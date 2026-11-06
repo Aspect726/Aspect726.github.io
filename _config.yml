@@ -1,0 +1,8 @@
+exclude:
+  - curriculum-web/server
+  - curriculum-web/server.mjs
+  - curriculum-web/scripts
+  - curriculum-web/tests
+  - curriculum-web/data
+  - curriculum-web/private
+  - curriculum-web/node_modules

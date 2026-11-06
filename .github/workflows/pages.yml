@@ -28,8 +28,17 @@ jobs:
       - name: Build public site and verify no answer fields
         run: npm run build:pages --prefix curriculum-web
       - uses: actions/configure-pages@v5
+      - name: Use the dedicated Pages artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method PUT "repos/${{ github.repository }}/pages" -f build_type=workflow
       - uses: actions/upload-pages-artifact@v3
         with:
           path: curriculum-web/dist
       - uses: actions/deploy-pages@v4
         id: deployment
+      - name: Check the published website
+        run: |
+          curl --fail --location --retry 4 --retry-delay 5 --max-time 30 https://donteventry.me/ -o /tmp/double-advanced-home.html
+          test -s /tmp/double-advanced-home.html
+          rg -q 'Double Advanced' /tmp/double-advanced-home.html
