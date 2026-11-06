@@ -1,0 +1,404 @@
+PAGE 20
+Double Advanced Math Program: build brief
+Page 20
+Part 7. Daily practice packets
+7.1 What to deliver
+50 packets: Monday to Friday after each of the ten weekends. Monday to Thursday are standard packets. Friday
+is the weekly check. Each is a PDF. Provide one answer key per packet (see 7.6).
+7.2 Format: plain, black and white, old-style type
+The packets are meant to look like a classic printed worksheet. Plain and quiet.
+•
+US Letter, one sheet (a single page, or two pages front and back at most). Black text on white. No color, no
+shading, no icons, no decorative borders, no boxes.
+•
+Typeface: an old-style serif. In order of preference: EB Garamond, a Palatino clone (TeX Gyre Pagella or
+Palladio), Century Schoolbook (TeX Gyre Schola), then a Times clone (Liberation Serif or Times New
+Roman) if nothing else is available. Never a sans serif. Embed the fonts in the PDF.
+•
+Body 12 to 13 point with 1.3 line spacing. Generous space to work after each problem (about 1.2 to 2 inches,
+matched to the work the problem needs).
+•
+Header: a line "Name ______ Date ______" and, at the right, "Week 3, Day 2". A thin rule under the header
+is allowed. A footer holds the packet ID, for example "W03D2".
+•
+Number the problems "1.", "2.", and so on. Put "Answer: ________" on problems that have one short
+answer.
+•
+Math typesetting: stacked fractions in problems, mixed numbers with a stacked fraction (for example 2 and
+1/4 set as a proper mixed number), × and ÷ for operations, a : b for ratios, a leading zero on decimals (0.5),
+and consistent minus signs. Use a real typesetting route: LaTeX (preferred if available), or ReportLab or
+WeasyPrint with a helper that draws stacked fractions properly. Do not write fractions as "3/4" on the
+printed packet if you can set them stacked.
+•
+When a problem cannot be asked without a figure (a number line, a ruled table, a grid), draw it in plain black
+line art, as small as is clear. Otherwise, use text only.
+7.3 Structure of a Monday to Thursday packet (15 to 20 minutes)
+•
+Part A. Warm-up (4 items, 3 to 4 minutes). Fluency. Rotate the strand by day: Monday, multiplication and
+division facts; Tuesday, fraction, decimal, and percent equivalents (1/8 = 0.125, 3/4 = 75%, and so on);
+Wednesday, mental scaling and powers of 10 (times and divided by 10, 100, 1,000; doubling and halving);
+Thursday, estimation.
+•
+Part B. Practice (8 to 10 items, 8 to 10 minutes). Mixed by the spiral rule below.
+•
+Part C. Think (1 or 2 items, 4 to 5 minutes). On Monday and Tuesday, one multi-step word problem or an
+error-analysis item ("Maya says... What did she do wrong?"). On Wednesday, the weekly brain teaser (an
+original puzzle that needs reasoning, not new content, suited to a bright 9 or 10 year old). On Thursday, a
+word problem plus an explain item. In weeks 8 to 10 the Thursday packet adds a short section labeled
+"Stretch (optional)" with 2 to 3 preview problems from IMT2's first units (signed numbers on a number line,
+percent change, two-step equations).
+
+
+PAGE 21
+Double Advanced Math Program: build brief
+Page 21
+7.4 The spiral rule
+For the packets after weekend W, draw Part B problems like this:
+Day
+Current weekend (W)
+Weekends W-1 and W-2
+Weekends W-3 and earlier
+Grade 5 foundations
+Monday
+60% (Saturday's topic)
+20%
+10%
+10%
+Tuesday
+60% (Sunday's topic)
+20%
+10%
+10%
+Wednesda
+y
+25%
+25%
+25%
+25%
+Thursday
+40%
+30%
+20%
+10%
+In week 1 there is no earlier material, so use Grade 5 foundations and the diagnostic's weak areas instead. In
+week 10 the packets are a cumulative capstone: spread the problems evenly across all units from Grade 5 to
+circles, and make Friday a full mixed check.
+7.5 Friday weekly check
+•
+Ten items, 20 minutes, no calculator, printed in the same plain format with the header "Weekly Check."
+•
+Mix: four items from the current weekend, three from the two weeks before, two from older weeks, and one
+"explain" item.
+•
+Include a printed scoring guide in the key: 9 to 10 correct is strong, 7 to 8 is on track, 5 to 6 means repeat the
+topic with a Booster set before moving on, and 4 or fewer means set aside 20 minutes of the next session for
+a re-teach. The guide also maps each item to a skill ID so misses point to the right Booster set.
+•
+Mini Check A (week 3, Sunday), the Grade 6 Cumulative Check (week 9, Sunday), and the final mixed
+review (week 10, Sunday) are paper checks in the same format.
+7.6 Answer keys
+For every packet, check, and handout, make a separate key and put it in the Tutor_Only folder, never in the
+student's folder. Each key gives the final answer to every item, a short worked solution for multi-step items, and
+for two or three items the most likely wrong answer and the error behind it. Also tell the tutor, for each packet,
+which Booster set to use if he misses three or more items on the same topic.
+
+
+PAGE 22
+Double Advanced Math Program: build brief
+Page 22
+Part 8. Weekend handouts, run sheets, and study guides
+8.1 Weekend session sheets (student)
+For each of the 20 sessions: a plain black-and-white sheet in the same old-style type as the packets, two pages at
+most. It holds the launch problem and the explore tasks with working space, and the exit ticket on its own page
+(so it can be collected). The exit ticket is a fresh problem, never a duplicate of a practice problem.
+8.2 Tutor run sheets
+For each of the 20 sessions: a one-page PDF in Tutor_Only with:
+•
+the timed agenda and materials list (name the items plainly, for example "paper fraction strips" and "grid
+paper"),
+•
+the learning goal in one sentence, the key idea, and the prerequisite skill,
+•
+three or more look-fors during Explore, each written as: the student response, why it matters, and what to do
+with it (and, if the task admits more than one correct approach, one look-for that says so, so the tutor accepts
+all of them),
+•
+the misconception table: what students do, why it happens, the tutor's move (two or three rows),
+•
+specific discussion prompts and the named talk move,
+•
+the exit-ticket sort with full criteria for all three buckets: Got it, Almost there, Needs re-teaching. Each
+bucket must say what a response in it contains. Do not use the bare labels alone.
+•
+the coverage table from 5.3.
+8.3 Weekly study guide
+One per week, 2 to 4 pages, in a clean textbook look. This is the one place where visual elements are welcome,
+and you may use color. It must still print acceptably in grayscale, so never rely on color alone.
+Include, in this order:
+1.
+The big idea in three sentences or fewer, plain language.
+2.
+Words to know. Each term with a kid-friendly meaning and a small example.
+3.
+How it works. The week's models drawn carefully (tape diagrams, number lines, area models, and so on)
+with short annotations, matching the slides.
+4.
+Worked examples. Two or three, step by step, with the thinking beside each step.
+5.
+Common mistakes. Three entries: what it looks like, why it happens, how to fix it.
+6.
+Try it. Five problems with answers printed in a separate block at the end of the guide.
+7.
+Where this connects. One or two sentences: what it builds on and what comes next.
+Use the same palette as the slides (teal and brick) for callout boxes and diagrams, light tinted boxes (#F3EFE6)
+for definitions, and the same old-style serif for body text, with a clean bold style for headings. No clip art, no
+gradients, no decorative icons.
+
+
+PAGE 23
+Double Advanced Math Program: build brief
+Page 23
+Part 9. The diagnostic
+Build a diagnostic for Saturday of week 1 (Week_01 folder), with a key and a scoring map. It should take about
+35 minutes in two sittings with a short break. It is not a test he can fail. Its purpose is to show the tutor where the
+gaps are.
+Part A: computation, no calculator (about 15 minutes, around 15 items). A 2-minute multiplication-fact
+check (about 30 mixed facts to 12 × 12, written in a scrambled order). 347 × 26. 1,248 ÷ 6. A division with a
+2-digit divisor and a 4-digit dividend. Decimal addition and subtraction with different lengths (3.45 + 12.8, 7.2
+− 3.56). A decimal product (0.6 × 0.8) and a decimal division. Fractions: 2/3 × 3/4, 3/4 + 1/6, "How many 1/3s
+are in 2?", 1/4 ÷ 2, and a mixed number times a whole number. Compare 3/8 and 2/5.
+Part B: reasoning (about 20 minutes, around 11 items). Place 2/3, 5/4, 7/8, and 1 1/2 on one number line.
+Order 0.5, 0.45, and 0.405. A tape-diagram ratio problem. Find 25% of 48. Evaluate 3n + 2 for n = 5. A
+negative-number temperature question in plain language. The area of a rectangle with fractional sides. The
+volume of a box. Plot and read points in the first quadrant of the coordinate plane. "Explain why 1/2 × 6 is
+smaller than 6" (the scaling idea). Two non-routine problems that test persistence rather than content (for
+example a pattern problem and a logic problem), clearly marked as ones he may find hard.
+Write the actual problems yourself. Tag each item with a skill ID (for example F-COMP for comparing
+fractions) and produce:
+•
+an answer key,
+•
+a scoring map (skill by item, with a simple traffic-light rule such as at least 80% secure, 50% to 79%
+developing, below 50% priority),
+•
+a "results to plan" table that tells the tutor what to do: which Booster sets to add to the weekday packets of
+week 1, whether to slow week 2, and whether to swap a fluency strand. The packets are pre-built and cannot
+change, so this table works through the Booster Library and through the tutor's choices, not through
+regenerated files.
+
+
+PAGE 24
+Double Advanced Math Program: build brief
+Page 24
+Part 10. Folders and file names
+Package the finished program as DoubleAdvanced_Math_Program (and as a ZIP). Use this structure, and name
+files in a way that sorts correctly.
+•
+00_Start_Here
+•
+README_Tutor_Guide.pdf (how to run the weekend sessions and packets; the calendar; how to use
+keys, Booster sets, and the tracker; pacing rules; how to adjust when he is ahead or behind)
+•
+Parent_Guide.pdf (one page: how to support him without teaching, how to use the answer keys, the
+"tell me why" routine, signs to slow down, how to praise effort and strategy)
+•
+Master_Calendar.pdf (one page with all dates)
+•
+Skills_Tracker.pdf (a printable grid of skill IDs by status: introduced, first check, one week later, four
+weeks later, mastered)
+•
+Design_Decisions.pdf (what you changed from this brief and why; what each unit leaves out)
+•
+01_Slides
+•
+DoubleAdvanced_Weekend_Slides.pptx
+•
+02_Weeks
+•
+Week_01 through Week_10, each with these four folders:
+•
+1_Weekend_Handouts (Sat and Sun session sheets, plus the diagnostic in Week_01, Mini
+Check A in Week_03, and the Grade 6 Cumulative Check in Week_09)
+•
+2_Daily_Packets (W01_D1_Mon.pdf, W01_D2_Tue.pdf, W01_D3_Wed.pdf,
+W01_D4_Thu.pdf, W01_D5_Fri_Weekly_Check.pdf)
+•
+3_Study_Guide (W01_Study_Guide.pdf)
+•
+4_Tutor_Only (Sat and Sun run sheets, and one answer-key PDF per week with a page per
+item)
+•
+03_Booster_Library
+•
+Eleven extra practice sets, each two pages with about 20 problems and a key: fractions (compare,
+order, add and subtract with unlike denominators), fraction multiplication and division, decimal
+operations, multi-digit multiplication and long division, multiplication and division facts, ratio tables
+and double number lines, percent, negative numbers and the number line, expressions and equations,
+area and volume, and a set of challenge puzzles. Use the same plain black-and-white old-style format
+as the packets.
+•
+04_Printables
+•
+Fraction strips (halves through twelfths), number lines (blank, 0 to 1, 0 to 2, and negative 10 to 10),
+grid paper (half-inch and 1 cm), four-quadrant coordinate planes, a tape diagram template, a double
+number line template, a ratio table template, and cut-out nets (rectangular prism, triangular prism,
+square pyramid). All plain black and white.
+•
+Manifest.csv (every file with its path, type, and page or slide count)
+If a ZIP is too large for a single delivery, make one ZIP per week plus one ZIP for the deck and the start-here
+files.
+
+
+PAGE 25
+Double Advanced Math Program: build brief
+Page 25
+Part 11. How to work, in phases
+Phase A. Plan, with no files yet. Read this whole document. Write a master blueprint for all 20 sessions: for
+each, confirm the standards, the learning goal, the structural cases mapped to problem numbers, the
+misconception and the exit ticket, the models, the slide list, and the packet themes for the five days that follow.
+Write the Design Decisions note. Check the blueprint against Part 5. Do not begin building until the blueprint
+passes your own check. Keep this phase tight: no long essays.
+Phase B. Build tools. Write reusable code before content: a slide-builder with the layouts from 6.3 and diagram
+functions (number line, tape diagram, double number line, ratio table, area model, hanger diagram, coordinate
+plane, dot plot, histogram, box plot, net, triangle and parallelogram with height, circle). Write a packet-builder
+that sets stacked fractions and old-style type correctly, a key-builder, and a math-verification helper (use exact
+fractions, not floating point, for answers). Store each session's content as structured data (JSON) so everything
+can be regenerated and corrected.
+Phase C. Build Week 1 completely as a pilot. All files for Week 1, including the diagnostic and the first
+slides. Run the full quality check (Part 12). Fix everything you find. Then continue.
+Phase D. Build weeks 2 to 10, one week at a time. After each week, run the quality check, and post a
+three-line status (what was built, what you fixed, what comes next). Do not stop to ask permission between
+weeks. If your output limits force a stop, end with a clear note naming the next week to build, so the person can
+reply "continue."
+Phase E. Assemble and package. Build the single deck from all sessions' data, render it, and check it. Build the
+Start Here folder, the Booster Library, and the Printables. Write the manifest. Create the ZIPs. Write the final
+report (Part 13).
+Your freedom. You may reorder topics within a week or move a topic across a weekend if you can say why.
+You may change the number of problems, the exact numbers, and the contexts. You may change slide counts
+within 14 to 20 per session. You may add Booster sets or printables you think are valuable. You may improve
+any rule in this document if you explain why in Design Decisions.
+What you may not change. The ten-week, 20-session structure. The one-deck rule. The plain black-and-white
+old-style format for packets, session sheets, and keys. The rule that all content is original. The rule that answers
+are verified with code. The priority order of topics in 3.3.
+
+
+PAGE 26
+Double Advanced Math Program: build brief
+Page 26
+Part 12. Quality check (mandatory, before every delivery)
+Math.
+•
+Every answer key value is produced or verified by code, using exact fractions and decimals. Where a
+problem has more than one correct answer, the key says so.
+•
+No ambiguous wording. Units are correct. Numbers are friendly enough for a 9 or 10 year old to compute by
+hand.
+•
+Geometry problems are possible: if a triangle has stated sides and a height, check them in code.
+•
+Each exit ticket passes the misconception test (5.4).
+•
+Each session has a coverage table showing every structural case in a numbered problem.
+•
+Notation is identical across slides, packets, guides, and keys.
+Pedagogy.
+•
+Each session follows the shape in 5.1 and its timings add up. Discuss is at least 10 minutes on a Saturday.
+•
+Each session has an error-analysis item built on a real misconception.
+•
+Each packet fits 15 to 20 minutes by your item count and timing rules. Spiral percentages roughly follow
+7.4.
+Language.
+•
+Scan every slide, handout, and guide for the banned phrases in 6.6 and for emoji. Count exclamation marks
+and em dashes.
+•
+Reading level matches a 9 or 10 year old, with math terms defined once and used the same way afterward.
+Visual.
+•
+Render the deck (for example, convert to PDF with LibreOffice and then to images) and look at every slide.
+Check for text overflow, overlap, crowding, and low contrast. Check every diagram for accurate spacing and
+legible labels.
+•
+Render every PDF to images and look at it. Check page counts (packets are at most two pages), fonts
+embedded, stacked fractions set properly, no clipped text, and no stray blank pages.
+•
+Confirm packets are black and white only and in an old-style serif.
+Files.
+•
+Names and folders match Part 10. The manifest lists every file with its page or slide count. ZIP files open
+and contain what they should.
+If any check fails, fix the cause and regenerate. Do not deliver known problems.
+
+
+PAGE 27
+Double Advanced Math Program: build brief
+Page 27
+Part 13. Final report to the person
+When the program is built, write a short final message (under 400 words) that lists what was delivered and
+where it is, the main changes you made to this brief and why, anything you could not do, and a ten-line "how to
+start on Saturday" for the tutor. Keep the tone plain. Do not oversell.
+
+
+PAGE 28
+Double Advanced Math Program: build brief
+Page 28
+Appendix A. Common misconceptions to design around
+•
+Fractions. A larger denominator means a larger fraction. Adding numerators and denominators. A fraction
+must be less than 1. A fraction on a number line counted from the wrong unit.
+•
+Operations. Multiplication always makes a number bigger. Division always makes a number smaller.
+Confusing 4 ÷ 1/3 with 1/3 ÷ 4.
+•
+Decimals. A decimal with more digits is larger. Aligning at the right edge instead of at the decimal point.
+Misplacing the decimal point in a product or quotient.
+•
+Ratios. Additive instead of multiplicative reasoning. Comparing ratios by their difference. Confusing
+part-to-part with part-to-whole.
+•
+Percent. Treating "x is 30% of a number" as "30% of x." Believing percent cannot exceed 100.
+•
+Algebra. A variable is one fixed number. 3² = 6. 3(x + 4) = 3x + 4. Different operations on the two sides of
+an equation.
+•
+Negative numbers. −8 > −3 because 8 > 3. Absolute value as "drop the sign."
+•
+Geometry. Using the slanted side as the height. Forgetting the 1/2 in a triangle. Leaving out hidden faces in
+surface area. Confusing area, surface area, and volume units.
+•
+Statistics. Median without ordering. Forgetting to average the middle two values. Splitting the range instead
+of the data to find quartiles.
+•
+Proportional relationships. Treating a linear but non-proportional relationship as proportional. Applying a
+scale factor to area.
+
+
+PAGE 29
+Double Advanced Math Program: build brief
+Page 29
+Appendix B. Writing samples: weak and strong
+Weak. Let's dive into the exciting world of ratios! A ratio is a powerful tool that lets us compare quantities in
+amazing ways. Strong. A ratio compares two amounts. 3 red tiles for every 2 blue tiles is the ratio 3 : 2.
+Weak. Great job! Now let's unlock the secrets of equivalent ratios! Strong. Try this before I show you
+anything. A recipe uses 2 cups of flour for every 3 cups of water. How much flour goes with 9 cups of water?
+Weak (title). Mastering Equivalent Ratios: Your Key to Success Strong (title). Equivalent ratios
+Weak (error analysis). Oops! Sam made a little mistake. Can you spot it? Strong (error analysis). Sam says 2
+: 3 is the same as 4 : 5, because he added 2 to each number. Is he right? Explain, and show a way to check.
+Weak (summary). Remember, the key takeaway is that fractions are amazing! Strong (summary). Finish the
+sentence in your own words: To divide by a fraction, I ask how many ___ fit in ___.
+
+
+PAGE 30
+Double Advanced Math Program: build brief
+Page 30
+Appendix C. If the placement date turns out to be later (do
+not build now)
+The family does not yet know the date of the evaluation. If it is in the spring, a second phase of about ten more
+weekends would follow. Do not build it now. Design weeks 9 and 10 so they hand off cleanly into it. For
+reference, the likely outline is: weeks 11 and 12, a second pass through ratios, percent, and fraction division
+with harder problem solving; weeks 13 and 14, IM Grade 7 Unit 4 (percent change, tax, tip, discount, markup);
+weeks 15 and 16, IM Grade 7 Unit 5 (arithmetic with signed numbers); weeks 17 and 18, IM Grade 7 Unit 6
+(equations px + q = r and p(x + q) = r, inequalities); weeks 19 and 20, mixed problem solving and practice
+evaluations.

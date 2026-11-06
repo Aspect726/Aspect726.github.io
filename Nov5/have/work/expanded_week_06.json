@@ -1,0 +1,1175 @@
+{
+  "weeks": [
+    {
+      "week": 6,
+      "days": [
+        {
+          "weekday": "Sat",
+          "challenges": [
+            {
+              "text": "A school orders 6 kits. Each kit has x pencils and 4 markers. Write the total number of tools two ways. For x = 7, find the total. Explain why 6x + 4 is incorrect.",
+              "answer": "6(x + 4) = 6x + 24; 66 tools.",
+              "worked": "Each of six kits contributes x pencils and four markers. Thus 6(x + 4) = 6x + 24. At x = 7, 42 + 24 = 66. The expression 6x + 4 counts markers from only one kit.",
+              "skill": "E-DIST",
+              "check": "6*(7+4)==6*7+24==66 and 6*7+4!=66",
+              "challenge": true,
+              "discussion": {
+                "ask": "What does each 6 multiply, and why?",
+                "expect": "6(x + 4) = 6x + 24; 66 tools.",
+                "if_stuck": "Draw six boxes; write x and 4 in every box."
+              },
+              "visual_hint": "Six equal boxes, each partitioned into x pencils and 4 markers.",
+              "diagram": {
+                "kind": "area",
+                "dimensions": [
+                  6,
+                  4
+                ],
+                "values": [
+                  6,
+                  4
+                ],
+                "labels": [
+                  "x",
+                  "4",
+                  "6 kits"
+                ]
+              }
+            },
+            {
+              "text": "Two rectangular banners are both 3 m high. Their widths are x m and x + 2 m. Write their combined area in a simplified form. Find it for x = 4. Can one rectangle show the same area?",
+              "answer": "6x + 6 square m; 30 square m; one 3 m by (2x + 2) m rectangle.",
+              "worked": "The areas are 3x and 3(x + 2). Adding gives 6x + 6. At x = 4 this is 30. Place the banners side by side: total width 2x + 2, so 3(2x + 2) gives the same area.",
+              "skill": "E-LIKE",
+              "check": "3*4+3*(4+2)==6*4+6==3*(2*4+2)==30",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which lengths add when the banners are placed side by side?",
+                "expect": "6x + 6 square m; 30 square m; one 3 m by (2x + 2) m rectangle.",
+                "if_stuck": "Keep the height 3; combine only the widths."
+              },
+              "visual_hint": "Two adjacent rectangles with common height 3; widths x and x+2.",
+              "diagram": {
+                "kind": "area",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "values": [
+                  3,
+                  2
+                ],
+                "labels": [
+                  "x",
+                  "x+2",
+                  "3"
+                ]
+              }
+            }
+          ],
+          "practice": [
+            {
+              "text": "A packet contains 3 cards. Write the number in p packets plus 2 loose cards; evaluate at p=2.",
+              "answer": "3p+2; 8 cards.",
+              "worked": "Multiply cards per packet by the packet count, then add loose cards.",
+              "skill": "E-EXPR",
+              "check": "3*2+2==8"
+            },
+            {
+              "text": "Evaluate 2t+3 when t=2. Show the multiplication first.",
+              "answer": "7",
+              "worked": "2×2+3=4+3=7.",
+              "skill": "E-EVAL",
+              "check": "2*2+3==7"
+            },
+            {
+              "text": "Evaluate 2²+3. Explain what the exponent means.",
+              "answer": "7",
+              "worked": "The exponent gives two equal factors: 2×2; add 3 afterward.",
+              "skill": "E-EXP",
+              "check": "2**2+3==7"
+            },
+            {
+              "text": "Expand 2(x+3) and check at x=2.",
+              "answer": "2x+6; both equal 10.",
+              "worked": "Multiply both x and 3 by 2.",
+              "skill": "E-DIST",
+              "check": "2*(2+3)==2*2+6==10"
+            },
+            {
+              "text": "Simplify 3y+2y+y. Evaluate at y=2.",
+              "answer": "6y; 12.",
+              "worked": "Add the counts of equal y terms: 3+2+1=6.",
+              "skill": "E-LIKE",
+              "check": "3*2+2*2+2==6*2==12"
+            },
+            {
+              "text": "A rectangle has height 2 and width z+3. Write its area two ways.",
+              "answer": "2(z+3)=2z+6.",
+              "worked": "Split the rectangle into widths z and 3; their areas add.",
+              "skill": "E-DIST",
+              "check": "all(2*(z+3)==2*z+6 for z in [1,3,7])"
+            }
+          ],
+          "estimated_minutes": 80
+        },
+        {
+          "weekday": "Sun",
+          "challenges": [
+            {
+              "text": "Three identical snack bags and a $4 delivery fee cost $19. Find the price per bag. A second shop charges $6 per bag with no fee. Which shop is cheaper for five bags, and by how much?",
+              "answer": "$5 per bag; first shop is cheaper by $1 for five bags.",
+              "worked": "Remove the $4 fee: three bags cost $15, so each costs $5. Five from the first shop cost 5×5+4=$29. Five from the second cost 5×6=$30. The first shop saves $1.",
+              "skill": "E-STORY",
+              "check": "(19-4)/3==5 and 5*5+4==29 and 5*6-(5*5+4)==1",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which part of the total is not repeated for every bag?",
+                "expect": "$5 per bag; first shop is cheaper by $1 for five bags.",
+                "if_stuck": "Separate the one-time fee from the equal bag costs."
+              },
+              "visual_hint": "Balance: three equal bags plus 4 equals 19.",
+              "diagram": {
+                "kind": "hanger",
+                "values": [
+                  3,
+                  19
+                ],
+                "labels": [
+                  "3 bags +$4",
+                  "$19"
+                ]
+              }
+            },
+            {
+              "text": "A tank starts with 3 liters and gains 2 liters each minute. Make a table for 0, 1, 3, 5 minutes. Write a rule. When will it hold 17 liters? Explain why multiplying the time by 2 alone is insufficient.",
+              "answer": "Table: (0, 3), (1, 5), (3, 9), (5, 13); L = 3 + 2t; 7 minutes.",
+              "worked": "The starting 3 liters remain at every time. Add 2t liters to get L=3+2t. To reach 17, 14 more liters are needed; 14÷2=7 minutes. The rule 2t omits the initial water.",
+              "skill": "E-RELATE",
+              "check": "[3+2*t for t in [0,1,3,5]]==[3,5,9,13] and (17-3)/2==7",
+              "challenge": true,
+              "discussion": {
+                "ask": "What must the rule give when the time is zero?",
+                "expect": "Table: (0, 3), (1, 5), (3, 9), (5, 13); L = 3 + 2t; 7 minutes.",
+                "if_stuck": "Fill the zero-minute row first."
+              },
+              "visual_hint": "Table of time and liters; graph starts at (0, 3).",
+              "diagram": {
+                "kind": "coordinate",
+                "points": [],
+                "range": [
+                  0,
+                  20
+                ],
+                "x_range": [
+                  0,
+                  7
+                ],
+                "y_range": [
+                  0,
+                  20
+                ],
+                "labels": [
+                  "minutes",
+                  "liters"
+                ]
+              }
+            }
+          ],
+          "practice": [
+            {
+              "text": "Solve x+4=7. Show a change to both sides.",
+              "answer": "x=3.",
+              "worked": "Subtract 4 from each side, then check by addition.",
+              "skill": "E-ADD",
+              "check": "7-4==3 and 3+4==7"
+            },
+            {
+              "text": "Solve 3x=9. Check using multiplication.",
+              "answer": "x=3.",
+              "worked": "Divide both sides by 3; each of 3 equal groups is 3.",
+              "skill": "E-MULT",
+              "check": "F(9,3)==3 and 3*3==9"
+            },
+            {
+              "text": "Solve {3/4}x=9. Draw 4 equal parts.",
+              "answer": "x=12.",
+              "worked": "The 3 known parts total 9, so one part is 3. All 4 parts total 12.",
+              "skill": "E-MULT",
+              "check": "F(3,4)*12==9"
+            },
+            {
+              "text": "4 identical pens cost $12. Write and solve an equation for price p per pen.",
+              "answer": "4p=12; p=$3.",
+              "worked": "Divide the whole cost among 4 equal pen prices.",
+              "skill": "E-STORY",
+              "check": "F(12,4)==3"
+            },
+            {
+              "text": "Use y=3x+4 for x=0, 1, 3. Give the ordered pairs.",
+              "answer": "(0, 4), (1, 7), (3, 13).",
+              "worked": "Substitute each input, multiply by 3, and add 4.",
+              "skill": "E-RELATE",
+              "check": "[3*x+4 for x in [0,1,3]]==[4,7,13]"
+            },
+            {
+              "text": "Are 3(u+4) and 3u+4 equivalent? Test u=2 and repair the second expression.",
+              "answer": "No; 3u+12 is equivalent.",
+              "worked": "The first gives 18; the second gives 10. The constant must also be multiplied by 3.",
+              "skill": "E-DIST",
+              "check": "3*(2+4)!=3*2+4 and 3*(2+4)==3*2+12"
+            }
+          ],
+          "estimated_minutes": 80
+        },
+        {
+          "weekday": "Mon",
+          "challenges": [
+            {
+              "text": "A museum sells family packs with 2 adult tickets and 3 child tickets. Adult tickets cost a dollars; child tickets cost $4. Write the cost of 4 packs. If a=$9, will $125 cover the order? Explain.",
+              "answer": "4(2a + 12)=8a + 48; $120; yes, $5 remains.",
+              "worked": "One pack costs 2a+3×4=2a+12. Four packs cost 8a+48. Substituting a=9 gives 72+48=$120; 125−120=$5 remains.",
+              "skill": "E-DIST",
+              "check": "4*(2*9+3*4)==8*9+48==120 and 125-120==5",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which counts belong inside the one-pack expression?",
+                "expect": "4(2a + 12)=8a + 48; $120; yes, $5 remains.",
+                "if_stuck": "Write one pack before multiplying by four."
+              },
+              "visual_hint": "Four equal family-pack groups."
+            },
+            {
+              "text": "A rectangular garden is 5 m wide and n+2 m long. A path covers 10 square m inside it. Write the planted area. Find it when n=6, and explain why 5n is equivalent to your expression.",
+              "answer": "5(n + 2)−10 = 5n; 30 square m.",
+              "worked": "The whole garden has area 5n+10. Removing 10 leaves 5n. For n=6 the whole area is 40 and the path is 10, leaving 30. The added 2-meter strip has area 5×2=10.",
+              "skill": "E-DIST",
+              "check": "5*(6+2)-10==5*6==30 and all(5*(n+2)-10==5*n for n in [0,1,3,9])",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which part of the area exactly matches the path?",
+                "expect": "5(n + 2)−10 = 5n; 30 square m.",
+                "if_stuck": "Split the length into n and 2."
+              },
+              "visual_hint": "Rectangle height 5 split into widths n and 2; remove the 2-wide strip."
+            }
+          ],
+          "practice": [
+            {
+              "text": "A packet contains 5 cards. Write the number in p packets plus 4 loose cards; evaluate at p=4.",
+              "answer": "5p+4; 24 cards.",
+              "worked": "Multiply cards per packet by the packet count, then add loose cards.",
+              "skill": "E-EXPR",
+              "check": "5*4+4==24"
+            },
+            {
+              "text": "Evaluate 4t+5 when t=4. Show the multiplication first.",
+              "answer": "21",
+              "worked": "4×4+5=16+5=21.",
+              "skill": "E-EVAL",
+              "check": "4*4+5==21"
+            },
+            {
+              "text": "Evaluate 4²+5. Explain what the exponent means.",
+              "answer": "21",
+              "worked": "The exponent gives two equal factors: 4×4; add 5 afterward.",
+              "skill": "E-EXP",
+              "check": "4**2+5==21"
+            },
+            {
+              "text": "Expand 4(x+5) and check at x=4.",
+              "answer": "4x+20; both equal 36.",
+              "worked": "Multiply both x and 5 by 4.",
+              "skill": "E-DIST",
+              "check": "4*(4+5)==4*4+20==36"
+            },
+            {
+              "text": "Simplify 5y+4y+y. Evaluate at y=2.",
+              "answer": "10y; 20.",
+              "worked": "Add the counts of equal y terms: 5+4+1=10.",
+              "skill": "E-LIKE",
+              "check": "5*2+4*2+2==10*2==20"
+            },
+            {
+              "text": "A rectangle has height 4 and width z+5. Write its area two ways.",
+              "answer": "4(z+5)=4z+20.",
+              "worked": "Split the rectangle into widths z and 5; their areas add.",
+              "skill": "E-DIST",
+              "check": "all(4*(z+5)==4*z+20 for z in [1,3,7])"
+            },
+            {
+              "text": "Solve x+5=9. Show a change to both sides.",
+              "answer": "x=4.",
+              "worked": "Subtract 5 from each side, then check by addition.",
+              "skill": "E-ADD",
+              "check": "9-5==4 and 4+5==9"
+            },
+            {
+              "text": "Solve 4x=16. Check using multiplication.",
+              "answer": "x=4.",
+              "worked": "Divide both sides by 4; each of 4 equal groups is 4.",
+              "skill": "E-MULT",
+              "check": "F(16,4)==4 and 4*4==16"
+            },
+            {
+              "text": "Solve {4/5}x=16. Draw 5 equal parts.",
+              "answer": "x=20.",
+              "worked": "The 4 known parts total 16, so one part is 4. All 5 parts total 20.",
+              "skill": "E-MULT",
+              "check": "F(4,5)*20==16"
+            },
+            {
+              "text": "5 identical pens cost $20. Write and solve an equation for price p per pen.",
+              "answer": "5p=20; p=$4.",
+              "worked": "Divide the whole cost among 5 equal pen prices.",
+              "skill": "E-STORY",
+              "check": "F(20,5)==4"
+            },
+            {
+              "text": "Use y=4x+5 for x=0, 1, 3. Give the ordered pairs.",
+              "answer": "(0, 5), (1, 9), (3, 17).",
+              "worked": "Substitute each input, multiply by 4, and add 5.",
+              "skill": "E-RELATE",
+              "check": "[4*x+5 for x in [0,1,3]]==[5,9,17]"
+            },
+            {
+              "text": "Are 4(u+5) and 4u+5 equivalent? Test u=2 and repair the second expression.",
+              "answer": "No; 4u+20 is equivalent.",
+              "worked": "The first gives 28; the second gives 13. The constant must also be multiplied by 4.",
+              "skill": "E-DIST",
+              "check": "4*(2+5)!=4*2+5 and 4*(2+5)==4*2+20"
+            },
+            {
+              "text": "A ribbon is 8 m long. Each bow uses {5/4} m. How many complete bows can be made, and what ribbon remains?",
+              "answer": "6 bows; {1/2} m remains.",
+              "worked": "Compute 8÷{5/4}={32/5}. Use only the whole-number quotient for complete bows; subtract the ribbon used.",
+              "skill": "F-DIV",
+              "check": "divmod(F(8),F(5,4))==(6,F(1,2))"
+            },
+            {
+              "text": "Find 2 + {5/6}. Give an estimate first.",
+              "answer": "{17/6}",
+              "worked": "Rename in twelfths: 2=24/12 and {5/6}=10/12; add and simplify.",
+              "skill": "F-ADD",
+              "check": "F(2,1)+F(5,6)==F(17,6)"
+            },
+            {
+              "text": "8 sketchbooks cost $40. What do 11 sketchbooks cost at the same price?",
+              "answer": "$55",
+              "worked": "Each costs $5; multiply by 11.",
+              "skill": "R-RATE",
+              "check": "F(40,8)*11==55"
+            },
+            {
+              "text": "A club has 180 members; 25% walk to meetings. How many walk?",
+              "answer": "45",
+              "worked": "Find 25/100 of 180: divide by 100, then multiply by 25.",
+              "skill": "P-PART",
+              "check": "F(25,100)*180==45"
+            },
+            {
+              "text": "Find 8.5 × 1.25. Explain whether the product exceeds 8.5.",
+              "answer": "{85/8}; greater",
+              "worked": "Multiply exactly; the second factor is {5/4}, which is greater than 1.",
+              "skill": "D-MULT",
+              "check": "F(17,2)*F(5,4)==F(85,8) and (F(85,8)>F(17,2))==(F(5,4)>1)"
+            },
+            {
+              "text": "A rectangle measures 8 cm by 5 cm. Find its area and perimeter.",
+              "answer": "40 square cm; 26 cm.",
+              "worked": "Area multiplies the sides; perimeter adds two of each side.",
+              "skill": "G-AREA",
+              "check": "(8*5,2*(8+5))==(40,26)"
+            }
+          ],
+          "estimated_minutes": 45
+        },
+        {
+          "weekday": "Tue",
+          "challenges": [
+            {
+              "text": "A ribbon is cut into four equal pieces. After 1.5 m is trimmed from each piece, each remaining piece is 2.25 m. Find the original ribbon length. Write an equation and check it.",
+              "answer": "15 m; L÷4−1.5=2.25.",
+              "worked": "Undo the trim first: each original piece was 2.25+1.5=3.75 m. Four original pieces total 15 m. Check: 15÷4−1.5=3.75−1.5=2.25.",
+              "skill": "E-STORY",
+              "check": "(F(9,4)+F(3,2))*4==15 and F(15,4)-F(3,2)==F(9,4)",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which operation must be undone first?",
+                "expect": "15 m; L÷4−1.5=2.25.",
+                "if_stuck": "Rebuild one original piece, then rebuild all four."
+              },
+              "visual_hint": "Four equal strips, each split into 2.25 remaining and 1.5 trimmed."
+            },
+            {
+              "text": "Five friends split a taxi bill equally. The fare is $18 plus $2 per kilometer. Each friend pays $6. Find the trip length. Then find each person’s share if the same trip had six riders.",
+              "answer": "6 km; $5 each with six riders.",
+              "worked": "Five payments of $6 make a $30 bill. After the $18 starting fare, the distance charge is $12. At $2 per kilometer, the trip is 6 km. The unchanged $30 bill split six ways costs $5 each.",
+              "skill": "E-STORY",
+              "check": "(5*6-18)/2==6 and (18+2*6)/6==5",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which total stays unchanged when the number of riders changes?",
+                "expect": "6 km; $5 each with six riders.",
+                "if_stuck": "Recover the entire bill from the first set of payments."
+              },
+              "visual_hint": "Bar with 18 fixed dollars and six 2-dollar distance parts."
+            }
+          ],
+          "practice": [
+            {
+              "text": "A packet contains 6 cards. Write the number in p packets plus 5 loose cards; evaluate at p=5.",
+              "answer": "6p+5; 35 cards.",
+              "worked": "Multiply cards per packet by the packet count, then add loose cards.",
+              "skill": "E-EXPR",
+              "check": "6*5+5==35"
+            },
+            {
+              "text": "Evaluate 5t+6 when t=5. Show the multiplication first.",
+              "answer": "31",
+              "worked": "5×5+6=25+6=31.",
+              "skill": "E-EVAL",
+              "check": "5*5+6==31"
+            },
+            {
+              "text": "Evaluate 5²+6. Explain what the exponent means.",
+              "answer": "31",
+              "worked": "The exponent gives two equal factors: 5×5; add 6 afterward.",
+              "skill": "E-EXP",
+              "check": "5**2+6==31"
+            },
+            {
+              "text": "Expand 5(x+6) and check at x=5.",
+              "answer": "5x+30; both equal 55.",
+              "worked": "Multiply both x and 6 by 5.",
+              "skill": "E-DIST",
+              "check": "5*(5+6)==5*5+30==55"
+            },
+            {
+              "text": "Simplify 6y+5y+y. Evaluate at y=2.",
+              "answer": "12y; 24.",
+              "worked": "Add the counts of equal y terms: 6+5+1=12.",
+              "skill": "E-LIKE",
+              "check": "6*2+5*2+2==12*2==24"
+            },
+            {
+              "text": "A rectangle has height 5 and width z+6. Write its area two ways.",
+              "answer": "5(z+6)=5z+30.",
+              "worked": "Split the rectangle into widths z and 6; their areas add.",
+              "skill": "E-DIST",
+              "check": "all(5*(z+6)==5*z+30 for z in [1,3,7])"
+            },
+            {
+              "text": "Solve x+6=11. Show a change to both sides.",
+              "answer": "x=5.",
+              "worked": "Subtract 6 from each side, then check by addition.",
+              "skill": "E-ADD",
+              "check": "11-6==5 and 5+6==11"
+            },
+            {
+              "text": "Solve 5x=25. Check using multiplication.",
+              "answer": "x=5.",
+              "worked": "Divide both sides by 5; each of 5 equal groups is 5.",
+              "skill": "E-MULT",
+              "check": "F(25,5)==5 and 5*5==25"
+            },
+            {
+              "text": "Solve {5/6}x=25. Draw 6 equal parts.",
+              "answer": "x=30.",
+              "worked": "The 5 known parts total 25, so one part is 5. All 6 parts total 30.",
+              "skill": "E-MULT",
+              "check": "F(5,6)*30==25"
+            },
+            {
+              "text": "6 identical pens cost $30. Write and solve an equation for price p per pen.",
+              "answer": "6p=30; p=$5.",
+              "worked": "Divide the whole cost among 6 equal pen prices.",
+              "skill": "E-STORY",
+              "check": "F(30,6)==5"
+            },
+            {
+              "text": "Use y=5x+6 for x=0, 1, 3. Give the ordered pairs.",
+              "answer": "(0, 6), (1, 11), (3, 21).",
+              "worked": "Substitute each input, multiply by 5, and add 6.",
+              "skill": "E-RELATE",
+              "check": "[5*x+6 for x in [0,1,3]]==[6,11,21]"
+            },
+            {
+              "text": "Are 5(u+6) and 5u+6 equivalent? Test u=2 and repair the second expression.",
+              "answer": "No; 5u+30 is equivalent.",
+              "worked": "The first gives 40; the second gives 16. The constant must also be multiplied by 5.",
+              "skill": "E-DIST",
+              "check": "5*(2+6)!=5*2+6 and 5*(2+6)==5*2+30"
+            },
+            {
+              "text": "A ribbon is 2 m long. Each bow uses {6/4} m. How many complete bows can be made, and what ribbon remains?",
+              "answer": "1 bows; {1/2} m remains.",
+              "worked": "Compute 2÷{3/2}={4/3}. Use only the whole-number quotient for complete bows; subtract the ribbon used.",
+              "skill": "F-DIV",
+              "check": "divmod(F(2),F(6,4))==(1,F(1,2))"
+            },
+            {
+              "text": "Find {1/2} + 1. Give an estimate first.",
+              "answer": "{3/2}",
+              "worked": "Rename in twelfths: {1/2}=6/12 and 1=12/12; add and simplify.",
+              "skill": "F-ADD",
+              "check": "F(1,2)+F(1,1)==F(3,2)"
+            },
+            {
+              "text": "2 sketchbooks cost $12. What do 5 sketchbooks cost at the same price?",
+              "answer": "$30",
+              "worked": "Each costs $6; multiply by 5.",
+              "skill": "R-RATE",
+              "check": "F(12,2)*5==30"
+            },
+            {
+              "text": "A club has 60 members; 30% walk to meetings. How many walk?",
+              "answer": "18",
+              "worked": "Find 30/100 of 60: divide by 100, then multiply by 30.",
+              "skill": "P-PART",
+              "check": "F(30,100)*60==18"
+            },
+            {
+              "text": "Find 2.6 × 1.5. Explain whether the product exceeds 2.6.",
+              "answer": "{39/10}; greater",
+              "worked": "Multiply exactly; the second factor is {3/2}, which is greater than 1.",
+              "skill": "D-MULT",
+              "check": "F(13,5)*F(3,2)==F(39,10) and (F(39,10)>F(13,5))==(F(3,2)>1)"
+            },
+            {
+              "text": "A rectangle measures 2 cm by 6 cm. Find its area and perimeter.",
+              "answer": "12 square cm; 16 cm.",
+              "worked": "Area multiplies the sides; perimeter adds two of each side.",
+              "skill": "G-AREA",
+              "check": "(2*6,2*(2+6))==(12,16)"
+            }
+          ],
+          "estimated_minutes": 45
+        },
+        {
+          "weekday": "Wed",
+          "challenges": [
+            {
+              "text": "A club buys 8 notebooks at n dollars each and returns 2. It also buys pens for $9. Its final bill is $33. Write two equivalent bill expressions, find n, and check the price against the original purchase and return.",
+              "answer": "8n−2n+9 = 6n+9; n=$4.",
+              "worked": "Returning 2 of 8 notebooks leaves a net purchase of 6. Thus 6n+9=33; notebooks account for 24 dollars, giving n=4. Original cost 32, refund 8, pens 9: 32−8+9=33.",
+              "skill": "E-LIKE",
+              "check": "(33-9)/6==4 and 8*4-2*4+9==6*4+9==33",
+              "challenge": true,
+              "discussion": {
+                "ask": "Why can a returned notebook be represented by subtraction?",
+                "expect": "8n−2n+9 = 6n+9; n=$4.",
+                "if_stuck": "Track bought, returned, and kept notebooks separately."
+              },
+              "visual_hint": "8 equal notebook boxes; cross out 2."
+            },
+            {
+              "text": "A number machine multiplies by 3, then adds 5. A second machine adds 5, then multiplies by 3. Compare outputs for input 4. How much greater is the second output for any input? Explain with expressions.",
+              "answer": "17 and 27; second is always 10 greater.",
+              "worked": "The first rule is 3x+5. The second is 3(x+5)=3x+15. At 4 the outputs are 17 and 27. Subtracting the first expression from the second leaves 10, independent of x.",
+              "skill": "E-DIST",
+              "check": "3*4+5==17 and 3*(4+5)==27 and all(3*(x+5)-(3*x+5)==10 for x in [-2,0,4,9])",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which 5 is multiplied by 3?",
+                "expect": "17 and 27; second is always 10 greater.",
+                "if_stuck": "Write each machine’s operations in order before simplifying."
+              },
+              "visual_hint": "Two flow diagrams showing the different operation orders."
+            }
+          ],
+          "practice": [
+            {
+              "text": "A packet contains 7 cards. Write the number in p packets plus 2 loose cards; evaluate at p=6.",
+              "answer": "7p+2; 44 cards.",
+              "worked": "Multiply cards per packet by the packet count, then add loose cards.",
+              "skill": "E-EXPR",
+              "check": "7*6+2==44"
+            },
+            {
+              "text": "Evaluate 2t+7 when t=6. Show the multiplication first.",
+              "answer": "19",
+              "worked": "2×6+7=12+7=19.",
+              "skill": "E-EVAL",
+              "check": "2*6+7==19"
+            },
+            {
+              "text": "Evaluate 2²+7. Explain what the exponent means.",
+              "answer": "11",
+              "worked": "The exponent gives two equal factors: 2×2; add 7 afterward.",
+              "skill": "E-EXP",
+              "check": "2**2+7==11"
+            },
+            {
+              "text": "Expand 2(x+7) and check at x=6.",
+              "answer": "2x+14; both equal 26.",
+              "worked": "Multiply both x and 7 by 2.",
+              "skill": "E-DIST",
+              "check": "2*(6+7)==2*6+14==26"
+            },
+            {
+              "text": "Simplify 7y+2y+y. Evaluate at y=2.",
+              "answer": "10y; 20.",
+              "worked": "Add the counts of equal y terms: 7+2+1=10.",
+              "skill": "E-LIKE",
+              "check": "7*2+2*2+2==10*2==20"
+            },
+            {
+              "text": "A rectangle has height 2 and width z+7. Write its area two ways.",
+              "answer": "2(z+7)=2z+14.",
+              "worked": "Split the rectangle into widths z and 7; their areas add.",
+              "skill": "E-DIST",
+              "check": "all(2*(z+7)==2*z+14 for z in [1,3,7])"
+            },
+            {
+              "text": "Solve x+7=13. Show a change to both sides.",
+              "answer": "x=6.",
+              "worked": "Subtract 7 from each side, then check by addition.",
+              "skill": "E-ADD",
+              "check": "13-7==6 and 6+7==13"
+            },
+            {
+              "text": "Solve 2x=12. Check using multiplication.",
+              "answer": "x=6.",
+              "worked": "Divide both sides by 2; each of 2 equal groups is 6.",
+              "skill": "E-MULT",
+              "check": "F(12,2)==6 and 2*6==12"
+            },
+            {
+              "text": "Solve {2/3}x=12. Draw 3 equal parts.",
+              "answer": "x=18.",
+              "worked": "The 2 known parts total 12, so one part is 6. All 3 parts total 18.",
+              "skill": "E-MULT",
+              "check": "F(2,3)*18==12"
+            },
+            {
+              "text": "7 identical pens cost $14. Write and solve an equation for price p per pen.",
+              "answer": "7p=14; p=$2.",
+              "worked": "Divide the whole cost among 7 equal pen prices.",
+              "skill": "E-STORY",
+              "check": "F(14,7)==2"
+            },
+            {
+              "text": "Use y=2x+7 for x=0, 1, 3. Give the ordered pairs.",
+              "answer": "(0, 7), (1, 9), (3, 13).",
+              "worked": "Substitute each input, multiply by 2, and add 7.",
+              "skill": "E-RELATE",
+              "check": "[2*x+7 for x in [0,1,3]]==[7,9,13]"
+            },
+            {
+              "text": "Are 2(u+7) and 2u+7 equivalent? Test u=2 and repair the second expression.",
+              "answer": "No; 2u+14 is equivalent.",
+              "worked": "The first gives 18; the second gives 11. The constant must also be multiplied by 2.",
+              "skill": "E-DIST",
+              "check": "2*(2+7)!=2*2+7 and 2*(2+7)==2*2+14"
+            },
+            {
+              "text": "A ribbon is 3 m long. Each bow uses {7/4} m. How many complete bows can be made, and what ribbon remains?",
+              "answer": "1 bows; {5/4} m remains.",
+              "worked": "Compute 3÷{7/4}={12/7}. Use only the whole-number quotient for complete bows; subtract the ribbon used.",
+              "skill": "F-DIV",
+              "check": "divmod(F(3),F(7,4))==(1,F(5,4))"
+            },
+            {
+              "text": "Find {3/4} + {7/6}. Give an estimate first.",
+              "answer": "{23/12}",
+              "worked": "Rename in twelfths: {3/4}=9/12 and {7/6}=14/12; add and simplify.",
+              "skill": "F-ADD",
+              "check": "F(3,4)+F(7,6)==F(23,12)"
+            },
+            {
+              "text": "3 sketchbooks cost $21. What do 6 sketchbooks cost at the same price?",
+              "answer": "$42",
+              "worked": "Each costs $7; multiply by 6.",
+              "skill": "R-RATE",
+              "check": "F(21,3)*6==42"
+            },
+            {
+              "text": "A club has 80 members; 35% walk to meetings. How many walk?",
+              "answer": "28",
+              "worked": "Find 35/100 of 80: divide by 100, then multiply by 35.",
+              "skill": "P-PART",
+              "check": "F(35,100)*80==28"
+            },
+            {
+              "text": "Find 3.7 × 1.75. Explain whether the product exceeds 3.7.",
+              "answer": "{259/40}; greater",
+              "worked": "Multiply exactly; the second factor is {7/4}, which is greater than 1.",
+              "skill": "D-MULT",
+              "check": "F(37,10)*F(7,4)==F(259,40) and (F(259,40)>F(37,10))==(F(7,4)>1)"
+            },
+            {
+              "text": "A rectangle measures 3 cm by 7 cm. Find its area and perimeter.",
+              "answer": "21 square cm; 20 cm.",
+              "worked": "Area multiplies the sides; perimeter adds two of each side.",
+              "skill": "G-AREA",
+              "check": "(3*7,2*(3+7))==(21,20)"
+            },
+            {
+              "text": "Find the GCF and LCM of 6 and 9. Describe one use for each.",
+              "answer": "GCF 3; LCM 18.",
+              "worked": "The greatest shared factor is 3; the first shared positive multiple is 18. GCF can make equal groups; LCM can match repeating events.",
+              "skill": "N-GCFLCM",
+              "check": "math.gcd(6,9)==3 and math.lcm(6,9)==18"
+            },
+            {
+              "text": "A box is 3 cm by 7 cm by 2 cm. Find its volume.",
+              "answer": "42 cubic cm.",
+              "worked": "There are 21 unit cubes in one layer and 2 layers.",
+              "skill": "G-VOL",
+              "check": "3*7*2==42"
+            },
+            {
+              "text": "Compare {4/3} and {7/5} using<, =, or>. Show equivalent fractions.",
+              "answer": "{4/3} < {7/5}.",
+              "worked": "Use denominator 15: numerators are 20 and 21.",
+              "skill": "F-COMP",
+              "check": "(F(4,3)>F(7,5))==False and (F(4,3)<F(7,5))==True"
+            },
+            {
+              "text": "21 beads are split in the ratio 1: 6. Find both parts.",
+              "answer": "3 and 18 beads.",
+              "worked": "There are 7 equal ratio units; each contains 3 beads.",
+              "skill": "R-WHOLE",
+              "check": "F(21,1+6)==3 and 3+18==21"
+            },
+            {
+              "text": "Find 0.9 ÷0.3. Check by multiplication.",
+              "answer": "3",
+              "worked": "Scale both numbers by 10: 9÷3=3. Then 3×0.3=0.9.",
+              "skill": "D-DIV",
+              "check": "F(9,10)/F(3,10)==3 and 3*F(3,10)==F(9,10)"
+            }
+          ],
+          "estimated_minutes": 55
+        },
+        {
+          "weekday": "Thu",
+          "challenges": [
+            {
+              "text": "A shop has a $45.75 budget for identical folders and a $9 delivery charge. Seven folders fit the budget exactly. Find the folder price. Can the shop buy 9 folders if delivery becomes free? Show the remaining amount.",
+              "answer": "Folder price $5.25; nine cost $47.25, so no; $1.50 short.",
+              "worked": "Remove delivery: $45.75 − $9 = $36.75 for seven folders, so each costs $5.25. Nine cost $47.25. Compared with the $45.75 budget, that is $1.50 too much.",
+              "skill": "E-STORY",
+              "check": "(F(4575,100)-9)/7==F(525,100) and 9*F(525,100)==F(4725,100) and F(4725,100)-F(4575,100)==F(3,2)",
+              "challenge": true,
+              "discussion": {
+                "ask": "How can you compare the full nine-folder cost with the exact budget?",
+                "expect": "Folder price $5.25; nine cost $47.25, so no; $1.50 short.",
+                "if_stuck": "Separate delivery from folder costs before dividing by seven."
+              },
+              "visual_hint": "Budget bar $45.75 with $9 delivery and seven equal folder sections."
+            },
+            {
+              "text": "A square tile has side x cm. A border strip adds a rectangle 2 cm wide along one side. Write the total area. Compare x=1, x=3, and x=5. Do the two increases of 2 in x produce equal increases in area?",
+              "answer": "A=x²+2x; areas 3, 15, and 35 square cm; increases 12, then 20, so they are unequal.",
+              "worked": "At x=3, 9+6=15. At x=5, 25+10=35, an increase of 20. For comparison x=1 gives 3, so increasing from 1 to 3 adds 12. The square term makes equal length changes produce different area changes.",
+              "skill": "E-EXP",
+              "check": "3**2+2*3==15 and 5**2+2*5==35 and (35-15)==20 and 15-(1**2+2*1)==12",
+              "challenge": true,
+              "discussion": {
+                "ask": "Which part of the shape changes in two dimensions?",
+                "expect": "A=x²+2x; areas 3, 15, and 35 square cm; increases 12, then 20, so they are unequal.",
+                "if_stuck": "Separate the square from the narrow rectangular strip."
+              },
+              "visual_hint": "Square x byx beside a2 byx strip."
+            }
+          ],
+          "practice": [
+            {
+              "text": "A packet contains 8 cards. Write the number in p packets plus 3 loose cards; evaluate at p=7.",
+              "answer": "8p+3; 59 cards.",
+              "worked": "Multiply cards per packet by the packet count, then add loose cards.",
+              "skill": "E-EXPR",
+              "check": "8*7+3==59"
+            },
+            {
+              "text": "Evaluate 3t+8 when t=7. Show the multiplication first.",
+              "answer": "29",
+              "worked": "3×7+8=21+8=29.",
+              "skill": "E-EVAL",
+              "check": "3*7+8==29"
+            },
+            {
+              "text": "Evaluate 3²+8. Explain what the exponent means.",
+              "answer": "17",
+              "worked": "The exponent gives two equal factors: 3×3; add 8 afterward.",
+              "skill": "E-EXP",
+              "check": "3**2+8==17"
+            },
+            {
+              "text": "Expand 3(x+8) and check at x=7.",
+              "answer": "3x+24; both equal 45.",
+              "worked": "Multiply both x and 8 by 3.",
+              "skill": "E-DIST",
+              "check": "3*(7+8)==3*7+24==45"
+            },
+            {
+              "text": "Simplify 8y+3y+y. Evaluate at y=2.",
+              "answer": "12y; 24.",
+              "worked": "Add the counts of equal y terms: 8+3+1=12.",
+              "skill": "E-LIKE",
+              "check": "8*2+3*2+2==12*2==24"
+            },
+            {
+              "text": "A rectangle has height 3 and width z+8. Write its area two ways.",
+              "answer": "3(z+8)=3z+24.",
+              "worked": "Split the rectangle into widths z and 8; their areas add.",
+              "skill": "E-DIST",
+              "check": "all(3*(z+8)==3*z+24 for z in [1,3,7])"
+            },
+            {
+              "text": "Solve x+8=15. Show a change to both sides.",
+              "answer": "x=7.",
+              "worked": "Subtract 8 from each side, then check by addition.",
+              "skill": "E-ADD",
+              "check": "15-8==7 and 7+8==15"
+            },
+            {
+              "text": "Solve 3x=21. Check using multiplication.",
+              "answer": "x=7.",
+              "worked": "Divide both sides by 3; each of 3 equal groups is 7.",
+              "skill": "E-MULT",
+              "check": "F(21,3)==7 and 3*7==21"
+            },
+            {
+              "text": "Solve {3/4}x=21. Draw 4 equal parts.",
+              "answer": "x=28.",
+              "worked": "The 3 known parts total 21, so one part is 7. All 4 parts total 28.",
+              "skill": "E-MULT",
+              "check": "F(3,4)*28==21"
+            },
+            {
+              "text": "8 identical pens cost $24. Write and solve an equation for price p per pen.",
+              "answer": "8p=24; p=$3.",
+              "worked": "Divide the whole cost among 8 equal pen prices.",
+              "skill": "E-STORY",
+              "check": "F(24,8)==3"
+            },
+            {
+              "text": "Use y=3x+8 for x=0, 1, 3. Give the ordered pairs.",
+              "answer": "(0, 8), (1, 11), (3, 17).",
+              "worked": "Substitute each input, multiply by 3, and add 8.",
+              "skill": "E-RELATE",
+              "check": "[3*x+8 for x in [0,1,3]]==[8,11,17]"
+            },
+            {
+              "text": "Are 3(u+8) and 3u+8 equivalent? Test u=2 and repair the second expression.",
+              "answer": "No; 3u+24 is equivalent.",
+              "worked": "The first gives 30; the second gives 14. The constant must also be multiplied by 3.",
+              "skill": "E-DIST",
+              "check": "3*(2+8)!=3*2+8 and 3*(2+8)==3*2+24"
+            },
+            {
+              "text": "A ribbon is 4 m long. Each bow uses {3/4} m. How many complete bows can be made, and what ribbon remains?",
+              "answer": "5 bows; {1/4} m remains.",
+              "worked": "Compute 4÷{3/4}={16/3}. Use only the whole-number quotient for complete bows; subtract the ribbon used.",
+              "skill": "F-DIV",
+              "check": "divmod(F(4),F(3,4))==(5,F(1,4))"
+            },
+            {
+              "text": "Find 1 + {1/2}. Give an estimate first.",
+              "answer": "{3/2}",
+              "worked": "Rename in twelfths: 1=12/12 and {1/2}=6/12; add and simplify.",
+              "skill": "F-ADD",
+              "check": "F(1,1)+F(1,2)==F(3,2)"
+            },
+            {
+              "text": "4 sketchbooks cost $12. What do 7 sketchbooks cost at the same price?",
+              "answer": "$21",
+              "worked": "Each costs $3; multiply by 7.",
+              "skill": "R-RATE",
+              "check": "F(12,4)*7==21"
+            },
+            {
+              "text": "A club has 100 members; 15% walk to meetings. How many walk?",
+              "answer": "15",
+              "worked": "Find 15/100 of 100: divide by 100, then multiply by 15.",
+              "skill": "P-PART",
+              "check": "F(15,100)*100==15"
+            },
+            {
+              "text": "Find 4.3 × 0.75. Explain whether the product exceeds 4.3.",
+              "answer": "{129/40}; less",
+              "worked": "Multiply exactly; the second factor is {3/4}, which is less than 1.",
+              "skill": "D-MULT",
+              "check": "F(43,10)*F(3,4)==F(129,40) and (F(129,40)>F(43,10))==(F(3,4)>1)"
+            },
+            {
+              "text": "A rectangle measures 4 cm by 3 cm. Find its area and perimeter.",
+              "answer": "12 square cm; 14 cm.",
+              "worked": "Area multiplies the sides; perimeter adds two of each side.",
+              "skill": "G-AREA",
+              "check": "(4*3,2*(4+3))==(12,14)"
+            }
+          ],
+          "estimated_minutes": 45
+        },
+        {
+          "weekday": "Fri",
+          "challenges": [
+            {
+              "text": "A craft club chooses between A: $12 setup plus $3 per bracelet and B: $5 per bracelet. Find both costs for 4 and 8 bracelets. Find a number of bracelets for which the costs match and explain your reasoning.",
+              "answer": "For 4: A $24, B $20; for 8: A $36, B $40; equal at 6 bracelets, $30.",
+              "worked": "A has a $12 head start but grows $2 less per bracelet than B. Six bracelets close that $12 gap. Check 12+3×6=5×6=30. The cheaper option changes between 4 and 8.",
+              "skill": "E-RELATE",
+              "check": "[12+3*n for n in [4,8]]==[24,36] and [5*n for n in [4,8]]==[20,40] and 12+3*6==5*6==30",
+              "challenge": true,
+              "discussion": {
+                "ask": "How fast does the cost gap shrink per bracelet?",
+                "expect": "For 4: A $24, B $20; for 8: A $36, B $40; equal at 6 bracelets, $30.",
+                "if_stuck": "Make a short table and track the difference between the costs."
+              },
+              "visual_hint": "Two cost rules with table rows 4, 6, 8."
+            },
+            {
+              "text": "A student claims 2(x+5)+3x equals 7x for every x because 2+5=7. Test x=2, repair the expression, and find whether the two expressions happen to agree for any positive whole-number input.",
+              "answer": "Correct form 5x+10; at 2, 20≠14; they agree only at x=5.",
+              "worked": "Distribute first: 2x+10+3x=5x+10. At x=2 this is 20, while 7x=14. Agreement requires the extra 2x in 7x to equal 10, so x=5. One matching input does not prove equivalence.",
+              "skill": "E-DIST",
+              "check": "2*(2+5)+3*2==20 and 7*2==14 and 5*5+10==7*5==35 and all((5*x+10==7*x)==(x==5) for x in range(1,21))",
+              "challenge": true,
+              "discussion": {
+                "ask": "What is the difference between equal at one input and equivalent?",
+                "expect": "Correct form 5x+10; at 2, 20≠14; they agree only at x=5.",
+                "if_stuck": "Keep the constant 10 separate from the x terms."
+              },
+              "visual_hint": "Two expressions tested in a small table."
+            }
+          ],
+          "practice": [
+            {
+              "text": "A packet contains 9 cards. Write the number in p packets plus 4 loose cards; evaluate at p=8.",
+              "answer": "9p+4; 76 cards.",
+              "worked": "Multiply cards per packet by the packet count, then add loose cards.",
+              "skill": "E-EXPR",
+              "check": "9*8+4==76"
+            },
+            {
+              "text": "Evaluate 4t+9 when t=8. Show the multiplication first.",
+              "answer": "41",
+              "worked": "4×8+9=32+9=41.",
+              "skill": "E-EVAL",
+              "check": "4*8+9==41"
+            },
+            {
+              "text": "Evaluate 4²+9. Explain what the exponent means.",
+              "answer": "25",
+              "worked": "The exponent gives two equal factors: 4×4; add 9 afterward.",
+              "skill": "E-EXP",
+              "check": "4**2+9==25"
+            },
+            {
+              "text": "Expand 4(x+9) and check at x=8.",
+              "answer": "4x+36; both equal 68.",
+              "worked": "Multiply both x and 9 by 4.",
+              "skill": "E-DIST",
+              "check": "4*(8+9)==4*8+36==68"
+            },
+            {
+              "text": "Simplify 9y+4y+y. Evaluate at y=2.",
+              "answer": "14y; 28.",
+              "worked": "Add the counts of equal y terms: 9+4+1=14.",
+              "skill": "E-LIKE",
+              "check": "9*2+4*2+2==14*2==28"
+            },
+            {
+              "text": "A rectangle has height 4 and width z+9. Write its area two ways.",
+              "answer": "4(z+9)=4z+36.",
+              "worked": "Split the rectangle into widths z and 9; their areas add.",
+              "skill": "E-DIST",
+              "check": "all(4*(z+9)==4*z+36 for z in [1,3,7])"
+            },
+            {
+              "text": "Solve x+9=17. Show a change to both sides.",
+              "answer": "x=8.",
+              "worked": "Subtract 9 from each side, then check by addition.",
+              "skill": "E-ADD",
+              "check": "17-9==8 and 8+9==17"
+            },
+            {
+              "text": "Solve 4x=32. Check using multiplication.",
+              "answer": "x=8.",
+              "worked": "Divide both sides by 4; each of 4 equal groups is 8.",
+              "skill": "E-MULT",
+              "check": "F(32,4)==8 and 4*8==32"
+            },
+            {
+              "text": "Solve {4/5}x=32. Draw 5 equal parts.",
+              "answer": "x=40.",
+              "worked": "The 4 known parts total 32, so one part is 8. All 5 parts total 40.",
+              "skill": "E-MULT",
+              "check": "F(4,5)*40==32"
+            },
+            {
+              "text": "9 identical pens cost $36. Write and solve an equation for price p per pen.",
+              "answer": "9p=36; p=$4.",
+              "worked": "Divide the whole cost among 9 equal pen prices.",
+              "skill": "E-STORY",
+              "check": "F(36,9)==4"
+            },
+            {
+              "text": "Use y=4x+9 for x=0, 1, 3. Give the ordered pairs.",
+              "answer": "(0, 9), (1, 13), (3, 21).",
+              "worked": "Substitute each input, multiply by 4, and add 9.",
+              "skill": "E-RELATE",
+              "check": "[4*x+9 for x in [0,1,3]]==[9,13,21]"
+            },
+            {
+              "text": "Are 4(u+9) and 4u+9 equivalent? Test u=2 and repair the second expression.",
+              "answer": "No; 4u+36 is equivalent.",
+              "worked": "The first gives 44; the second gives 17. The constant must also be multiplied by 4.",
+              "skill": "E-DIST",
+              "check": "4*(2+9)!=4*2+9 and 4*(2+9)==4*2+36"
+            },
+            {
+              "text": "A ribbon is 5 m long. Each bow uses {4/4} m. How many complete bows can be made, and what ribbon remains?",
+              "answer": "5 bows; 0 m remains.",
+              "worked": "Compute 5÷1=5. Use only the whole-number quotient for complete bows; subtract the ribbon used.",
+              "skill": "F-DIV",
+              "check": "divmod(F(5),F(4,4))==(5,F(0,1))"
+            },
+            {
+              "text": "Find {5/4} + {2/3}. Give an estimate first.",
+              "answer": "{23/12}",
+              "worked": "Rename in twelfths: {5/4}=15/12 and {2/3}=8/12; add and simplify.",
+              "skill": "F-ADD",
+              "check": "F(5,4)+F(2,3)==F(23,12)"
+            },
+            {
+              "text": "5 sketchbooks cost $20. What do 8 sketchbooks cost at the same price?",
+              "answer": "$32",
+              "worked": "Each costs $4; multiply by 8.",
+              "skill": "R-RATE",
+              "check": "F(20,5)*8==32"
+            },
+            {
+              "text": "A club has 120 members; 20% walk to meetings. How many walk?",
+              "answer": "24",
+              "worked": "Find 20/100 of 120: divide by 100, then multiply by 20.",
+              "skill": "P-PART",
+              "check": "F(20,100)*120==24"
+            },
+            {
+              "text": "Find 5.4 × 1. Explain whether the product exceeds 5.4.",
+              "answer": "{27/5}; equal",
+              "worked": "Multiply exactly; the second factor is 1, which is equal to 1.",
+              "skill": "D-MULT",
+              "check": "F(27,5)*F(1,1)==F(27,5) and (F(27,5)>F(27,5))==(F(1,1)>1)"
+            },
+            {
+              "text": "A rectangle measures 5 cm by 4 cm. Find its area and perimeter.",
+              "answer": "20 square cm; 18 cm.",
+              "worked": "Area multiplies the sides; perimeter adds two of each side.",
+              "skill": "G-AREA",
+              "check": "(5*4,2*(5+4))==(20,18)"
+            }
+          ],
+          "estimated_minutes": 45
+        }
+      ],
+      "sessions": [
+        {
+          "session": 11,
+          "deepening": {
+            "title": "One rectangle, three expressions",
+            "prompt": "A rectangle has height 4 and width 2x+3. Ari writes 4(2x+3), Bo writes 8x+12, and Cy writes 8x+3. Decide which expressions match for every x. Use a split rectangle, then test x=2. Explain why testing one value can disprove a claim but cannot establish every-value equivalence.",
+            "answer": "Ari and Bo are equivalent; Cy is not. At x=2 the values are 28, 28, 19.",
+            "worked": "Split the width into 2x and 3. The pieces have areas 8x and 12, so 4(2x+3)=8x+12 for all allowed lengths. Cy counts only 3 square units in the second piece instead of 12. A mismatch disproves equivalence; a structural argument proves it.",
+            "check": "4*(2*2+3)==8*2+12==28 and 8*2+3==19",
+            "skill": "E-DIST",
+            "teacher_ask": "Which part of the rectangle accounts for the constant 12?",
+            "teacher_hint": "Trace the height 4 on both parts; do not add the labels as lengths from different directions.",
+            "visual_hint": "Rectangle height 4 split into widths 2x and 3; label piece areas only during the reveal.",
+            "model": {
+              "kind": "area",
+              "dimensions": [
+                4,
+                3
+              ],
+              "values": [
+                4,
+                3
+              ],
+              "labels": [
+                "2x",
+                "3",
+                "4"
+              ]
+            },
+            "steps": [
+              "Split the width into 2x and 3; both parts have height 4.",
+              "Their areas are 8x and 12, so 4(2x+3)=8x+12.",
+              "At x=2, Ari and Bo both give 28; Cy gives 19. A structural split explains every-value equivalence."
+            ],
+            "minutes": 8
+          },
+          "discussion_moves": [
+            "Ask the learner to explain why both terms are multiplied.",
+            "Compare a numerical check with a diagram that works for any positive x.",
+            "Invite a different split, such as x+x+3, and combine its areas."
+          ]
+        },
+        {
+          "session": 12,
+          "deepening": {
+            "title": "A solution and a changing relationship",
+            "prompt": "A pool contains 6 liters and gains 3 liters each minute. Compare the equation 6+3t=24 with the rule L=6+3t. Solve the equation, build rule outputs for t=0, 2, 6, and explain why the rule has many pairs but the equation asks for one time.",
+            "answer": "t=6; rule pairs (0, 6), (2, 12), (6, 24).",
+            "worked": "The equation fixes the final amount at 24. Subtract 6 then divide by 3 to get 6 minutes. The rule accepts each time and returns a different water amount; its graph starts above the origin at 6 liters.",
+            "check": "(24-6)/3==6 and [6+3*t for t in [0,2,6]]==[6,12,24]",
+            "skill": "E-RELATE",
+            "teacher_ask": "Which quantity is fixed in the equation and which may vary in the rule?",
+            "teacher_hint": "Cover L with 24 to turn the rule into the one-question equation.",
+            "visual_hint": "Table and first-quadrant graph of L=6+3t; highlight (6, 24).",
+            "model": {
+              "kind": "coordinate",
+              "points": [
+                [
+                  0,
+                  6
+                ],
+                [
+                  2,
+                  12
+                ],
+                [
+                  6,
+                  24
+                ]
+              ],
+              "range": [
+                0,
+                24
+              ],
+              "x_range": [
+                0,
+                6
+              ],
+              "y_range": [
+                0,
+                24
+              ],
+              "connect": true,
+              "labels": [
+                "minutes",
+                "liters"
+              ]
+            },
+            "steps": [
+              "At zero minutes the pool already has 6 liters.",
+              "The rule L=6+3t gives 6, 12, 24 liters at 0, 2, 6 minutes.",
+              "Set L=24: remove 6, then divide 18 by 3 to get 6 minutes."
+            ],
+            "minutes": 8
+          },
+          "discussion_moves": [
+            "Ask what zero minutes means in this context.",
+            "Have the student check the solved time in the original equation.",
+            "Compare the water added with the total water present."
+          ]
+        }
+      ]
+    }
+  ]
+}

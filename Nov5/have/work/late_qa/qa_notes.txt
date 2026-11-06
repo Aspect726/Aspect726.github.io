@@ -1,0 +1,26 @@
+Late curriculum QA
+- Authored work/weeks_6_10.json from work/build_weeks_6_10.py.
+- 5 weeks, 10 sessions, 124 bank items, 237 executable checks passed.
+- All late-session required structural cases represented by numbered problems.
+- Quartiles consistently use median of halves excluding odd-set middle.
+
+Slides 185-370: every slide visually reviewed via 16 contact sheets.
+Issues sent to deck author:
+- 211 plot task had completed plotted answers; blank the task graph.
+- 217 and other mixed reviews reused warm-up items; use fresh items across previous 3 weeks.
+- 284 point-reading grid should retain P,Q but avoid answer-coordinate labels.
+- 341 proportional straight line needed connected points.
+- 343 compared A/B graphs but B omitted; render second_points and lines.
+- 356 radius segment mislabeled diameter 8; draw full diameter.
+- 361 signed addition preview task revealed finish3; blank before attempt.
+- 352/368 Week10 previews should name cumulative capstone practice.
+Deck author reports all issues fixed, final rerender pending.
+
+PDF contacts 020-034: every page visually reviewed, no text clipping seen.
+Issues sent to root:
+- W08_Sat_Session page1 P2/P3 'Place' prompts printed solved points.
+- W09_All_Answers contains stale cumulative-check keys after new balanced check built.
+- Rebuild all consolidated weekly keys AFTER special checks to avoid stale copies.
+- S19.model connect:true explicitly needed in study guide, as caption removed before draw.
+- Error-item skill mappings given to root. Root reports corrected.
+- Root corrected Grade6 cumulative coverage to explicit unit balance and added stats/circle boosters.

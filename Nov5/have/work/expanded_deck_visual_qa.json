@@ -1,0 +1,28 @@
+{
+  "slides": 966,
+  "lesson_slides": 591,
+  "answer_review_slides": 375,
+  "student_answer_items": 1547,
+  "all_slides_rendered": true,
+  "render_folder": "work/expanded_deck_render",
+  "review_visual_pass": true,
+  "early_visual_pass": true,
+  "late_content_visual_pass": true,
+  "root_late_core_visual_pass": true,
+  "early_independent_checks": 15627,
+  "root_independent_checks": 12452,
+  "notes_all_sections_complete": true,
+  "session_minutes": 80,
+  "session_count": 20,
+  "hidden_tutor_slides": 20,
+  "workbook_pages": 112,
+  "updated": "2026-11-05T23:14:17.862235-08:00",
+  "last_changes": [
+    "Exact 112-page follow-along references",
+    "Visible prose-fraction spacing and grouped mixed numbers",
+    "S01:F alongside P8 with blank twelfths strips",
+    "Task-specific guided geometry and signed number line",
+    "Correct interval endpoint reveals and sparse plot labels",
+    "S20 circle wording and of-pi spacing"
+  ]
+}

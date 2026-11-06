@@ -1,0 +1,4837 @@
+{
+  "catalog": {
+    "01_Fractions": [
+      {
+        "text": "Compare {2/4} and {2/5}.",
+        "answer": "{2/4} > {2/5}",
+        "skill": "F-COMP",
+        "case": "Same numerator",
+        "check": "F(2,4)>F(2,5)",
+        "worked": "With the same numerator, the fraction with larger pieces is larger.",
+        "wrong": "{2/4} < {2/5}",
+        "error": "A larger denominator makes smaller equal parts, not a larger fraction.",
+        "session_id": 1
+      },
+      {
+        "text": "Order {2/5}, 0.45, and {1/2} from least to greatest.",
+        "answer": "{2/5}, 0.45, {1/2}",
+        "skill": "F-COMP",
+        "case": "Fractions and decimals",
+        "check": "F(2,5)<D(\"0.45\")<F(1,2)",
+        "worked": "Rename two fifths as 0.40 and one half as 0.50.",
+        "wrong": "",
+        "error": "",
+        "session_id": 1
+      },
+      {
+        "text": "Which is closer to 1: {7/8} or {4/5}?",
+        "answer": "{7/8}",
+        "skill": "F-COMP",
+        "case": "Benchmark distance",
+        "check": "1-F(7,8)<1-F(4,5)",
+        "worked": "The gaps from 1 are one eighth and one fifth. One eighth is smaller.",
+        "wrong": "",
+        "error": "",
+        "session_id": 1
+      },
+      {
+        "text": "Compare {1/3} and {1/4}.",
+        "answer": "{1/3} > {1/4}",
+        "skill": "F-COMP",
+        "case": "Same numerator",
+        "check": "F(1,3)>F(1,4)",
+        "worked": "With the same numerator, the fraction with larger pieces is larger.",
+        "wrong": "{1/3} < {1/4}",
+        "error": "A larger denominator makes smaller equal parts, not a larger fraction.",
+        "session_id": 1
+      },
+      {
+        "text": "Find {1/2} + {1/3}.",
+        "answer": "{5/6}",
+        "skill": "F-ADD",
+        "case": "Unlike denominator addition",
+        "check": "(F(1,2)+F(1,3)) == F(5,6)",
+        "worked": "Rename both fractions with a common denominator. Add the counts of equal parts.",
+        "wrong": "",
+        "error": "",
+        "session_id": 1
+      },
+      {
+        "text": "Compare {2/9} and {7/9}.",
+        "answer": "{2/9} < {7/9}",
+        "skill": "F-COMP",
+        "case": "Same denominator",
+        "check": "F(2,9)<F(7,9)",
+        "worked": "With ninths fixed, compare two parts and seven parts.",
+        "wrong": "{2/9} > {7/9}",
+        "error": "The numerator counts the parts.",
+        "session_id": 1
+      },
+      {
+        "text": "Compare {5/8} and {3/5}.",
+        "answer": "{5/8} > {3/5}",
+        "skill": "F-COMP",
+        "case": "Unlike numerator and denominator",
+        "check": "F(5,8)==F(25,40) and F(3,5)==F(24,40)",
+        "worked": "Rename as twenty-five fortieths and twenty-four fortieths.",
+        "wrong": "{5/8} < {3/5}",
+        "error": "Compare equal-sized parts, not the original denominator counts.",
+        "session_id": 1
+      },
+      {
+        "text": "Find {2/3} + {1/4}.",
+        "answer": "{11/12}",
+        "skill": "F-ADD",
+        "case": "Unlike denominator addition",
+        "check": "(F(2,3)+F(1,4)) == F(11,12)",
+        "worked": "Rename both fractions with a common denominator. Add the counts of equal parts.",
+        "wrong": "",
+        "error": "",
+        "session_id": 1
+      },
+      {
+        "text": "{1/6} + {1/4}",
+        "answer": "{5/12}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(1,6)+F(1,4)==F(\"5/12\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Compare {1/4} and {2/5}.",
+        "answer": "{1/4} < {2/5}",
+        "skill": "F-COMP",
+        "case": "F-COMP",
+        "check": "F(2,8) != F(2,5)",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{4/3} \u2212 {3/4}",
+        "answer": "{7/12}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(8,6)-F(3,4)==F(\"7/12\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{2/3} + {1/4}",
+        "answer": "{11/12}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(4,6)+F(1,4)==F(\"11/12\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Compare {5/8} and {1/5}.",
+        "answer": "{5/8} > {1/5}",
+        "skill": "F-COMP",
+        "case": "F-COMP",
+        "check": "F(5,8) != F(1,5)",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "1 \u2212 {3/4}",
+        "answer": "{1/4}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(6,6)-F(3,4)==F(\"1/4\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{1/3} + {1/4}",
+        "answer": "{7/12}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(2,6)+F(1,4)==F(\"7/12\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Compare {1/8} and {4/5}.",
+        "answer": "{1/8} < {4/5}",
+        "skill": "F-COMP",
+        "case": "F-COMP",
+        "check": "F(1,8) != F(4,5)",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{3/2} \u2212 {3/4}",
+        "answer": "{3/4}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(9,6)-F(3,4)==F(\"3/4\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{5/6} + {1/4}",
+        "answer": "{13/12}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(5,6)+F(1,4)==F(\"13/12\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Compare {1/2} and {3/5}.",
+        "answer": "{1/2} < {3/5}",
+        "skill": "F-COMP",
+        "case": "F-COMP",
+        "check": "F(4,8) != F(3,5)",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{7/6} \u2212 {3/4}",
+        "answer": "{5/12}",
+        "skill": "F-ADD",
+        "case": "F-ADD",
+        "check": "F(7,6)-F(3,4)==F(\"5/12\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "02_Fraction_Operations": [
+      {
+        "text": "Which is the reciprocal of 2 {1/2}: {2/5} or {5/2}? Explain using a product of 1.",
+        "answer": "{2/5}",
+        "skill": "F-DIV",
+        "case": "Mixed number reciprocal",
+        "check": "F(5,2)*F(2,5)==1 and F(5,2)*F(5,2)!=1",
+        "worked": "Two and one half is five halves. Five halves times two fifths equals one.",
+        "wrong": "",
+        "error": "",
+        "session_id": 8
+      },
+      {
+        "text": "Write a story for {5/6} \u00f7 {1/3}. Solve it.",
+        "answer": "2 {1/2}; stories vary",
+        "skill": "F-DIV",
+        "case": "Story writing",
+        "check": "F(5,6)/F(1,3)==F(5,2)",
+        "worked": "Example: how many one-third-meter lengths fit in five sixths meter, allowing part of a length?",
+        "wrong": "",
+        "error": "",
+        "session_id": 7
+      },
+      {
+        "text": "How many {1/3}-meter pieces fit in 2 meters?",
+        "answer": "6 pieces",
+        "skill": "F-DIV",
+        "case": "Whole number by unit fraction",
+        "check": "(2/F(1,3)) == F(6,1)",
+        "worked": "Each meter contains 3 equal pieces. Multiply by 2 meters.",
+        "wrong": "{2/3}",
+        "error": "Multiplying by the divisor answers a different question.",
+        "session_id": 2
+      },
+      {
+        "text": "Find {1/2} \u00f7 {4/5}.",
+        "answer": "{5/8}",
+        "skill": "F-DIV",
+        "case": "Quotient below one",
+        "check": "(F(1,2)/F(4,5)) == F(5,8)",
+        "worked": "The available amount is smaller than one group. Multiply by the reciprocal of the group size.",
+        "wrong": "{2/5}",
+        "error": "Multiplying by the divisor answers a different question.",
+        "session_id": 7
+      },
+      {
+        "text": "Find 3 \u00d7 {2/3}.",
+        "answer": "2",
+        "skill": "F-MULT",
+        "case": "Whole number times fraction",
+        "check": "(3*F(2,3)) == F(2,1)",
+        "worked": "Count two thirds for each whole-number group, then rename the result.",
+        "wrong": "",
+        "error": "",
+        "session_id": 2
+      },
+      {
+        "text": "Share {1/3} liter equally among 2 cups. How much per cup?",
+        "answer": "{1/6} liter",
+        "skill": "F-DIV",
+        "case": "Unit fraction by whole number",
+        "check": "(F(1,3)/2) == F(1,6)",
+        "worked": "Split the given fractional amount into the stated number of equal shares.",
+        "wrong": "{2/3}",
+        "error": "Multiplying by the divisor answers a different question.",
+        "session_id": 2
+      },
+      {
+        "text": "Find 1 {1/2} \u00f7 {3/4}.",
+        "answer": "2",
+        "skill": "F-DIV",
+        "case": "Mixed number quotient",
+        "check": "(F(3,2)/F(3,4)) == F(2,1)",
+        "worked": "Rename the mixed number as an improper fraction, then count groups of three fourths.",
+        "wrong": "1 {1/8}",
+        "error": "Multiplying by the divisor answers a different question.",
+        "session_id": 8
+      },
+      {
+        "text": "Write a story for {1/6} \u00f7 3 and solve it.",
+        "answer": "{1/18}; stories vary",
+        "skill": "F-DIV",
+        "case": "Sharing story",
+        "check": "F(1,6)/3==F(1,18)",
+        "worked": "Example: share one sixth liter equally among three cups. Each gets one eighteenth liter.",
+        "wrong": "",
+        "error": "",
+        "session_id": 2
+      },
+      {
+        "text": "Find both 4 \u00f7 {1/5} and {1/5} \u00f7 4.",
+        "answer": "20; {1/20}",
+        "skill": "F-DIV",
+        "case": "Reversed division meanings",
+        "check": "4/F(1,5)==20 and F(1,5)/4==F(1,20)",
+        "worked": "The first counts fifths in four. The second splits one fifth into four shares.",
+        "wrong": "{4/5}; {4/5}",
+        "error": "Changing the order changes what is shared or counted.",
+        "session_id": 2
+      },
+      {
+        "text": "Find 4 \u00d7 {2/3}.",
+        "answer": "2 {2/3}",
+        "skill": "F-MULT",
+        "case": "Whole number times fraction",
+        "check": "(4*F(2,3)) == F(8,3)",
+        "worked": "Count two thirds for each whole-number group, then rename the result.",
+        "wrong": "",
+        "error": "",
+        "session_id": 2
+      },
+      {
+        "text": "{2/3} \u00f7 {1/5}",
+        "answer": "{10/3}",
+        "skill": "F-DIV",
+        "case": "F-DIV",
+        "check": "F(2,3)/F(1,5)==F(\"10/3\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "1 \u00d7 {2/5}",
+        "answer": "{2/5}",
+        "skill": "F-MULT",
+        "case": "F-MULT",
+        "check": "F(3,3)*F(2,5)==F(\"2/5\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{4/3} \u00f7 {3/5}",
+        "answer": "{20/9}",
+        "skill": "F-DIV",
+        "case": "F-DIV",
+        "check": "F(4,3)/F(3,5)==F(\"20/9\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{5/3} \u00d7 {4/5}",
+        "answer": "{4/3}",
+        "skill": "F-MULT",
+        "case": "F-MULT",
+        "check": "F(5,3)*F(4,5)==F(\"4/3\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "2 \u00f7 {1/5}",
+        "answer": "10",
+        "skill": "F-DIV",
+        "case": "F-DIV",
+        "check": "F(6,3)/F(1,5)==F(\"10\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{2/3} \u00d7 {2/5}",
+        "answer": "{4/15}",
+        "skill": "F-MULT",
+        "case": "F-MULT",
+        "check": "F(2,3)*F(2,5)==F(\"4/15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "1 \u00f7 {3/5}",
+        "answer": "{5/3}",
+        "skill": "F-DIV",
+        "case": "F-DIV",
+        "check": "F(3,3)/F(3,5)==F(\"5/3\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{4/3} \u00d7 {4/5}",
+        "answer": "{16/15}",
+        "skill": "F-MULT",
+        "case": "F-MULT",
+        "check": "F(4,3)*F(4,5)==F(\"16/15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "{5/3} \u00f7 {1/5}",
+        "answer": "{25/3}",
+        "skill": "F-DIV",
+        "case": "F-DIV",
+        "check": "F(5,3)/F(1,5)==F(\"25/3\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "2 \u00d7 {2/5}",
+        "answer": "{4/5}",
+        "skill": "F-MULT",
+        "case": "F-MULT",
+        "check": "F(6,3)*F(2,5)==F(\"4/5\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "03_Decimals": [
+      {
+        "text": "Find 9.6 \u00f7 8.",
+        "answer": "1.2",
+        "skill": "D-DIV",
+        "case": "Decimal by whole number",
+        "check": "D(\"9.6\")/8==D(\"1.2\")",
+        "worked": "Ninety-six tenths shared among eight gives twelve tenths.",
+        "wrong": "",
+        "error": "",
+        "session_id": 10
+      },
+      {
+        "text": "Find 7 \u00f7 8.",
+        "answer": "0.875",
+        "skill": "D-DIV",
+        "case": "Decimal quotient",
+        "check": "(D(7)/8) == D('0.875')",
+        "worked": "Continue the long division into tenths, hundredths, and thousandths until the remainder is zero.",
+        "wrong": "",
+        "error": "",
+        "session_id": 10
+      },
+      {
+        "text": "Find 2.45 + 4.078.",
+        "answer": "6.528",
+        "skill": "D-ADD",
+        "case": "Different lengths",
+        "check": "(D(\"2.45\")+D(\"4.078\")) == D('6.528')",
+        "worked": "Line up decimal points. Add digits in the same place-value columns.",
+        "wrong": "",
+        "error": "",
+        "session_id": 9
+      },
+      {
+        "text": "Find 0.25 \u00d7 0.02.",
+        "answer": "0.0050",
+        "skill": "D-MULT",
+        "case": "Leading-zero product",
+        "check": "(D(\"0.25\")*D(\"0.02\")) == D('0.0050')",
+        "worked": "One fourth of the second factor must be smaller than it. Use this to check the decimal position.",
+        "wrong": "0.0500",
+        "error": "The decimal point is one place too far right. Check the product against both factors.",
+        "session_id": 9
+      },
+      {
+        "text": "Find 10 \u2212 2.286.",
+        "answer": "7.714",
+        "skill": "D-SUB",
+        "case": "Subtract across zeros",
+        "check": "(D(10)-D(\"2.286\")) == D('7.714')",
+        "worked": "Write 10.000 and regroup through the zero columns.",
+        "wrong": "",
+        "error": "",
+        "session_id": 9
+      },
+      {
+        "text": "Find 1.45 + 3.078.",
+        "answer": "4.528",
+        "skill": "D-ADD",
+        "case": "Different lengths",
+        "check": "(D(\"1.45\")+D(\"3.078\")) == D('4.528')",
+        "worked": "Line up decimal points. Add digits in the same place-value columns.",
+        "wrong": "",
+        "error": "",
+        "session_id": 9
+      },
+      {
+        "text": "Find 0.8 \u00d7 0.7. Is the product below both factors?",
+        "answer": "0.56; yes",
+        "skill": "D-MULT",
+        "case": "Product below both factors",
+        "check": "D(\"0.8\")*D(\"0.7\")==D(\"0.56\") and D(\"0.56\")<D(\"0.7\")<D(\"0.8\")",
+        "worked": "Eight tenths of seven tenths covers fifty-six hundredths.",
+        "wrong": "",
+        "error": "",
+        "session_id": 9
+      },
+      {
+        "text": "Find 2.8 \u00f7 0.07.",
+        "answer": "40",
+        "skill": "D-DIV",
+        "case": "Scale both numbers",
+        "check": "(D(\"2.8\")/D(\"0.07\")) == D('4E+1')",
+        "worked": "Multiply both dividend and divisor by 100, then divide by 7.",
+        "wrong": "0.4",
+        "error": "Changing only the divisor changes the quotient. Scale both quantities by 100.",
+        "session_id": 10
+      },
+      {
+        "text": "A ball costs $4.65 and a card costs $2.78. Find the change from $10.",
+        "answer": "$2.57",
+        "skill": "D-MONEY",
+        "case": "Money with two steps",
+        "check": "D(10)-D(\"4.65\")-D(\"2.78\")==D(\"2.57\")",
+        "worked": "The cost is $7.43. Subtract that from $10.00.",
+        "wrong": "",
+        "error": "",
+        "session_id": 9
+      },
+      {
+        "text": "Find 10 \u2212 1.286.",
+        "answer": "8.714",
+        "skill": "D-SUB",
+        "case": "Subtract across zeros",
+        "check": "(D(10)-D(\"1.286\")) == D('8.714')",
+        "worked": "Write 10.000 and regroup through the zero columns.",
+        "wrong": "",
+        "error": "",
+        "session_id": 9
+      },
+      {
+        "text": "2.4 + 1.75",
+        "answer": "4.15",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"2.4\")+D(\"1.75\")==D(\"4.15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "3.4 \u00d7 0.5",
+        "answer": "1.70",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"3.4\")*D(\".5\")==D(\"1.70\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "4.4 + 1.75",
+        "answer": "6.15",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"4.4\")+D(\"1.75\")==D(\"6.15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "5.4 \u00d7 0.5",
+        "answer": "2.70",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"5.4\")*D(\".5\")==D(\"2.70\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "6.4 + 1.75",
+        "answer": "8.15",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"6.4\")+D(\"1.75\")==D(\"8.15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "7.4 \u00d7 0.5",
+        "answer": "3.70",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"7.4\")*D(\".5\")==D(\"3.70\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "8.4 + 1.75",
+        "answer": "10.15",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"8.4\")+D(\"1.75\")==D(\"10.15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "9.4 \u00d7 0.5",
+        "answer": "4.70",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"9.4\")*D(\".5\")==D(\"4.70\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "10.4 + 1.75",
+        "answer": "12.15",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"10.4\")+D(\"1.75\")==D(\"12.15\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "11.4 \u00d7 0.5",
+        "answer": "5.70",
+        "skill": "D-OPS",
+        "case": "D-OPS",
+        "check": "D(\"11.4\")*D(\".5\")==D(\"5.70\")",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "04_Multi_Digit": [
+      {
+        "text": "Find 312 \u00f7 24.",
+        "answer": "13",
+        "skill": "N-DIV",
+        "case": "Two-digit divisor",
+        "check": "(F(312,24)) == F(13,1)",
+        "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+        "wrong": "",
+        "error": "",
+        "session_id": 10
+      },
+      {
+        "text": "117 \u00d7 12",
+        "answer": "1404",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "117*12==1404",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 1,344 \u00f7 32. Verify by multiplication.",
+        "answer": "42",
+        "skill": "N-DIV",
+        "case": "Four-digit by two-digit division",
+        "check": "1344//32==42 and 42*32==1344",
+        "worked": "Thirty-two times forty is 1,280. Two more groups add 64.",
+        "wrong": "",
+        "error": "",
+        "session_id": 10
+      },
+      {
+        "text": "143 \u00d7 14",
+        "answer": "2002",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "143*14==2002",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 336 \u00f7 24.",
+        "answer": "14",
+        "skill": "N-DIV",
+        "case": "Two-digit divisor",
+        "check": "(F(336,24)) == F(14,1)",
+        "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+        "wrong": "",
+        "error": "",
+        "session_id": 10
+      },
+      {
+        "text": "169 \u00d7 16",
+        "answer": "2704",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "169*16==2704",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "52 \u00f7 4",
+        "answer": "13",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "52/4==13",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "195 \u00d7 18",
+        "answer": "3510",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "195*18==3510",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "252 \u00f7 12",
+        "answer": "21",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "252/12==21",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "90 \u00f7 6",
+        "answer": "15",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "90/6==15",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 288 \u00f7 24.",
+        "answer": "12",
+        "skill": "N-DIV",
+        "case": "Two-digit divisor",
+        "check": "(F(288,24)) == F(12,1)",
+        "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+        "wrong": "",
+        "error": "",
+        "session_id": 10
+      },
+      {
+        "text": "136 \u00f7 8",
+        "answer": "17",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "136/8==17",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "190 \u00f7 10",
+        "answer": "19",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "190/10==19",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "221 \u00d7 20",
+        "answer": "4420",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "221*20==4420",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "247 \u00d7 22",
+        "answer": "5434",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "247*22==5434",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "322 \u00f7 14",
+        "answer": "23",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "322/14==23",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "273 \u00d7 24",
+        "answer": "6552",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "273*24==6552",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "400 \u00f7 16",
+        "answer": "25",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "400/16==25",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "299 \u00d7 26",
+        "answer": "7774",
+        "skill": "N-MULT",
+        "case": "N-MULT",
+        "check": "299*26==7774",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "486 \u00f7 18",
+        "answer": "27",
+        "skill": "N-DIV",
+        "case": "N-DIV",
+        "check": "486/18==27",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "05_Facts": [
+      {
+        "text": "6 \u00d7 8",
+        "answer": "48",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "6*8==48",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "48 \u00f7 6",
+        "answer": "8",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "48//6==8",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "7 \u00d7 9",
+        "answer": "63",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "7*9==63",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "63 \u00f7 7",
+        "answer": "9",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "63//7==9",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "8 \u00d7 11",
+        "answer": "88",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "8*11==88",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "88 \u00f7 8",
+        "answer": "11",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "88//8==11",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "12 \u00d7 7",
+        "answer": "84",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "12*7==84",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "84 \u00f7 12",
+        "answer": "7",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "84//12==7",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "9 \u00d7 6",
+        "answer": "54",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "9*6==54",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "54 \u00f7 9",
+        "answer": "6",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "54//9==6",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "4 \u00d7 12",
+        "answer": "48",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "4*12==48",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "48 \u00f7 4",
+        "answer": "12",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "48//4==12",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "3 \u00d7 9",
+        "answer": "27",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "3*9==27",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "27 \u00f7 3",
+        "answer": "9",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "27//3==9",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "11 \u00d7 6",
+        "answer": "66",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "11*6==66",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "66 \u00f7 11",
+        "answer": "6",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "66//11==6",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "8 \u00d7 7",
+        "answer": "56",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "8*7==56",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "56 \u00f7 8",
+        "answer": "7",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "56//8==7",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "12 \u00d7 9",
+        "answer": "108",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "12*9==108",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "108 \u00f7 12",
+        "answer": "9",
+        "skill": "N-FACT",
+        "case": "N-FACT",
+        "check": "108//12==9",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "06_Ratios": [
+      {
+        "text": "A picture shows 5 green tiles and 2 white tiles. Write green : white and white : green.",
+        "answer": "5 : 2; 2 : 5",
+        "skill": "R-RATIO",
+        "case": "Order matters",
+        "check": "F(5,2)!=F(2,5)",
+        "worked": "Keep the requested first color first.",
+        "wrong": "",
+        "error": "",
+        "session_id": 3
+      },
+      {
+        "text": "Is 6 : 10 equivalent to 9 : 15?",
+        "answer": "Yes",
+        "skill": "R-EQUIV",
+        "case": "Recognize a non-whole factor",
+        "check": "F(6,10)==F(9,15)",
+        "worked": "Multiply both numbers in 6 : 10 by one and one half.",
+        "wrong": "",
+        "error": "",
+        "session_id": 3
+      },
+      {
+        "text": "Ava changes 3 : 7 to 5 : 9. Is it the same ratio?",
+        "answer": "No",
+        "skill": "R-EQUIV",
+        "case": "Additive error analysis",
+        "check": "F(3,7)!=F(5,9)",
+        "worked": "Adding two to each count changes the relationship. Two batches would give 6 : 14.",
+        "wrong": "Yes",
+        "error": "Equal additions do not preserve a ratio.",
+        "session_id": 3
+      },
+      {
+        "text": "A team has 4 runners for every 3 walkers. There are 18 walkers. How many runners?",
+        "answer": "24 runners",
+        "skill": "R-EQUIV",
+        "case": "Missing first quantity",
+        "check": "F(18,3)*4==24",
+        "worked": "Eighteen walkers make six groups. Six groups need twenty-four runners.",
+        "wrong": "",
+        "error": "",
+        "session_id": 3
+      },
+      {
+        "text": "Red : blue is 3 : 5. How many blue tiles go with 6 red tiles?",
+        "answer": "10 blue tiles",
+        "skill": "R-EQUIV",
+        "case": "Scale up a ratio",
+        "check": "(5*2) == F(10,1)",
+        "worked": "The number of batches is 6 \u00f7 3. Multiply that count by 5.",
+        "wrong": "8 blue tiles",
+        "error": "Adding the same amount to both counts changes the ratio.",
+        "session_id": 3
+      },
+      {
+        "text": "Simplify the ratio 8 : 14 by dividing both counts by 2.",
+        "answer": "4 : 7",
+        "skill": "R-EQUIV",
+        "case": "Scale down a ratio",
+        "check": "F(8,14)==F(4,7)",
+        "worked": "Divide both counts by the same factor.",
+        "wrong": "",
+        "error": "",
+        "session_id": 3
+      },
+      {
+        "text": "A recipe uses 2 cups beans for 3 cups rice. How many cups beans go with {9/2} cups rice?",
+        "answer": "3 cups",
+        "skill": "R-EQUIV",
+        "case": "Non-whole scale factor",
+        "check": "(F(9,2)/3*2) == F(3,1)",
+        "worked": "Find the number of recipe batches by dividing the rice amount by 3. Each batch needs 2 cups beans.",
+        "wrong": "",
+        "error": "",
+        "session_id": 3
+      },
+      {
+        "text": "Red : blue is 3 : 5. How many blue tiles go with 9 red tiles?",
+        "answer": "15 blue tiles",
+        "skill": "R-EQUIV",
+        "case": "Scale up a ratio",
+        "check": "(5*3) == F(15,1)",
+        "worked": "The number of batches is 9 \u00f7 3. Multiply that count by 5.",
+        "wrong": "11 blue tiles",
+        "error": "Adding the same amount to both counts changes the ratio.",
+        "session_id": 3
+      },
+      {
+        "text": "The pairs (2, 7), (4, 14), and (6, __) have the same ratio. Complete the table.",
+        "answer": "21",
+        "skill": "R-TABLE",
+        "case": "Table missing value",
+        "check": "F(2,7)==F(4,14)==F(6,21)",
+        "worked": "Multiply both entries of the first pair by three.",
+        "wrong": "",
+        "error": "",
+        "session_id": 4
+      },
+      {
+        "text": "A double number line pairs 3 minutes with 8 laps. What pairs with 12 minutes?",
+        "answer": "32 laps",
+        "skill": "R-TABLE",
+        "case": "Double number line",
+        "check": "F(12,3)*8==32",
+        "worked": "Four jumps of three minutes match four jumps of eight laps.",
+        "wrong": "",
+        "error": "",
+        "session_id": 4
+      },
+      {
+        "text": "Plot (1, 2), (2, 4), and (4, 8). Do they lie on a line through the origin?",
+        "answer": "Yes",
+        "skill": "R-GRAPH",
+        "case": "Ratio graph",
+        "check": "all(y==2*x for x,y in [(0,0),(1,2),(2,4),(4,8)])",
+        "worked": "Every vertical value is twice the horizontal value.",
+        "wrong": "",
+        "error": "",
+        "session_id": 4
+      },
+      {
+        "text": "A mix has 5 cups oats and 3 cups seeds. What fraction of the whole is seeds?",
+        "answer": "{3/8}",
+        "skill": "R-WHOLE",
+        "case": "Part-to-whole fraction",
+        "check": "F(3,5+3)==F(3,8)",
+        "worked": "Count all eight cups before forming the fraction.",
+        "wrong": "{3/5}",
+        "error": "Five counts the other part, not the whole.",
+        "session_id": 4
+      },
+      {
+        "text": "Yellow : purple is 2 : 5. There are 21 beads. Find both counts.",
+        "answer": "6 yellow; 15 purple",
+        "skill": "R-WHOLE",
+        "case": "Part-part-whole",
+        "check": "21//7*2==6 and 21//7*5==15",
+        "worked": "Add ratio parts: 2 + 5 = 7. Divide the total by 7, then multiply each ratio part.",
+        "wrong": "",
+        "error": "",
+        "session_id": 4
+      },
+      {
+        "text": "Complete the ratio-table pair: (3, 4), (9, __).",
+        "answer": "12",
+        "skill": "R-TABLE",
+        "case": "Missing table value",
+        "check": "(4*3) == F(12,1)",
+        "worked": "Multiply both entries in the first pair by the same factor.",
+        "wrong": "",
+        "error": "",
+        "session_id": 4
+      },
+      {
+        "text": "Mix A has 2 cups juice and 3 cups water. Mix B has 3 cups juice and 5 cups water. Which has more juice for the same water?",
+        "answer": "Mix A",
+        "skill": "R-COMP",
+        "case": "Compare ratios",
+        "check": "F(2,3)>F(3,5)",
+        "worked": "Use equivalent ratios with the same water amount, then compare juice.",
+        "wrong": "Mix B",
+        "error": "Comparing only the juice counts ignores the amount of water.",
+        "session_id": 4
+      },
+      {
+        "text": "Yellow : purple is 2 : 5. There are 28 beads. Find both counts.",
+        "answer": "8 yellow; 20 purple",
+        "skill": "R-WHOLE",
+        "case": "Part-part-whole",
+        "check": "28//7*2==8 and 28//7*5==20",
+        "worked": "Add ratio parts: 2 + 5 = 7. Divide the total by 7, then multiply each ratio part.",
+        "wrong": "",
+        "error": "",
+        "session_id": 4
+      },
+      {
+        "text": "A bus covers 10 miles in 25 minutes at constant speed. How many miles in one hour?",
+        "answer": "24 miles",
+        "skill": "R-RATE",
+        "case": "Non-hour time interval",
+        "check": "F(10,25)*60==24",
+        "worked": "Five minutes corresponds to two miles. Twelve five-minute groups make 24 miles.",
+        "wrong": "",
+        "error": "",
+        "session_id": 5
+      },
+      {
+        "text": "Pack A has 4 erasers for $1.80. Pack B has 6 for $2.40. Which costs less per eraser?",
+        "answer": "Pack B: $0.40 each",
+        "skill": "R-COMP",
+        "case": "Compare unit prices",
+        "check": "D(\"1.80\")/4==D(\"0.45\") and D(\"2.40\")/6==D(\"0.40\")",
+        "worked": "Compare forty-five cents with forty cents for one eraser.",
+        "wrong": "",
+        "error": "",
+        "session_id": 5
+      },
+      {
+        "text": "A machine makes 24 labels in 6 minutes. Find labels per minute and minutes per label.",
+        "answer": "4 labels per minute; {1/4} minute per label",
+        "skill": "R-RATE",
+        "case": "Both unit-rate directions",
+        "check": "F(24,6)==4 and F(6,24)==F(1,4)",
+        "worked": "Divide labels by minutes for the first rate. Reverse for the second.",
+        "wrong": "",
+        "error": "",
+        "session_id": 5
+      },
+      {
+        "text": "A snail moves 3 centimeters each minute. Find the distance after 0, 4, and 7 minutes.",
+        "answer": "0, 12, and 21 centimeters",
+        "skill": "R-TABLE",
+        "case": "Constant-speed table",
+        "check": "[3*t for t in [0,4,7]]==[0,12,21]",
+        "worked": "Multiply each time by the unit rate. Zero time matches zero distance.",
+        "wrong": "",
+        "error": "",
+        "session_id": 5
+      }
+    ],
+    "07_Percent": [
+      {
+        "text": "Find 140% of 30 points.",
+        "answer": "42 points",
+        "skill": "P-PART",
+        "case": "Percent above one hundred",
+        "check": "(F(140,100)*30) == F(42,1)",
+        "worked": "Take all 30 points, then add forty percent, which is 12 points.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "Find 35% of 80 tiles.",
+        "answer": "28 tiles",
+        "skill": "P-PART",
+        "case": "Non-benchmark percent",
+        "check": "(F(35,100)*80) == F(28,1)",
+        "worked": "Thirty percent is 24. Five percent is 4. Add them.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "Find 12% of $15.00.",
+        "answer": "1.8000 dollars",
+        "skill": "P-PART",
+        "case": "Decimal result",
+        "check": "(D(\"0.12\")*D(\"15.00\")) == D('1.8000')",
+        "worked": "Ten percent is $1.50 and two percent is $0.30. Add them.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "Find 10%, 50%, and 75% of 40 counters.",
+        "answer": "4, 20, and 30 counters",
+        "skill": "P-PART",
+        "case": "Benchmark percents",
+        "check": "[F(p,100)*40 for p in [10,50,75]]==[4,20,30]",
+        "worked": "Use one tenth, one half, and three fourths of the whole.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "Find 25% of 24 stickers.",
+        "answer": "6 stickers",
+        "skill": "P-PART",
+        "case": "Find a percent part",
+        "check": "(F(25,100)*24) == F(6,1)",
+        "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "12 shells are 30% of a collection. Find the whole collection.",
+        "answer": "40 shells",
+        "skill": "P-WHOLE",
+        "case": "Find the whole",
+        "check": "(F(12,1)/F(30,100)) == F(40,1)",
+        "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+        "wrong": "3.60 shells",
+        "error": "Taking 30% of the known part does not recover the whole.",
+        "session_id": 6
+      },
+      {
+        "text": "9 of 12 tiles are green. What percent are green?",
+        "answer": "75 %",
+        "skill": "P-PERCENT",
+        "case": "Find the percent",
+        "check": "(F(9,12)*100) == F(75,1)",
+        "worked": "Compare the green count with the total. Rename the fraction as a rate per hundred.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "Find 25% of 32 stickers.",
+        "answer": "8 stickers",
+        "skill": "P-PART",
+        "case": "Find a percent part",
+        "check": "(F(25,100)*32) == F(8,1)",
+        "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "18 shells are 30% of a collection. Find the whole collection.",
+        "answer": "60 shells",
+        "skill": "P-WHOLE",
+        "case": "Find the whole",
+        "check": "(F(18,1)/F(30,100)) == F(60,1)",
+        "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+        "wrong": "5.40 shells",
+        "error": "Taking 30% of the known part does not recover the whole.",
+        "session_id": 6
+      },
+      {
+        "text": "12 of 16 tiles are green. What percent are green?",
+        "answer": "75 %",
+        "skill": "P-PERCENT",
+        "case": "Find the percent",
+        "check": "(F(12,16)*100) == F(75,1)",
+        "worked": "Compare the green count with the total. Rename the fraction as a rate per hundred.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "Find 25% of 40 stickers.",
+        "answer": "10 stickers",
+        "skill": "P-PART",
+        "case": "Find a percent part",
+        "check": "(F(25,100)*40) == F(10,1)",
+        "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+        "wrong": "",
+        "error": "",
+        "session_id": 6
+      },
+      {
+        "text": "24 shells are 30% of a collection. Find the whole collection.",
+        "answer": "80 shells",
+        "skill": "P-WHOLE",
+        "case": "Find the whole",
+        "check": "(F(24,1)/F(30,100)) == F(80,1)",
+        "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+        "wrong": "7.20 shells",
+        "error": "Taking 30% of the known part does not recover the whole.",
+        "session_id": 6
+      },
+      {
+        "text": "Find 10% of 20.",
+        "answer": "2",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(10,100)*20==2",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 20% of 20.",
+        "answer": "4",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(20,100)*20==4",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 30% of 20.",
+        "answer": "6",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(30,100)*20==6",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 40% of 20.",
+        "answer": "8",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(40,100)*20==8",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 50% of 20.",
+        "answer": "10",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(50,100)*20==10",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 10% of 40.",
+        "answer": "4",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(10,100)*40==4",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 20% of 40.",
+        "answer": "8",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(20,100)*40==8",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Find 30% of 40.",
+        "answer": "12",
+        "skill": "R-PERCENT",
+        "case": "R-PERCENT",
+        "check": "F(30,100)*40==12",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "08_Negatives": [
+      {
+        "text": "Order \u22127, 2, \u22121 from least to greatest.",
+        "answer": "\u22127, \u22121, 2",
+        "skill": "N-ORDER",
+        "case": "order signed integers",
+        "check": "sorted([-7, 2, -1])==[-7, -1, 2]",
+        "worked": "Read the numbers from left to right on a number line.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Order \u22124, 0, \u22129 from least to greatest.",
+        "answer": "\u22129, \u22124, 0",
+        "skill": "N-ORDER",
+        "case": "order signed integers",
+        "check": "sorted([-4, 0, -9])==[-9, -4, 0]",
+        "worked": "Read the numbers from left to right on a number line.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Order \u22123, 1, \u22126 from least to greatest.",
+        "answer": "\u22126, \u22123, 1",
+        "skill": "N-ORDER",
+        "case": "order signed integers",
+        "check": "sorted([-3, 1, -6])==[-6, -3, 1]",
+        "worked": "Read the numbers from left to right on a number line.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Order \u22122, 4, \u22125 from least to greatest.",
+        "answer": "\u22125, \u22122, 4",
+        "skill": "N-ORDER",
+        "case": "order signed integers",
+        "check": "sorted([-2, 4, -5])==[-5, -2, 4]",
+        "worked": "Read the numbers from left to right on a number line.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find |\u221212| and describe it as a distance.",
+        "answer": "12 units from zero",
+        "skill": "N-ABS",
+        "case": "absolute value as distance",
+        "check": "abs(-12)==12",
+        "worked": "Count the unit steps between the number and zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find |5| and describe it as a distance.",
+        "answer": "5 units from zero",
+        "skill": "N-ABS",
+        "case": "absolute value as distance",
+        "check": "abs(5)==5",
+        "worked": "Count the unit steps between the number and zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find |\u22123| and describe it as a distance.",
+        "answer": "3 units from zero",
+        "skill": "N-ABS",
+        "case": "absolute value as distance",
+        "check": "abs(-3)==3",
+        "worked": "Count the unit steps between the number and zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find |0| and describe it as a distance.",
+        "answer": "0 units from zero",
+        "skill": "N-ABS",
+        "case": "absolute value as distance",
+        "check": "abs(0)==0",
+        "worked": "Count the unit steps between the number and zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find the opposite of \u22126.",
+        "answer": "6",
+        "skill": "N-OPP",
+        "case": "opposite",
+        "check": "-(-6)==6",
+        "worked": "Reflect the point across zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find the opposite of 4.",
+        "answer": "\u22124",
+        "skill": "N-OPP",
+        "case": "opposite",
+        "check": "-(4)==-4",
+        "worked": "Reflect the point across zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find the opposite of \u22121.",
+        "answer": "1",
+        "skill": "N-OPP",
+        "case": "opposite",
+        "check": "-(-1)==1",
+        "worked": "Reflect the point across zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Find the opposite of 9.",
+        "answer": "\u22129",
+        "skill": "N-OPP",
+        "case": "opposite",
+        "check": "-(9)==-9",
+        "worked": "Reflect the point across zero.",
+        "wrong": "",
+        "error": "",
+        "session": 15
+      },
+      {
+        "text": "Reflect (-3, 4) across the y-axis.",
+        "answer": "(3, 4)",
+        "skill": "N-REFLECT",
+        "case": "axis reflection",
+        "check": "(3, 4)==(3, 4)",
+        "worked": "Keep the coordinate along the y-axis fixed; change the other sign.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Reflect (2, -5) across the x-axis.",
+        "answer": "(2, 5)",
+        "skill": "N-REFLECT",
+        "case": "axis reflection",
+        "check": "(2, 5)==(2, 5)",
+        "worked": "Keep the coordinate along the x-axis fixed; change the other sign.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Reflect (-4, -2) across the y-axis.",
+        "answer": "(4, \u22122)",
+        "skill": "N-REFLECT",
+        "case": "axis reflection",
+        "check": "(4, -2)==(4, -2)",
+        "worked": "Keep the coordinate along the y-axis fixed; change the other sign.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Find the distance from (-4, 2) to (3, 2).",
+        "answer": "7 units",
+        "skill": "N-DIST",
+        "case": "horizontal or vertical distance",
+        "check": "abs(3-(-4))+abs(2-(2))==7",
+        "worked": "One coordinate stays fixed. Count the gap in the other coordinate.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Find the distance from (1, -5) to (1, 4).",
+        "answer": "9 units",
+        "skill": "N-DIST",
+        "case": "horizontal or vertical distance",
+        "check": "abs(1-(1))+abs(4-(-5))==9",
+        "worked": "One coordinate stays fixed. Count the gap in the other coordinate.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Find the distance from (-2, -3) to (-2, 2).",
+        "answer": "5 units",
+        "skill": "N-DIST",
+        "case": "horizontal or vertical distance",
+        "check": "abs(-2-(-2))+abs(2-(-3))==5",
+        "worked": "One coordinate stays fixed. Count the gap in the other coordinate.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Write an inequality for x that means at least 9. Is the boundary included?",
+        "answer": "x \u2265 9; yes",
+        "skill": "E-INEQ",
+        "case": "word inequality and boundary",
+        "check": "bool(9>=9)==True",
+        "worked": "Use a closed circle if equality is allowed; otherwise use an open circle.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      },
+      {
+        "text": "Write an inequality for x that means less than 5. Is the boundary included?",
+        "answer": "x < 5; no",
+        "skill": "E-INEQ",
+        "case": "word inequality and boundary",
+        "check": "bool(5<5)==False",
+        "worked": "Use a closed circle if equality is allowed; otherwise use an open circle.",
+        "wrong": "",
+        "error": "",
+        "session": 16
+      }
+    ],
+    "09_Equations": [
+      {
+        "text": "Expand 2(x + 7).",
+        "answer": "2x + 14",
+        "skill": "E-DIST",
+        "case": "distribute both terms",
+        "check": "all(2*(x+7)==2*x+14 for x in range(10))",
+        "worked": "Multiply x and 7 by 2.",
+        "wrong": "2x + 7",
+        "error": "Multiplies only the first term.",
+        "session": 11
+      },
+      {
+        "text": "Expand 3(x + 6).",
+        "answer": "3x + 18",
+        "skill": "E-DIST",
+        "case": "distribute both terms",
+        "check": "all(3*(x+6)==3*x+18 for x in range(10))",
+        "worked": "Multiply x and 6 by 3.",
+        "wrong": "3x + 6",
+        "error": "Multiplies only the first term.",
+        "session": 11
+      },
+      {
+        "text": "Expand 4(x + 5).",
+        "answer": "4x + 20",
+        "skill": "E-DIST",
+        "case": "distribute both terms",
+        "check": "all(4*(x+5)==4*x+20 for x in range(10))",
+        "worked": "Multiply x and 5 by 4.",
+        "wrong": "4x + 5",
+        "error": "Multiplies only the first term.",
+        "session": 11
+      },
+      {
+        "text": "Find 5\u00b2. Write the repeated factors.",
+        "answer": "25",
+        "skill": "E-EXP",
+        "case": "whole-number exponent",
+        "check": "5**2==25",
+        "worked": "Multiply 2 factors of 5.",
+        "wrong": "10",
+        "error": "Multiplies the base by the exponent.",
+        "session": 11
+      },
+      {
+        "text": "Find 2\u2074. Write the repeated factors.",
+        "answer": "16",
+        "skill": "E-EXP",
+        "case": "whole-number exponent",
+        "check": "2**4==16",
+        "worked": "Multiply 4 factors of 2.",
+        "wrong": "8",
+        "error": "Multiplies the base by the exponent.",
+        "session": 11
+      },
+      {
+        "text": "Find 3\u00b2. Write the repeated factors.",
+        "answer": "9",
+        "skill": "E-EXP",
+        "case": "whole-number exponent",
+        "check": "3**2==9",
+        "worked": "Multiply 2 factors of 3.",
+        "wrong": "6",
+        "error": "Multiplies the base by the exponent.",
+        "session": 11
+      },
+      {
+        "text": "Find 4n + 3 when n = 2.",
+        "answer": "11",
+        "skill": "E-EVAL",
+        "case": "evaluate an expression",
+        "check": "4*2+3==11",
+        "worked": "4 \u00d7 2 + 3 = 11.",
+        "wrong": "",
+        "error": "",
+        "session": 11
+      },
+      {
+        "text": "Find 2n + 7 when n = 5.",
+        "answer": "17",
+        "skill": "E-EVAL",
+        "case": "evaluate an expression",
+        "check": "2*5+7==17",
+        "worked": "2 \u00d7 5 + 7 = 17.",
+        "wrong": "",
+        "error": "",
+        "session": 11
+      },
+      {
+        "text": "Find 3n + 1 when n = 4.",
+        "answer": "13",
+        "skill": "E-EVAL",
+        "case": "evaluate an expression",
+        "check": "3*4+1==13",
+        "worked": "3 \u00d7 4 + 1 = 13.",
+        "wrong": "",
+        "error": "",
+        "session": 11
+      },
+      {
+        "text": "Each pack has b beads. Write the total in 3 packs. Find it when b = 4.",
+        "answer": "3b; 12 beads",
+        "skill": "E-EXPR",
+        "case": "story to expression",
+        "check": "3*4==12",
+        "worked": "3 equal groups of b give 3b.",
+        "wrong": "",
+        "error": "",
+        "session": 11
+      },
+      {
+        "text": "Solve x + 11 = 18.",
+        "answer": "x = 7",
+        "skill": "E-ADD",
+        "case": "additive equation",
+        "check": "7+11==18",
+        "worked": "Subtract 11 from both sides.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      },
+      {
+        "text": "Solve 7x = 56.",
+        "answer": "x = 8",
+        "skill": "E-MULT",
+        "case": "whole-number multiplicative equation",
+        "check": "7*8==56",
+        "worked": "Divide both sides by 7.",
+        "wrong": "49",
+        "error": "Subtracts instead of dividing.",
+        "session": 12
+      },
+      {
+        "text": "Solve 6x = 54.",
+        "answer": "x = 9",
+        "skill": "E-MULT",
+        "case": "whole-number multiplicative equation",
+        "check": "6*9==54",
+        "worked": "Divide both sides by 6.",
+        "wrong": "48",
+        "error": "Subtracts instead of dividing.",
+        "session": 12
+      },
+      {
+        "text": "Solve 8x = 32.",
+        "answer": "x = 4",
+        "skill": "E-MULT",
+        "case": "whole-number multiplicative equation",
+        "check": "8*4==32",
+        "worked": "Divide both sides by 8.",
+        "wrong": "24",
+        "error": "Subtracts instead of dividing.",
+        "session": 12
+      },
+      {
+        "text": "Solve 1.5x = 4.80.",
+        "answer": "x = 3.2",
+        "skill": "E-MULT",
+        "case": "decimal multiplicative equation",
+        "check": "D('1.5')*D('3.2')==D('4.80')",
+        "worked": "Divide both sides by 1.5; then check the product.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      },
+      {
+        "text": "Solve 0.8x = 3.60.",
+        "answer": "x = 4.5",
+        "skill": "E-MULT",
+        "case": "decimal multiplicative equation",
+        "check": "D('0.8')*D('4.5')==D('3.60')",
+        "worked": "Divide both sides by 0.8; then check the product.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      },
+      {
+        "text": "Solve ({3/4})x = 12.",
+        "answer": "x = 16",
+        "skill": "E-MULT",
+        "case": "fractional coefficient",
+        "check": "F(3,4)*16==F(12,1)",
+        "worked": "3 equal parts total 12. Find one part, then all 4.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      },
+      {
+        "text": "Solve ({2/5})x = 10.",
+        "answer": "x = 25",
+        "skill": "E-MULT",
+        "case": "fractional coefficient",
+        "check": "F(2,5)*25==F(10,1)",
+        "worked": "2 equal parts total 10. Find one part, then all 5.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      },
+      {
+        "text": "Use y = 4x for x = 0, 2, 3. Give the ordered pairs.",
+        "answer": "(0, 0), (2, 8), (3, 12)",
+        "skill": "E-RELATE",
+        "case": "equation to table",
+        "check": "[4*x for x in [0, 2, 3]]==[0, 8, 12]",
+        "worked": "Multiply each input by 4.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      },
+      {
+        "text": "Use y = 2x for x = 1, 3, 5. Give the ordered pairs.",
+        "answer": "(1, 2), (3, 6), (5, 10)",
+        "skill": "E-RELATE",
+        "case": "equation to table",
+        "check": "[2*x for x in [1, 3, 5]]==[2, 6, 10]",
+        "worked": "Multiply each input by 2.",
+        "wrong": "",
+        "error": "",
+        "session": 12
+      }
+    ],
+    "10_Area_Volume": [
+      {
+        "text": "A rectangle is 7 cm by 3 cm. Find its area.",
+        "answer": "21 square cm",
+        "skill": "G-AREA",
+        "case": "rectangle area",
+        "check": "F(7)*F('3')==F('21')",
+        "worked": "Multiply the two perpendicular side lengths.",
+        "wrong": "",
+        "error": "",
+        "session": 13
+      },
+      {
+        "text": "A rectangle is 6 cm by {3/2} cm. Find its area.",
+        "answer": "9 square cm",
+        "skill": "G-AREA",
+        "case": "rectangle area",
+        "check": "F(6)*F('3/2')==F('9')",
+        "worked": "Multiply the two perpendicular side lengths.",
+        "wrong": "",
+        "error": "",
+        "session": 13
+      },
+      {
+        "text": "A parallelogram has base 9, height 4, and slanted side 5 cm. Find its area.",
+        "answer": "36 square cm",
+        "skill": "G-PARA",
+        "case": "perpendicular height versus slanted side",
+        "check": "9*4==36 and 5**2>4**2",
+        "worked": "Use base \u00d7 perpendicular height: 9 \u00d7 4.",
+        "wrong": "45",
+        "error": "Uses the slanted side.",
+        "session": 13
+      },
+      {
+        "text": "A parallelogram has base 8, height 3, and slanted side 5 cm. Find its area.",
+        "answer": "24 square cm",
+        "skill": "G-PARA",
+        "case": "perpendicular height versus slanted side",
+        "check": "8*3==24 and 5**2>3**2",
+        "worked": "Use base \u00d7 perpendicular height: 8 \u00d7 3.",
+        "wrong": "40",
+        "error": "Uses the slanted side.",
+        "session": 13
+      },
+      {
+        "text": "A triangle has base 9 cm and height 4 cm. Find its area.",
+        "answer": "18 square cm",
+        "skill": "G-TRI",
+        "case": "triangle area",
+        "check": "F(1,2)*9*4==18",
+        "worked": "Half of 9 \u00d7 4 is 18.",
+        "wrong": "36",
+        "error": "Omits the half.",
+        "session": 13
+      },
+      {
+        "text": "A triangle has base 7 cm and height 6 cm. Find its area.",
+        "answer": "21 square cm",
+        "skill": "G-TRI",
+        "case": "triangle area",
+        "check": "F(1,2)*7*6==21",
+        "worked": "Half of 7 \u00d7 6 is 21.",
+        "wrong": "42",
+        "error": "Omits the half.",
+        "session": 13
+      },
+      {
+        "text": "A 9 by 5 cm rectangle loses a 2 by 3 cm corner. Find the remaining area.",
+        "answer": "39 square cm",
+        "skill": "G-COMP",
+        "case": "composite area by subtraction",
+        "check": "9*5-2*3==39",
+        "worked": "Subtract the corner area from the full rectangle.",
+        "wrong": "",
+        "error": "",
+        "session": 13
+      },
+      {
+        "text": "A 7 by 6 cm rectangle loses a 2 by 2 cm corner. Find the remaining area.",
+        "answer": "38 square cm",
+        "skill": "G-COMP",
+        "case": "composite area by subtraction",
+        "check": "7*6-2*2==38",
+        "worked": "Subtract the corner area from the full rectangle.",
+        "wrong": "",
+        "error": "",
+        "session": 13
+      },
+      {
+        "text": "Find the surface area of a closed 2 by 3 by 5 cm box.",
+        "answer": "62 square cm",
+        "skill": "G-SA",
+        "case": "rectangular prism surface area",
+        "check": "2*(2*3+2*5+3*5)==62",
+        "worked": "Two faces of each type: 2 \u00d7 (6 + 10 + 15).",
+        "wrong": "30",
+        "error": "Uses volume.",
+        "session": 14
+      },
+      {
+        "text": "Find the surface area of a closed 3 by 3 by 4 cm box.",
+        "answer": "66 square cm",
+        "skill": "G-SA",
+        "case": "rectangular prism surface area",
+        "check": "2*(3*3+3*4+3*4)==66",
+        "worked": "Two faces of each type: 2 \u00d7 (9 + 12 + 12).",
+        "wrong": "36",
+        "error": "Uses volume.",
+        "session": 14
+      },
+      {
+        "text": "A prism has right-triangle ends with sides 3, 4, 5 cm and length 4 cm. Find surface area.",
+        "answer": "60 square cm",
+        "skill": "G-SA",
+        "case": "triangular prism surface area",
+        "check": "2*F(1,2)*3*4+4*(3+4+5)==60",
+        "worked": "Two ends give 12 square cm. The three rectangles give 48.",
+        "wrong": "54",
+        "error": "Omits one triangular end.",
+        "session": 14
+      },
+      {
+        "text": "A prism has right-triangle ends with sides 3, 4, 5 cm and length 6 cm. Find surface area.",
+        "answer": "84 square cm",
+        "skill": "G-SA",
+        "case": "triangular prism surface area",
+        "check": "2*F(1,2)*3*4+6*(3+4+5)==84",
+        "worked": "Two ends give 12 square cm. The three rectangles give 72.",
+        "wrong": "78",
+        "error": "Omits one triangular end.",
+        "session": 14
+      },
+      {
+        "text": "A square pyramid has base side 4 cm and triangular-face height 3 cm. Find surface area.",
+        "answer": "40 square cm",
+        "skill": "G-SA",
+        "case": "square pyramid surface area",
+        "check": "4**2+4*F(1,2)*4*3==40 and 3**2>F(4,2)**2",
+        "worked": "Add the square base and four half-base-times-height triangles.",
+        "wrong": "",
+        "error": "",
+        "session": 14
+      },
+      {
+        "text": "A square pyramid has base side 6 cm and triangular-face height 5 cm. Find surface area.",
+        "answer": "96 square cm",
+        "skill": "G-SA",
+        "case": "square pyramid surface area",
+        "check": "6**2+4*F(1,2)*6*5==96 and 5**2>F(6,2)**2",
+        "worked": "Add the square base and four half-base-times-height triangles.",
+        "wrong": "",
+        "error": "",
+        "session": 14
+      },
+      {
+        "text": "A closed cube has side 2 cm. Jo counts five faces and gets 20 square cm. Repair the total.",
+        "answer": "24 square cm",
+        "skill": "G-SA",
+        "case": "missing face error",
+        "check": "6*2**2==24",
+        "worked": "Six faces are needed. Each has area 4.",
+        "wrong": "20",
+        "error": "Leaves out the hidden face.",
+        "session": 14
+      },
+      {
+        "text": "A closed cube has side 4 cm. Jo counts five faces and gets 80 square cm. Repair the total.",
+        "answer": "96 square cm",
+        "skill": "G-SA",
+        "case": "missing face error",
+        "check": "6*4**2==96",
+        "worked": "Six faces are needed. Each has area 16.",
+        "wrong": "80",
+        "error": "Leaves out the hidden face.",
+        "session": 14
+      },
+      {
+        "text": "A box has edges {1/2}, {2/3}, and 2 meters. Find the volume.",
+        "answer": "{2/3} cubic meters",
+        "skill": "G-VOL",
+        "case": "Fractional-edge volume",
+        "check": "(F(1,2)*F(2,3)*2) == F(2,3)",
+        "worked": "Multiply the three edge lengths. Track the three length units as cubic meters.",
+        "wrong": "",
+        "error": "",
+        "session_id": 8
+      },
+      {
+        "text": "A box has edges {1/2}, {2/3}, and 3 meters. Find the volume.",
+        "answer": "1 cubic meters",
+        "skill": "G-VOL",
+        "case": "Fractional-edge volume",
+        "check": "(F(1,2)*F(2,3)*3) == F(1,1)",
+        "worked": "Multiply the three edge lengths. Track the three length units as cubic meters.",
+        "wrong": "",
+        "error": "",
+        "session_id": 8
+      },
+      {
+        "text": "A rectangle has sides 3 cm and 4 cm. Find its area.",
+        "answer": "12 cm\u00b2",
+        "skill": "G-AREA",
+        "case": "G-AREA",
+        "check": "3*4==12",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "A rectangle has sides 5 cm and 4 cm. Find its area.",
+        "answer": "20 cm\u00b2",
+        "skill": "G-AREA",
+        "case": "G-AREA",
+        "check": "5*4==20",
+        "worked": "",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "11_Puzzles": [
+      {
+        "text": "A card shows a fraction. Its denominator is 8. It lies between {1/2} and {3/4}. What fraction is on the card?",
+        "answer": "{5/8}",
+        "skill": "PUZZLE",
+        "case": "Fraction between benchmarks",
+        "check": "[n for n in range(1,8) if F(1,2)<F(n,8)<F(3,4)]==[5]",
+        "worked": "Half is four eighths and three fourths is six eighths. Only five eighths lies strictly between them.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "A tile bag has red : blue = 3 : 2. The total is greater than 20 and less than 30. How many of each color?",
+        "answer": "15 red and 10 blue",
+        "skill": "PUZZLE",
+        "case": "Ratio and total constraint",
+        "check": "[(3*k,2*k) for k in range(1,10) if 20<5*k<30]==[(15,10)]",
+        "worked": "One batch contains five tiles. The only multiple of five strictly between 20 and 30 is 25.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "A mystery number has this property: 25% of it is 6 more than 10% of it. Find the number.",
+        "answer": "40",
+        "skill": "PUZZLE",
+        "case": "Difference of percent parts",
+        "check": "F(25,100)*40-F(10,100)*40==6 and F(6,1)/(F(25,100)-F(10,100))==40",
+        "worked": "The gap is 15%, which equals 6. Five percent is 2, so 100% is 40.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "A jug holds 2 liters. You have {1/3}-liter and {1/2}-liter scoops. Use both sizes and exactly five full scoops to fill it. How many of each?",
+        "answer": "3 one-third-liter scoops and 2 half-liter scoops",
+        "skill": "PUZZLE",
+        "case": "Fraction combination",
+        "check": "[(a,b) for a in range(1,5) for b in range(1,5) if a+b==5 and a*F(1,3)+b*F(1,2)==2]==[(3,2)]",
+        "worked": "Try five thirds first: {5/3} liters. Replacing a third with a half adds {1/6} liter. Two replacements fill the missing third.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Use digits 2, 4, and 8 once each in the form A.BC. Which number is closest to 5?",
+        "answer": "4.82",
+        "skill": "PUZZLE",
+        "case": "Place-value reasoning",
+        "check": "min([D(\"2.48\"),D(\"2.84\"),D(\"4.28\"),D(\"4.82\"),D(\"8.24\"),D(\"8.42\")],key=lambda x:abs(x-5))==D(\"4.82\")",
+        "worked": "A ones digit of 4 places the number nearest 5. Among 4.28 and 4.82, the larger is nearer to 5.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Two whole numbers total 17. One is 5 more than the other. Find both numbers and show a way to check.",
+        "answer": "6 and 11",
+        "skill": "E-STORY",
+        "case": "reasoning puzzle with sum and difference",
+        "check": "[(a,17-a) for a in range(18) if (17-a)-a==5]==[(6,11)]",
+        "worked": "Remove the extra 5: 17 \u2212 5 = 12. Split the rest equally: 6 and 6. Restore 5 to one number.",
+        "wrong": "5 and 12",
+        "error": "Uses the difference as one of the numbers."
+      },
+      {
+        "text": "A rectangle has whole-number side lengths, perimeter 24 cm, and area 35 square cm. Find its side lengths.",
+        "answer": "5 cm and 7 cm",
+        "skill": "G-AREA",
+        "case": "area and perimeter reasoning",
+        "check": "[(a,b) for a in range(1,13) for b in range(a,13) if 2*(a+b)==24 and a*b==35]==[(5,7)]",
+        "worked": "The sides sum to 12. Test factor pairs of 35: 1 and 35 fail; 5 and 7 sum to 12.",
+        "wrong": "3 cm and 8 cm",
+        "error": "Checks neither condition completely."
+      },
+      {
+        "text": "A point lies left of the y-axis and above the x-axis. It is 3 units from the y-axis and 2 from the x-axis. Find it, then reflect it across both axes in turn.",
+        "answer": "Start (\u22123, 2); after y-axis (3, 2); after x-axis (3, \u22122)",
+        "skill": "N-REFLECT",
+        "case": "coordinate reasoning puzzle",
+        "check": "(-3,2)==(-abs(3),abs(2)) and (-(-3),-(2))==(3,-2)",
+        "worked": "The vertical axis measures horizontal distance. The horizontal axis measures vertical distance. Each reflection changes one sign.",
+        "wrong": "(\u22122, 3)",
+        "error": "Swaps the distances to the axes."
+      },
+      {
+        "text": "Find two sets of five different whole numbers with minimum 2, maximum 12, median 5, and mean 6.",
+        "answer": "2, 3, 5, 8, 12 and 2, 4, 5, 7, 12",
+        "skill": "S-MEAN",
+        "case": "data constraints puzzle",
+        "check": "[(2,a,5,b,12) for a in range(3,5) for b in range(6,12) if 2+a+5+b+12==30]==[(2,3,5,8,12),(2,4,5,7,12)]",
+        "worked": "The total must be 30. Known values 2, 5, 12 total 19. The remaining values must total 11, with one below 5 and one above.",
+        "wrong": "2, 5, 5, 6, 12",
+        "error": "Repeats a number despite the distinct-value condition."
+      },
+      {
+        "text": "A garden is 3 cm by 4 cm on a map where 1 cm means 10 m. Redraw it where 1 cm means 20 m. Find the new drawing dimensions and the actual garden area.",
+        "answer": "New drawing: 1.5 cm by 2 cm. Actual area: 1,200 square m.",
+        "skill": "P-SCALE",
+        "case": "scale and area capstone",
+        "check": "F(3*10,20)==F(3,2) and F(4*10,20)==2 and (3*10)*(4*10)==1200",
+        "worked": "The garden is 30 m by 40 m. Divide those lengths by 20 for the new drawing. The garden itself stays the same.",
+        "wrong": "600 square m",
+        "error": "Changes the actual area when only the drawing scale changes."
+      },
+      {
+        "text": "Three consecutive whole numbers add to 15. Find them.",
+        "answer": "4, 5, 6",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "4+5+6==15",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 18. Find them.",
+        "answer": "5, 6, 7",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "5+6+7==18",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 21. Find them.",
+        "answer": "6, 7, 8",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "6+7+8==21",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 24. Find them.",
+        "answer": "7, 8, 9",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "7+8+9==24",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 27. Find them.",
+        "answer": "8, 9, 10",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "8+9+10==27",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 30. Find them.",
+        "answer": "9, 10, 11",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "9+10+11==30",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 33. Find them.",
+        "answer": "10, 11, 12",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "10+11+12==33",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 36. Find them.",
+        "answer": "11, 12, 13",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "11+12+13==36",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 39. Find them.",
+        "answer": "12, 13, 14",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "12+13+14==39",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      },
+      {
+        "text": "Three consecutive whole numbers add to 42. Find them.",
+        "answer": "13, 14, 15",
+        "skill": "P-LOGIC",
+        "case": "P-LOGIC",
+        "check": "13+14+15==42",
+        "worked": "The middle number is one third of the sum.",
+        "wrong": "",
+        "error": ""
+      }
+    ],
+    "12_Statistics": [
+      {
+        "text": "Find the mean of 2, 3, 7, 8.",
+        "answer": "5",
+        "skill": "S-MEAN",
+        "case": "mean",
+        "check": "F(sum([2, 3, 7, 8]),len([2, 3, 7, 8]))==F('5')",
+        "worked": "Total 20 divided by 4 values gives 5.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Find the mean of 1, 4, 5, 6.",
+        "answer": "4",
+        "skill": "S-MEAN",
+        "case": "mean",
+        "check": "F(sum([1, 4, 5, 6]),len([1, 4, 5, 6]))==F('4')",
+        "worked": "Total 16 divided by 4 values gives 4.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Find the mean of 3, 5, 6, 10.",
+        "answer": "6",
+        "skill": "S-MEAN",
+        "case": "mean",
+        "check": "F(sum([3, 5, 6, 10]),len([3, 5, 6, 10]))==F('6')",
+        "worked": "Total 24 divided by 4 values gives 6.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Find the median of 9, 1, 5, 3, 7.",
+        "answer": "5",
+        "skill": "S-MEDIAN",
+        "case": "median after ordering",
+        "check": "F(statistics.median([9, 1, 5, 3, 7]))==F('5')",
+        "worked": "Order: 1, 3, 5, 7, 9. Use the middle value or mean of two middles.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Find the median of 8, 2, 4, 6.",
+        "answer": "5",
+        "skill": "S-MEDIAN",
+        "case": "median after ordering",
+        "check": "F(statistics.median([8, 2, 4, 6]))==F('5')",
+        "worked": "Order: 2, 4, 6, 8. Use the middle value or mean of two middles.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Find the median of 10, 3, 5, 7, 2, 9.",
+        "answer": "6",
+        "skill": "S-MEDIAN",
+        "case": "median after ordering",
+        "check": "F(statistics.median([10, 3, 5, 7, 2, 9]))==F('6')",
+        "worked": "Order: 2, 3, 5, 7, 9, 10. Use the middle value or mean of two middles.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Four scores have mean 5. Three are 2, 4, 7. Find the fourth.",
+        "answer": "7",
+        "skill": "S-MEAN",
+        "case": "missing value for given mean",
+        "check": "F(sum([2, 4, 7])+7,4)==5",
+        "worked": "The total is 20; subtract the known total 13.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Four scores have mean 6. Three are 3, 6, 8. Find the fourth.",
+        "answer": "7",
+        "skill": "S-MEAN",
+        "case": "missing value for given mean",
+        "check": "F(sum([3, 6, 8])+7,4)==6",
+        "worked": "The total is 24; subtract the known total 17.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Four scores have mean 7. Three are 4, 5, 9. Find the fourth.",
+        "answer": "10",
+        "skill": "S-MEAN",
+        "case": "missing value for given mean",
+        "check": "F(sum([4, 5, 9])+10,4)==7",
+        "worked": "The total is 28; subtract the known total 18.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Data are 1, 1, 2, 3, 3, 3, 4. How many dots belong above 3 in a dot plot?",
+        "answer": "3",
+        "skill": "S-DISPLAY",
+        "case": "frequency in a dot plot",
+        "check": "[1, 1, 2, 3, 3, 3, 4].count(3)==3",
+        "worked": "Count every occurrence of 3.",
+        "wrong": "",
+        "error": "",
+        "session": 17
+      },
+      {
+        "text": "Find the range of 2, 5, 8, 11.",
+        "answer": "9",
+        "skill": "S-RANGE",
+        "case": "range",
+        "check": "max([2, 5, 8, 11])-min([2, 5, 8, 11])==9",
+        "worked": "11 \u2212 2 = 9.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      },
+      {
+        "text": "Find the range of 3, 4, 6, 9, 15.",
+        "answer": "12",
+        "skill": "S-RANGE",
+        "case": "range",
+        "check": "max([3, 4, 6, 9, 15])-min([3, 4, 6, 9, 15])==12",
+        "worked": "15 \u2212 3 = 12.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      },
+      {
+        "text": "Find the range of 0, 2, 5, 10.",
+        "answer": "10",
+        "skill": "S-RANGE",
+        "case": "range",
+        "check": "max([0, 2, 5, 10])-min([0, 2, 5, 10])==10",
+        "worked": "10 \u2212 0 = 10.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      },
+      {
+        "text": "Find Q1, Q3, and IQR for 1, 2, 4, 5, 7, 8, 10, 11. Exclude the median if the count is odd.",
+        "answer": "Q1 3.0; Q3 9.0; IQR 6",
+        "skill": "S-IQR",
+        "case": "quartiles and IQR",
+        "check": "F(statistics.median([1, 2, 4, 5]))==F('3.0') and F(statistics.median([7, 8, 10, 11]))==F('9.0') and F('9.0')-F('3.0')==F('6')",
+        "worked": "Split the ordered list into equal-count halves. Subtract the two half-medians.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      },
+      {
+        "text": "Find Q1, Q3, and IQR for 2, 3, 5, 6, 8, 10, 12. Exclude the median if the count is odd.",
+        "answer": "Q1 3; Q3 10; IQR 7",
+        "skill": "S-IQR",
+        "case": "quartiles and IQR",
+        "check": "F(statistics.median([2, 3, 5]))==F('3') and F(statistics.median([8, 10, 12]))==F('10') and F('10')-F('3')==F('7')",
+        "worked": "Split the ordered list into equal-count halves. Subtract the two half-medians.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      },
+      {
+        "text": "Find Q1, Q3, and IQR for 0, 2, 3, 5, 7, 9, 10, 12. Exclude the median if the count is odd.",
+        "answer": "Q1 2.5; Q3 9.5; IQR 7",
+        "skill": "S-IQR",
+        "case": "quartiles and IQR",
+        "check": "F(statistics.median([0, 2, 3, 5]))==F('2.5') and F(statistics.median([7, 9, 10, 12]))==F('9.5') and F('9.5')-F('2.5')==F('7')",
+        "worked": "Split the ordered list into equal-count halves. Subtract the two half-medians.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      },
+      {
+        "text": "Find the MAD of 1, 3, 5, 7.",
+        "answer": "2",
+        "skill": "S-MAD",
+        "case": "mean absolute deviation",
+        "check": "sum(abs(F(x)-F('4')) for x in [1, 3, 5, 7])/len([1, 3, 5, 7])==F('2')",
+        "worked": "Mean 4. Average the distances from 4.",
+        "wrong": "0",
+        "error": "Averages signed differences instead of distances.",
+        "session": 18
+      },
+      {
+        "text": "Find the MAD of 2, 5, 5, 8.",
+        "answer": "{3/2}",
+        "skill": "S-MAD",
+        "case": "mean absolute deviation",
+        "check": "sum(abs(F(x)-F('5')) for x in [2, 5, 5, 8])/len([2, 5, 5, 8])==F('3/2')",
+        "worked": "Mean 5. Average the distances from 5.",
+        "wrong": "0",
+        "error": "Averages signed differences instead of distances.",
+        "session": 18
+      },
+      {
+        "text": "Find the MAD of 3, 3, 9, 9.",
+        "answer": "3",
+        "skill": "S-MAD",
+        "case": "mean absolute deviation",
+        "check": "sum(abs(F(x)-F('6')) for x in [3, 3, 9, 9])/len([3, 3, 9, 9])==F('3')",
+        "worked": "Mean 6. Average the distances from 6.",
+        "wrong": "0",
+        "error": "Averages signed differences instead of distances.",
+        "session": 18
+      },
+      {
+        "text": "A: 3, 4, 5. B: 1, 4, 7. Compare their means and ranges.",
+        "answer": "Both means 4. Range A 2; range B 6. B is more spread out.",
+        "skill": "S-SPREAD",
+        "case": "same center; compare spread",
+        "check": "statistics.mean([3, 4, 5])==statistics.mean([1, 4, 7])==4 and max([3, 4, 5])-min([3, 4, 5])==2 and max([1, 4, 7])-min([1, 4, 7])==6",
+        "worked": "Find the center, then compare the endpoint gaps.",
+        "wrong": "",
+        "error": "",
+        "session": 18
+      }
+    ],
+    "13_Scale_and_Circles": [
+      {
+        "text": "A 3 by 4 cm rectangle is copied with scale factor 2. Find the new side lengths.",
+        "answer": "6 cm and 8 cm",
+        "skill": "P-SCALE",
+        "case": "scaled side lengths",
+        "check": "3*F('2')==F('6') and 4*F('2')==F('8')",
+        "worked": "Multiply both lengths by the same factor.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A 5 by 6 cm rectangle is copied with scale factor 3. Find the new side lengths.",
+        "answer": "15 cm and 18 cm",
+        "skill": "P-SCALE",
+        "case": "scaled side lengths",
+        "check": "5*F('3')==F('15') and 6*F('3')==F('18')",
+        "worked": "Multiply both lengths by the same factor.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A 8 by 12 cm rectangle is copied with scale factor {1/2}. Find the new side lengths.",
+        "answer": "4 cm and 6 cm",
+        "skill": "P-SCALE",
+        "case": "scaled side lengths",
+        "check": "8*F('1/2')==F('4') and 12*F('1/2')==F('6')",
+        "worked": "Multiply both lengths by the same factor.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A map uses 1 cm for 20 km. A route is 4 cm long. Find the actual distance.",
+        "answer": "80 km",
+        "skill": "P-MAP",
+        "case": "map scale",
+        "check": "20*4==80",
+        "worked": "4 map centimeters represent 4 groups of 20 km.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A map uses 1 cm for 30 km. A route is 3 cm long. Find the actual distance.",
+        "answer": "90 km",
+        "skill": "P-MAP",
+        "case": "map scale",
+        "check": "30*3==90",
+        "worked": "3 map centimeters represent 3 groups of 30 km.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A map uses 1 cm for 50 km. A route is 2 cm long. Find the actual distance.",
+        "answer": "100 km",
+        "skill": "P-MAP",
+        "case": "map scale",
+        "check": "50*2==100",
+        "worked": "2 map centimeters represent 2 groups of 50 km.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A shape has area 6 square cm. All lengths scale by 2. Find the new area.",
+        "answer": "24 square cm",
+        "skill": "P-SCALE",
+        "case": "area factor squared",
+        "check": "6*F('2')**2==F('24')",
+        "worked": "Multiply area by the square of the scale factor.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A shape has area 8 square cm. All lengths scale by 3. Find the new area.",
+        "answer": "72 square cm",
+        "skill": "P-SCALE",
+        "case": "area factor squared",
+        "check": "8*F('3')**2==F('72')",
+        "worked": "Multiply area by the square of the scale factor.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A shape has area 20 square cm. All lengths scale by {1/2}. Find the new area.",
+        "answer": "5 square cm",
+        "skill": "P-SCALE",
+        "case": "area factor squared",
+        "check": "20*F('1/2')**2==F('5')",
+        "worked": "Multiply area by the square of the scale factor.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A proportional table contains (4, 12). Find k in y = kx.",
+        "answer": "k = 3",
+        "skill": "P-PROP",
+        "case": "constant of proportionality",
+        "check": "F('12')/4==F('3')",
+        "worked": "Divide the output by the input.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A proportional table contains (6, 9). Find k in y = kx.",
+        "answer": "k = 1.5",
+        "skill": "P-PROP",
+        "case": "constant of proportionality",
+        "check": "F('9')/6==F('3/2')",
+        "worked": "Divide the output by the input.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A proportional table contains (4, 10). Find k in y = kx.",
+        "answer": "k = 2.5",
+        "skill": "P-PROP",
+        "case": "constant of proportionality",
+        "check": "F('10')/4==F('5/2')",
+        "worked": "Divide the output by the input.",
+        "wrong": "",
+        "error": "",
+        "session": 19
+      },
+      {
+        "text": "A circle has diameter 3 cm. Find circumference exactly and using 3.14.",
+        "answer": "3\u03c0 cm; about 9.42 cm",
+        "skill": "G-CIRCLE",
+        "case": "circumference from diameter",
+        "check": "D(3)*D('3.14')==D('9.42')",
+        "worked": "Use C = \u03c0d.",
+        "wrong": "",
+        "error": "",
+        "session": 20
+      },
+      {
+        "text": "A circle has radius 2 cm. Find circumference exactly and using 3.14.",
+        "answer": "4\u03c0 cm; about 12.56 cm",
+        "skill": "G-CIRCLE",
+        "case": "circumference from radius",
+        "check": "2*2==4 and D(4)*D('3.14')==D('12.56')",
+        "worked": "Double the radius for the diameter, then multiply by \u03c0.",
+        "wrong": "",
+        "error": "",
+        "session": 20
+      },
+      {
+        "text": "A circle has radius 2 cm. Find area exactly and using 3.14.",
+        "answer": "4\u03c0 square cm; about 12.56 square cm",
+        "skill": "G-CIRCLE",
+        "case": "area from radius",
+        "check": "2**2==4 and D(4)*D('3.14')==D('12.56')",
+        "worked": "Square the radius, then multiply by \u03c0.",
+        "wrong": "",
+        "error": "",
+        "session": 20
+      },
+      {
+        "text": "A circle has diameter 4 cm. Find area exactly and using 3.14.",
+        "answer": "4\u03c0 square cm; about 12.56 square cm",
+        "skill": "G-CIRCLE",
+        "case": "area from diameter",
+        "check": "4//2==2 and 2**2==4 and D(4)*D('3.14')==D('12.56')",
+        "worked": "Halve the diameter, square the radius, then multiply by \u03c0.",
+        "wrong": "16\u03c0 square cm",
+        "error": "Squares the diameter.",
+        "session": 20
+      },
+      {
+        "text": "A circle has diameter 5 cm. Find circumference exactly and using 3.14.",
+        "answer": "5\u03c0 cm; about 15.70 cm",
+        "skill": "G-CIRCLE",
+        "case": "circumference from diameter",
+        "check": "D(5)*D('3.14')==D('15.70')",
+        "worked": "Use C = \u03c0d.",
+        "wrong": "",
+        "error": "",
+        "session": 20
+      },
+      {
+        "text": "A circle has radius 5 cm. Find circumference exactly and using 3.14.",
+        "answer": "10\u03c0 cm; about 31.40 cm",
+        "skill": "G-CIRCLE",
+        "case": "circumference from radius",
+        "check": "2*5==10 and D(10)*D('3.14')==D('31.40')",
+        "worked": "Double the radius for the diameter, then multiply by \u03c0.",
+        "wrong": "",
+        "error": "",
+        "session": 20
+      },
+      {
+        "text": "A circle has radius 3 cm. Find area exactly and using 3.14.",
+        "answer": "9\u03c0 square cm; about 28.26 square cm",
+        "skill": "G-CIRCLE",
+        "case": "area from radius",
+        "check": "3**2==9 and D(9)*D('3.14')==D('28.26')",
+        "worked": "Square the radius, then multiply by \u03c0.",
+        "wrong": "",
+        "error": "",
+        "session": 20
+      },
+      {
+        "text": "A circle has diameter 8 cm. Find area exactly and using 3.14.",
+        "answer": "16\u03c0 square cm; about 50.24 square cm",
+        "skill": "G-CIRCLE",
+        "case": "area from diameter",
+        "check": "8//2==4 and 4**2==16 and D(16)*D('3.14')==D('50.24')",
+        "worked": "Halve the diameter, square the radius, then multiply by \u03c0.",
+        "wrong": "64\u03c0 square cm",
+        "error": "Squares the diameter.",
+        "session": 20
+      }
+    ]
+  },
+  "labels": {
+    "01_Fractions": "Fractions: compare and combine",
+    "02_Fraction_Operations": "Fraction operations",
+    "03_Decimals": "Decimal practice",
+    "04_Multi_Digit": "Multiplication and long division",
+    "05_Facts": "Multiplication and division facts",
+    "06_Ratios": "Ratios and rates",
+    "07_Percent": "Percent practice",
+    "08_Negatives": "Number lines and coordinates",
+    "09_Equations": "Expressions and equations",
+    "10_Area_Volume": "Area, surface area and volume",
+    "11_Puzzles": "Weekly puzzle",
+    "12_Statistics": "Data and statistics",
+    "13_Scale_and_Circles": "Scale, proportion and circles"
+  },
+  "placements": [
+    {
+      "week": 1,
+      "weekday": "Mon",
+      "set_id": "01_Fractions",
+      "label": "Fractions: compare and combine",
+      "indices": [
+        5,
+        0,
+        1,
+        6
+      ],
+      "problems": [
+        {
+          "text": "Compare {2/9} and {7/9}.",
+          "answer": "{2/9} < {7/9}",
+          "skill": "F-COMP",
+          "case": "Same denominator",
+          "check": "F(2,9)<F(7,9)",
+          "worked": "With ninths fixed, compare two parts and seven parts.",
+          "wrong": "{2/9} > {7/9}",
+          "error": "The numerator counts the parts.",
+          "session_id": 1
+        },
+        {
+          "text": "Compare {2/4} and {2/5}.",
+          "answer": "{2/4} > {2/5}",
+          "skill": "F-COMP",
+          "case": "Same numerator",
+          "check": "F(2,4)>F(2,5)",
+          "worked": "With the same numerator, the fraction with larger pieces is larger.",
+          "wrong": "{2/4} < {2/5}",
+          "error": "A larger denominator makes smaller equal parts, not a larger fraction.",
+          "session_id": 1
+        },
+        {
+          "text": "Order {2/5}, 0.45, and {1/2} from least to greatest.",
+          "answer": "{2/5}, 0.45, {1/2}",
+          "skill": "F-COMP",
+          "case": "Fractions and decimals",
+          "check": "F(2,5)<D(\"0.45\")<F(1,2)",
+          "worked": "Rename two fifths as 0.40 and one half as 0.50.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Compare {5/8} and {3/5}.",
+          "answer": "{5/8} > {3/5}",
+          "skill": "F-COMP",
+          "case": "Unlike numerator and denominator",
+          "check": "F(5,8)==F(25,40) and F(3,5)==F(24,40)",
+          "worked": "Rename as twenty-five fortieths and twenty-four fortieths.",
+          "wrong": "{5/8} < {3/5}",
+          "error": "Compare equal-sized parts, not the original denominator counts.",
+          "session_id": 1
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 1,
+      "weekday": "Tue",
+      "set_id": "02_Fraction_Operations",
+      "label": "Fraction operations",
+      "indices": [
+        4,
+        15,
+        2,
+        5
+      ],
+      "problems": [
+        {
+          "text": "Find 3 \u00d7 {2/3}.",
+          "answer": "2",
+          "skill": "F-MULT",
+          "case": "Whole number times fraction",
+          "check": "(3*F(2,3)) == F(2,1)",
+          "worked": "Count two thirds for each whole-number group, then rename the result.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "{2/3} \u00d7 {2/5}",
+          "answer": "{4/15}",
+          "skill": "F-MULT",
+          "case": "F-MULT",
+          "check": "F(2,3)*F(2,5)==F(\"4/15\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "How many {1/3}-meter pieces fit in 2 meters?",
+          "answer": "6 pieces",
+          "skill": "F-DIV",
+          "case": "Whole number by unit fraction",
+          "check": "(2/F(1,3)) == F(6,1)",
+          "worked": "Each meter contains 3 equal pieces. Multiply by 2 meters.",
+          "wrong": "{2/3}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 2
+        },
+        {
+          "text": "Share {1/3} liter equally among 2 cups. How much per cup?",
+          "answer": "{1/6} liter",
+          "skill": "F-DIV",
+          "case": "Unit fraction by whole number",
+          "check": "(F(1,3)/2) == F(1,6)",
+          "worked": "Split the given fractional amount into the stated number of equal shares.",
+          "wrong": "{2/3}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 2
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 1,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        0
+      ],
+      "problems": [
+        {
+          "text": "A card shows a fraction. Its denominator is 8. It lies between {1/2} and {3/4}. What fraction is on the card?",
+          "answer": "{5/8}",
+          "skill": "PUZZLE",
+          "case": "Fraction between benchmarks",
+          "check": "[n for n in range(1,8) if F(1,2)<F(n,8)<F(3,4)]==[5]",
+          "worked": "Half is four eighths and three fourths is six eighths. Only five eighths lies strictly between them.",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 1,
+      "weekday": "Thu",
+      "set_id": "05_Facts",
+      "label": "Multiplication and division facts",
+      "indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "problems": [
+        {
+          "text": "6 \u00d7 8",
+          "answer": "48",
+          "skill": "N-FACT",
+          "case": "N-FACT",
+          "check": "6*8==48",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "48 \u00f7 6",
+          "answer": "8",
+          "skill": "N-FACT",
+          "case": "N-FACT",
+          "check": "48//6==8",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "7 \u00d7 9",
+          "answer": "63",
+          "skill": "N-FACT",
+          "case": "N-FACT",
+          "check": "7*9==63",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "63 \u00f7 7",
+          "answer": "9",
+          "skill": "N-FACT",
+          "case": "N-FACT",
+          "check": "63//7==9",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 2,
+      "weekday": "Mon",
+      "set_id": "06_Ratios",
+      "label": "Ratios and rates",
+      "indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "problems": [
+        {
+          "text": "A picture shows 5 green tiles and 2 white tiles. Write green : white and white : green.",
+          "answer": "5 : 2; 2 : 5",
+          "skill": "R-RATIO",
+          "case": "Order matters",
+          "check": "F(5,2)!=F(2,5)",
+          "worked": "Keep the requested first color first.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Is 6 : 10 equivalent to 9 : 15?",
+          "answer": "Yes",
+          "skill": "R-EQUIV",
+          "case": "Recognize a non-whole factor",
+          "check": "F(6,10)==F(9,15)",
+          "worked": "Multiply both numbers in 6 : 10 by one and one half.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Ava changes 3 : 7 to 5 : 9. Is it the same ratio?",
+          "answer": "No",
+          "skill": "R-EQUIV",
+          "case": "Additive error analysis",
+          "check": "F(3,7)!=F(5,9)",
+          "worked": "Adding two to each count changes the relationship. Two batches would give 6 : 14.",
+          "wrong": "Yes",
+          "error": "Equal additions do not preserve a ratio.",
+          "session_id": 3
+        },
+        {
+          "text": "A team has 4 runners for every 3 walkers. There are 18 walkers. How many runners?",
+          "answer": "24 runners",
+          "skill": "R-EQUIV",
+          "case": "Missing first quantity",
+          "check": "F(18,3)*4==24",
+          "worked": "Eighteen walkers make six groups. Six groups need twenty-four runners.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 2,
+      "weekday": "Tue",
+      "set_id": "06_Ratios",
+      "label": "Ratios and rates",
+      "indices": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "problems": [
+        {
+          "text": "The pairs (2, 7), (4, 14), and (6, __) have the same ratio. Complete the table.",
+          "answer": "21",
+          "skill": "R-TABLE",
+          "case": "Table missing value",
+          "check": "F(2,7)==F(4,14)==F(6,21)",
+          "worked": "Multiply both entries of the first pair by three.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "A double number line pairs 3 minutes with 8 laps. What pairs with 12 minutes?",
+          "answer": "32 laps",
+          "skill": "R-TABLE",
+          "case": "Double number line",
+          "check": "F(12,3)*8==32",
+          "worked": "Four jumps of three minutes match four jumps of eight laps.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Plot (1, 2), (2, 4), and (4, 8). Do they lie on a line through the origin?",
+          "answer": "Yes",
+          "skill": "R-GRAPH",
+          "case": "Ratio graph",
+          "check": "all(y==2*x for x,y in [(0,0),(1,2),(2,4),(4,8)])",
+          "worked": "Every vertical value is twice the horizontal value.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "A mix has 5 cups oats and 3 cups seeds. What fraction of the whole is seeds?",
+          "answer": "{3/8}",
+          "skill": "R-WHOLE",
+          "case": "Part-to-whole fraction",
+          "check": "F(3,5+3)==F(3,8)",
+          "worked": "Count all eight cups before forming the fraction.",
+          "wrong": "{3/5}",
+          "error": "Five counts the other part, not the whole.",
+          "session_id": 4
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 2,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        1
+      ],
+      "problems": [
+        {
+          "text": "A tile bag has red : blue = 3 : 2. The total is greater than 20 and less than 30. How many of each color?",
+          "answer": "15 red and 10 blue",
+          "skill": "PUZZLE",
+          "case": "Ratio and total constraint",
+          "check": "[(3*k,2*k) for k in range(1,10) if 20<5*k<30]==[(15,10)]",
+          "worked": "One batch contains five tiles. The only multiple of five strictly between 20 and 30 is 25.",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 2,
+      "weekday": "Thu",
+      "set_id": "01_Fractions",
+      "label": "Fractions: compare and combine",
+      "indices": [
+        4,
+        7,
+        10,
+        16
+      ],
+      "problems": [
+        {
+          "text": "Find {1/2} + {1/3}.",
+          "answer": "{5/6}",
+          "skill": "F-ADD",
+          "case": "Unlike denominator addition",
+          "check": "(F(1,2)+F(1,3)) == F(5,6)",
+          "worked": "Rename both fractions with a common denominator. Add the counts of equal parts.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Find {2/3} + {1/4}.",
+          "answer": "{11/12}",
+          "skill": "F-ADD",
+          "case": "Unlike denominator addition",
+          "check": "(F(2,3)+F(1,4)) == F(11,12)",
+          "worked": "Rename both fractions with a common denominator. Add the counts of equal parts.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "{4/3} \u2212 {3/4}",
+          "answer": "{7/12}",
+          "skill": "F-ADD",
+          "case": "F-ADD",
+          "check": "F(8,6)-F(3,4)==F(\"7/12\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "{3/2} \u2212 {3/4}",
+          "answer": "{3/4}",
+          "skill": "F-ADD",
+          "case": "F-ADD",
+          "check": "F(9,6)-F(3,4)==F(\"3/4\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 3,
+      "weekday": "Mon",
+      "set_id": "06_Ratios",
+      "label": "Ratios and rates",
+      "indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "problems": [
+        {
+          "text": "A bus covers 10 miles in 25 minutes at constant speed. How many miles in one hour?",
+          "answer": "24 miles",
+          "skill": "R-RATE",
+          "case": "Non-hour time interval",
+          "check": "F(10,25)*60==24",
+          "worked": "Five minutes corresponds to two miles. Twelve five-minute groups make 24 miles.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "Pack A has 4 erasers for $1.80. Pack B has 6 for $2.40. Which costs less per eraser?",
+          "answer": "Pack B: $0.40 each",
+          "skill": "R-COMP",
+          "case": "Compare unit prices",
+          "check": "D(\"1.80\")/4==D(\"0.45\") and D(\"2.40\")/6==D(\"0.40\")",
+          "worked": "Compare forty-five cents with forty cents for one eraser.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A machine makes 24 labels in 6 minutes. Find labels per minute and minutes per label.",
+          "answer": "4 labels per minute; {1/4} minute per label",
+          "skill": "R-RATE",
+          "case": "Both unit-rate directions",
+          "check": "F(24,6)==4 and F(6,24)==F(1,4)",
+          "worked": "Divide labels by minutes for the first rate. Reverse for the second.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A snail moves 3 centimeters each minute. Find the distance after 0, 4, and 7 minutes.",
+          "answer": "0, 12, and 21 centimeters",
+          "skill": "R-TABLE",
+          "case": "Constant-speed table",
+          "check": "[3*t for t in [0,4,7]]==[0,12,21]",
+          "worked": "Multiply each time by the unit rate. Zero time matches zero distance.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 3,
+      "weekday": "Tue",
+      "set_id": "07_Percent",
+      "label": "Percent practice",
+      "indices": [
+        0,
+        1,
+        5,
+        6
+      ],
+      "problems": [
+        {
+          "text": "Find 140% of 30 points.",
+          "answer": "42 points",
+          "skill": "P-PART",
+          "case": "Percent above one hundred",
+          "check": "(F(140,100)*30) == F(42,1)",
+          "worked": "Take all 30 points, then add forty percent, which is 12 points.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 35% of 80 tiles.",
+          "answer": "28 tiles",
+          "skill": "P-PART",
+          "case": "Non-benchmark percent",
+          "check": "(F(35,100)*80) == F(28,1)",
+          "worked": "Thirty percent is 24. Five percent is 4. Add them.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "12 shells are 30% of a collection. Find the whole collection.",
+          "answer": "40 shells",
+          "skill": "P-WHOLE",
+          "case": "Find the whole",
+          "check": "(F(12,1)/F(30,100)) == F(40,1)",
+          "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+          "wrong": "3.60 shells",
+          "error": "Taking 30% of the known part does not recover the whole.",
+          "session_id": 6
+        },
+        {
+          "text": "9 of 12 tiles are green. What percent are green?",
+          "answer": "75 %",
+          "skill": "P-PERCENT",
+          "case": "Find the percent",
+          "check": "(F(9,12)*100) == F(75,1)",
+          "worked": "Compare the green count with the total. Rename the fraction as a rate per hundred.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 3,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        2
+      ],
+      "problems": [
+        {
+          "text": "A mystery number has this property: 25% of it is 6 more than 10% of it. Find the number.",
+          "answer": "40",
+          "skill": "PUZZLE",
+          "case": "Difference of percent parts",
+          "check": "F(25,100)*40-F(10,100)*40==6 and F(6,1)/(F(25,100)-F(10,100))==40",
+          "worked": "The gap is 15%, which equals 6. Five percent is 2, so 100% is 40.",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 3,
+      "weekday": "Thu",
+      "set_id": "03_Decimals",
+      "label": "Decimal practice",
+      "indices": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "problems": [
+        {
+          "text": "2.4 + 1.75",
+          "answer": "4.15",
+          "skill": "D-OPS",
+          "case": "D-OPS",
+          "check": "D(\"2.4\")+D(\"1.75\")==D(\"4.15\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "3.4 \u00d7 0.5",
+          "answer": "1.70",
+          "skill": "D-OPS",
+          "case": "D-OPS",
+          "check": "D(\"3.4\")*D(\".5\")==D(\"1.70\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "4.4 + 1.75",
+          "answer": "6.15",
+          "skill": "D-OPS",
+          "case": "D-OPS",
+          "check": "D(\"4.4\")+D(\"1.75\")==D(\"6.15\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "5.4 \u00d7 0.5",
+          "answer": "2.70",
+          "skill": "D-OPS",
+          "case": "D-OPS",
+          "check": "D(\"5.4\")*D(\".5\")==D(\"2.70\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 4,
+      "weekday": "Mon",
+      "set_id": "02_Fraction_Operations",
+      "label": "Fraction operations",
+      "indices": [
+        3,
+        10,
+        16,
+        18
+      ],
+      "problems": [
+        {
+          "text": "Find {1/2} \u00f7 {4/5}.",
+          "answer": "{5/8}",
+          "skill": "F-DIV",
+          "case": "Quotient below one",
+          "check": "(F(1,2)/F(4,5)) == F(5,8)",
+          "worked": "The available amount is smaller than one group. Multiply by the reciprocal of the group size.",
+          "wrong": "{2/5}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "{2/3} \u00f7 {1/5}",
+          "answer": "{10/3}",
+          "skill": "F-DIV",
+          "case": "F-DIV",
+          "check": "F(2,3)/F(1,5)==F(\"10/3\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "1 \u00f7 {3/5}",
+          "answer": "{5/3}",
+          "skill": "F-DIV",
+          "case": "F-DIV",
+          "check": "F(3,3)/F(3,5)==F(\"5/3\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "{5/3} \u00f7 {1/5}",
+          "answer": "{25/3}",
+          "skill": "F-DIV",
+          "case": "F-DIV",
+          "check": "F(5,3)/F(1,5)==F(\"25/3\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 4,
+      "weekday": "Tue",
+      "set_id": "02_Fraction_Operations",
+      "label": "Fraction operations",
+      "indices": [
+        0,
+        6,
+        12,
+        17
+      ],
+      "problems": [
+        {
+          "text": "Which is the reciprocal of 2 {1/2}: {2/5} or {5/2}? Explain using a product of 1.",
+          "answer": "{2/5}",
+          "skill": "F-DIV",
+          "case": "Mixed number reciprocal",
+          "check": "F(5,2)*F(2,5)==1 and F(5,2)*F(5,2)!=1",
+          "worked": "Two and one half is five halves. Five halves times two fifths equals one.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "Find 1 {1/2} \u00f7 {3/4}.",
+          "answer": "2",
+          "skill": "F-DIV",
+          "case": "Mixed number quotient",
+          "check": "(F(3,2)/F(3,4)) == F(2,1)",
+          "worked": "Rename the mixed number as an improper fraction, then count groups of three fourths.",
+          "wrong": "1 {1/8}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        },
+        {
+          "text": "{4/3} \u00f7 {3/5}",
+          "answer": "{20/9}",
+          "skill": "F-DIV",
+          "case": "F-DIV",
+          "check": "F(4,3)/F(3,5)==F(\"20/9\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "{4/3} \u00d7 {4/5}",
+          "answer": "{16/15}",
+          "skill": "F-MULT",
+          "case": "F-MULT",
+          "check": "F(4,3)*F(4,5)==F(\"16/15\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 4,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        3
+      ],
+      "problems": [
+        {
+          "text": "A jug holds 2 liters. You have {1/3}-liter and {1/2}-liter scoops. Use both sizes and exactly five full scoops to fill it. How many of each?",
+          "answer": "3 one-third-liter scoops and 2 half-liter scoops",
+          "skill": "PUZZLE",
+          "case": "Fraction combination",
+          "check": "[(a,b) for a in range(1,5) for b in range(1,5) if a+b==5 and a*F(1,3)+b*F(1,2)==2]==[(3,2)]",
+          "worked": "Try five thirds first: {5/3} liters. Replacing a third with a half adds {1/6} liter. Two replacements fill the missing third.",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 4,
+      "weekday": "Thu",
+      "set_id": "07_Percent",
+      "label": "Percent practice",
+      "indices": [
+        2,
+        8,
+        9,
+        10
+      ],
+      "problems": [
+        {
+          "text": "Find 12% of $15.00.",
+          "answer": "1.8000 dollars",
+          "skill": "P-PART",
+          "case": "Decimal result",
+          "check": "(D(\"0.12\")*D(\"15.00\")) == D('1.8000')",
+          "worked": "Ten percent is $1.50 and two percent is $0.30. Add them.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "18 shells are 30% of a collection. Find the whole collection.",
+          "answer": "60 shells",
+          "skill": "P-WHOLE",
+          "case": "Find the whole",
+          "check": "(F(18,1)/F(30,100)) == F(60,1)",
+          "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+          "wrong": "5.40 shells",
+          "error": "Taking 30% of the known part does not recover the whole.",
+          "session_id": 6
+        },
+        {
+          "text": "12 of 16 tiles are green. What percent are green?",
+          "answer": "75 %",
+          "skill": "P-PERCENT",
+          "case": "Find the percent",
+          "check": "(F(12,16)*100) == F(75,1)",
+          "worked": "Compare the green count with the total. Rename the fraction as a rate per hundred.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 25% of 40 stickers.",
+          "answer": "10 stickers",
+          "skill": "P-PART",
+          "case": "Find a percent part",
+          "check": "(F(25,100)*40) == F(10,1)",
+          "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 5,
+      "weekday": "Mon",
+      "set_id": "03_Decimals",
+      "label": "Decimal practice",
+      "indices": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "problems": [
+        {
+          "text": "Find 2.45 + 4.078.",
+          "answer": "6.528",
+          "skill": "D-ADD",
+          "case": "Different lengths",
+          "check": "(D(\"2.45\")+D(\"4.078\")) == D('6.528')",
+          "worked": "Line up decimal points. Add digits in the same place-value columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 0.25 \u00d7 0.02.",
+          "answer": "0.0050",
+          "skill": "D-MULT",
+          "case": "Leading-zero product",
+          "check": "(D(\"0.25\")*D(\"0.02\")) == D('0.0050')",
+          "worked": "One fourth of the second factor must be smaller than it. Use this to check the decimal position.",
+          "wrong": "0.0500",
+          "error": "The decimal point is one place too far right. Check the product against both factors.",
+          "session_id": 9
+        },
+        {
+          "text": "Find 10 \u2212 2.286.",
+          "answer": "7.714",
+          "skill": "D-SUB",
+          "case": "Subtract across zeros",
+          "check": "(D(10)-D(\"2.286\")) == D('7.714')",
+          "worked": "Write 10.000 and regroup through the zero columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 0.8 \u00d7 0.7. Is the product below both factors?",
+          "answer": "0.56; yes",
+          "skill": "D-MULT",
+          "case": "Product below both factors",
+          "check": "D(\"0.8\")*D(\"0.7\")==D(\"0.56\") and D(\"0.56\")<D(\"0.7\")<D(\"0.8\")",
+          "worked": "Eight tenths of seven tenths covers fifty-six hundredths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 5,
+      "weekday": "Tue",
+      "set_id": "04_Multi_Digit",
+      "label": "Multiplication and long division",
+      "indices": [
+        0,
+        1,
+        2,
+        6
+      ],
+      "problems": [
+        {
+          "text": "Find 312 \u00f7 24.",
+          "answer": "13",
+          "skill": "N-DIV",
+          "case": "Two-digit divisor",
+          "check": "(F(312,24)) == F(13,1)",
+          "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "117 \u00d7 12",
+          "answer": "1404",
+          "skill": "N-MULT",
+          "case": "N-MULT",
+          "check": "117*12==1404",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "Find 1,344 \u00f7 32. Verify by multiplication.",
+          "answer": "42",
+          "skill": "N-DIV",
+          "case": "Four-digit by two-digit division",
+          "check": "1344//32==42 and 42*32==1344",
+          "worked": "Thirty-two times forty is 1,280. Two more groups add 64.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "52 \u00f7 4",
+          "answer": "13",
+          "skill": "N-DIV",
+          "case": "N-DIV",
+          "check": "52/4==13",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    },
+    {
+      "week": 5,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        4
+      ],
+      "problems": [
+        {
+          "text": "Use digits 2, 4, and 8 once each in the form A.BC. Which number is closest to 5?",
+          "answer": "4.82",
+          "skill": "PUZZLE",
+          "case": "Place-value reasoning",
+          "check": "min([D(\"2.48\"),D(\"2.84\"),D(\"4.28\"),D(\"4.82\"),D(\"8.24\"),D(\"8.42\")],key=lambda x:abs(x-5))==D(\"4.82\")",
+          "worked": "A ones digit of 4 places the number nearest 5. Among 4.28 and 4.82, the larger is nearer to 5.",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 5,
+      "weekday": "Thu",
+      "set_id": "02_Fraction_Operations",
+      "label": "Fraction operations",
+      "indices": [
+        8,
+        9,
+        15,
+        19
+      ],
+      "problems": [
+        {
+          "text": "Find both 4 \u00f7 {1/5} and {1/5} \u00f7 4.",
+          "answer": "20; {1/20}",
+          "skill": "F-DIV",
+          "case": "Reversed division meanings",
+          "check": "4/F(1,5)==20 and F(1,5)/4==F(1,20)",
+          "worked": "The first counts fifths in four. The second splits one fifth into four shares.",
+          "wrong": "{4/5}; {4/5}",
+          "error": "Changing the order changes what is shared or counted.",
+          "session_id": 2
+        },
+        {
+          "text": "Find 4 \u00d7 {2/3}.",
+          "answer": "2 {2/3}",
+          "skill": "F-MULT",
+          "case": "Whole number times fraction",
+          "check": "(4*F(2,3)) == F(8,3)",
+          "worked": "Count two thirds for each whole-number group, then rename the result.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "{2/3} \u00d7 {2/5}",
+          "answer": "{4/15}",
+          "skill": "F-MULT",
+          "case": "F-MULT",
+          "check": "F(2,3)*F(2,5)==F(\"4/15\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        },
+        {
+          "text": "2 \u00d7 {2/5}",
+          "answer": "{4/5}",
+          "skill": "F-MULT",
+          "case": "F-MULT",
+          "check": "F(6,3)*F(2,5)==F(\"4/5\")",
+          "worked": "",
+          "wrong": "",
+          "error": ""
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 6,
+      "weekday": "Mon",
+      "set_id": "09_Equations",
+      "label": "Expressions and equations",
+      "indices": [
+        0,
+        3,
+        6,
+        9
+      ],
+      "problems": [
+        {
+          "text": "Expand 2(x + 7).",
+          "answer": "2x + 14",
+          "skill": "E-DIST",
+          "case": "distribute both terms",
+          "check": "all(2*(x+7)==2*x+14 for x in range(10))",
+          "worked": "Multiply x and 7 by 2.",
+          "wrong": "2x + 7",
+          "error": "Multiplies only the first term.",
+          "session": 11
+        },
+        {
+          "text": "Find 5\u00b2. Write the repeated factors.",
+          "answer": "25",
+          "skill": "E-EXP",
+          "case": "whole-number exponent",
+          "check": "5**2==25",
+          "worked": "Multiply 2 factors of 5.",
+          "wrong": "10",
+          "error": "Multiplies the base by the exponent.",
+          "session": 11
+        },
+        {
+          "text": "Find 4n + 3 when n = 2.",
+          "answer": "11",
+          "skill": "E-EVAL",
+          "case": "evaluate an expression",
+          "check": "4*2+3==11",
+          "worked": "4 \u00d7 2 + 3 = 11.",
+          "wrong": "",
+          "error": "",
+          "session": 11
+        },
+        {
+          "text": "Each pack has b beads. Write the total in 3 packs. Find it when b = 4.",
+          "answer": "3b; 12 beads",
+          "skill": "E-EXPR",
+          "case": "story to expression",
+          "check": "3*4==12",
+          "worked": "3 equal groups of b give 3b.",
+          "wrong": "",
+          "error": "",
+          "session": 11
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 6,
+      "weekday": "Tue",
+      "set_id": "09_Equations",
+      "label": "Expressions and equations",
+      "indices": [
+        10,
+        11,
+        14,
+        16
+      ],
+      "problems": [
+        {
+          "text": "Solve x + 11 = 18.",
+          "answer": "x = 7",
+          "skill": "E-ADD",
+          "case": "additive equation",
+          "check": "7+11==18",
+          "worked": "Subtract 11 from both sides.",
+          "wrong": "",
+          "error": "",
+          "session": 12
+        },
+        {
+          "text": "Solve 7x = 56.",
+          "answer": "x = 8",
+          "skill": "E-MULT",
+          "case": "whole-number multiplicative equation",
+          "check": "7*8==56",
+          "worked": "Divide both sides by 7.",
+          "wrong": "49",
+          "error": "Subtracts instead of dividing.",
+          "session": 12
+        },
+        {
+          "text": "Solve 1.5x = 4.80.",
+          "answer": "x = 3.2",
+          "skill": "E-MULT",
+          "case": "decimal multiplicative equation",
+          "check": "D('1.5')*D('3.2')==D('4.80')",
+          "worked": "Divide both sides by 1.5; then check the product.",
+          "wrong": "",
+          "error": "",
+          "session": 12
+        },
+        {
+          "text": "Solve ({3/4})x = 12.",
+          "answer": "x = 16",
+          "skill": "E-MULT",
+          "case": "fractional coefficient",
+          "check": "F(3,4)*16==F(12,1)",
+          "worked": "3 equal parts total 12. Find one part, then all 4.",
+          "wrong": "",
+          "error": "",
+          "session": 12
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 6,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        5
+      ],
+      "problems": [
+        {
+          "text": "Two whole numbers total 17. One is 5 more than the other. Find both numbers and show a way to check.",
+          "answer": "6 and 11",
+          "skill": "E-STORY",
+          "case": "reasoning puzzle with sum and difference",
+          "check": "[(a,17-a) for a in range(18) if (17-a)-a==5]==[(6,11)]",
+          "worked": "Remove the extra 5: 17 \u2212 5 = 12. Split the rest equally: 6 and 6. Restore 5 to one number.",
+          "wrong": "5 and 12",
+          "error": "Uses the difference as one of the numbers."
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 6,
+      "weekday": "Thu",
+      "set_id": "03_Decimals",
+      "label": "Decimal practice",
+      "indices": [
+        0,
+        7,
+        8,
+        9
+      ],
+      "problems": [
+        {
+          "text": "Find 9.6 \u00f7 8.",
+          "answer": "1.2",
+          "skill": "D-DIV",
+          "case": "Decimal by whole number",
+          "check": "D(\"9.6\")/8==D(\"1.2\")",
+          "worked": "Ninety-six tenths shared among eight gives twelve tenths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 2.8 \u00f7 0.07.",
+          "answer": "40",
+          "skill": "D-DIV",
+          "case": "Scale both numbers",
+          "check": "(D(\"2.8\")/D(\"0.07\")) == D('4E+1')",
+          "worked": "Multiply both dividend and divisor by 100, then divide by 7.",
+          "wrong": "0.4",
+          "error": "Changing only the divisor changes the quotient. Scale both quantities by 100.",
+          "session_id": 10
+        },
+        {
+          "text": "A ball costs $4.65 and a card costs $2.78. Find the change from $10.",
+          "answer": "$2.57",
+          "skill": "D-MONEY",
+          "case": "Money with two steps",
+          "check": "D(10)-D(\"4.65\")-D(\"2.78\")==D(\"2.57\")",
+          "worked": "The cost is $7.43. Subtract that from $10.00.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 10 \u2212 1.286.",
+          "answer": "8.714",
+          "skill": "D-SUB",
+          "case": "Subtract across zeros",
+          "check": "(D(10)-D(\"1.286\")) == D('8.714')",
+          "worked": "Write 10.000 and regroup through the zero columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 7,
+      "weekday": "Mon",
+      "set_id": "10_Area_Volume",
+      "label": "Area, surface area and volume",
+      "indices": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "problems": [
+        {
+          "text": "A rectangle is 6 cm by {3/2} cm. Find its area.",
+          "answer": "9 square cm",
+          "skill": "G-AREA",
+          "case": "rectangle area",
+          "check": "F(6)*F('3/2')==F('9')",
+          "worked": "Multiply the two perpendicular side lengths.",
+          "wrong": "",
+          "error": "",
+          "session": 13
+        },
+        {
+          "text": "A parallelogram has base 9, height 4, and slanted side 5 cm. Find its area.",
+          "answer": "36 square cm",
+          "skill": "G-PARA",
+          "case": "perpendicular height versus slanted side",
+          "check": "9*4==36 and 5**2>4**2",
+          "worked": "Use base \u00d7 perpendicular height: 9 \u00d7 4.",
+          "wrong": "45",
+          "error": "Uses the slanted side.",
+          "session": 13
+        },
+        {
+          "text": "A triangle has base 9 cm and height 4 cm. Find its area.",
+          "answer": "18 square cm",
+          "skill": "G-TRI",
+          "case": "triangle area",
+          "check": "F(1,2)*9*4==18",
+          "worked": "Half of 9 \u00d7 4 is 18.",
+          "wrong": "36",
+          "error": "Omits the half.",
+          "session": 13
+        },
+        {
+          "text": "A 9 by 5 cm rectangle loses a 2 by 3 cm corner. Find the remaining area.",
+          "answer": "39 square cm",
+          "skill": "G-COMP",
+          "case": "composite area by subtraction",
+          "check": "9*5-2*3==39",
+          "worked": "Subtract the corner area from the full rectangle.",
+          "wrong": "",
+          "error": "",
+          "session": 13
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    },
+    {
+      "week": 7,
+      "weekday": "Tue",
+      "set_id": "10_Area_Volume",
+      "label": "Area, surface area and volume",
+      "indices": [
+        8,
+        10,
+        12,
+        14
+      ],
+      "problems": [
+        {
+          "text": "Find the surface area of a closed 2 by 3 by 5 cm box.",
+          "answer": "62 square cm",
+          "skill": "G-SA",
+          "case": "rectangular prism surface area",
+          "check": "2*(2*3+2*5+3*5)==62",
+          "worked": "Two faces of each type: 2 \u00d7 (6 + 10 + 15).",
+          "wrong": "30",
+          "error": "Uses volume.",
+          "session": 14
+        },
+        {
+          "text": "A prism has right-triangle ends with sides 3, 4, 5 cm and length 4 cm. Find surface area.",
+          "answer": "60 square cm",
+          "skill": "G-SA",
+          "case": "triangular prism surface area",
+          "check": "2*F(1,2)*3*4+4*(3+4+5)==60",
+          "worked": "Two ends give 12 square cm. The three rectangles give 48.",
+          "wrong": "54",
+          "error": "Omits one triangular end.",
+          "session": 14
+        },
+        {
+          "text": "A square pyramid has base side 4 cm and triangular-face height 3 cm. Find surface area.",
+          "answer": "40 square cm",
+          "skill": "G-SA",
+          "case": "square pyramid surface area",
+          "check": "4**2+4*F(1,2)*4*3==40 and 3**2>F(4,2)**2",
+          "worked": "Add the square base and four half-base-times-height triangles.",
+          "wrong": "",
+          "error": "",
+          "session": 14
+        },
+        {
+          "text": "A closed cube has side 2 cm. Jo counts five faces and gets 20 square cm. Repair the total.",
+          "answer": "24 square cm",
+          "skill": "G-SA",
+          "case": "missing face error",
+          "check": "6*2**2==24",
+          "worked": "Six faces are needed. Each has area 4.",
+          "wrong": "20",
+          "error": "Leaves out the hidden face.",
+          "session": 14
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    },
+    {
+      "week": 7,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        6
+      ],
+      "problems": [
+        {
+          "text": "A rectangle has whole-number side lengths, perimeter 24 cm, and area 35 square cm. Find its side lengths.",
+          "answer": "5 cm and 7 cm",
+          "skill": "G-AREA",
+          "case": "area and perimeter reasoning",
+          "check": "[(a,b) for a in range(1,13) for b in range(a,13) if 2*(a+b)==24 and a*b==35]==[(5,7)]",
+          "worked": "The sides sum to 12. Test factor pairs of 35: 1 and 35 fail; 5 and 7 sum to 12.",
+          "wrong": "3 cm and 8 cm",
+          "error": "Checks neither condition completely."
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 7,
+      "weekday": "Thu",
+      "set_id": "09_Equations",
+      "label": "Expressions and equations",
+      "indices": [
+        1,
+        4,
+        12,
+        18
+      ],
+      "problems": [
+        {
+          "text": "Expand 3(x + 6).",
+          "answer": "3x + 18",
+          "skill": "E-DIST",
+          "case": "distribute both terms",
+          "check": "all(3*(x+6)==3*x+18 for x in range(10))",
+          "worked": "Multiply x and 6 by 3.",
+          "wrong": "3x + 6",
+          "error": "Multiplies only the first term.",
+          "session": 11
+        },
+        {
+          "text": "Find 2\u2074. Write the repeated factors.",
+          "answer": "16",
+          "skill": "E-EXP",
+          "case": "whole-number exponent",
+          "check": "2**4==16",
+          "worked": "Multiply 4 factors of 2.",
+          "wrong": "8",
+          "error": "Multiplies the base by the exponent.",
+          "session": 11
+        },
+        {
+          "text": "Solve 6x = 54.",
+          "answer": "x = 9",
+          "skill": "E-MULT",
+          "case": "whole-number multiplicative equation",
+          "check": "6*9==54",
+          "worked": "Divide both sides by 6.",
+          "wrong": "48",
+          "error": "Subtracts instead of dividing.",
+          "session": 12
+        },
+        {
+          "text": "Use y = 4x for x = 0, 2, 3. Give the ordered pairs.",
+          "answer": "(0, 0), (2, 8), (3, 12)",
+          "skill": "E-RELATE",
+          "case": "equation to table",
+          "check": "[4*x for x in [0, 2, 3]]==[0, 8, 12]",
+          "worked": "Multiply each input by 4.",
+          "wrong": "",
+          "error": "",
+          "session": 12
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 8,
+      "weekday": "Mon",
+      "set_id": "08_Negatives",
+      "label": "Number lines and coordinates",
+      "indices": [
+        1,
+        4,
+        7,
+        8
+      ],
+      "problems": [
+        {
+          "text": "Order \u22124, 0, \u22129 from least to greatest.",
+          "answer": "\u22129, \u22124, 0",
+          "skill": "N-ORDER",
+          "case": "order signed integers",
+          "check": "sorted([-4, 0, -9])==[-9, -4, 0]",
+          "worked": "Read the numbers from left to right on a number line.",
+          "wrong": "",
+          "error": "",
+          "session": 15
+        },
+        {
+          "text": "Find |\u221212| and describe it as a distance.",
+          "answer": "12 units from zero",
+          "skill": "N-ABS",
+          "case": "absolute value as distance",
+          "check": "abs(-12)==12",
+          "worked": "Count the unit steps between the number and zero.",
+          "wrong": "",
+          "error": "",
+          "session": 15
+        },
+        {
+          "text": "Find |0| and describe it as a distance.",
+          "answer": "0 units from zero",
+          "skill": "N-ABS",
+          "case": "absolute value as distance",
+          "check": "abs(0)==0",
+          "worked": "Count the unit steps between the number and zero.",
+          "wrong": "",
+          "error": "",
+          "session": 15
+        },
+        {
+          "text": "Find the opposite of \u22126.",
+          "answer": "6",
+          "skill": "N-OPP",
+          "case": "opposite",
+          "check": "-(-6)==6",
+          "worked": "Reflect the point across zero.",
+          "wrong": "",
+          "error": "",
+          "session": 15
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 8,
+      "weekday": "Tue",
+      "set_id": "08_Negatives",
+      "label": "Number lines and coordinates",
+      "indices": [
+        12,
+        15,
+        18,
+        19
+      ],
+      "problems": [
+        {
+          "text": "Reflect (-3, 4) across the y-axis.",
+          "answer": "(3, 4)",
+          "skill": "N-REFLECT",
+          "case": "axis reflection",
+          "check": "(3, 4)==(3, 4)",
+          "worked": "Keep the coordinate along the y-axis fixed; change the other sign.",
+          "wrong": "",
+          "error": "",
+          "session": 16
+        },
+        {
+          "text": "Find the distance from (-4, 2) to (3, 2).",
+          "answer": "7 units",
+          "skill": "N-DIST",
+          "case": "horizontal or vertical distance",
+          "check": "abs(3-(-4))+abs(2-(2))==7",
+          "worked": "One coordinate stays fixed. Count the gap in the other coordinate.",
+          "wrong": "",
+          "error": "",
+          "session": 16
+        },
+        {
+          "text": "Write an inequality for x that means at least 9. Is the boundary included?",
+          "answer": "x \u2265 9; yes",
+          "skill": "E-INEQ",
+          "case": "word inequality and boundary",
+          "check": "bool(9>=9)==True",
+          "worked": "Use a closed circle if equality is allowed; otherwise use an open circle.",
+          "wrong": "",
+          "error": "",
+          "session": 16
+        },
+        {
+          "text": "Write an inequality for x that means less than 5. Is the boundary included?",
+          "answer": "x < 5; no",
+          "skill": "E-INEQ",
+          "case": "word inequality and boundary",
+          "check": "bool(5<5)==False",
+          "worked": "Use a closed circle if equality is allowed; otherwise use an open circle.",
+          "wrong": "",
+          "error": "",
+          "session": 16
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 8,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        7
+      ],
+      "problems": [
+        {
+          "text": "A point lies left of the y-axis and above the x-axis. It is 3 units from the y-axis and 2 from the x-axis. Find it, then reflect it across both axes in turn.",
+          "answer": "Start (\u22123, 2); after y-axis (3, 2); after x-axis (3, \u22122)",
+          "skill": "N-REFLECT",
+          "case": "coordinate reasoning puzzle",
+          "check": "(-3,2)==(-abs(3),abs(2)) and (-(-3),-(2))==(3,-2)",
+          "worked": "The vertical axis measures horizontal distance. The horizontal axis measures vertical distance. Each reflection changes one sign.",
+          "wrong": "(\u22122, 3)",
+          "error": "Swaps the distances to the axes."
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 8,
+      "weekday": "Thu",
+      "set_id": "10_Area_Volume",
+      "label": "Area, surface area and volume",
+      "indices": [
+        0,
+        7,
+        9,
+        16
+      ],
+      "problems": [
+        {
+          "text": "A rectangle is 7 cm by 3 cm. Find its area.",
+          "answer": "21 square cm",
+          "skill": "G-AREA",
+          "case": "rectangle area",
+          "check": "F(7)*F('3')==F('21')",
+          "worked": "Multiply the two perpendicular side lengths.",
+          "wrong": "",
+          "error": "",
+          "session": 13
+        },
+        {
+          "text": "A 7 by 6 cm rectangle loses a 2 by 2 cm corner. Find the remaining area.",
+          "answer": "38 square cm",
+          "skill": "G-COMP",
+          "case": "composite area by subtraction",
+          "check": "7*6-2*2==38",
+          "worked": "Subtract the corner area from the full rectangle.",
+          "wrong": "",
+          "error": "",
+          "session": 13
+        },
+        {
+          "text": "Find the surface area of a closed 3 by 3 by 4 cm box.",
+          "answer": "66 square cm",
+          "skill": "G-SA",
+          "case": "rectangular prism surface area",
+          "check": "2*(3*3+3*4+3*4)==66",
+          "worked": "Two faces of each type: 2 \u00d7 (9 + 12 + 12).",
+          "wrong": "36",
+          "error": "Uses volume.",
+          "session": 14
+        },
+        {
+          "text": "A box has edges {1/2}, {2/3}, and 2 meters. Find the volume.",
+          "answer": "{2/3} cubic meters",
+          "skill": "G-VOL",
+          "case": "Fractional-edge volume",
+          "check": "(F(1,2)*F(2,3)*2) == F(2,3)",
+          "worked": "Multiply the three edge lengths. Track the three length units as cubic meters.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    },
+    {
+      "week": 9,
+      "weekday": "Mon",
+      "set_id": "12_Statistics",
+      "label": "Data and statistics",
+      "indices": [
+        0,
+        3,
+        4,
+        6
+      ],
+      "problems": [
+        {
+          "text": "Find the mean of 2, 3, 7, 8.",
+          "answer": "5",
+          "skill": "S-MEAN",
+          "case": "mean",
+          "check": "F(sum([2, 3, 7, 8]),len([2, 3, 7, 8]))==F('5')",
+          "worked": "Total 20 divided by 4 values gives 5.",
+          "wrong": "",
+          "error": "",
+          "session": 17
+        },
+        {
+          "text": "Find the median of 9, 1, 5, 3, 7.",
+          "answer": "5",
+          "skill": "S-MEDIAN",
+          "case": "median after ordering",
+          "check": "F(statistics.median([9, 1, 5, 3, 7]))==F('5')",
+          "worked": "Order: 1, 3, 5, 7, 9. Use the middle value or mean of two middles.",
+          "wrong": "",
+          "error": "",
+          "session": 17
+        },
+        {
+          "text": "Find the median of 8, 2, 4, 6.",
+          "answer": "5",
+          "skill": "S-MEDIAN",
+          "case": "median after ordering",
+          "check": "F(statistics.median([8, 2, 4, 6]))==F('5')",
+          "worked": "Order: 2, 4, 6, 8. Use the middle value or mean of two middles.",
+          "wrong": "",
+          "error": "",
+          "session": 17
+        },
+        {
+          "text": "Four scores have mean 5. Three are 2, 4, 7. Find the fourth.",
+          "answer": "7",
+          "skill": "S-MEAN",
+          "case": "missing value for given mean",
+          "check": "F(sum([2, 4, 7])+7,4)==5",
+          "worked": "The total is 20; subtract the known total 13.",
+          "wrong": "",
+          "error": "",
+          "session": 17
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    },
+    {
+      "week": 9,
+      "weekday": "Tue",
+      "set_id": "12_Statistics",
+      "label": "Data and statistics",
+      "indices": [
+        10,
+        13,
+        16,
+        19
+      ],
+      "problems": [
+        {
+          "text": "Find the range of 2, 5, 8, 11.",
+          "answer": "9",
+          "skill": "S-RANGE",
+          "case": "range",
+          "check": "max([2, 5, 8, 11])-min([2, 5, 8, 11])==9",
+          "worked": "11 \u2212 2 = 9.",
+          "wrong": "",
+          "error": "",
+          "session": 18
+        },
+        {
+          "text": "Find Q1, Q3, and IQR for 1, 2, 4, 5, 7, 8, 10, 11. Exclude the median if the count is odd.",
+          "answer": "Q1 3.0; Q3 9.0; IQR 6",
+          "skill": "S-IQR",
+          "case": "quartiles and IQR",
+          "check": "F(statistics.median([1, 2, 4, 5]))==F('3.0') and F(statistics.median([7, 8, 10, 11]))==F('9.0') and F('9.0')-F('3.0')==F('6')",
+          "worked": "Split the ordered list into equal-count halves. Subtract the two half-medians.",
+          "wrong": "",
+          "error": "",
+          "session": 18
+        },
+        {
+          "text": "Find the MAD of 1, 3, 5, 7.",
+          "answer": "2",
+          "skill": "S-MAD",
+          "case": "mean absolute deviation",
+          "check": "sum(abs(F(x)-F('4')) for x in [1, 3, 5, 7])/len([1, 3, 5, 7])==F('2')",
+          "worked": "Mean 4. Average the distances from 4.",
+          "wrong": "0",
+          "error": "Averages signed differences instead of distances.",
+          "session": 18
+        },
+        {
+          "text": "A: 3, 4, 5. B: 1, 4, 7. Compare their means and ranges.",
+          "answer": "Both means 4. Range A 2; range B 6. B is more spread out.",
+          "skill": "S-SPREAD",
+          "case": "same center; compare spread",
+          "check": "statistics.mean([3, 4, 5])==statistics.mean([1, 4, 7])==4 and max([3, 4, 5])-min([3, 4, 5])==2 and max([1, 4, 7])-min([1, 4, 7])==6",
+          "worked": "Find the center, then compare the endpoint gaps.",
+          "wrong": "",
+          "error": "",
+          "session": 18
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    },
+    {
+      "week": 9,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        8
+      ],
+      "problems": [
+        {
+          "text": "Find two sets of five different whole numbers with minimum 2, maximum 12, median 5, and mean 6.",
+          "answer": "2, 3, 5, 8, 12 and 2, 4, 5, 7, 12",
+          "skill": "S-MEAN",
+          "case": "data constraints puzzle",
+          "check": "[(2,a,5,b,12) for a in range(3,5) for b in range(6,12) if 2+a+5+b+12==30]==[(2,3,5,8,12),(2,4,5,7,12)]",
+          "worked": "The total must be 30. Known values 2, 5, 12 total 19. The remaining values must total 11, with one below 5 and one above.",
+          "wrong": "2, 5, 5, 6, 12",
+          "error": "Repeats a number despite the distinct-value condition."
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 9,
+      "weekday": "Thu",
+      "set_id": "08_Negatives",
+      "label": "Number lines and coordinates",
+      "indices": [
+        2,
+        5,
+        13,
+        17
+      ],
+      "problems": [
+        {
+          "text": "Order \u22123, 1, \u22126 from least to greatest.",
+          "answer": "\u22126, \u22123, 1",
+          "skill": "N-ORDER",
+          "case": "order signed integers",
+          "check": "sorted([-3, 1, -6])==[-6, -3, 1]",
+          "worked": "Read the numbers from left to right on a number line.",
+          "wrong": "",
+          "error": "",
+          "session": 15
+        },
+        {
+          "text": "Find |5| and describe it as a distance.",
+          "answer": "5 units from zero",
+          "skill": "N-ABS",
+          "case": "absolute value as distance",
+          "check": "abs(5)==5",
+          "worked": "Count the unit steps between the number and zero.",
+          "wrong": "",
+          "error": "",
+          "session": 15
+        },
+        {
+          "text": "Reflect (2, -5) across the x-axis.",
+          "answer": "(2, 5)",
+          "skill": "N-REFLECT",
+          "case": "axis reflection",
+          "check": "(2, 5)==(2, 5)",
+          "worked": "Keep the coordinate along the x-axis fixed; change the other sign.",
+          "wrong": "",
+          "error": "",
+          "session": 16
+        },
+        {
+          "text": "Find the distance from (-2, -3) to (-2, 2).",
+          "answer": "5 units",
+          "skill": "N-DIST",
+          "case": "horizontal or vertical distance",
+          "check": "abs(-2-(-2))+abs(2-(-3))==5",
+          "worked": "One coordinate stays fixed. Count the gap in the other coordinate.",
+          "wrong": "",
+          "error": "",
+          "session": 16
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 10,
+      "weekday": "Mon",
+      "set_id": "13_Scale_and_Circles",
+      "label": "Scale, proportion and circles",
+      "indices": [
+        2,
+        3,
+        8,
+        10
+      ],
+      "problems": [
+        {
+          "text": "A 8 by 12 cm rectangle is copied with scale factor {1/2}. Find the new side lengths.",
+          "answer": "4 cm and 6 cm",
+          "skill": "P-SCALE",
+          "case": "scaled side lengths",
+          "check": "8*F('1/2')==F('4') and 12*F('1/2')==F('6')",
+          "worked": "Multiply both lengths by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session": 19
+        },
+        {
+          "text": "A map uses 1 cm for 20 km. A route is 4 cm long. Find the actual distance.",
+          "answer": "80 km",
+          "skill": "P-MAP",
+          "case": "map scale",
+          "check": "20*4==80",
+          "worked": "4 map centimeters represent 4 groups of 20 km.",
+          "wrong": "",
+          "error": "",
+          "session": 19
+        },
+        {
+          "text": "A shape has area 20 square cm. All lengths scale by {1/2}. Find the new area.",
+          "answer": "5 square cm",
+          "skill": "P-SCALE",
+          "case": "area factor squared",
+          "check": "20*F('1/2')**2==F('5')",
+          "worked": "Multiply area by the square of the scale factor.",
+          "wrong": "",
+          "error": "",
+          "session": 19
+        },
+        {
+          "text": "A proportional table contains (6, 9). Find k in y = kx.",
+          "answer": "k = 1.5",
+          "skill": "P-PROP",
+          "case": "constant of proportionality",
+          "check": "F('9')/6==F('3/2')",
+          "worked": "Divide the output by the input.",
+          "wrong": "",
+          "error": "",
+          "session": 19
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 10,
+      "weekday": "Tue",
+      "set_id": "13_Scale_and_Circles",
+      "label": "Scale, proportion and circles",
+      "indices": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "problems": [
+        {
+          "text": "A circle has diameter 3 cm. Find circumference exactly and using 3.14.",
+          "answer": "3\u03c0 cm; about 9.42 cm",
+          "skill": "G-CIRCLE",
+          "case": "circumference from diameter",
+          "check": "D(3)*D('3.14')==D('9.42')",
+          "worked": "Use C = \u03c0d.",
+          "wrong": "",
+          "error": "",
+          "session": 20
+        },
+        {
+          "text": "A circle has radius 2 cm. Find circumference exactly and using 3.14.",
+          "answer": "4\u03c0 cm; about 12.56 cm",
+          "skill": "G-CIRCLE",
+          "case": "circumference from radius",
+          "check": "2*2==4 and D(4)*D('3.14')==D('12.56')",
+          "worked": "Double the radius for the diameter, then multiply by \u03c0.",
+          "wrong": "",
+          "error": "",
+          "session": 20
+        },
+        {
+          "text": "A circle has radius 2 cm. Find area exactly and using 3.14.",
+          "answer": "4\u03c0 square cm; about 12.56 square cm",
+          "skill": "G-CIRCLE",
+          "case": "area from radius",
+          "check": "2**2==4 and D(4)*D('3.14')==D('12.56')",
+          "worked": "Square the radius, then multiply by \u03c0.",
+          "wrong": "",
+          "error": "",
+          "session": 20
+        },
+        {
+          "text": "A circle has diameter 4 cm. Find area exactly and using 3.14.",
+          "answer": "4\u03c0 square cm; about 12.56 square cm",
+          "skill": "G-CIRCLE",
+          "case": "area from diameter",
+          "check": "4//2==2 and 2**2==4 and D(4)*D('3.14')==D('12.56')",
+          "worked": "Halve the diameter, square the radius, then multiply by \u03c0.",
+          "wrong": "16\u03c0 square cm",
+          "error": "Squares the diameter.",
+          "session": 20
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 5
+    },
+    {
+      "week": 10,
+      "weekday": "Wed",
+      "set_id": "11_Puzzles",
+      "label": "Weekly puzzle",
+      "indices": [
+        9
+      ],
+      "problems": [
+        {
+          "text": "A garden is 3 cm by 4 cm on a map where 1 cm means 10 m. Redraw it where 1 cm means 20 m. Find the new drawing dimensions and the actual garden area.",
+          "answer": "New drawing: 1.5 cm by 2 cm. Actual area: 1,200 square m.",
+          "skill": "P-SCALE",
+          "case": "scale and area capstone",
+          "check": "F(3*10,20)==F(3,2) and F(4*10,20)==2 and (3*10)*(4*10)==1200",
+          "worked": "The garden is 30 m by 40 m. Divide those lengths by 20 for the new drawing. The garden itself stays the same.",
+          "wrong": "600 square m",
+          "error": "Changes the actual area when only the drawing scale changes."
+        }
+      ],
+      "replace": "Part C Think",
+      "target_minutes": 4
+    },
+    {
+      "week": 10,
+      "weekday": "Thu",
+      "set_id": "12_Statistics",
+      "label": "Data and statistics",
+      "indices": [
+        1,
+        5,
+        12,
+        17
+      ],
+      "problems": [
+        {
+          "text": "Find the mean of 1, 4, 5, 6.",
+          "answer": "4",
+          "skill": "S-MEAN",
+          "case": "mean",
+          "check": "F(sum([1, 4, 5, 6]),len([1, 4, 5, 6]))==F('4')",
+          "worked": "Total 16 divided by 4 values gives 4.",
+          "wrong": "",
+          "error": "",
+          "session": 17
+        },
+        {
+          "text": "Find the median of 10, 3, 5, 7, 2, 9.",
+          "answer": "6",
+          "skill": "S-MEDIAN",
+          "case": "median after ordering",
+          "check": "F(statistics.median([10, 3, 5, 7, 2, 9]))==F('6')",
+          "worked": "Order: 2, 3, 5, 7, 9, 10. Use the middle value or mean of two middles.",
+          "wrong": "",
+          "error": "",
+          "session": 17
+        },
+        {
+          "text": "Find the range of 0, 2, 5, 10.",
+          "answer": "10",
+          "skill": "S-RANGE",
+          "case": "range",
+          "check": "max([0, 2, 5, 10])-min([0, 2, 5, 10])==10",
+          "worked": "10 \u2212 0 = 10.",
+          "wrong": "",
+          "error": "",
+          "session": 18
+        },
+        {
+          "text": "Find the MAD of 2, 5, 5, 8.",
+          "answer": "{3/2}",
+          "skill": "S-MAD",
+          "case": "mean absolute deviation",
+          "check": "sum(abs(F(x)-F('5')) for x in [2, 5, 5, 8])/len([2, 5, 5, 8])==F('3/2')",
+          "worked": "Mean 5. Average the distances from 5.",
+          "wrong": "0",
+          "error": "Averages signed differences instead of distances.",
+          "session": 18
+        }
+      ],
+      "replace": "Four Part B items",
+      "target_minutes": 6
+    }
+  ],
+  "notes": [
+    "Each Mon/Tue/Thu block replaces four Part B items. It does not add four more items. Keep the other four practice items, the short warm-up, and the thinking item.",
+    "Wednesday uses one weekly puzzle in place of the existing Think item. Do not assign four puzzles. Friday stays a clean ten-item check with no extra Booster block.",
+    "All thirteen Booster sets appear in the sequence. The remaining library problems are alternatives for future re-teaching, not additional mandatory homework.",
+    "After a difficult exit ticket, swap the next block for four items targeting the observed error. Record the actual replacement IDs and adjust its key.",
+    "Week 1 avoids reciprocal/general fraction division. Those wait until Week 4. Week 2 avoids rate-per-hour problems. Those wait until Week 3. Inequalities first appear in Week 8.",
+    "Week 7 surface area and Week 9 variability blocks are slower. Pair them with four short mixed items and use the stop rule. Never add a separate extra practice page.",
+    "Week 10 is cumulative: the four selected bridge/circle items replace four capstone items; the remaining six items must cover distinct earlier units. Wednesday and Friday should cover the broadest mix.",
+    "Print the source ID in tutor material, not a directive telling the child to find another file. All selected problems are embedded directly on the day page."
+  ],
+  "validation": {
+    "exact_math_checks": 260,
+    "catalog_sets": 13,
+    "problems_per_set": 20,
+    "placements": 40,
+    "uses_all_sets": true,
+    "indexing": "zero-based"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "finding_count": 0,
+  "findings": [],
+  "font_policy": {
+    "checked_text_script_count": 14667,
+    "native_font_rendering_verified": false,
+    "observed_font_families": [
+      "Calibri",
+      "Georgia"
+    ],
+    "observed_font_use_counts": {
+      "Calibri": 10000,
+      "Georgia": 4667
+    },
+    "passed": true,
+    "performed": true
+  },
+  "slide_count": 630,
+  "slide_size_in": [
+    13.3333,
+    7.5
+  ],
+  "warning_count": 10,
+  "warnings": [
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "16",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.2086,
+      "right_object_id": "18",
+      "slide": 13
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "20",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.1753,
+      "right_object_id": "22",
+      "slide": 13
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "28",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.1455,
+      "right_object_id": "30",
+      "slide": 13
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "17",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.2086,
+      "right_object_id": "19",
+      "slide": 205
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "21",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.1753,
+      "right_object_id": "23",
+      "slide": 205
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "29",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.1455,
+      "right_object_id": "31",
+      "slide": 205
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "16",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.2086,
+      "right_object_id": "18",
+      "slide": 225
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "20",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.1753,
+      "right_object_id": "22",
+      "slide": 225
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "28",
+      "overlap_height_in": 0.32,
+      "overlap_width_in": 0.1455,
+      "right_object_id": "30",
+      "slide": 225
+    },
+    {
+      "kind": "substantial_text_frame_overlap",
+      "left_object_id": "17",
+      "overlap_height_in": 0.2871,
+      "overlap_width_in": 1.222,
+      "right_object_id": "18",
+      "slide": 401
+    }
+  ]
+}

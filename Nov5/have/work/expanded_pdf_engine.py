@@ -1,0 +1,396 @@
+import re, math, json, os
+from pathlib import Path
+from fractions import Fraction as F
+from decimal import Decimal as D
+import statistics
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.colors import HexColor
+FONT='/System/Library/Fonts/Supplemental/'
+pdfmetrics.registerFont(TTFont('Old',FONT+'Times New Roman.ttf'))
+pdfmetrics.registerFont(TTFont('OldB',FONT+'Times New Roman Bold.ttf'))
+pdfmetrics.registerFont(TTFont('OldI',FONT+'Times New Roman Italic.ttf'))
+ROOT=Path('outputs/DoubleAdvanced_Expanded')
+TEAL='#1F5A63'; BRICK='#A3472B'; INK='#1F1F1F'
+OVERFLOWS=[]
+def clean(s):
+ return str(s).replace('—',' - ').replace('–','-').replace('**','')
+# Fractions sit on the mathematical axis of the surrounding type.
+# Mixed numbers stay together across line breaks.
+def tokens(s):
+ return re.findall(r"[−-]?\d+ +\{[^{}]+/[^{}]+\}|\{[^{}]+/[^{}]+\}|[^\s{}]+|[ \t]+|\n",clean(s))
+def fraction_parts(t):
+ m=re.fullmatch(r"(?:(.*?) +)?\{([^{}]+)/([^{}]+)\}",t)
+ return m.groups() if m else None
+
+def tw(t,size,font='Old'):
+ frac=fraction_parts(t)
+ if frac:
+  whole,n,d=frac; fs=size*.88
+  fw=max(pdfmetrics.stringWidth(n,font,fs),pdfmetrics.stringWidth(d,font,fs))+size*.32
+  return (pdfmetrics.stringWidth(whole,font,size)+size*.22 if whole else 0)+fw
+ return pdfmetrics.stringWidth(t,font,size)
+def wrap_lines(s,w,size=12,font='Old'):
+ lines=[];line=[];width=0
+ for token in tokens(s):
+  if token=='\n':lines.append(line);line=[];width=0;continue
+  ww=tw(token,size,font)
+  if width+ww>w and line:
+   lines.append(line);line=[];width=0
+   if token.isspace():continue
+  line.append(token);width+=ww
+ if line:lines.append(line)
+ return lines
+
+def text_height(s,w,size=12,font='Old',leading=None):
+ return sum(max(leading or size*1.32,size*1.88 if any(fraction_parts(t) for t in ln) else 0) for ln in wrap_lines(s,w,size,font))
+
+def text(c,s,x,y,w,size=12.5,font='Old',color='black',leading=None):
+ color=HexColor(color) if color.startswith('#') else color
+ c.setFillColor(color);leading=leading or size*1.32
+ for ln in wrap_lines(s,w,size,font):
+  xx=x;hasfrac=any(fraction_parts(t) for t in ln)
+  for t in ln:
+   frac=fraction_parts(t);c.setFont(font,size)
+   if frac:
+    whole,n,d=frac;ww=tw(t,size,font);fs=size*.88
+    if whole:
+     c.drawString(xx,y,whole);off=pdfmetrics.stringWidth(whole,font,size)+size*.22
+    else:off=0
+    fw=ww-off;axis=y+size*.29
+    c.setFont(font,fs)
+    c.drawCentredString(xx+off+fw/2,axis+size*.25,n)
+    c.drawCentredString(xx+off+fw/2,axis-size*.84,d)
+    c.setStrokeColor(color);c.setLineWidth(max(.45,size*.042));c.line(xx+off+size*.04,axis,xx+ww-size*.04,axis)
+   else:c.drawString(xx,y,t)
+   xx+=tw(t,size,font)
+  y-=max(leading,size*1.88 if hasfrac else leading)
+ return y
+
+def newpdf(path,title):
+ path=Path(path); path.parent.mkdir(parents=True,exist_ok=True)
+ c=canvas.Canvas(str(path),pagesize=(612,792)); c.setTitle(title); c.setAuthor('Double Advanced Math Program'); c._artifact_path=str(path); return c
+
+def header(c,title,id,page=1,student=False,right=''):
+ c.setFillColorRGB(0,0,0);c.setStrokeColorRGB(0,0,0)
+ if student:
+  text(c,'Name __________________ Date __________',42,758,340,11)
+  text(c,right,407,758,163,11)
+  c.setLineWidth(.5); c.line(42,747,570,747)
+  title_end=text(c,title,42,724,528,17,'OldB')
+ else:title_end=text(c,title,42,750,528,19,'OldB')
+ text(c,f'{id}   /   {page}',42,25,528,9)
+ return min(693 if student else 716,title_end-9)
+
+def rule(c,x,y,w):c.setLineWidth(.5);c.line(x,y,x+w,y)
+def section(c,s,y):return text(c,s,42,y,528,14,'OldB')-8
+
+def line_model(c,m,x,y,w,h):
+ """Draw the supplied mathematical model, with consistent scales and native line art."""
+ kind=m.get('kind','numberline'); vals=m.get('values',[]); labels=m.get('labels',[])
+ c.saveState();c.setStrokeColorRGB(0,0,0);c.setFillColorRGB(0,0,0);c.setLineWidth(.9)
+ def t(s,xx,yy,ww=150,fs=9):return text(c,s,xx,yy,ww,fs)
+ def num(v):
+  try:
+   v=float(v)
+   return str(int(v)) if v.is_integer() else f'{v:g}'
+  except (ValueError,TypeError):return str(v)
+ def poly(points,closed=True):
+  if not points:return
+  p=c.beginPath();p.moveTo(*points[0])
+  for q in points[1:]:p.lineTo(*q)
+  if closed:p.close()
+  c.drawPath(p)
+ def fitted(points,padleft=18,padbottom=19,padright=25,padtop=15):
+  xmin=min(a for a,b in points);xmax=max(a for a,b in points)
+  ymin=min(b for a,b in points);ymax=max(b for a,b in points)
+  scale=min((w-padleft-padright)/max(xmax-xmin,.01),(h-padbottom-padtop)/max(ymax-ymin,.01))
+  ox=x+padleft+(w-padleft-padright-(xmax-xmin)*scale)/2
+  oy=y+padbottom+(h-padbottom-padtop-(ymax-ymin)*scale)/2
+  return lambda a,b:(ox+(a-xmin)*scale,oy+(b-ymin)*scale),scale
+ if kind=='doubleline' and len(vals)>=2:
+  n=max(1,min(int(m.get('multiples',5)),10));left=x+12;right=x+w-12
+  for row in range(2):
+   yy=y+h*(.68 if row==0 else .20)
+   c.line(left,yy,right,yy);t(labels[row] if len(labels)>row else '',x,yy+19,w,9)
+   for i in range(n+1):
+    xx=left+(right-left)*i/n;c.line(xx,yy-3,xx,yy+3)
+    if (n<=5 or i%2==0) and i<=m.get('blank_after',n):t(num(float(vals[row])*i),xx-7,yy-14,40,8)
+ elif kind=='ratio' and isinstance(m.get('rows'),list):
+  rows=m['rows'];nc=max([len(r) for r in rows]+[len(labels),2]);cw=w/nc
+  rh=min(25,h/(len(rows)+1));top=y+h-rh
+  for j,row in enumerate([labels]+rows):
+   for i in range(nc):
+    yy=top-j*rh;c.rect(x+i*cw,yy,cw,rh)
+    if i<len(row):t(num(row[i]),x+i*cw+4,yy+rh/2-3,cw-8,9)
+ elif kind=='area' and 'rows' in m:
+  nr=int(m['rows']);nc=int(m.get('cols',m.get('columns',5)))
+  sr=int(m.get('shade_rows',m.get('shadeRows',0)));sc=int(m.get('shade_cols',m.get('shadeColumns',0)))
+  side=min(h-18,w-28);ww=hh=side;xx=x+(w-ww)/2;yy=y+10;cw=ww/nc;rh=hh/nr
+  for j in range(nr):
+   for i in range(nc):
+    c.rect(xx+i*cw,yy+j*rh,cw,rh)
+    if j<sr and i<sc:
+     c.line(xx+i*cw+1,yy+j*rh+1,xx+(i+1)*cw-1,yy+(j+1)*rh-1)
+ elif kind=='area' and m.get('points'):
+  points=m['points'];f,scale=fitted(points);poly([f(*q) for q in points])
+  dims=m.get('dimensions',[])
+  if len(dims)>=4:
+   a,b=dims[:2];cutw,cuth=dims[2:4];xx,yy=f(a/2,0);t(num(a),xx-4,yy-14,40,9)
+   xx,yy=f(0,b/2);t(num(b),xx-15,yy,30,9)
+   xx,yy=f(a-cutw/2,b-cuth);t(num(cutw),xx-4,yy+4,40,8)
+   xx,yy=f(a-cutw,b-cuth/2);t(num(cuth),xx+5,yy,40,8)
+ elif kind=='area' and 'dimensions' in m:
+  dims=m['dimensions']
+  if labels and any(str(z)=='x' for z in labels):
+   # x is unknown: the schematic deliberately has no numerical horizontal scale.
+   left=x+24;bottom=y+20;ww=w-55;hh=max(20,h-45);split=.58*ww
+   c.rect(left,bottom,ww,hh);c.line(left+split,bottom,left+split,bottom+hh)
+   t(labels[0],left+split/2-4,bottom-14,50,9);t(labels[1],left+split+(ww-split)/2-4,bottom-14,50,9)
+   t(labels[2] if len(labels)>2 else num(dims[0]),left-22,bottom+hh/2,30,9)
+  else:
+   a,b=dims[:2];f,scale=fitted([(0,0),(a,b)]);xx,yy=f(0,0);c.rect(xx,yy,a*scale,b*scale)
+   t(labels[0] if labels else num(a),xx,yy-14,max(50,a*scale),9)
+   t(labels[1] if len(labels)>1 else num(b),xx+a*scale+5,yy+b*scale/2,max(60,w*.45),9)
+ elif kind=='tape' and len(vals)>=2:
+  mx=max(float(v) for v in vals);unit=(w-20)/mx;bh=min(24,h*.22)
+  for j,n in enumerate(vals[:2]):
+   yy=y+h*.62-j*(bh+25)
+   for i in range(int(n)):c.rect(x+10+i*unit,yy,unit,bh)
+   t(labels[j] if len(labels)>j else num(n),x+10,yy+bh+7,w-20,9)
+ elif kind=='hanger':
+  groups=int(vals[0]) if vals else 4;total=vals[1] if len(vals)>1 else '?'
+  cy=y+h*.68;cx=x+w/2;arm=w*.34
+  c.line(cx,cy+18,cx,cy);c.line(cx-arm,cy,cx+arm,cy)
+  c.circle(cx,cy,2,fill=1)
+  for sign in [-1,1]:
+   ax=cx+sign*arm*.72;c.line(ax,cy,ax,cy-15);c.line(ax-w*.16,cy-15,ax+w*.16,cy-15)
+  size=min(18,w*.30/max(groups,1));start=cx-arm*.72-groups*size/2
+  for k in range(groups):
+   c.rect(start+k*size,cy-35,size,18);t('x',start+k*size+size/2-3,cy-29,20,9)
+  t(num(total),cx+arm*.72-10,cy-30,60,12)
+  t(labels[0] if labels else f'{groups} equal groups',x,y+9,w/2,8.5)
+  t(labels[1] if len(labels)>1 else str(total),x+w/2,y+9,w/2,8.5)
+ elif kind in ['numberline','doubleline']:
+  lo=float(m.get('min',m.get('start',0)));hi=float(m.get('max',m.get('end',2)))
+  step=m.get('step');n=m.get('ticks',round((hi-lo)/step) if step else round(hi-lo) if hi-lo>=2 else 8)
+  n=max(1,int(n));left=x+13;right=x+w-13
+  for row in range(2 if kind=='doubleline' else 1):
+   yy=y+h*(.65 if row==0 else .20);c.line(left,yy,right,yy)
+   for i in range(n+1):
+    xx=left+(right-left)*i/n;c.line(xx,yy-3,xx,yy+3)
+    v=lo+(hi-lo)*i/n
+    if i in [0,n] or abs(v)<1e-8 or (n<=12 and abs(v-round(v))<1e-8):t(num(v),xx-7,yy-15,35,8)
+   positions=[]
+   for j,v in enumerate(vals):
+    if isinstance(v,(int,float)) and lo<=v<=hi:
+     xx=left+(right-left)*(v-lo)/(hi-lo);c.circle(xx,yy,2,fill=1)
+     lab=labels[j] if len(labels)>j else num(v)
+     tier=1 if positions and xx-positions[-1]<35 else 0
+     t(lab,xx-10,yy+13+12*tier,min(90,w),8.5);positions.append(xx)
+ elif kind in ['coordinate','grid']:
+  points=m.get('points',[]);second=m.get('second_points',[])
+  def point(p):return (p.get('x',0),p.get('y',0)) if isinstance(p,dict) else tuple(p[:2])
+  pp=[point(p) for p in points];qq=[point(p) for p in second];allp=pp+qq
+  if 'range' in m:xmin=ymin=float(m['range'][0]);xmax=ymax=float(m['range'][1])
+  elif 'limit' in m:xmin=ymin=-float(m['limit']);xmax=ymax=float(m['limit'])
+  elif 'xmax' in m or 'ymax' in m:
+   xmin=ymin=0;xmax=float(m.get('xmax',max([a for a,b in allp]+[5])));ymax=float(m.get('ymax',max([b for a,b in allp]+[5])))
+  elif allp:
+   xmin=min(0,math.floor(min(a for a,b in allp)));ymin=min(0,math.floor(min(b for a,b in allp)))
+   xmax=max(1,math.ceil(max(a for a,b in allp)));ymax=max(1,math.ceil(max(b for a,b in allp)))
+  else:xmin=ymin=-5;xmax=ymax=5
+  f,scale=fitted([(xmin,ymin),(xmax,ymax)],28,24,30,16)
+  for a in range(math.ceil(xmin),math.floor(xmax)+1):
+   c.setLineWidth(.8 if a==0 else .2);c.line(*f(a,ymin),*f(a,ymax))
+  for b in range(math.ceil(ymin),math.floor(ymax)+1):
+   c.setLineWidth(.8 if b==0 else .2);c.line(*f(xmin,b),*f(xmax,b))
+  xaxis=max(ymin,min(0,ymax));yaxis=max(xmin,min(0,xmax));c.setLineWidth(.8)
+  for a in sorted(set([xmin,xmax,0] if xmin<=0<=xmax else [xmin,xmax])):
+   xx,yy=f(a,xaxis);t(num(a),xx-5,yy-12,30,7.5)
+  for b in sorted(set([ymin,ymax])):
+   xx,yy=f(yaxis,b);t(num(b),xx-17,yy-3,30,7.5)
+  xx,yy=f(xmax,xaxis);t('x',xx+6,yy-3,20,9)
+  xx,yy=f(yaxis,ymax);t('y',xx-2,yy+5,20,9)
+  for series,letter in [(pp,'A'),(qq,'B')]:
+   if not series:continue
+   if m.get('closed') or qq or m.get('connect') or 'straight line' in m.get('caption',''):
+    c.setDash(3,2) if series is qq else c.setDash()
+    poly([f(*q) for q in series],closed=bool(m.get('closed')));c.setDash()
+   for j,(a,b) in enumerate(series):
+    xx,yy=f(a,b);c.circle(xx,yy,2,fill=1)
+    labs=m.get('point_labels',[]);lab=labs[j] if series is pp and j<len(labs) else ''
+    if lab:
+     dx,dy=(m.get('point_label_offsets') or [[4,4]]*len(series))[j]
+     t(lab,xx+dx,yy+dy,60,8.5)
+   if qq:
+    xx,yy=f(*series[-1]);t(letter,xx+5,yy+5,20,9)
+  if labels and labels!=['x','y']:t('x: '+labels[0]+'; y: '+(labels[1] if len(labels)>1 else ''),x,y+1,w,8)
+ elif kind=='tape':
+  n=max(1,min(int(m.get('parts',4)),12));bh=min(30,h*.25)
+  for row in range(2):
+   yy=y+h*.6-row*(bh+20)
+   for j in range(n):c.rect(x+8+j*(w-16)/n,yy,(w-16)/n,bh)
+ elif kind in ['triangle','parallelogram']:
+  dims=m.get('dimensions',[6,4]);base,height=dims[:2]
+  raw=m.get('points') or ([[0,0],[base,0],[base+height*.6,height],[height*.6,height]] if kind=='parallelogram' else [[0,0],[base,0],[base*.5,height]])
+  apex=raw[-1];foot=[apex[0],raw[0][1]]
+  f,scale=fitted(raw+[foot],22,22,37,12);pts=[f(*p) for p in raw];poly(pts)
+  af=f(*apex);ff=f(*foot);c.setDash(3,2);c.line(*af,*ff)
+  if foot[0]>raw[1][0]:c.line(*f(*raw[1]),*ff)
+  elif foot[0]<raw[0][0]:c.line(*f(*raw[0]),*ff)
+  c.setDash();mark=min(6,abs(af[1]-ff[1])*.2);c.line(ff[0],ff[1]+mark,ff[0]-mark,ff[1]+mark);c.line(ff[0]-mark,ff[1]+mark,ff[0]-mark,ff[1])
+  xx,yy=f((raw[0][0]+raw[1][0])/2,raw[0][1]);t('base '+num(base),xx-18,yy-16,95,8.5)
+  t('height '+num(height),ff[0]+5 if foot[0]>raw[1][0] else ff[0]-57,(af[1]+ff[1])/2,65,8.5)
+  if len(dims)>2:
+   end=pts[2] if kind=='parallelogram' else pts[-1];start=pts[1]
+   t('side '+num(dims[2]),(start[0]+end[0])/2+4,(start[1]+end[1])/2+7,75,8.5)
+ elif kind=='circle':
+  r=min(w-45,h-20)/2;cx=x+w/2;cy=y+h/2;c.circle(cx,cy,r);c.circle(cx,cy,1.5,fill=1)
+  diameter=any('diameter' in str(z) for z in labels)
+  c.line(cx-r if diameter else cx,cy,cx+r,cy)
+  if diameter:
+   lab=next(str(z) for z in labels if 'diameter' in str(z));t(lab,cx-r,cy+7,2*r+40,9)
+   if any('radius' in str(z) for z in labels):
+    c.line(cx,cy,cx,cy-r);t(next(str(z) for z in labels if 'radius' in str(z)),cx+5,cy-r*.65,90,9)
+  else:t(labels[0] if labels else m.get('radius_label','r'),cx+5,cy+7,100,9)
+ elif kind=='net':
+  dims=m.get('dimensions',[1,1,1]);solid=m.get('solid','rectangular_prism');polygons=[];face_labels=[]
+  if solid=='rectangular_prism':
+   a,b,depth=dims[:3];offset=0
+   for width in [a,b,a,b]:
+    polygons.append([(offset,0),(offset+width,0),(offset+width,depth),(offset,depth)])
+    face_labels.append((offset+width/2,depth/2,f'{num(width)} × {num(depth)}'));offset+=width
+   for yy in [depth,-a]:
+    polygons.append([(a,yy),(a+b,yy),(a+b,yy+a),(a,yy+a)])
+    face_labels.append((a+b/2,yy+a/2,f'{num(b)} × {num(a)}'))
+  elif solid=='triangular_prism':
+   a,b,hyp,depth=dims[:4];offset=0
+   for width in [a,b,hyp]:
+    polygons.append([(offset,0),(offset+width,0),(offset+width,depth),(offset,depth)])
+    face_labels.append((offset+width/2,depth/2,f'{num(width)} × {num(depth)}'));offset+=width
+   polygons.extend([[(0,depth),(a,depth),(0,depth+b)],[(0,0),(a,0),(0,-b)]])
+   face_labels.extend([(a*.2,depth+b*.3,'triangle'),(a*.2,-b*.3,'triangle')])
+  elif solid=='square_pyramid':
+   a,faceh=dims[:2];polygons=[[(0,0),(a,0),(a,a),(0,a)],[(0,0),(a,0),(a/2,-faceh)],[(0,a),(a,a),(a/2,a+faceh)],[(0,0),(0,a),(-faceh,a/2)],[(a,0),(a,a),(a+faceh,a/2)]]
+   face_labels=[(a/2,a/2,'square')]
+  f,scale=fitted([p for q in polygons for p in q],5,7,5,7)
+  for q in polygons:poly([f(*p) for p in q])
+  if h>=100:
+   for a,b,lab in face_labels:
+    xx,yy=f(a,b);t(lab,xx-17,yy-3,80,7)
+  # Shared edges use matching lengths; dimensions come from the problem text.
+ elif kind in ['dotplot','histogram','boxplot']:
+  data=m.get('data',vals);data=[float(a) for a in data if isinstance(a,(int,float))]
+  if kind=='histogram':
+   bins=m.get('bins');freq=m.get('frequencies')
+   if bins is None:
+    lo=math.floor(min(data or [0]));hi=math.ceil(max(data or [4]))+1;bins=list(range(lo,hi+1))
+   if freq is None:freq=[sum(a<=v<b for v in data) for a,b in zip(bins,bins[1:])]
+   left=x+23;bottom=y+23;ww=w-35;hh=h-35;maximum=max(freq+[1]);c.line(left,bottom,left+ww,bottom);c.line(left,bottom,left,bottom+hh)
+   for i,count in enumerate(freq):
+    xx=left+ww*(bins[i]-bins[0])/(bins[-1]-bins[0]);bw=ww*(bins[i+1]-bins[i])/(bins[-1]-bins[0]);bh=hh*count/maximum
+    c.rect(xx,bottom,bw,bh);t(str(count),xx+bw/2-3,bottom+bh+4,25,8)
+   for b in bins:t(num(b),left+ww*(b-bins[0])/(bins[-1]-bins[0])-3,bottom-14,35,8)
+   t('count',x,y+h-2,40,8)
+  else:
+   five=m.get('five_number')
+   if kind=='boxplot' and five:
+    lo,q1,med,q3,hi=map(float,five)
+   elif kind=='boxplot':
+    data=sorted(data or [1,2,3,4,5]);half=len(data)//2;lo,hi=data[0],data[-1];med=statistics.median(data);q1=statistics.median(data[:half]);q3=statistics.median(data[-half:])
+   else:lo=min(data or [0]);hi=max(data or [5])
+   span=max(hi-lo,1);left=x+22;right=x+w-22
+   def pos(v):return left+(right-left)*(v-lo)/span
+   yy=y+24;c.line(left,yy,right,yy)
+   if kind=='dotplot':
+    from collections import Counter
+    counts=Counter(data);dy=min(10,(h-43)/max(list(counts.values())+[1]))
+    for v in range(math.floor(lo),math.ceil(hi)+1):
+     c.line(pos(v),yy-2,pos(v),yy+2);t(num(v),pos(v)-4,yy-14,30,8)
+    for v,n in sorted(counts.items()):
+     for j in range(n):c.circle(pos(v),yy+8+j*dy,2,fill=1)
+    if labels:t(labels[0],x,y+1,w,8)
+   else:
+    mid=y+h*.58;bh=min(28,h*.28);c.line(pos(lo),mid,pos(q1),mid);c.line(pos(q3),mid,pos(hi),mid)
+    c.line(pos(lo),mid-6,pos(lo),mid+6);c.line(pos(hi),mid-6,pos(hi),mid+6)
+    c.rect(pos(q1),mid-bh/2,pos(q3)-pos(q1),bh);c.line(pos(med),mid-bh/2,pos(med),mid+bh/2)
+    for v in [lo,q1,med,q3,hi]:t(num(v),pos(v)-6,yy-14,40,8)
+ if m.get('caption'):t(m['caption'],x,y+h+7,w,9)
+ c.restoreState()
+
+def problem(c,p,n,x,y,w,space=70,size=12.5,answerline=True):
+ end=text(c,f'{n}. '+p['text'],x,y,w,size)
+ if p.get('diagram'):
+  dh=70;line_model(c,p['diagram'],x,end-dh-12,w,dh);end-=dh+20
+ if answerline:end=text(c,'Answer: ____________________',x,end-5,w,11)
+ return min(y-space,end-16)
+
+def packet(path,title,id,wk,day,parts):
+ c=newpdf(path,title);page=1;y=header(c,title,id,page,True,f'Week {wk}, Day {day}')
+ has_stretch=any('Stretch' in label for label,items in parts)
+ num=1
+ for label,ps in parts:
+  if label=='Part B. Practice':
+   y=section(c,label,y-4)
+   # four on first page, rest after page break. Two columns, two rows.
+   for k,p in enumerate(ps[:4]):problem(c,p,num,42+(k%2)*270,y-(k//2)*145,250,space=130);num+=1
+   c.showPage();page+=1;y=header(c,'Practice and thinking',id,page,True,f'Week {wk}, Day {day}')
+   for k,p in enumerate(ps[4:]):problem(c,p,num,42+(k%2)*270,y-(k//2)*105,250,space=95);num+=1
+   y-=math.ceil(len(ps[4:])/2)*105+10
+  elif label=='Part A. Warm-up':
+   y=section(c,label+'  (3 minutes)',y)
+   for k,p in enumerate(ps):problem(c,p,num,42+(k%2)*270,y-(k//2)*65,250,space=58);num+=1
+   y-=140
+  else:
+   y=section(c,label,y)
+   if 'Stretch' in label:
+    ends=[]
+    for k,p in enumerate(ps):
+     ends.append(problem(c,p,num,42+(k%2)*270,y-(k//2)*75,250,space=65));num+=1
+    y=min(ends) if ends else y
+   else:
+    for p in ps:
+     y=problem(c,p,num,42,y,528,space=85 if has_stretch else 100);num+=1
+   if y<42:OVERFLOWS.append((str(path),page,y))
+ c.save()
+
+def check_pdf(path,title,id,ps,wk,minutes=20):
+ c=newpdf(path,title);npp=6 if len(ps)>12 else 5
+ for start in range(0,len(ps),npp):
+  page=start//npp+1;y=header(c,title,id,page,True,f'Week {wk}')
+  if page==1:y=text(c,f'{minutes} minutes. No calculator. Show your work.',42,y,528,11)-18
+  chunk=ps[start:start+npp]
+  for j,p in enumerate(chunk):
+   if len(ps)>12:
+    problem(c,p,start+j+1,42+(j%2)*270,y-(j//2)*195,250,space=180)
+   else:problem(c,p,start+j+1,42+(j%2)*270,y-(j//2)*185,250,space=170)
+  c.showPage()
+ c.save()
+
+def key_pdf(path,title,id,ps):
+ c=newpdf(path,title);page=1;y=header(c,title,id,page)
+ y=text(c,'Tutor copy. Accept equivalent forms and valid alternative methods.',42,y,528,10)-10
+ for n,p in enumerate(ps,1):
+  content=f'{n}. [{p["skill"]}] '+p['answer']
+  if p.get('worked'):content+='\nReasoning: '+p['worked']
+  if p.get('wrong') and n<=3:content+='\nWatch for '+p['wrong']+'. '+p.get('error','')
+  needed=len(clean(content))*0.22+70
+  if y-needed<60:c.showPage();page+=1;y=header(c,title,id,page)
+  y=text(c,content,42,y,528,11.5)-16
+ if y<155:c.showPage();page+=1;y=header(c,title,id,page)
+ y=text(c,'Next step',42,y,528,13,'OldB')-4
+ text(c,'If three or more misses share a skill, use the matching Booster set before adding harder work. On a 10-item check: 9-10 strong; 7-8 on track; 5-6 repeat with a Booster; 0-4 use 20 minutes next session to reteach. Score explain items for a correct conclusion supported by a valid model or reason. Record each item by its skill ID.',42,y,528,11)
+ c.save()
+
+def document(path,title,sections,fontsize=12):
+ c=newpdf(path,title);page=1;y=header(c,title,Path(path).stem,page)
+ for heading,body in sections:
+  if y<140:c.showPage();page+=1;y=header(c,title,Path(path).stem,page)
+  y=text(c,heading,42,y,528,14,'OldB')-6
+  for para in (body if isinstance(body,list) else [body]):
+   need=len(str(para))*fontsize/100+30
+   if y-need<65:c.showPage();page+=1;y=header(c,title,Path(path).stem,page)
+   y=text(c,para,42,y,528,fontsize)-12
+ c.save()

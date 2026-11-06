@@ -1,0 +1,126 @@
+{
+  "guides": [
+    {
+      "week": 1,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_01_Teacher_Guide.pdf",
+      "pages": 29,
+      "slides": [
+        1,
+        66
+      ],
+      "slide_count": 66,
+      "answer_sections": 10,
+      "answer_items": 153
+    },
+    {
+      "week": 2,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_02_Teacher_Guide.pdf",
+      "pages": 25,
+      "slides": [
+        67,
+        127
+      ],
+      "slide_count": 61,
+      "answer_sections": 8,
+      "answer_items": 98
+    },
+    {
+      "week": 3,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_03_Teacher_Guide.pdf",
+      "pages": 27,
+      "slides": [
+        128,
+        190
+      ],
+      "slide_count": 63,
+      "answer_sections": 9,
+      "answer_items": 105
+    },
+    {
+      "week": 4,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_04_Teacher_Guide.pdf",
+      "pages": 27,
+      "slides": [
+        191,
+        254
+      ],
+      "slide_count": 64,
+      "answer_sections": 8,
+      "answer_items": 101
+    },
+    {
+      "week": 5,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_05_Teacher_Guide.pdf",
+      "pages": 25,
+      "slides": [
+        255,
+        315
+      ],
+      "slide_count": 61,
+      "answer_sections": 8,
+      "answer_items": 100
+    },
+    {
+      "week": 6,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_06_Teacher_Guide.pdf",
+      "pages": 26,
+      "slides": [
+        316,
+        376
+      ],
+      "slide_count": 61,
+      "answer_sections": 8,
+      "answer_items": 99
+    },
+    {
+      "week": 7,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_07_Teacher_Guide.pdf",
+      "pages": 26,
+      "slides": [
+        377,
+        438
+      ],
+      "slide_count": 62,
+      "answer_sections": 8,
+      "answer_items": 98
+    },
+    {
+      "week": 8,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_08_Teacher_Guide.pdf",
+      "pages": 28,
+      "slides": [
+        439,
+        503
+      ],
+      "slide_count": 65,
+      "answer_sections": 8,
+      "answer_items": 102
+    },
+    {
+      "week": 9,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_09_Teacher_Guide.pdf",
+      "pages": 29,
+      "slides": [
+        504,
+        568
+      ],
+      "slide_count": 65,
+      "answer_sections": 9,
+      "answer_items": 120
+    },
+    {
+      "week": 10,
+      "file": "outputs/DoubleAdvanced_Revised/Teacher_Weeks/Week_10_Teacher_Guide.pdf",
+      "pages": 30,
+      "slides": [
+        569,
+        630
+      ],
+      "slide_count": 62,
+      "answer_sections": 9,
+      "answer_items": 116
+    }
+  ],
+  "math_checks": 1072,
+  "layout_issues": []
+}

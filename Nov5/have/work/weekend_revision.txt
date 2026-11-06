@@ -1,0 +1,43 @@
+def weekend_file(s,w,day,weekday):
+ path=WORK/f'day{day:03d}_lesson.pdf';c=newpdf(path,s['title']);items=[];ex=EXTRAS[s['id']];pg=0
+ recall=ex['recall'];mixed=ex['mixed'];summary=ex['summary']
+ if recall:
+  pg+=1;y=day_header(c,'Recall',day,w,weekday,pg)
+  y=text(c,'Work from memory, then check with your tutor.',42,y,528,11)-24
+  for j,p in enumerate(recall):
+   problem(c,{k:v for k,v in p.items() if k!='diagram'},p['id'],42+(j%2)*270,y-(j//2)*155,250,space=140)
+   items.append(cp(p,p['id'],pg))
+  y=text(c,'S. Return here near the end of the lesson',42,285,528,14,'OldB')-12
+  text(c,summary['text'],42,y,528,12.5)
+  for yy in [210,175,140]:c.setLineWidth(.35);c.line(42,yy,570,yy)
+  items.append(cp(summary,'S',pg));c.showPage()
+ tasklist=[(f'P{i+1}',p) for i,p in enumerate(s['problems'])]
+ fade=dict(s['fade'],skill={11:'E-DIST',12:'E-MULT',13:'G-TRI',14:'G-SA',15:'N-ABS',16:'N-REFLECT',17:'S-MEDIAN',18:'S-MAD',19:'P-PROP',20:'G-CIRCLE'}.get(s['id'],s['exit']['skill']),worked='Use the worked example in the slides to check each step.')
+ err=dict(text=s['error']['text'],answer=s['error']['correction'],skill=bp.error_skill(s),check=s['error']['check'],worked=s['error']['why']+' '+s['error']['move'])
+ tasklist += [('F',fade),('D',err)]
+ if not recall:tasklist.append(('S',summary))
+ for start in range(0,len(tasklist),3):
+  pg+=1;y=day_header(c,s['title'],day,w,weekday,pg)
+  y=text(c,'Follow the slide labels. P = problem; F = your turn; D = discussion.',42,y,528,10.5)-18
+  for j,(label,p) in enumerate(tasklist[start:start+3]):
+   yy=y-j*195;end=text(c,label+'. '+p['text'],42,yy,528,12.5)
+   m=safe_diagram(p)
+   if m:line_model(c,m,305,yy-165,245,100)
+   else:text(c,'Answer: ______________________________',42,end-10,528,11)
+   items.append(cp(p,label,pg))
+  c.showPage()
+ if mixed:
+  pg+=1;y=day_header(c,'Mixed review',day,w,weekday,pg)
+  for j,p in enumerate(mixed):
+   problem(c,{k:v for k,v in p.items() if k!='diagram'},p['id'],42,y-j*185,528,space=170)
+   items.append(cp(p,p['id'],pg))
+  c.showPage()
+ pg+=1;y=day_header(c,'Exit ticket',day,w,weekday,pg)
+ y=text(c,'Work on your own. Show a model or reason when the question asks for one.',42,y,528,11)-30
+ problem(c,{k:v for k,v in s['exit'].items() if k!='diagram'},'E',42,y,528,space=160)
+ m=safe_diagram(s['exit'])
+ if m:line_model(c,m,85,270,440,190)
+ items.append(cp(s['exit'],'E',pg));c.save()
+ bp.verify([p for _,p in tasklist if p.get('check')]+recall+mixed+[s['exit']],f'Day{day} weekend')
+ return path,sect(f'S{s["id"]:02d}',s['title'],day,items,1,pg)
+

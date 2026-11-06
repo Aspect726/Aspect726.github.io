@@ -1,0 +1,27 @@
+{
+  "finding_count": 0,
+  "findings": [],
+  "font_policy": {
+    "checked_text_script_count": 21044,
+    "native_font_rendering_verified": false,
+    "observed_font_families": [
+      "Calibri",
+      "Georgia",
+      "STIX Two Math"
+    ],
+    "observed_font_use_counts": {
+      "Calibri": 18439,
+      "Georgia": 886,
+      "STIX Two Math": 1719
+    },
+    "passed": true,
+    "performed": true
+  },
+  "slide_count": 966,
+  "slide_size_in": [
+    13.3333,
+    7.5
+  ],
+  "warning_count": 0,
+  "warnings": []
+}

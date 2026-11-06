@@ -1,0 +1,3430 @@
+{
+  "weeks": [
+    {
+      "week": 1,
+      "title": "Fractions and equal parts",
+      "big_idea": "The whole stays the same when fractions are compared. Multiplication can take part of an amount. Division can count fractional groups or split a fraction into shares.",
+      "connections": "This builds on equal sharing and multiplication facts. Next, ratios compare amounts that change together.",
+      "omissions": "The diagnostic samples Grade 5 rather than reteaching every standard. General fraction division waits until Week 4; unlike-denominator addition and subtraction recur in practice.",
+      "teaser": {
+        "text": "A card shows a fraction. Its denominator is 8. It lies between {1/2} and {3/4}. What fraction is on the card?",
+        "answer": "{5/8}",
+        "skill": "PUZZLE",
+        "case": "Fraction between benchmarks",
+        "check": "[n for n in range(1,8) if F(1,2)<F(n,8)<F(3,4)]==[5]",
+        "worked": "Half is four eighths and three fourths is six eighths. Only five eighths lies strictly between them.",
+        "wrong": "",
+        "error": ""
+      },
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Fractions on one number line",
+          "standards": [
+            "4.NF.A.1",
+            "4.NF.A.2",
+            "5.NF.A.1",
+            "5.NF.B.3",
+            "5.NBT.A.3"
+          ],
+          "goal": "I can compare fractions and decimals by placing them on the same number line.",
+          "key_idea": "A fraction names equal parts of one whole. The size of that whole stays fixed.",
+          "prerequisite": "Name numerator and denominator. Divide a whole into equal parts.",
+          "materials": [
+            "paper fraction strips",
+            "blank number lines",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Numerator",
+              "meaning": "The top number counts equal parts.",
+              "example": "In {3/5}, count three fifths."
+            },
+            {
+              "term": "Denominator",
+              "meaning": "The bottom number names how many equal parts make one whole.",
+              "example": "Five fifths make one whole."
+            },
+            {
+              "term": "Equivalent fractions",
+              "meaning": "Different names for the same amount.",
+              "example": "{1/2} = {3/6}."
+            },
+            {
+              "term": "Quotient",
+              "meaning": "The result of division.",
+              "example": "3 \u00f7 4 = {3/4}."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Compare {3/7} and {5/7}. Write <, >, or =.",
+              "answer": "{3/7} < {5/7}",
+              "skill": "F-COMP",
+              "case": "Same denominator",
+              "check": "F(3,7)<F(5,7)",
+              "worked": "Both use sevenths. Three parts are fewer than five.",
+              "wrong": ">",
+              "error": "Counting denominator size instead of the number of parts."
+            },
+            {
+              "text": "Compare {4/5} and {4/9}. Use strips of the same length.",
+              "answer": "{4/5} > {4/9}",
+              "skill": "F-COMP",
+              "case": "Same numerator",
+              "check": "F(4,5)>F(4,9)",
+              "worked": "Fifths are larger than ninths, so four fifths cover more.",
+              "wrong": "<",
+              "error": "Thinking a larger denominator makes a larger amount."
+            },
+            {
+              "text": "Is {5/12} less than or greater than {1/2}?",
+              "answer": "Less than {1/2}",
+              "skill": "F-COMP",
+              "case": "Benchmark comparison",
+              "check": "F(5,12)<F(1,2)",
+              "worked": "Half of twelve parts is six parts. Five twelfths is below half.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Compare {3/5} and {7/12}. Rename both using sixtieths.",
+              "answer": "{3/5} > {7/12}",
+              "skill": "F-COMP",
+              "case": "Unlike denominators and numerators",
+              "check": "F(3,5)==F(36,60) and F(7,12)==F(35,60) and F(3,5)>F(7,12)",
+              "worked": "{3/5} = {36/60}; {7/12} = {35/60}. Compare 36 and 35.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "On a 0-to-2 line, place {5/4}, 1 {3/4}, and 0.5.",
+              "answer": "Left to right: 0.5, {5/4}, 1 {3/4}",
+              "skill": "F-LINE",
+              "case": "Improper fraction, mixed number and decimal",
+              "check": "D(\"0.5\")<F(5,4)<F(7,4)",
+              "worked": "{5/4} = 1 {1/4}. Split each whole into four equal steps.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "numberline",
+                "min": 0,
+                "max": 2,
+                "ticks": 8,
+                "values": [],
+                "caption": "Each tick interval is one fourth."
+              }
+            },
+            {
+              "text": "Compare {7/10} and 0.68.",
+              "answer": "{7/10} > 0.68",
+              "skill": "F-COMP",
+              "case": "Fraction versus decimal",
+              "check": "F(7,10)>D(\"0.68\")",
+              "worked": "{7/10} = 0.70, which is 2 hundredths more than 0.68.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A line has ticks at 0, 2, and 4. Place 2 {1/2}.",
+              "answer": "One fourth of the way from 2 to 4",
+              "skill": "F-LINE",
+              "case": "Changed number-line scale",
+              "check": "(F(5,2)-2)/(4-2)==F(1,4)",
+              "worked": "The interval from 2 to 4 is two units. Half a unit uses one fourth of that interval.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "numberline",
+                "min": 0,
+                "max": 4,
+                "ticks": 2,
+                "values": [],
+                "caption": "Main ticks are two units apart."
+              }
+            },
+            {
+              "text": "Three identical muffins are shared equally by four friends. How much muffin does each friend receive?",
+              "answer": "{3/4} of a muffin",
+              "skill": "F-QUOT",
+              "case": "Fraction as division",
+              "check": "F(3,4)*4==3",
+              "worked": "Split each muffin into fourths. Each friend gets three fourths.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "Order {3/4}, {7/10}, and 0.72 from least to greatest. Place them on a 0-to-1 line.",
+            "answer": "{7/10}, 0.72, {3/4}",
+            "skill": "F-COMP",
+            "case": "Exit: denominator misconception with decimals",
+            "check": "F(7,10)<D(\"0.72\")<F(3,4)",
+            "worked": "Rename as 0.70, 0.72, 0.75. Their positions increase to the right.",
+            "wrong": "{3/4}, 0.72, {7/10}",
+            "error": "The larger denominator does not make the fraction larger.",
+            "diagram": {
+              "kind": "numberline",
+              "min": 0,
+              "max": 1,
+              "ticks": 10,
+              "values": [],
+              "caption": "Label each number between 0 and 1."
+            }
+          },
+          "error": {
+            "text": "Nora says {4/9} is greater than {4/5} because 9 is greater than 5. Explain and repair her claim.",
+            "correction": "{4/5} > {4/9}. Nine equal pieces are smaller than five equal pieces of the same whole.",
+            "wrong": "{4/9} > {4/5}",
+            "why": "She compares denominator counts without comparing piece sizes.",
+            "move": "Align equal-length strips. Cover four fifths and four ninths.",
+            "check": "F(4,9)<F(4,5)"
+          },
+          "example": {
+            "text": "Compare {2/3} and {3/4}.",
+            "answer": "{2/3} < {3/4}",
+            "steps": [
+              "Use one whole for both fractions.",
+              "Split the whole into 12 equal parts.",
+              "{2/3} = {8/12}; {3/4} = {9/12}.",
+              "Eight twelfths is less than nine twelfths."
+            ],
+            "check": "F(2,3)==F(8,12) and F(3,4)==F(9,12) and F(2,3)<F(3,4)"
+          },
+          "fade": {
+            "text": "Complete: {5/6} = __ twelfths. Compare {5/6} and {3/4}.",
+            "answer": "10 twelfths; {5/6} > {3/4}",
+            "check": "F(5,6)==F(10,12) and F(5,6)>F(3,4)"
+          },
+          "model": {
+            "kind": "numberline",
+            "min": 0,
+            "max": 2,
+            "ticks": 8,
+            "values": [
+              0.5,
+              1.25,
+              1.75
+            ],
+            "labels": [
+              "0.5",
+              "{5/4}",
+              "1 {3/4}"
+            ],
+            "caption": "One whole keeps the same length."
+          },
+          "look_fors": [
+            {
+              "response": "Uses equal-length wholes.",
+              "why": "Comparisons require the same unit.",
+              "move": "Ask the student to mark 0 and 1 on both strips."
+            },
+            {
+              "response": "Uses a benchmark or common denominator.",
+              "why": "Both are valid comparison methods.",
+              "move": "Accept either method and ask where the fractions lie."
+            },
+            {
+              "response": "Counts spaces between ticks, not tick marks.",
+              "why": "Each space represents an equal fractional step.",
+              "move": "Trace one interval and name its length."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Places {5/4} between 0 and 1.",
+              "why": "Thinks all fractions are less than one.",
+              "move": "Build four fourths, then add one fourth."
+            },
+            {
+              "response": "Orders by denominator size.",
+              "why": "Confuses number of parts with part size.",
+              "move": "Compare equal-length strips cut into fifths and ninths."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: More pieces always means more muffin. Use the same whole to support your answer.",
+            "Partner compare: How does a benchmark comparison differ from renaming both fractions?"
+          ],
+          "summary_frame": "To compare fractions, I first keep ___ the same. Then I can ___.",
+          "exit_sort": {
+            "got": "Orders all three correctly and places them in order between 0.7 and 0.8, with {3/4} at 0.75.",
+            "almost": "Order is correct, but a position or label is imprecise; explains that larger denominator means smaller equal parts.",
+            "reteach": "Reverses the fractions because 10 exceeds 4, or uses inconsistent units."
+          }
+        },
+        {
+          "id": 2,
+          "title": "Fraction operations with models",
+          "standards": [
+            "5.NF.B.3",
+            "5.NF.B.4",
+            "5.NF.B.5",
+            "5.NF.B.6",
+            "5.NF.B.7"
+          ],
+          "goal": "I can use equal parts to explain fraction multiplication and two kinds of division.",
+          "key_idea": "Multiplication can take part of an amount. Division can count groups or find the size of each share.",
+          "prerequisite": "Equivalent fractions and equal-sized parts.",
+          "materials": [
+            "paper rectangles",
+            "fraction strips",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Scaling",
+              "meaning": "Multiplying an amount to change its size.",
+              "example": "{1/2} \u00d7 8 takes half of eight."
+            },
+            {
+              "term": "Unit fraction",
+              "meaning": "A fraction with numerator 1.",
+              "example": "{1/5} is one fifth."
+            },
+            {
+              "term": "Product",
+              "meaning": "The result of multiplication.",
+              "example": "{1/2} \u00d7 8 has product 4."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Five bags each hold {3/4} cup of seeds. How many cups altogether?",
+              "answer": "3 {3/4} cups",
+              "skill": "F-MULT",
+              "case": "Whole number times fraction",
+              "check": "5*F(3,4)==F(15,4)",
+              "worked": "Five groups of three fourths make fifteen fourths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A rectangle is {3/5} meter long and {2/3} meter wide. Find its area using equal parts.",
+              "answer": "{2/5} square meter",
+              "skill": "F-MULT",
+              "case": "Fraction times fraction",
+              "check": "F(3,5)*F(2,3)==F(2,5)",
+              "worked": "Divide a unit square into 5 columns and 3 rows. The overlap is 6 of 15 parts.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "area",
+                "rows": 3,
+                "cols": 5,
+                "shade_rows": 2,
+                "shade_cols": 3,
+                "caption": "The overlap covers 6 of 15 equal parts."
+              }
+            },
+            {
+              "text": "Find {2/3} of 1 {1/2} cups.",
+              "answer": "1 cup",
+              "skill": "F-MULT",
+              "case": "Fraction times mixed number",
+              "check": "F(2,3)*F(3,2)==1",
+              "worked": "Rename 1 {1/2} as {3/2}. Two thirds of three halves is two halves.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Without multiplying first, compare {3/4} \u00d7 8 and {5/4} \u00d7 8 with 8. Then compute.",
+              "answer": "6 < 8; 10 > 8",
+              "skill": "F-SCALE",
+              "case": "Factors below and above one",
+              "check": "F(3,4)*8==6 and F(5,4)*8==10 and 6<8<10",
+              "worked": "Three fourths takes less than all eight. Five fourths takes more than all eight.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Three meters of ribbon are cut into {1/4}-meter pieces. How many pieces?",
+              "answer": "12 pieces",
+              "skill": "F-DIV",
+              "case": "Whole number divided by unit fraction",
+              "check": "3/F(1,4)==12",
+              "worked": "There are four fourths per meter. Three meters hold twelve fourths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A {1/4}-liter juice sample is shared equally among three cups. How much goes in each cup?",
+              "answer": "{1/12} liter",
+              "skill": "F-DIV",
+              "case": "Unit fraction divided by whole number",
+              "check": "F(1,4)/3==F(1,12)",
+              "worked": "Split one fourth into three equal parts. Each is one twelfth of a liter.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Write one story for 2 \u00f7 {1/5} and one for {1/5} \u00f7 2. Solve both.",
+              "answer": "10 groups; {1/10} in each share. Stories vary.",
+              "skill": "F-DIV",
+              "case": "Contrast counting groups and sharing",
+              "check": "2/F(1,5)==10 and F(1,5)/2==F(1,10)",
+              "worked": "Example: cut 2 meters into fifth-meter pieces; share a fifth-meter piece equally between two people.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "A board is 5 meters long. Each shelf needs {1/2} meter. How many shelves can be cut?",
+            "answer": "10 shelves",
+            "skill": "F-DIV",
+            "case": "Exit: division by a number below one",
+            "check": "5/F(1,2)==10",
+            "worked": "Each meter contains two half-meters, so five meters contain ten.",
+            "wrong": "2 {1/2}",
+            "error": "Multiplying by one half answers a different question."
+          },
+          "error": {
+            "text": "Eli says 3 \u00f7 {1/4} = {3/4}, because division makes numbers smaller. Show why this fails.",
+            "correction": "Twelve quarter-meter pieces fit in 3 meters.",
+            "wrong": "{3/4}",
+            "why": "He treats division by a fraction as multiplication by that fraction.",
+            "move": "Make one meter from four quarter-meter pieces, then repeat three times.",
+            "check": "3/F(1,4)==12 and 3*F(1,4)==F(3,4)"
+          },
+          "example": {
+            "text": "Find {3/4} of {2/3} cup.",
+            "answer": "{1/2} cup",
+            "steps": [
+              "Split a whole into 3 equal columns and 4 equal rows.",
+              "Select 2 columns, then 3 fourths of those columns.",
+              "The overlap is 6 of 12 pieces: {6/12} = {1/2}."
+            ],
+            "check": "F(3,4)*F(2,3)==F(6,12)==F(1,2)"
+          },
+          "fade": {
+            "text": "A model has 4 columns and 3 rows. Shade {3/4}, then {2/3} of it. Complete __ \u00d7 __ = __.",
+            "answer": "{3/4} \u00d7 {2/3} = {1/2}",
+            "check": "F(3,4)*F(2,3)==F(1,2)"
+          },
+          "model": {
+            "kind": "area",
+            "rows": 3,
+            "cols": 5,
+            "shade_rows": 2,
+            "shade_cols": 3,
+            "caption": "{2/3} of {3/5} is {6/15}, or {2/5}."
+          },
+          "look_fors": [
+            {
+              "response": "Counts overlapping equal parts in the area model.",
+              "why": "The overlap represents multiplication.",
+              "move": "Ask what fraction of the entire unit square is shaded twice."
+            },
+            {
+              "response": "Predicts shrinking for a factor below one.",
+              "why": "Connects computation to scaling.",
+              "move": "Ask for an estimate before calculation."
+            },
+            {
+              "response": "Distinguishes number of pieces from piece size.",
+              "why": "These division situations have different units.",
+              "move": "Accept a tape or a story, but require units in the answer."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Says multiplication always increases an amount.",
+              "why": "Uses only whole-number experience.",
+              "move": "Take half of a familiar amount."
+            },
+            {
+              "response": "Uses the same answer for reversed division.",
+              "why": "Does not identify what is known and unknown.",
+              "move": "Label total amount, number of groups, and group size."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: Taking three fourths of a cup gives more than one cup.",
+            "Partner compare: In the two ribbon stories, which question counts pieces and which finds their size?"
+          ],
+          "summary_frame": "When I divide, I first ask whether I need the number of ___ or the size of ___.",
+          "exit_sort": {
+            "got": "Gives 10 shelves and connects five meters to ten equal half-meter pieces.",
+            "almost": "Gives 10 but cannot yet explain the unit or draw equal pieces.",
+            "reteach": "Gives 2 {1/2} or claims the answer must be below 5."
+          }
+        }
+      ],
+      "bank": [
+        {
+          "text": "Compare {2/9} and {7/9}.",
+          "answer": "{2/9} < {7/9}",
+          "skill": "F-COMP",
+          "case": "Same denominator",
+          "check": "F(2,9)<F(7,9)",
+          "worked": "With ninths fixed, compare two parts and seven parts.",
+          "wrong": "{2/9} > {7/9}",
+          "error": "The numerator counts the parts.",
+          "session_id": 1
+        },
+        {
+          "text": "Which is closer to 1: {7/8} or {4/5}?",
+          "answer": "{7/8}",
+          "skill": "F-COMP",
+          "case": "Benchmark distance",
+          "check": "1-F(7,8)<1-F(4,5)",
+          "worked": "The gaps from 1 are one eighth and one fifth. One eighth is smaller.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Compare {5/8} and {3/5}.",
+          "answer": "{5/8} > {3/5}",
+          "skill": "F-COMP",
+          "case": "Unlike numerator and denominator",
+          "check": "F(5,8)==F(25,40) and F(3,5)==F(24,40)",
+          "worked": "Rename as twenty-five fortieths and twenty-four fortieths.",
+          "wrong": "{5/8} < {3/5}",
+          "error": "Compare equal-sized parts, not the original denominator counts.",
+          "session_id": 1
+        },
+        {
+          "text": "Order {2/5}, 0.45, and {1/2} from least to greatest.",
+          "answer": "{2/5}, 0.45, {1/2}",
+          "skill": "F-COMP",
+          "case": "Fractions and decimals",
+          "check": "F(2,5)<D(\"0.45\")<F(1,2)",
+          "worked": "Rename two fifths as 0.40 and one half as 0.50.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "A number line uses quarters from 0 to 2. Where does {7/4} belong?",
+          "answer": "At 1 {3/4}, the seventh quarter-step from 0",
+          "skill": "F-LINE",
+          "case": "Improper fraction on a line",
+          "check": "F(7,4)==1+F(3,4)",
+          "worked": "Four fourths reach 1. Three more fourths reach one and three fourths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "A line marks 0, 3, and 6. How far from 3 toward 6 is 4 {1/2}?",
+          "answer": "Halfway",
+          "skill": "F-LINE",
+          "case": "Changed number-line scale",
+          "check": "(F(9,2)-3)/(6-3)==F(1,2)",
+          "worked": "The interval is 3 units. One and one half units is half of that interval.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Five granola bars are shared equally among six children. How much does each get?",
+          "answer": "{5/6} of a bar",
+          "skill": "F-QUOT",
+          "case": "Fraction as quotient",
+          "check": "F(5,6)*6==5",
+          "worked": "Split each bar into sixths and give each child five sixths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Compare {1/3} and {1/4}.",
+          "answer": "{1/3} > {1/4}",
+          "skill": "F-COMP",
+          "case": "Same numerator",
+          "check": "F(1,3)>F(1,4)",
+          "worked": "With the same numerator, the fraction with larger pieces is larger.",
+          "wrong": "{1/3} < {1/4}",
+          "error": "A larger denominator makes smaller equal parts, not a larger fraction.",
+          "session_id": 1
+        },
+        {
+          "text": "Find {1/2} + {1/3}.",
+          "answer": "{5/6}",
+          "skill": "F-ADD",
+          "case": "Unlike denominator addition",
+          "check": "(F(1,2)+F(1,3)) == F(5,6)",
+          "worked": "Rename both fractions with a common denominator. Add the counts of equal parts.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Find {3/4} \u2212 {1/3}.",
+          "answer": "{5/12}",
+          "skill": "F-SUB",
+          "case": "Unlike denominator subtraction",
+          "check": "(F(3,4)-F(1,3)) == F(5,12)",
+          "worked": "Rename both fractions with a common denominator. Subtract equal parts.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Compare {2/4} and {2/5}.",
+          "answer": "{2/4} > {2/5}",
+          "skill": "F-COMP",
+          "case": "Same numerator",
+          "check": "F(2,4)>F(2,5)",
+          "worked": "With the same numerator, the fraction with larger pieces is larger.",
+          "wrong": "{2/4} < {2/5}",
+          "error": "A larger denominator makes smaller equal parts, not a larger fraction.",
+          "session_id": 1
+        },
+        {
+          "text": "Find {2/3} + {1/4}.",
+          "answer": "{11/12}",
+          "skill": "F-ADD",
+          "case": "Unlike denominator addition",
+          "check": "(F(2,3)+F(1,4)) == F(11,12)",
+          "worked": "Rename both fractions with a common denominator. Add the counts of equal parts.",
+          "wrong": "",
+          "error": "",
+          "session_id": 1
+        },
+        {
+          "text": "Find {3/4} \u00d7 {4/5}.",
+          "answer": "{3/5}",
+          "skill": "F-MULT",
+          "case": "Fraction times fraction",
+          "check": "(F(3,4)*F(4,5)) == F(3,5)",
+          "worked": "An area model shows 12 of 20 equal parts, or three fifths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "Find {3/5} of 1 {2/3} cups.",
+          "answer": "1 cup",
+          "skill": "F-MULT",
+          "case": "Fraction times mixed number",
+          "check": "(F(3,5)*F(5,3)) == F(1,1)",
+          "worked": "Rename one and two thirds as five thirds. Three fifths of five thirds is one.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "Is {2/3} \u00d7 9 smaller or larger than 9? Compute to check.",
+          "answer": "Smaller; 6",
+          "skill": "F-SCALE",
+          "case": "Factor below one",
+          "check": "F(2,3)*9==6 and 6<9",
+          "worked": "Two thirds takes less than all nine.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "Is {4/3} \u00d7 6 smaller or larger than 6? Compute to check.",
+          "answer": "Larger; 8",
+          "skill": "F-SCALE",
+          "case": "Factor above one",
+          "check": "F(4,3)*6==8 and 8>6",
+          "worked": "Four thirds takes one whole six plus one third of six.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "Find both 4 \u00f7 {1/5} and {1/5} \u00f7 4.",
+          "answer": "20; {1/20}",
+          "skill": "F-DIV",
+          "case": "Reversed division meanings",
+          "check": "4/F(1,5)==20 and F(1,5)/4==F(1,20)",
+          "worked": "The first counts fifths in four. The second splits one fifth into four shares.",
+          "wrong": "{4/5}; {4/5}",
+          "error": "Changing the order changes what is shared or counted.",
+          "session_id": 2
+        },
+        {
+          "text": "A garden is {4/5} meter by {5/6} meter. Find its area.",
+          "answer": "{2/3} square meter",
+          "skill": "F-MULT",
+          "case": "Area context",
+          "check": "(F(4,5)*F(5,6)) == F(2,3)",
+          "worked": "Multiply the two side lengths and simplify twenty thirtieths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "Write a story for {1/6} \u00f7 3 and solve it.",
+          "answer": "{1/18}; stories vary",
+          "skill": "F-DIV",
+          "case": "Sharing story",
+          "check": "F(1,6)/3==F(1,18)",
+          "worked": "Example: share one sixth liter equally among three cups. Each gets one eighteenth liter.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "Find 3 \u00d7 {2/3}.",
+          "answer": "2",
+          "skill": "F-MULT",
+          "case": "Whole number times fraction",
+          "check": "(3*F(2,3)) == F(2,1)",
+          "worked": "Count two thirds for each whole-number group, then rename the result.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "How many {1/3}-meter pieces fit in 2 meters?",
+          "answer": "6 pieces",
+          "skill": "F-DIV",
+          "case": "Whole number by unit fraction",
+          "check": "(2/F(1,3)) == F(6,1)",
+          "worked": "Each meter contains 3 equal pieces. Multiply by 2 meters.",
+          "wrong": "{2/3}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 2
+        },
+        {
+          "text": "Share {1/3} liter equally among 2 cups. How much per cup?",
+          "answer": "{1/6} liter",
+          "skill": "F-DIV",
+          "case": "Unit fraction by whole number",
+          "check": "(F(1,3)/2) == F(1,6)",
+          "worked": "Split the given fractional amount into the stated number of equal shares.",
+          "wrong": "{2/3}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 2
+        },
+        {
+          "text": "Find 4 \u00d7 {2/3}.",
+          "answer": "2 {2/3}",
+          "skill": "F-MULT",
+          "case": "Whole number times fraction",
+          "check": "(4*F(2,3)) == F(8,3)",
+          "worked": "Count two thirds for each whole-number group, then rename the result.",
+          "wrong": "",
+          "error": "",
+          "session_id": 2
+        },
+        {
+          "text": "How many {1/4}-meter pieces fit in 3 meters?",
+          "answer": "12 pieces",
+          "skill": "F-DIV",
+          "case": "Whole number by unit fraction",
+          "check": "(3/F(1,4)) == F(12,1)",
+          "worked": "Each meter contains 4 equal pieces. Multiply by 3 meters.",
+          "wrong": "{3/4}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 2
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "Ratios and matching amounts",
+      "big_idea": "A ratio compares two amounts in a chosen order. Equivalent ratios scale both amounts together. Tables and double number lines keep matching amounts connected.",
+      "connections": "This builds on equal groups and fraction comparison. Next, unit rates and percents describe one-unit and hundred-unit comparisons.",
+      "omissions": "Ratio reasoning uses friendly two-quantity examples. Multi-stage mixtures and formal cross-multiplication are omitted.",
+      "teaser": {
+        "text": "A tile bag has red : blue = 3 : 2. The total is greater than 20 and less than 30. How many of each color?",
+        "answer": "15 red and 10 blue",
+        "skill": "PUZZLE",
+        "case": "Ratio and total constraint",
+        "check": "[(3*k,2*k) for k in range(1,10) if 20<5*k<30]==[(15,10)]",
+        "worked": "One batch contains five tiles. The only multiple of five strictly between 20 and 30 is 25.",
+        "wrong": "",
+        "error": ""
+      },
+      "sessions": [
+        {
+          "id": 3,
+          "title": "Equivalent ratios",
+          "standards": [
+            "6.RP.A.1",
+            "6.RP.A.3a"
+          ],
+          "goal": "I can keep a ratio unchanged while making more or less of a mixture.",
+          "key_idea": "Equivalent ratios multiply or divide both quantities by the same factor.",
+          "prerequisite": "Multiplication, division, and equal groups.",
+          "materials": [
+            "two colors of counters",
+            "paper strips",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Ratio",
+              "meaning": "A comparison of two amounts in a stated order.",
+              "example": "4 red to 3 blue is 4 : 3."
+            },
+            {
+              "term": "Equivalent ratios",
+              "meaning": "Ratios that describe the same relationship.",
+              "example": "4 : 3 and 8 : 6 are equivalent."
+            },
+            {
+              "term": "Scale factor",
+              "meaning": "The number used to multiply both amounts.",
+              "example": "From 4 : 3 to 12 : 9, the factor is 3."
+            }
+          ],
+          "problems": [
+            {
+              "text": "The diagram has 4 red tiles and 3 blue tiles. Write red : blue. Write blue : red.",
+              "answer": "4 : 3; 3 : 4",
+              "skill": "R-RATIO",
+              "case": "Read a picture and preserve order",
+              "check": "F(4,3)!=F(3,4)",
+              "worked": "Name the requested first color before writing its count.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "tape",
+                "values": [
+                  4,
+                  3
+                ],
+                "labels": [
+                  "red tiles",
+                  "blue tiles"
+                ],
+                "caption": "Each block represents one tile."
+              }
+            },
+            {
+              "text": "A trail mix uses 4 raisins for every 3 nuts. How many nuts go with 12 raisins?",
+              "answer": "9 nuts",
+              "skill": "R-EQUIV",
+              "case": "Scale up by a whole number",
+              "check": "F(12,4)*3==9",
+              "worked": "Twelve is three times four, so use three times three nuts.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A box has 20 red tiles and 15 blue tiles. Divide both counts by 5 to find an equivalent ratio.",
+              "answer": "4 : 3",
+              "skill": "R-EQUIV",
+              "case": "Scale down by division",
+              "check": "F(20,15)==F(4,3) and 20//5==4 and 15//5==3",
+              "worked": "Make five equal groups. Each has four red and three blue.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A recipe uses 6 cups of oats for every 4 cups of seeds. How many cups of seeds go with 9 cups of oats?",
+              "answer": "6 cups",
+              "skill": "R-EQUIV",
+              "case": "Non-whole scale factor",
+              "check": "F(9,6)*4==6",
+              "worked": "Nine is 1 {1/2} times six. Multiply four by the same factor.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Paint uses 2 cups yellow for every 5 cups blue. How much yellow goes with 15 cups blue?",
+              "answer": "6 cups yellow",
+              "skill": "R-EQUIV",
+              "case": "Missing value in a mixture",
+              "check": "F(15,5)*2==6",
+              "worked": "Fifteen cups blue makes three batches. Each batch uses two cups yellow.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Each game team has 3 builders for every 2 testers. How many builders go with 8 testers?",
+              "answer": "12 builders",
+              "skill": "R-EQUIV",
+              "case": "Missing value in groups",
+              "check": "F(8,2)*3==12",
+              "worked": "Eight testers make four groups of two. Four groups need twelve builders.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "A bracelet pattern uses 7 green beads for every 4 white beads. How many green beads go with 12 white beads?",
+            "answer": "21 green beads",
+            "skill": "R-EQUIV",
+            "case": "Exit: multiplicative versus additive reasoning",
+            "check": "F(12,4)*7==21 and 7+(12-4)==15",
+            "worked": "Twelve white beads are three groups of four. Use three groups of seven green.",
+            "wrong": "15",
+            "error": "Adding eight to each count changes the relationship."
+          },
+          "error": {
+            "text": "Mia changes 4 red : 3 blue to 7 red : 6 blue by adding 3 to each count. Is the ratio unchanged?",
+            "correction": "No. Two copies would give 8 : 6, not 7 : 6.",
+            "wrong": "7 : 6 is equivalent to 4 : 3.",
+            "why": "She uses equal additions rather than equal multiplication.",
+            "move": "Build two full copies of the original group and compare.",
+            "check": "F(4,3)!=F(7,6) and F(4,3)==F(8,6)"
+          },
+          "example": {
+            "text": "A mix uses 3 cups oats for every 2 cups seeds. Find seeds for 12 cups oats.",
+            "answer": "8 cups seeds",
+            "steps": [
+              "12 \u00f7 3 = 4 batches.",
+              "Each batch has 2 cups seeds.",
+              "4 \u00d7 2 = 8 cups seeds."
+            ],
+            "check": "F(12,3)*2==8"
+          },
+          "fade": {
+            "text": "A mix uses 5 cups oats for every 2 cups seeds. Ten cups oats makes __ batches and needs __ cups seeds.",
+            "answer": "2 batches; 4 cups seeds",
+            "check": "F(10,5)==2 and F(10,5)*2==4"
+          },
+          "model": {
+            "kind": "tape",
+            "values": [
+              4,
+              3
+            ],
+            "labels": [
+              "red tiles",
+              "blue tiles"
+            ],
+            "caption": "Repeat the whole 4 : 3 group."
+          },
+          "look_fors": [
+            {
+              "response": "Says four red for every three blue.",
+              "why": "Names both quantities and their order.",
+              "move": "Ask for the reversed ratio and compare meanings."
+            },
+            {
+              "response": "Repeats or partitions a complete group.",
+              "why": "Shows equivalent ratios concretely.",
+              "move": "Ask which factor acts on both amounts."
+            },
+            {
+              "response": "Uses a half-batch or a unit batch.",
+              "why": "Non-whole factors can preserve the ratio.",
+              "move": "Accept either method if both quantities scale equally."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Adds the same count to both colors.",
+              "why": "Confuses additive and multiplicative change.",
+              "move": "Build identical batches."
+            },
+            {
+              "response": "Says 4 : 3 means four out of three.",
+              "why": "Confuses part-to-part and part-to-whole.",
+              "move": "Count the total seven tiles before naming the red fraction."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: Adding the same number to both counts keeps a mixture the same.",
+            "Partner compare: How do you know the recipe with nine cups of oats has the same taste?"
+          ],
+          "summary_frame": "To keep a ratio the same, I ___ both quantities by ___.",
+          "exit_sort": {
+            "got": "Gives 21 green beads and shows a factor of 3 on both quantities.",
+            "almost": "Gives 21 with incomplete labeling, or makes a small arithmetic slip after using factor 3.",
+            "reteach": "Gives 15 or another answer from adding the same amount."
+          }
+        },
+        {
+          "id": 4,
+          "title": "Ratio tables and comparisons",
+          "standards": [
+            "6.RP.A.1",
+            "6.RP.A.3a",
+            "6.RP.A.3b"
+          ],
+          "goal": "I can use tables, double number lines, and equal totals to solve ratio problems.",
+          "key_idea": "A ratio table records equal groups. Comparing mixtures needs a common amount or a common total.",
+          "prerequisite": "Scaling both amounts in a ratio.",
+          "materials": [
+            "grid paper",
+            "ruler",
+            "two colors of counters"
+          ],
+          "vocab": [
+            {
+              "term": "Ratio table",
+              "meaning": "A table of matching amounts with the same ratio.",
+              "example": "(2, 5), (4, 10), and (6, 15)."
+            },
+            {
+              "term": "Double number line",
+              "meaning": "Two aligned scales showing matching amounts.",
+              "example": "Two cups concentrate matches five cups water."
+            },
+            {
+              "term": "Part-to-whole",
+              "meaning": "A comparison between one part and the total.",
+              "example": "2 red and 3 blue makes red {2/5} of all tiles."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Concentrate : water is 2 : 5. Complete pairs (2, 5), (4, __), and (6, 15).",
+              "answer": "10 cups water",
+              "skill": "R-TABLE",
+              "case": "One missing table value",
+              "check": "F(4,2)*5==10",
+              "worked": "Double both numbers in (2, 5).",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "ratio",
+                "labels": [
+                  "concentrate",
+                  "water"
+                ],
+                "rows": [
+                  [
+                    2,
+                    5
+                  ],
+                  [
+                    4,
+                    "?"
+                  ],
+                  [
+                    6,
+                    15
+                  ]
+                ],
+                "caption": "Each row describes the same mixture."
+              }
+            },
+            {
+              "text": "For that 2 : 5 mixture, how much water matches 10 cups concentrate? Solve using a table and a double number line.",
+              "answer": "25 cups water",
+              "skill": "R-TABLE",
+              "case": "Solve the same problem two ways",
+              "check": "F(10,2)*5==25",
+              "worked": "Table: multiply (2, 5) by five. Line: five equal jumps of 2 match five jumps of 5.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "doubleline",
+                "values": [
+                  2,
+                  5
+                ],
+                "labels": [
+                  "concentrate",
+                  "water"
+                ],
+                "multiples": 5,
+                "caption": "Equal jumps pair matching amounts."
+              }
+            },
+            {
+              "text": "Mix A uses 3 cups syrup to 4 cups water. Mix B uses 5 cups syrup to 8 cups water. Which has more syrup for the same water?",
+              "answer": "Mix A",
+              "skill": "R-COMP",
+              "case": "Compare using a common amount",
+              "check": "F(3,4)>F(5,8)",
+              "worked": "Double A to get 6 syrup : 8 water. Compare 6 syrup with 5 syrup.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Yellow : blue paint is 2 : 3. There are 35 cups in all. How much of each color?",
+              "answer": "14 cups yellow and 21 cups blue",
+              "skill": "R-WHOLE",
+              "case": "Part-part-whole with total",
+              "check": "F(35,5)*2==14 and F(35,5)*3==21",
+              "worked": "Five equal ratio parts total 35. Each part is 7 cups.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Plot (1, 3), (2, 6), and (3, 9). Let x be bags and y be marbles. Does their straight line also pass through (0, 0)?",
+              "answer": "Yes",
+              "skill": "R-GRAPH",
+              "case": "Ratio points in the first quadrant",
+              "check": "all(y==3*x for x,y in [(0,0),(1,3),(2,6),(3,9)])",
+              "worked": "Each y-value is three times its x-value. Zero bags have zero marbles.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "coordinate",
+                "points": [
+                  [
+                    1,
+                    3
+                  ],
+                  [
+                    2,
+                    6
+                  ],
+                  [
+                    3,
+                    9
+                  ]
+                ],
+                "xmax": 4,
+                "ymax": 10,
+                "labels": [
+                  "bags",
+                  "marbles"
+                ],
+                "caption": "Plot the matching amounts."
+              }
+            }
+          ],
+          "exit": {
+            "text": "Mix A has 4 cups juice and 3 cups water. Mix B has 6 cups juice and 5 cups water. Which has the larger fraction of juice?",
+            "answer": "Mix A",
+            "skill": "R-COMP",
+            "case": "Exit: equal differences do not imply equal ratios",
+            "check": "F(4,7)>F(6,11) and 4-3==6-5",
+            "worked": "A is {4/7} juice; B is {6/11}. Compare {44/77} and {42/77}.",
+            "wrong": "They are the same.",
+            "error": "Both differences are one, but the fractions of juice differ."
+          },
+          "error": {
+            "text": "Leo says 2 yellow : 3 blue means {2/3} of all the paint is yellow. Repair his statement.",
+            "correction": "There are five parts in all. Yellow is {2/5} of the paint.",
+            "wrong": "{2/3}",
+            "why": "He uses the other part as the whole.",
+            "move": "Join the two yellow parts and three blue parts into one total strip.",
+            "check": "F(2,2+3)==F(2,5) and F(2,5)!=F(2,3)"
+          },
+          "example": {
+            "text": "Orange : purple tiles is 3 : 2. There are 25 tiles. Find each count.",
+            "answer": "15 orange, 10 purple",
+            "steps": [
+              "3 + 2 = 5 equal parts.",
+              "25 \u00f7 5 = 5 tiles per part.",
+              "Orange: 3 \u00d7 5 = 15. Purple: 2 \u00d7 5 = 10."
+            ],
+            "check": "F(25,5)*3==15 and F(25,5)*2==10"
+          },
+          "fade": {
+            "text": "Green : white is 4 : 1. There are 30 beads. Five equal parts means __ beads per part. Green = __; white = __.",
+            "answer": "6 per part; 24 green; 6 white",
+            "check": "30/5==6 and 4*6==24"
+          },
+          "model": {
+            "kind": "doubleline",
+            "values": [
+              2,
+              5
+            ],
+            "labels": [
+              "concentrate",
+              "water"
+            ],
+            "multiples": 5,
+            "caption": "Two cups concentrate pairs with five cups water."
+          },
+          "look_fors": [
+            {
+              "response": "Keeps matching values in the same row.",
+              "why": "Pairs are meaningful together.",
+              "move": "Ask what one complete row means."
+            },
+            {
+              "response": "Finds a common water amount or compares part fractions.",
+              "why": "Both are valid ratio comparisons.",
+              "move": "Accept either method and require a shared comparison unit."
+            },
+            {
+              "response": "Adds ratio parts before using the total.",
+              "why": "Separates a part-to-part ratio from the whole.",
+              "move": "Ask the student to label all five parts."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Compares mixtures by subtraction.",
+              "why": "A difference ignores mixture size.",
+              "move": "Use the same amount of water in both mixtures."
+            },
+            {
+              "response": "Divides total by one ratio number.",
+              "why": "Treats one part as the whole.",
+              "move": "Draw and count all ratio parts first."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: A mixture with more cups of juice always tastes stronger.",
+            "Partner compare: Why must the 35-cup paint total be divided into five parts?"
+          ],
+          "summary_frame": "To compare two mixtures fairly, I can make ___ the same.",
+          "exit_sort": {
+            "got": "Chooses A and compares equivalent ratios or correct fractions of juice.",
+            "almost": "Chooses A but does not show a valid comparison, or makes a minor arithmetic slip with the right setup.",
+            "reteach": "Says equal because the differences match, or compares only the juice counts."
+          }
+        }
+      ],
+      "bank": [
+        {
+          "text": "A picture shows 5 green tiles and 2 white tiles. Write green : white and white : green.",
+          "answer": "5 : 2; 2 : 5",
+          "skill": "R-RATIO",
+          "case": "Order matters",
+          "check": "F(5,2)!=F(2,5)",
+          "worked": "Keep the requested first color first.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Is 6 : 10 equivalent to 9 : 15?",
+          "answer": "Yes",
+          "skill": "R-EQUIV",
+          "case": "Recognize a non-whole factor",
+          "check": "F(6,10)==F(9,15)",
+          "worked": "Multiply both numbers in 6 : 10 by one and one half.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Ava changes 3 : 7 to 5 : 9. Is it the same ratio?",
+          "answer": "No",
+          "skill": "R-EQUIV",
+          "case": "Additive error analysis",
+          "check": "F(3,7)!=F(5,9)",
+          "worked": "Adding two to each count changes the relationship. Two batches would give 6 : 14.",
+          "wrong": "Yes",
+          "error": "Equal additions do not preserve a ratio.",
+          "session_id": 3
+        },
+        {
+          "text": "A team has 4 runners for every 3 walkers. There are 18 walkers. How many runners?",
+          "answer": "24 runners",
+          "skill": "R-EQUIV",
+          "case": "Missing first quantity",
+          "check": "F(18,3)*4==24",
+          "worked": "Eighteen walkers make six groups. Six groups need twenty-four runners.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Red : blue is 3 : 5. How many blue tiles go with 6 red tiles?",
+          "answer": "10 blue tiles",
+          "skill": "R-EQUIV",
+          "case": "Scale up a ratio",
+          "check": "(5*2) == F(10,1)",
+          "worked": "The number of batches is 6 \u00f7 3. Multiply that count by 5.",
+          "wrong": "8 blue tiles",
+          "error": "Adding the same amount to both counts changes the ratio.",
+          "session_id": 3
+        },
+        {
+          "text": "Simplify the ratio 8 : 14 by dividing both counts by 2.",
+          "answer": "4 : 7",
+          "skill": "R-EQUIV",
+          "case": "Scale down a ratio",
+          "check": "F(8,14)==F(4,7)",
+          "worked": "Divide both counts by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "A recipe uses 2 cups beans for 3 cups rice. How many cups beans go with {9/2} cups rice?",
+          "answer": "3 cups",
+          "skill": "R-EQUIV",
+          "case": "Non-whole scale factor",
+          "check": "(F(9,2)/3*2) == F(3,1)",
+          "worked": "Find the number of recipe batches by dividing the rice amount by 3. Each batch needs 2 cups beans.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Red : blue is 3 : 5. How many blue tiles go with 9 red tiles?",
+          "answer": "15 blue tiles",
+          "skill": "R-EQUIV",
+          "case": "Scale up a ratio",
+          "check": "(5*3) == F(15,1)",
+          "worked": "The number of batches is 9 \u00f7 3. Multiply that count by 5.",
+          "wrong": "11 blue tiles",
+          "error": "Adding the same amount to both counts changes the ratio.",
+          "session_id": 3
+        },
+        {
+          "text": "Simplify the ratio 12 : 21 by dividing both counts by 3.",
+          "answer": "4 : 7",
+          "skill": "R-EQUIV",
+          "case": "Scale down a ratio",
+          "check": "F(12,21)==F(4,7)",
+          "worked": "Divide both counts by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "A recipe uses 2 cups beans for 3 cups rice. How many cups beans go with {15/2} cups rice?",
+          "answer": "5 cups",
+          "skill": "R-EQUIV",
+          "case": "Non-whole scale factor",
+          "check": "(F(15,2)/3*2) == F(5,1)",
+          "worked": "Find the number of recipe batches by dividing the rice amount by 3. Each batch needs 2 cups beans.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "Red : blue is 3 : 5. How many blue tiles go with 12 red tiles?",
+          "answer": "20 blue tiles",
+          "skill": "R-EQUIV",
+          "case": "Scale up a ratio",
+          "check": "(5*4) == F(20,1)",
+          "worked": "The number of batches is 12 \u00f7 3. Multiply that count by 5.",
+          "wrong": "14 blue tiles",
+          "error": "Adding the same amount to both counts changes the ratio.",
+          "session_id": 3
+        },
+        {
+          "text": "Simplify the ratio 16 : 28 by dividing both counts by 4.",
+          "answer": "4 : 7",
+          "skill": "R-EQUIV",
+          "case": "Scale down a ratio",
+          "check": "F(16,28)==F(4,7)",
+          "worked": "Divide both counts by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session_id": 3
+        },
+        {
+          "text": "The pairs (2, 7), (4, 14), and (6, __) have the same ratio. Complete the table.",
+          "answer": "21",
+          "skill": "R-TABLE",
+          "case": "Table missing value",
+          "check": "F(2,7)==F(4,14)==F(6,21)",
+          "worked": "Multiply both entries of the first pair by three.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "A double number line pairs 3 minutes with 8 laps. What pairs with 12 minutes?",
+          "answer": "32 laps",
+          "skill": "R-TABLE",
+          "case": "Double number line",
+          "check": "F(12,3)*8==32",
+          "worked": "Four jumps of three minutes match four jumps of eight laps.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Plot (1, 2), (2, 4), and (4, 8). Do they lie on a line through the origin?",
+          "answer": "Yes",
+          "skill": "R-GRAPH",
+          "case": "Ratio graph",
+          "check": "all(y==2*x for x,y in [(0,0),(1,2),(2,4),(4,8)])",
+          "worked": "Every vertical value is twice the horizontal value.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "A mix has 5 cups oats and 3 cups seeds. What fraction of the whole is seeds?",
+          "answer": "{3/8}",
+          "skill": "R-WHOLE",
+          "case": "Part-to-whole fraction",
+          "check": "F(3,5+3)==F(3,8)",
+          "worked": "Count all eight cups before forming the fraction.",
+          "wrong": "{3/5}",
+          "error": "Five counts the other part, not the whole.",
+          "session_id": 4
+        },
+        {
+          "text": "Yellow : purple is 2 : 5. There are 21 beads. Find both counts.",
+          "answer": "6 yellow; 15 purple",
+          "skill": "R-WHOLE",
+          "case": "Part-part-whole",
+          "check": "21//7*2==6 and 21//7*5==15",
+          "worked": "Add ratio parts: 2 + 5 = 7. Divide the total by 7, then multiply each ratio part.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Complete the ratio-table pair: (3, 4), (9, __).",
+          "answer": "12",
+          "skill": "R-TABLE",
+          "case": "Missing table value",
+          "check": "(4*3) == F(12,1)",
+          "worked": "Multiply both entries in the first pair by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Mix A has 2 cups juice and 3 cups water. Mix B has 3 cups juice and 5 cups water. Which has more juice for the same water?",
+          "answer": "Mix A",
+          "skill": "R-COMP",
+          "case": "Compare ratios",
+          "check": "F(2,3)>F(3,5)",
+          "worked": "Use equivalent ratios with the same water amount, then compare juice.",
+          "wrong": "Mix B",
+          "error": "Comparing only the juice counts ignores the amount of water.",
+          "session_id": 4
+        },
+        {
+          "text": "Yellow : purple is 2 : 5. There are 28 beads. Find both counts.",
+          "answer": "8 yellow; 20 purple",
+          "skill": "R-WHOLE",
+          "case": "Part-part-whole",
+          "check": "28//7*2==8 and 28//7*5==20",
+          "worked": "Add ratio parts: 2 + 5 = 7. Divide the total by 7, then multiply each ratio part.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Complete the ratio-table pair: (3, 4), (12, __).",
+          "answer": "16",
+          "skill": "R-TABLE",
+          "case": "Missing table value",
+          "check": "(4*4) == F(16,1)",
+          "worked": "Multiply both entries in the first pair by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Mix A has 4 cups juice and 6 cups water. Mix B has 5 cups juice and 8 cups water. Which has more juice for the same water?",
+          "answer": "Mix A",
+          "skill": "R-COMP",
+          "case": "Compare ratios",
+          "check": "F(4,6)>F(5,8)",
+          "worked": "Use equivalent ratios with the same water amount, then compare juice.",
+          "wrong": "Mix B",
+          "error": "Comparing only the juice counts ignores the amount of water.",
+          "session_id": 4
+        },
+        {
+          "text": "Yellow : purple is 2 : 5. There are 35 beads. Find both counts.",
+          "answer": "10 yellow; 25 purple",
+          "skill": "R-WHOLE",
+          "case": "Part-part-whole",
+          "check": "35//7*2==10 and 35//7*5==25",
+          "worked": "Add ratio parts: 2 + 5 = 7. Divide the total by 7, then multiply each ratio part.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        },
+        {
+          "text": "Complete the ratio-table pair: (3, 4), (15, __).",
+          "answer": "20",
+          "skill": "R-TABLE",
+          "case": "Missing table value",
+          "check": "(4*5) == F(20,1)",
+          "worked": "Multiply both entries in the first pair by the same factor.",
+          "wrong": "",
+          "error": "",
+          "session_id": 4
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "Rates and percents",
+      "big_idea": "A unit rate describes an amount per one unit. Percent means per hundred. Label the whole before deciding whether to find a part, a whole, or a percent.",
+      "connections": "This builds on equivalent ratios. Fraction division later extends the same grouping and scaling ideas.",
+      "omissions": "Discounts, tax, and percent change wait for the optional bridge previews. Compound percent calculations are omitted.",
+      "teaser": {
+        "text": "A mystery number has this property: 25% of it is 6 more than 10% of it. Find the number.",
+        "answer": "40",
+        "skill": "PUZZLE",
+        "case": "Difference of percent parts",
+        "check": "F(25,100)*40-F(10,100)*40==6 and F(6,1)/(F(25,100)-F(10,100))==40",
+        "worked": "The gap is 15%, which equals 6. Five percent is 2, so 100% is 40.",
+        "wrong": "",
+        "error": ""
+      },
+      "sessions": [
+        {
+          "id": 5,
+          "title": "Rates and unit rates",
+          "standards": [
+            "6.RP.A.2",
+            "6.RP.A.3b"
+          ],
+          "goal": "I can find an amount per one unit and use it to compare rates.",
+          "key_idea": "A unit rate names how much of one quantity goes with one unit of another. Its units show the division order.",
+          "prerequisite": "Equivalent ratios and decimal division by whole numbers.",
+          "materials": [
+            "ratio table template",
+            "double number line template",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Rate",
+              "meaning": "A ratio comparing quantities with different units.",
+              "example": "15 kilometers in 3 hours."
+            },
+            {
+              "term": "Unit rate",
+              "meaning": "An amount per one unit of another quantity.",
+              "example": "5 kilometers per hour."
+            },
+            {
+              "term": "Per",
+              "meaning": "For each one.",
+              "example": "$0.60 per apple means $0.60 for one apple."
+            }
+          ],
+          "problems": [
+            {
+              "text": "A rider goes 20 kilometers in 4 hours at a steady speed. Find kilometers per hour.",
+              "answer": "5 kilometers per hour",
+              "skill": "R-RATE",
+              "case": "Whole-number unit rate",
+              "check": "F(20,4)==5",
+              "worked": "Divide 20 kilometers by 4 hours.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Eight apples cost $6.00. Find dollars per apple.",
+              "answer": "$0.75 per apple",
+              "skill": "R-RATE",
+              "case": "Decimal unit rate",
+              "check": "D(\"6.00\")/8==D(\"0.75\")",
+              "worked": "Share the total cost equally among eight apples.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Two cups of rice make 5 servings. Find cups per serving.",
+              "answer": "{2/5} cup per serving",
+              "skill": "R-RATE",
+              "case": "Fraction unit rate",
+              "check": "F(2,5)==F(2,5)",
+              "worked": "Divide two cups among five servings. The unit is cups per serving.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A printer makes 15 cards in 3 minutes. Find cards per minute and minutes per card.",
+              "answer": "5 cards per minute; {1/5} minute per card",
+              "skill": "R-RATE",
+              "case": "Both unit-rate directions",
+              "check": "F(15,3)==5 and F(3,15)==F(1,5)",
+              "worked": "Cards per minute uses 15 \u00f7 3. Minutes per card uses 3 \u00f7 15.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Pack A has 6 pencils for $2.40. Pack B has 10 pencils for $3.50. Which costs less per pencil?",
+              "answer": "Pack B: $0.35 per pencil",
+              "skill": "R-COMP",
+              "case": "Compare deals with unequal quantities",
+              "check": "D(\"2.40\")/6==D(\"0.40\") and D(\"3.50\")/10==D(\"0.35\") and D(\"0.35\")<D(\"0.40\")",
+              "worked": "A costs $0.40 each. B costs $0.35 each, saving $0.05 per pencil.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A skater travels 3 miles in 20 minutes at steady speed. Find miles per hour.",
+              "answer": "9 miles per hour",
+              "skill": "R-RATE",
+              "case": "Time below one hour",
+              "check": "3*(60//20)==9",
+              "worked": "An hour has three 20-minute groups, so multiply 3 miles by 3.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A robot rolls 4 meters each second. Complete distances for 0, 2, and 5 seconds.",
+              "answer": "0, 8, and 20 meters",
+              "skill": "R-TABLE",
+              "case": "Constant-speed table",
+              "check": "[4*t for t in [0,2,5]]==[0,8,20]",
+              "worked": "Multiply seconds by 4 meters per second.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "A cyclist travels 9 miles in 45 minutes at steady speed. Find miles per hour and minutes per mile.",
+            "answer": "12 miles per hour; 5 minutes per mile",
+            "skill": "R-RATE",
+            "case": "Exit: two directions with time conversion",
+            "check": "F(9,45)*60==12 and F(45,9)==5",
+            "worked": "Nine miles in three 15-minute groups means 3 miles per 15 minutes. Four groups give 12 miles in an hour.",
+            "wrong": "5 miles per hour; 12 minutes per mile",
+            "error": "The numbers belong to different units; label the quantity per one."
+          },
+          "error": {
+            "text": "Ava says 8 apples for $6 costs {4/3} dollars per apple because 8 \u00f7 6 = {4/3}. Is her unit correct?",
+            "correction": "No. $6 \u00f7 8 apples = $0.75 per apple. {4/3} describes apples per dollar.",
+            "wrong": "{4/3} dollars per apple",
+            "why": "She reverses the requested quantities.",
+            "move": "Write dollars above the division and apples below it.",
+            "check": "D(6)/8==D(\"0.75\") and F(8,6)==F(4,3)"
+          },
+          "example": {
+            "text": "A walker travels 2 miles in 30 minutes. Find miles per hour.",
+            "answer": "4 miles per hour",
+            "steps": [
+              "60 minutes is two groups of 30.",
+              "Two groups of 2 miles make 4 miles.",
+              "The rate is 4 miles per hour."
+            ],
+            "check": "2*(60//30)==4"
+          },
+          "fade": {
+            "text": "A scooter travels 5 miles in 30 minutes. There are __ half-hours in one hour, so the speed is __ miles per hour.",
+            "answer": "2; 10 miles per hour",
+            "check": "60//30==2 and 5*2==10"
+          },
+          "model": {
+            "kind": "doubleline",
+            "values": [
+              15,
+              3
+            ],
+            "labels": [
+              "minutes",
+              "miles"
+            ],
+            "multiples": 4,
+            "caption": "Four 15-minute intervals make one hour."
+          },
+          "look_fors": [
+            {
+              "response": "Labels dollars per apple.",
+              "why": "The units identify division order.",
+              "move": "Ask what one in the rate refers to."
+            },
+            {
+              "response": "Uses scaling or divides to one.",
+              "why": "Both methods can find an equivalent rate.",
+              "move": "Accept either, then connect them in a table."
+            },
+            {
+              "response": "Converts time to 60 minutes.",
+              "why": "Hourly rates require an hour as the time unit.",
+              "move": "Mark 0, 15, 30, 45, 60 on the time line."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Divides in the reverse direction.",
+              "why": "Does not track the per unit.",
+              "move": "Read the desired rate aloud before dividing."
+            },
+            {
+              "response": "Treats 20 minutes as 0.20 hours.",
+              "why": "Uses base ten instead of 60 minutes per hour.",
+              "move": "Partition an hour into three 20-minute sections."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: A unit rate must be a whole number. Use the apples to decide.",
+            "Partner compare: What does {1/5} minute per card mean compared with 5 cards per minute?"
+          ],
+          "summary_frame": "The word per tells me to find the amount for one ___.",
+          "exit_sort": {
+            "got": "Gives 12 miles per hour and 5 minutes per mile, with correct units and scaling.",
+            "almost": "Gets one rate correct or both values correct with one unclear unit.",
+            "reteach": "Reverses division, uses 45 as 0.45 hours, or assigns the rates to the wrong units."
+          }
+        },
+        {
+          "id": 6,
+          "title": "Percent as a rate per hundred",
+          "standards": [
+            "6.RP.A.3c"
+          ],
+          "goal": "I can find a percent, a part, or a whole using matching amounts.",
+          "key_idea": "Percent compares an amount with a whole split into 100 equal parts.",
+          "prerequisite": "Equivalent ratios and unit rates.",
+          "materials": [
+            "percent strips",
+            "double number line template",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Percent",
+              "meaning": "A rate per hundred.",
+              "example": "35% means 35 for every 100."
+            },
+            {
+              "term": "Whole",
+              "meaning": "The amount that represents 100%.",
+              "example": "If all 80 tiles count, 80 is the whole."
+            },
+            {
+              "term": "Benchmark percent",
+              "meaning": "A familiar percent useful for reasoning.",
+              "example": "25% is one fourth."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Find 10%, 25%, 50%, and 75% of 80 counters.",
+              "answer": "8, 20, 40, and 60 counters",
+              "skill": "P-PART",
+              "case": "Benchmark percents of a whole",
+              "check": "[F(p,100)*80 for p in [10,25,50,75]]==[8,20,40,60]",
+              "worked": "Ten percent is a tenth. Twenty-five percent is a fourth. Fifty percent is half.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A shelf holds 40 books. Twelve are mysteries. What percent are mysteries?",
+              "answer": "30%",
+              "skill": "P-PERCENT",
+              "case": "Find percent from part and whole",
+              "check": "F(12,40)*100==30",
+              "worked": "{12/40} = {3/10} = {30/100}.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Twenty-four stickers are 40% of a collection. How many stickers are in the whole collection?",
+              "answer": "60 stickers",
+              "skill": "P-WHOLE",
+              "case": "Find the whole",
+              "check": "F(24,1)/F(40,100)==60",
+              "worked": "Four 10% groups contain 24 stickers. One group has 6; ten groups have 60.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 125% of 48 minutes.",
+              "answer": "60 minutes",
+              "skill": "P-PART",
+              "case": "Percent above one hundred",
+              "check": "F(125,100)*48==60",
+              "worked": "100% is 48. Another 25% is 12. Add 48 and 12.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 35% of 60 tiles.",
+              "answer": "21 tiles",
+              "skill": "P-PART",
+              "case": "Non-benchmark percent",
+              "check": "F(35,100)*60==21",
+              "worked": "30% is 18 and 5% is 3. Their sum is 21.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 15% of $18.00.",
+              "answer": "$2.70",
+              "skill": "P-PART",
+              "case": "Decimal result",
+              "check": "D(\"0.15\")*D(\"18.00\")==D(\"2.70\")",
+              "worked": "10% is $1.80. Half of that is 5%, or $0.90. Add them.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "Twenty-one marbles are 35% of a bag. How many marbles are in the bag?",
+            "answer": "60 marbles",
+            "skill": "P-WHOLE",
+            "case": "Exit: part versus whole",
+            "check": "F(21,1)/F(35,100)==60 and F(35,100)*21==F(147,20)",
+            "worked": "Seven 5% groups contain 21 marbles. Each 5% group has 3. Twenty groups have 60.",
+            "wrong": "7.35",
+            "error": "Taking 35% of 21 finds a part of the given part, not the whole."
+          },
+          "error": {
+            "text": "Omar says 24 is 40% of 9.6 because 0.40 \u00d7 24 = 9.6. Explain the error.",
+            "correction": "The unknown whole is 60. Check: 40% of 60 is 24.",
+            "wrong": "9.6",
+            "why": "He treats the known part as the whole.",
+            "move": "Label 24 at 40% on a double number line and locate 100%.",
+            "check": "D(\"0.40\")*24==D(\"9.6\") and D(\"0.40\")*60==24"
+          },
+          "example": {
+            "text": "Eighteen blocks are 30% of a tower set. Find the whole set.",
+            "answer": "60 blocks",
+            "steps": [
+              "30% has three 10% groups.",
+              "18 \u00f7 3 = 6 blocks per 10%.",
+              "Ten groups give 10 \u00d7 6 = 60 blocks."
+            ],
+            "check": "F(18,1)/F(30,100)==60"
+          },
+          "fade": {
+            "text": "Twelve coins are 20% of a jar. Ten percent is __ coins. One hundred percent is __ coins.",
+            "answer": "6 coins; 60 coins",
+            "check": "12/2==6 and 6*10==60"
+          },
+          "model": {
+            "kind": "doubleline",
+            "values": [
+              10,
+              6
+            ],
+            "labels": [
+              "percent",
+              "stickers"
+            ],
+            "multiples": 10,
+            "caption": "100% labels the unknown whole."
+          },
+          "look_fors": [
+            {
+              "response": "Labels the given amount as part or whole.",
+              "why": "The role controls the calculation.",
+              "move": "Ask which amount belongs at 100%."
+            },
+            {
+              "response": "Combines benchmark percentages.",
+              "why": "Builds a non-benchmark percent from known pieces.",
+              "move": "Accept a unit-percent method or a benchmark method."
+            },
+            {
+              "response": "Allows a percent above 100.",
+              "why": "A comparison amount can exceed the starting whole.",
+              "move": "Extend the percent line beyond 100%."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Multiplies the known part by the percent.",
+              "why": "Treats every percent problem as finding a part.",
+              "move": "Place the known part and its percent on aligned lines."
+            },
+            {
+              "response": "Rejects 125%.",
+              "why": "Thinks a percent is always a piece below one whole.",
+              "move": "Show one whole plus one fourth of the same whole."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: The whole must be smaller than 24 if 24 is only 40%.",
+            "Partner compare: How does finding 35% of 60 differ from finding a whole when 21 is 35%?"
+          ],
+          "summary_frame": "Before using a percent, I decide which amount represents ___.",
+          "exit_sort": {
+            "got": "Finds 60 marbles and checks that 35% of 60 is 21.",
+            "almost": "Sets 21 at 35% correctly but makes a small scaling error or omits the check.",
+            "reteach": "Computes 35% of 21 or gives a whole smaller than the part."
+          }
+        }
+      ],
+      "bank": [
+        {
+          "text": "A bus covers 10 miles in 25 minutes at constant speed. How many miles in one hour?",
+          "answer": "24 miles",
+          "skill": "R-RATE",
+          "case": "Non-hour time interval",
+          "check": "F(10,25)*60==24",
+          "worked": "Five minutes corresponds to two miles. Twelve five-minute groups make 24 miles.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "Pack A has 4 erasers for $1.80. Pack B has 6 for $2.40. Which costs less per eraser?",
+          "answer": "Pack B: $0.40 each",
+          "skill": "R-COMP",
+          "case": "Compare unit prices",
+          "check": "D(\"1.80\")/4==D(\"0.45\") and D(\"2.40\")/6==D(\"0.40\")",
+          "worked": "Compare forty-five cents with forty cents for one eraser.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A machine makes 24 labels in 6 minutes. Find labels per minute and minutes per label.",
+          "answer": "4 labels per minute; {1/4} minute per label",
+          "skill": "R-RATE",
+          "case": "Both unit-rate directions",
+          "check": "F(24,6)==4 and F(6,24)==F(1,4)",
+          "worked": "Divide labels by minutes for the first rate. Reverse for the second.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A snail moves 3 centimeters each minute. Find the distance after 0, 4, and 7 minutes.",
+          "answer": "0, 12, and 21 centimeters",
+          "skill": "R-TABLE",
+          "case": "Constant-speed table",
+          "check": "[3*t for t in [0,4,7]]==[0,12,21]",
+          "worked": "Multiply each time by the unit rate. Zero time matches zero distance.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A walker travels 8 miles in 2 hours. Find miles per hour.",
+          "answer": "4 miles per hour",
+          "skill": "R-RATE",
+          "case": "Whole-number unit rate",
+          "check": "(F(8,2)) == F(4,1)",
+          "worked": "Use the named units, calculate, then check with the inverse operation.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "3 markers cost $1.95. Find dollars per marker.",
+          "answer": "0.65 dollars per marker",
+          "skill": "R-RATE",
+          "case": "Decimal unit rate",
+          "check": "(D(\"1.95\")/3) == D('0.65')",
+          "worked": "Use the named units, calculate, then check with the inverse operation.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A game uses 2 cups of tokens for 5 players. Find cups per player and players per cup.",
+          "answer": "{2/5} cups per player; 2 {1/2} players per cup",
+          "skill": "R-RATE",
+          "case": "Two directions",
+          "check": "F(2,5)*F(5,2)==1",
+          "worked": "Divide the first quantity by the second for cups per player. Reverse for players per cup.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A walker travels 12 miles in 3 hours. Find miles per hour.",
+          "answer": "4 miles per hour",
+          "skill": "R-RATE",
+          "case": "Whole-number unit rate",
+          "check": "(F(12,3)) == F(4,1)",
+          "worked": "Use the named units, calculate, then check with the inverse operation.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "4 markers cost $2.60. Find dollars per marker.",
+          "answer": "0.65 dollars per marker",
+          "skill": "R-RATE",
+          "case": "Decimal unit rate",
+          "check": "(D(\"2.60\")/4) == D('0.65')",
+          "worked": "Use the named units, calculate, then check with the inverse operation.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A game uses 3 cups of tokens for 7 players. Find cups per player and players per cup.",
+          "answer": "{3/7} cups per player; 2 {1/3} players per cup",
+          "skill": "R-RATE",
+          "case": "Two directions",
+          "check": "F(3,7)*F(7,3)==1",
+          "worked": "Divide the first quantity by the second for cups per player. Reverse for players per cup.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "A walker travels 16 miles in 4 hours. Find miles per hour.",
+          "answer": "4 miles per hour",
+          "skill": "R-RATE",
+          "case": "Whole-number unit rate",
+          "check": "(F(16,4)) == F(4,1)",
+          "worked": "Use the named units, calculate, then check with the inverse operation.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "5 markers cost $3.25. Find dollars per marker.",
+          "answer": "0.65 dollars per marker",
+          "skill": "R-RATE",
+          "case": "Decimal unit rate",
+          "check": "(D(\"3.25\")/5) == D('0.65')",
+          "worked": "Use the named units, calculate, then check with the inverse operation.",
+          "wrong": "",
+          "error": "",
+          "session_id": 5
+        },
+        {
+          "text": "Find 140% of 30 points.",
+          "answer": "42 points",
+          "skill": "P-PART",
+          "case": "Percent above one hundred",
+          "check": "(F(140,100)*30) == F(42,1)",
+          "worked": "Take all 30 points, then add forty percent, which is 12 points.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 35% of 80 tiles.",
+          "answer": "28 tiles",
+          "skill": "P-PART",
+          "case": "Non-benchmark percent",
+          "check": "(F(35,100)*80) == F(28,1)",
+          "worked": "Thirty percent is 24. Five percent is 4. Add them.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 12% of $15.00.",
+          "answer": "1.8000 dollars",
+          "skill": "P-PART",
+          "case": "Decimal result",
+          "check": "(D(\"0.12\")*D(\"15.00\")) == D('1.8000')",
+          "worked": "Ten percent is $1.50 and two percent is $0.30. Add them.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 10%, 50%, and 75% of 40 counters.",
+          "answer": "4, 20, and 30 counters",
+          "skill": "P-PART",
+          "case": "Benchmark percents",
+          "check": "[F(p,100)*40 for p in [10,50,75]]==[4,20,30]",
+          "worked": "Use one tenth, one half, and three fourths of the whole.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 25% of 24 stickers.",
+          "answer": "6 stickers",
+          "skill": "P-PART",
+          "case": "Find a percent part",
+          "check": "(F(25,100)*24) == F(6,1)",
+          "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "12 shells are 30% of a collection. Find the whole collection.",
+          "answer": "40 shells",
+          "skill": "P-WHOLE",
+          "case": "Find the whole",
+          "check": "(F(12,1)/F(30,100)) == F(40,1)",
+          "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+          "wrong": "3.60 shells",
+          "error": "Taking 30% of the known part does not recover the whole.",
+          "session_id": 6
+        },
+        {
+          "text": "9 of 12 tiles are green. What percent are green?",
+          "answer": "75 %",
+          "skill": "P-PERCENT",
+          "case": "Find the percent",
+          "check": "(F(9,12)*100) == F(75,1)",
+          "worked": "Compare the green count with the total. Rename the fraction as a rate per hundred.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 25% of 32 stickers.",
+          "answer": "8 stickers",
+          "skill": "P-PART",
+          "case": "Find a percent part",
+          "check": "(F(25,100)*32) == F(8,1)",
+          "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "18 shells are 30% of a collection. Find the whole collection.",
+          "answer": "60 shells",
+          "skill": "P-WHOLE",
+          "case": "Find the whole",
+          "check": "(F(18,1)/F(30,100)) == F(60,1)",
+          "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+          "wrong": "5.40 shells",
+          "error": "Taking 30% of the known part does not recover the whole.",
+          "session_id": 6
+        },
+        {
+          "text": "12 of 16 tiles are green. What percent are green?",
+          "answer": "75 %",
+          "skill": "P-PERCENT",
+          "case": "Find the percent",
+          "check": "(F(12,16)*100) == F(75,1)",
+          "worked": "Compare the green count with the total. Rename the fraction as a rate per hundred.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "Find 25% of 40 stickers.",
+          "answer": "10 stickers",
+          "skill": "P-PART",
+          "case": "Find a percent part",
+          "check": "(F(25,100)*40) == F(10,1)",
+          "worked": "Twenty-five percent is one fourth. Divide the whole by 4.",
+          "wrong": "",
+          "error": "",
+          "session_id": 6
+        },
+        {
+          "text": "24 shells are 30% of a collection. Find the whole collection.",
+          "answer": "80 shells",
+          "skill": "P-WHOLE",
+          "case": "Find the whole",
+          "check": "(F(24,1)/F(30,100)) == F(80,1)",
+          "worked": "Divide the given amount into three 10% groups, then take ten such groups.",
+          "wrong": "7.20 shells",
+          "error": "Taking 30% of the known part does not recover the whole.",
+          "session_id": 6
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "Dividing fractions",
+      "big_idea": "Division asks how many divisor-sized groups fit. Equal small units make the comparison visible. The reciprocal rule records that reasoning efficiently.",
+      "connections": "This builds on fraction multiplication and equivalent ratios. Decimal division will also preserve group counts by renaming units.",
+      "omissions": "Complex fractions, algebraic fraction equations, and lengthy multi-stage fraction contexts are omitted. Fractional prism volume is included in the Sunday session.",
+      "teaser": {
+        "text": "A jug holds 2 liters. You have {1/3}-liter and {1/2}-liter scoops. Use both sizes and exactly five full scoops to fill it. How many of each?",
+        "answer": "3 one-third-liter scoops and 2 half-liter scoops",
+        "skill": "PUZZLE",
+        "case": "Fraction combination",
+        "check": "[(a,b) for a in range(1,5) for b in range(1,5) if a+b==5 and a*F(1,3)+b*F(1,2)==2]==[(3,2)]",
+        "worked": "Try five thirds first: {5/3} liters. Replacing a third with a half adds {1/6} liter. Two replacements fill the missing third.",
+        "wrong": "",
+        "error": ""
+      },
+      "sessions": [
+        {
+          "id": 7,
+          "title": "The meaning of fraction division",
+          "standards": [
+            "6.NS.A.1"
+          ],
+          "goal": "I can show how many fractional groups fit in an amount.",
+          "key_idea": "The divisor names one group. A quotient tells how many of those groups fit, even when it is part of a group.",
+          "prerequisite": "Fraction equivalence and division by unit fractions.",
+          "materials": [
+            "fraction strips",
+            "blank number lines",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Dividend",
+              "meaning": "The amount being divided.",
+              "example": "In 2 \u00f7 {3/4}, the dividend is 2."
+            },
+            {
+              "term": "Divisor",
+              "meaning": "The amount that names one group in a grouping problem.",
+              "example": "In 2 \u00f7 {3/4}, one group is {3/4}."
+            },
+            {
+              "term": "Quotient",
+              "meaning": "The result of division.",
+              "example": "{3/4} \u00f7 {1/4} = 3 groups."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Four meters are cut into {1/5}-meter pieces. How many pieces?",
+              "answer": "20 pieces",
+              "skill": "F-DIV",
+              "case": "Whole number by unit fraction",
+              "check": "4/F(1,5)==20",
+              "worked": "Each meter contains five fifths. Four meters contain twenty.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "How many {2/3}-cup scoops fit in 4 cups?",
+              "answer": "6 scoops",
+              "skill": "F-DIV",
+              "case": "Whole number by non-unit fraction",
+              "check": "4/F(2,3)==6",
+              "worked": "Four cups are twelve thirds. Each scoop uses two thirds, so twelve thirds make six scoops.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "How many {1/8}-meter pieces fit in {3/4} meter?",
+              "answer": "6 pieces",
+              "skill": "F-DIV",
+              "case": "Fraction quotient is whole",
+              "check": "F(3,4)/F(1,8)==6",
+              "worked": "Three fourths is six eighths. Count six pieces.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "How many {2/3}-cup groups fit in {5/6} cup? A fraction of a group is allowed.",
+              "answer": "1 {1/4} groups",
+              "skill": "F-DIV",
+              "case": "Fraction quotient is non-whole",
+              "check": "F(5,6)/F(2,3)==F(5,4)",
+              "worked": "One group is four sixths. Five sixths is five fourths of that group.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "What fraction of a {5/6}-cup scoop is filled by {1/3} cup?",
+              "answer": "{2/5} of a scoop",
+              "skill": "F-DIV",
+              "case": "Quotient below one",
+              "check": "F(1,3)/F(5,6)==F(2,5)",
+              "worked": "One scoop has five sixths. One third is two sixths, so it fills two of five equal scoop parts.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A jar is {2/3} full after {3/5} liter is poured in. How many liters fill the whole jar?",
+              "answer": "{9/10} liter",
+              "skill": "F-DIV",
+              "case": "Find amount for one whole group",
+              "check": "F(3,5)/F(2,3)==F(9,10)",
+              "worked": "Two thirds of the jar hold three fifths liter. One third holds three tenths, so three thirds hold nine tenths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Write a story for {3/4} \u00f7 {1/2}. Solve it.",
+              "answer": "1 {1/2} groups. Stories vary.",
+              "skill": "F-DIV",
+              "case": "Write a division story",
+              "check": "F(3,4)/F(1,2)==F(3,2)",
+              "worked": "Example: A pitcher has three fourths liter. How many half-liter servings does it hold, including part of a serving?",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "How much of a {3/4}-meter length is {2/5} meter? Draw equal parts to show {2/5} \u00f7 {3/4}.",
+            "answer": "{8/15} of the length",
+            "skill": "F-DIV",
+            "case": "Exit: quotient below one with different denominators",
+            "check": "F(2,5)/F(3,4)==F(8,15)",
+            "worked": "Use twentieths. The target length is 15 twentieths; the available amount is 8 twentieths. That is eight fifteenths of one group.",
+            "wrong": "{3/10}",
+            "error": "Multiplying the two fractions finds a different amount.",
+            "diagram": {
+              "kind": "tape",
+              "values": [
+                15,
+                8
+              ],
+              "labels": [
+                "one group: 15 twentieths",
+                "amount: 8 twentieths"
+              ],
+              "caption": "Compare equal twentieths."
+            }
+          },
+          "error": {
+            "text": "Ben says {1/3} \u00f7 {5/6} = {5/18}. He multiplies the fractions. Explain what division asks here.",
+            "correction": "It asks what fraction of a five-sixths group fits in one third. The answer is {2/5}.",
+            "wrong": "{5/18}",
+            "why": "He uses a familiar fraction rule without identifying the group.",
+            "move": "Rename one third as two sixths and compare with five sixths.",
+            "check": "F(1,3)/F(5,6)==F(2,5) and F(1,3)*F(5,6)==F(5,18)"
+          },
+          "example": {
+            "text": "Find {3/4} \u00f7 {1/2} with a tape.",
+            "answer": "1 {1/2}",
+            "steps": [
+              "Rename one half as two fourths.",
+              "Three fourths contains one full pair of fourths and one fourth left.",
+              "The remaining fourth is half of a two-fourths group."
+            ],
+            "check": "F(3,4)/F(1,2)==F(3,2)"
+          },
+          "fade": {
+            "text": "Find {5/8} \u00f7 {1/4}. One group is __ eighths. Five eighths holds __ groups.",
+            "answer": "2 eighths; 2 {1/2} groups",
+            "check": "F(1,4)==F(2,8) and F(5,8)/F(1,4)==F(5,2)"
+          },
+          "model": {
+            "kind": "tape",
+            "values": [
+              4,
+              5
+            ],
+            "labels": [
+              "one group: 4 sixths",
+              "amount: 5 sixths"
+            ],
+            "caption": "Five sixths is five fourths of a four-sixths group."
+          },
+          "look_fors": [
+            {
+              "response": "Labels what counts as one group.",
+              "why": "Fractional quotients refer to the divisor-sized group.",
+              "move": "Ask the student to circle one whole group."
+            },
+            {
+              "response": "Renames both amounts using the same small unit.",
+              "why": "Counting comparable pieces makes division visible.",
+              "move": "Accept a tape or a number line with equal units."
+            },
+            {
+              "response": "Calls the remainder a fraction of the group.",
+              "why": "Avoids treating leftover units as the answer fraction.",
+              "move": "Compare the leftover pieces with pieces in one group."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Reverses dividend and divisor.",
+              "why": "Has not named the available amount.",
+              "move": "Label amount first and group size second."
+            },
+            {
+              "response": "Multiplies the fractions.",
+              "why": "Applies a rule before making sense of division.",
+              "move": "Count equal pieces before writing a rule."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: A quotient below one means the division cannot be done.",
+            "Partner compare: Why is the leftover one fourth in the example half of a group?"
+          ],
+          "summary_frame": "To divide by a fraction, I ask how many ___-sized groups fit in ___.",
+          "exit_sort": {
+            "got": "Gives {8/15} and shows 8 equal units compared with a 15-unit group.",
+            "almost": "Correct quotient but an unclear drawing, or a correct comparison model with a simplification slip.",
+            "reteach": "Multiplies, reverses the fractions, or says the answer must exceed one."
+          }
+        },
+        {
+          "id": 8,
+          "title": "Fraction division and reciprocals",
+          "standards": [
+            "6.NS.A.1",
+            "6.G.A.2"
+          ],
+          "goal": "I can connect the reciprocal rule to equal groups and use it in measurement problems.",
+          "key_idea": "Dividing by a fraction counts groups. Multiplying by its reciprocal gives the same count.",
+          "prerequisite": "Fraction division with equal-part models and mixed-number conversion.",
+          "materials": [
+            "fraction strips",
+            "grid paper",
+            "small box"
+          ],
+          "vocab": [
+            {
+              "term": "Reciprocal",
+              "meaning": "A number that multiplies with another number to make 1.",
+              "example": "{3/5} and {5/3} are reciprocals."
+            },
+            {
+              "term": "Mixed number",
+              "meaning": "A whole number plus a fraction.",
+              "example": "2 {1/3} = {7/3}."
+            },
+            {
+              "term": "Volume",
+              "meaning": "The amount of three-dimensional space a solid fills.",
+              "example": "A box uses cubic units."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Share {3/4} liter equally among 5 bottles. How much per bottle?",
+              "answer": "{3/20} liter",
+              "skill": "F-DIV",
+              "case": "Fraction divided by whole number",
+              "check": "F(3,4)/5==F(3,20)",
+              "worked": "Each fourth is split into five parts, so each bottle gets three twentieths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "How many {3/5}-cup groups fit in 4 cups? Include a fraction of a group.",
+              "answer": "6 {2/3} groups",
+              "skill": "F-DIV",
+              "case": "Whole number divided by fraction",
+              "check": "4/F(3,5)==F(20,3)",
+              "worked": "Four cups are twenty fifths. Each group uses three fifths. Count twenty thirds of a group.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find {7/8} \u00f7 {1/4}. Check by multiplying the quotient by {1/4}.",
+              "answer": "3 {1/2}",
+              "skill": "F-DIV",
+              "case": "Fraction divided by fraction",
+              "check": "F(7,8)/F(1,4)==F(7,2) and F(7,2)*F(1,4)==F(7,8)",
+              "worked": "One quarter is two eighths. Seven eighths contains seven halves of a two-eighths group.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 1 {7/8} \u00f7 {5/8}.",
+              "answer": "3",
+              "skill": "F-DIV",
+              "case": "Mixed number divided by fraction",
+              "check": "F(15,8)/F(5,8)==3",
+              "worked": "Rename 1 {7/8} as {15/8}. Three groups of five eighths fit.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A cord is 3 {1/2} meters long. Each piece is {7/8} meter. How many pieces?",
+              "answer": "4 pieces",
+              "skill": "F-DIV",
+              "case": "Cutting length into pieces",
+              "check": "F(7,2)/F(7,8)==4",
+              "worked": "Convert 3 {1/2} to {28/8}. Four groups of seven eighths fit.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A rectangle has area {5/6} square meter and width {2/3} meter. Find its length.",
+              "answer": "1 {1/4} meters",
+              "skill": "F-DIV",
+              "case": "Missing rectangle side",
+              "check": "F(5,6)/F(2,3)==F(5,4)",
+              "worked": "Length \u00d7 width = area. Length is {5/6} \u00f7 {2/3}.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "area",
+                "dimensions": [
+                  1.25,
+                  0.6666666666666666
+                ],
+                "labels": [
+                  "length ?",
+                  "width {2/3} m"
+                ],
+                "caption": "Area = {5/6} square meter."
+              }
+            },
+            {
+              "text": "A box has edges {2/3}, {3/4}, and 2 meters. Find its volume.",
+              "answer": "1 cubic meter",
+              "skill": "G-VOL",
+              "case": "Fractional-edge prism volume",
+              "check": "F(2,3)*F(3,4)*2==1",
+              "worked": "Multiply the three perpendicular edge lengths. The base area is {1/2} square meter; two layers make one cubic meter.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "A ribbon is 2 {5/8} yards long. Each piece is {3/8} yard. How many pieces can be cut?",
+            "answer": "7 pieces",
+            "skill": "F-DIV",
+            "case": "Exit: mixed number and correct reciprocal",
+            "check": "F(21,8)/F(3,8)==7",
+            "worked": "2 {5/8} = {21/8}. Twenty-one eighths make seven groups of three eighths.",
+            "wrong": "{7/8} or {1/7}",
+            "error": "Dropping the whole part or reversing the wrong fraction changes the total."
+          },
+          "error": {
+            "text": "Zoe writes {7/8} \u00f7 {1/4} = {8/7} \u00d7 {1/4} = {2/7}. Explain which number should be inverted.",
+            "correction": "Keep the dividend {7/8}. Multiply by the reciprocal of the divisor: {7/8} \u00d7 4 = 3 {1/2}.",
+            "wrong": "{2/7}",
+            "why": "She reverses the dividend instead of changing the size of the divisor-sized group.",
+            "move": "Check whether {2/7} groups of one fourth could make seven eighths.",
+            "check": "F(8,7)*F(1,4)==F(2,7) and F(7,8)*4==F(7,2)"
+          },
+          "example": {
+            "text": "Find {2/3} \u00f7 {3/5}.",
+            "answer": "1 {1/9}",
+            "steps": [
+              "One whole contains {5/3} groups of size {3/5}.",
+              "Two thirds of a whole contains {2/3} \u00d7 {5/3} groups.",
+              "Multiply to get {10/9}, or 1 {1/9}."
+            ],
+            "check": "F(2,3)/F(3,5)==F(2,3)*F(5,3)==F(10,9)"
+          },
+          "fade": {
+            "text": "Complete: {4/5} \u00f7 {2/3} = {4/5} \u00d7 __ = __. Check by multiplying by {2/3}.",
+            "answer": "{3/2}; 1 {1/5}",
+            "check": "F(4,5)/F(2,3)==F(6,5) and F(6,5)*F(2,3)==F(4,5)"
+          },
+          "model": {
+            "kind": "tape",
+            "values": [
+              3,
+              5
+            ],
+            "labels": [
+              "one group: 3 fifths",
+              "one whole: 5 fifths"
+            ],
+            "caption": "One whole has {5/3} groups of size {3/5}."
+          },
+          "look_fors": [
+            {
+              "response": "Converts the mixed number before dividing.",
+              "why": "Preserves the total amount.",
+              "move": "Ask how many eighths make both whole yards."
+            },
+            {
+              "response": "Uses a model or reciprocal and checks by multiplication.",
+              "why": "Both methods are valid and connected.",
+              "move": "Accept either method and ask what the quotient counts."
+            },
+            {
+              "response": "Uses square units for area and cubic units for volume.",
+              "why": "The dimensions measure different things.",
+              "move": "Trace one face, then point inside the box."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Inverts the dividend.",
+              "why": "Memorizes a rule without a division meaning.",
+              "move": "Check quotient \u00d7 divisor = dividend."
+            },
+            {
+              "response": "Leaves out the whole-number part.",
+              "why": "Treats a mixed number as only its fraction.",
+              "move": "Build the whole amount with equal fractional pieces."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: In a division problem, either fraction can be inverted. Test the claim with a tape.",
+            "Partner compare: How does finding a missing rectangle side use the same division idea as cutting ribbon?"
+          ],
+          "summary_frame": "I can check a fraction quotient by multiplying it by ___.",
+          "exit_sort": {
+            "got": "Finds 7 pieces, converts to {21/8}, and shows seven groups or a valid reciprocal calculation.",
+            "almost": "Uses the correct mixed-number conversion and division setup but makes a small arithmetic slip.",
+            "reteach": "Drops the 2 whole yards, multiplies by {3/8}, or inverts the dividend."
+          }
+        }
+      ],
+      "bank": [
+        {
+          "text": "How many {3/4}-liter groups fit in {7/8} liter? Include part of a group.",
+          "answer": "1 {1/6} groups",
+          "skill": "F-DIV",
+          "case": "Non-whole quotient",
+          "check": "F(7,8)/F(3,4)==F(7,6)",
+          "worked": "A group is six eighths. Seven eighths is seven sixths of that group.",
+          "wrong": "",
+          "error": "",
+          "session_id": 7
+        },
+        {
+          "text": "A bottle is {3/4} full and holds {2/3} liter so far. Find its full capacity.",
+          "answer": "{8/9} liter",
+          "skill": "F-DIV",
+          "case": "Amount for a whole group",
+          "check": "F(2,3)/F(3,4)==F(8,9)",
+          "worked": "One fourth holds two ninths liter. Four fourths hold eight ninths liter.",
+          "wrong": "",
+          "error": "",
+          "session_id": 7
+        },
+        {
+          "text": "Write a story for {5/6} \u00f7 {1/3}. Solve it.",
+          "answer": "2 {1/2}; stories vary",
+          "skill": "F-DIV",
+          "case": "Story writing",
+          "check": "F(5,6)/F(1,3)==F(5,2)",
+          "worked": "Example: how many one-third-meter lengths fit in five sixths meter, allowing part of a length?",
+          "wrong": "",
+          "error": "",
+          "session_id": 7
+        },
+        {
+          "text": "Jules says {1/2} \u00f7 {2/3} = {1/3}. Find and fix the error.",
+          "answer": "{3/4}",
+          "skill": "F-DIV",
+          "case": "Multiplication error analysis",
+          "check": "F(1,2)/F(2,3)==F(3,4) and F(1,2)*F(2,3)==F(1,3)",
+          "worked": "One half is three sixths. A group is four sixths. Three of four group parts fit.",
+          "wrong": "{1/3}",
+          "error": "The proposed answer multiplies instead of dividing.",
+          "session_id": 7
+        },
+        {
+          "text": "Find 2 \u00f7 {2/3}.",
+          "answer": "3",
+          "skill": "F-DIV",
+          "case": "Whole number by non-unit fraction",
+          "check": "(2/F(2,3)) == F(3,1)",
+          "worked": "Rename each whole in thirds, then count groups of two thirds.",
+          "wrong": "1 {1/3}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find {2/4} \u00f7 {1/4}.",
+          "answer": "2",
+          "skill": "F-DIV",
+          "case": "Whole quotient with fractions",
+          "check": "(F(2,4)/F(1,4)) == F(2,1)",
+          "worked": "Both fractions use the same unit. Count how many single parts fit.",
+          "wrong": "{1/8}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find {1/2} \u00f7 {3/4}.",
+          "answer": "{2/3}",
+          "skill": "F-DIV",
+          "case": "Quotient below one",
+          "check": "(F(1,2)/F(3,4)) == F(2,3)",
+          "worked": "The available amount is smaller than one group. Multiply by the reciprocal of the group size.",
+          "wrong": "{3/8}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find 3 \u00f7 {2/3}.",
+          "answer": "4 {1/2}",
+          "skill": "F-DIV",
+          "case": "Whole number by non-unit fraction",
+          "check": "(3/F(2,3)) == F(9,2)",
+          "worked": "Rename each whole in thirds, then count groups of two thirds.",
+          "wrong": "2",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find {3/5} \u00f7 {1/5}.",
+          "answer": "3",
+          "skill": "F-DIV",
+          "case": "Whole quotient with fractions",
+          "check": "(F(3,5)/F(1,5)) == F(3,1)",
+          "worked": "Both fractions use the same unit. Count how many single parts fit.",
+          "wrong": "{3/25}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find {1/2} \u00f7 {4/5}.",
+          "answer": "{5/8}",
+          "skill": "F-DIV",
+          "case": "Quotient below one",
+          "check": "(F(1,2)/F(4,5)) == F(5,8)",
+          "worked": "The available amount is smaller than one group. Multiply by the reciprocal of the group size.",
+          "wrong": "{2/5}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find 4 \u00f7 {2/3}.",
+          "answer": "6",
+          "skill": "F-DIV",
+          "case": "Whole number by non-unit fraction",
+          "check": "(4/F(2,3)) == F(6,1)",
+          "worked": "Rename each whole in thirds, then count groups of two thirds.",
+          "wrong": "2 {2/3}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Find {4/6} \u00f7 {1/6}.",
+          "answer": "4",
+          "skill": "F-DIV",
+          "case": "Whole quotient with fractions",
+          "check": "(F(4,6)/F(1,6)) == F(4,1)",
+          "worked": "Both fractions use the same unit. Count how many single parts fit.",
+          "wrong": "{1/9}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 7
+        },
+        {
+          "text": "Share {5/6} liter equally among 4 cups. How much goes in each cup?",
+          "answer": "{5/24} liter",
+          "skill": "F-DIV",
+          "case": "Fraction divided by whole number",
+          "check": "F(5,6)/4==F(5,24)",
+          "worked": "Split each sixth into four equal parts. Each cup gets five twenty-fourths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "A ribbon is 4 {1/2} meters long. Pieces measure {3/8} meter. How many pieces fit?",
+          "answer": "12 pieces",
+          "skill": "F-DIV",
+          "case": "Cutting a mixed-number length",
+          "check": "F(9,2)/F(3,8)==12",
+          "worked": "Rename the total as thirty-six eighths. Divide into groups of three eighths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "Find {4/7} \u00f7 {2/5}. Check the result by multiplying by {2/5}.",
+          "answer": "1 {3/7}",
+          "skill": "F-DIV",
+          "case": "Reciprocal with inverse check",
+          "check": "F(4,7)/F(2,5)==F(10,7) and F(10,7)*F(2,5)==F(4,7)",
+          "worked": "Keep four sevenths and multiply by five halves. The check recovers four sevenths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "Which is the reciprocal of 2 {1/2}: {2/5} or {5/2}? Explain using a product of 1.",
+          "answer": "{2/5}",
+          "skill": "F-DIV",
+          "case": "Mixed number reciprocal",
+          "check": "F(5,2)*F(2,5)==1 and F(5,2)*F(5,2)!=1",
+          "worked": "Two and one half is five halves. Five halves times two fifths equals one.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "Find 1 {1/2} \u00f7 {3/4}.",
+          "answer": "2",
+          "skill": "F-DIV",
+          "case": "Mixed number quotient",
+          "check": "(F(3,2)/F(3,4)) == F(2,1)",
+          "worked": "Rename the mixed number as an improper fraction, then count groups of three fourths.",
+          "wrong": "1 {1/8}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        },
+        {
+          "text": "A rectangle has area {3/4} square meter and width {3/4} meter. Find its length.",
+          "answer": "1 meters",
+          "skill": "F-DIV",
+          "case": "Missing rectangle side",
+          "check": "(F(3,4)/F(3,4)) == F(1,1)",
+          "worked": "Divide area by width. Check that length times width equals area.",
+          "wrong": "{9/16}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        },
+        {
+          "text": "A box has edges {1/2}, {2/3}, and 2 meters. Find the volume.",
+          "answer": "{2/3} cubic meters",
+          "skill": "G-VOL",
+          "case": "Fractional-edge volume",
+          "check": "(F(1,2)*F(2,3)*2) == F(2,3)",
+          "worked": "Multiply the three edge lengths. Track the three length units as cubic meters.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "Find 2 {1/2} \u00f7 {3/4}.",
+          "answer": "3 {1/3}",
+          "skill": "F-DIV",
+          "case": "Mixed number quotient",
+          "check": "(F(5,2)/F(3,4)) == F(10,3)",
+          "worked": "Rename the mixed number as an improper fraction, then count groups of three fourths.",
+          "wrong": "1 {7/8}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        },
+        {
+          "text": "A rectangle has area {4/4} square meter and width {3/4} meter. Find its length.",
+          "answer": "1 {1/3} meters",
+          "skill": "F-DIV",
+          "case": "Missing rectangle side",
+          "check": "(F(4,4)/F(3,4)) == F(4,3)",
+          "worked": "Divide area by width. Check that length times width equals area.",
+          "wrong": "{3/4}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        },
+        {
+          "text": "A box has edges {1/2}, {2/3}, and 3 meters. Find the volume.",
+          "answer": "1 cubic meters",
+          "skill": "G-VOL",
+          "case": "Fractional-edge volume",
+          "check": "(F(1,2)*F(2,3)*3) == F(1,1)",
+          "worked": "Multiply the three edge lengths. Track the three length units as cubic meters.",
+          "wrong": "",
+          "error": "",
+          "session_id": 8
+        },
+        {
+          "text": "Find 3 {1/2} \u00f7 {3/4}.",
+          "answer": "4 {2/3}",
+          "skill": "F-DIV",
+          "case": "Mixed number quotient",
+          "check": "(F(7,2)/F(3,4)) == F(14,3)",
+          "worked": "Rename the mixed number as an improper fraction, then count groups of three fourths.",
+          "wrong": "2 {5/8}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        },
+        {
+          "text": "A rectangle has area {5/4} square meter and width {3/4} meter. Find its length.",
+          "answer": "1 {2/3} meters",
+          "skill": "F-DIV",
+          "case": "Missing rectangle side",
+          "check": "(F(5,4)/F(3,4)) == F(5,3)",
+          "worked": "Divide area by width. Check that length times width equals area.",
+          "wrong": "{15/16}",
+          "error": "Multiplying by the divisor answers a different question.",
+          "session_id": 8
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "title": "Decimals and long division",
+      "big_idea": "Decimal digits name parts of a whole. Addition and subtraction combine equal place-value units. Division preserves its quotient when both quantities scale equally.",
+      "connections": "This builds on whole-number operations and fraction groups. Accurate decimal arithmetic supports expressions and equations next week.",
+      "omissions": "Repeating decimals and divisors producing recurring expansions are omitted. Very long multiplication and division chains are deferred to targeted boosters.",
+      "teaser": {
+        "text": "Use digits 2, 4, and 8 once each in the form A.BC. Which number is closest to 5?",
+        "answer": "4.82",
+        "skill": "PUZZLE",
+        "case": "Place-value reasoning",
+        "check": "min([D(\"2.48\"),D(\"2.84\"),D(\"4.28\"),D(\"4.82\"),D(\"8.24\"),D(\"8.42\")],key=lambda x:abs(x-5))==D(\"4.82\")",
+        "worked": "A ones digit of 4 places the number nearest 5. Among 4.28 and 4.82, the larger is nearer to 5.",
+        "wrong": "",
+        "error": ""
+      },
+      "sessions": [
+        {
+          "id": 9,
+          "title": "Decimal place value and products",
+          "standards": [
+            "6.NS.B.3",
+            "5.NBT.B.7"
+          ],
+          "goal": "I can add, subtract, and multiply decimals while keeping track of the value of each digit.",
+          "key_idea": "Addition combines like-sized units. Multiplication combines both the number of parts and the size of each part.",
+          "prerequisite": "Whole-number multiplication, regrouping, and decimal place names.",
+          "materials": [
+            "place-value paper",
+            "grid paper",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Place value",
+              "meaning": "A digit\u2019s value depends on its position.",
+              "example": "The 4 in 0.04 means four hundredths."
+            },
+            {
+              "term": "Estimate",
+              "meaning": "A nearby value that helps check an answer.",
+              "example": "6.2 \u00d7 3 is close to 6 \u00d7 3 = 18."
+            },
+            {
+              "term": "Thousandth",
+              "meaning": "One of 1,000 equal parts of a whole.",
+              "example": "0.007 means seven thousandths."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Find 4.7 + 8.036.",
+              "answer": "12.736",
+              "skill": "D-ADD",
+              "case": "Different decimal lengths",
+              "check": "D(\"4.7\")+D(\"8.036\")==D(\"12.736\")",
+              "worked": "Write 4.700 so tenths, hundredths, and thousandths line up.",
+              "wrong": "8.083",
+              "error": "Aligning the final digits combines different units."
+            },
+            {
+              "text": "Find 12 \u2212 4.685.",
+              "answer": "7.315",
+              "skill": "D-SUB",
+              "case": "Subtract across zeros",
+              "check": "D(\"12\")-D(\"4.685\")==D(\"7.315\")",
+              "worked": "Write 12.000. Regroup one whole into tenths, then into hundredths and thousandths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A rope costs $2.35 per meter. What do 4 meters cost?",
+              "answer": "$9.40",
+              "skill": "D-MULT",
+              "case": "Decimal times whole number and money",
+              "check": "D(\"2.35\")*4==D(\"9.40\")",
+              "worked": "235 cents \u00d7 4 = 940 cents, or $9.40.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 0.6 \u00d7 0.4. Is the product less than each factor?",
+              "answer": "0.24; yes",
+              "skill": "D-MULT",
+              "case": "Product below both factors",
+              "check": "D(\"0.6\")*D(\"0.4\")==D(\"0.24\") and D(\"0.24\")<D(\"0.4\")<D(\"0.6\")",
+              "worked": "Six tenths of four tenths is twenty-four hundredths.",
+              "wrong": "",
+              "error": "",
+              "diagram": {
+                "kind": "area",
+                "rows": 10,
+                "cols": 10,
+                "shade_rows": 4,
+                "shade_cols": 6,
+                "caption": "24 hundredths overlap."
+              }
+            },
+            {
+              "text": "Find 0.15 \u00d7 0.02.",
+              "answer": "0.003",
+              "skill": "D-MULT",
+              "case": "Leading zeros in a product",
+              "check": "D(\"0.15\")*D(\"0.02\")==D(\"0.003\")",
+              "worked": "Fifteen hundredths times two hundredths is thirty ten-thousandths, or three thousandths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A notebook costs $3.85 and a pen costs $1.67. You pay $10. Find the change.",
+              "answer": "$4.48",
+              "skill": "D-MONEY",
+              "case": "Multi-step money context",
+              "check": "D(\"10\")-D(\"3.85\")-D(\"1.67\")==D(\"4.48\")",
+              "worked": "Add costs: $5.52. Subtract from $10.00 to get $4.48.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "Find 0.45 \u00d7 0.06. Explain why your decimal position is reasonable.",
+            "answer": "0.027",
+            "skill": "D-MULT",
+            "case": "Exit: leading zeros and estimate",
+            "check": "D(\"0.45\")*D(\"0.06\")==D(\"0.027\")",
+            "worked": "45 \u00d7 6 = 270. Hundredths times hundredths makes ten-thousandths: 0.0270. It is less than 0.06.",
+            "wrong": "0.27",
+            "error": "The product is ten times too large for six hundredths of a number below one."
+          },
+          "error": {
+            "text": "Isaac says 0.6 \u00d7 0.4 = 2.4 because 6 \u00d7 4 = 24. Use place value to repair this.",
+            "correction": "Six tenths times four tenths is twenty-four hundredths, or 0.24.",
+            "wrong": "2.4",
+            "why": "He counts digits without tracking the size of the units.",
+            "move": "Shade six tenths across and four tenths down on a hundred-square grid.",
+            "check": "D(\"0.6\")*D(\"0.4\")==D(\"0.24\") and 6*4==24"
+          },
+          "example": {
+            "text": "Find 3.8 + 0.475.",
+            "answer": "4.275",
+            "steps": [
+              "Write 3.800 + 0.475.",
+              "Add thousandths to thousandths and tenths to tenths.",
+              "3.800 + 0.475 = 4.275. The sum is a little above 4."
+            ],
+            "check": "D(\"3.8\")+D(\"0.475\")==D(\"4.275\")"
+          },
+          "fade": {
+            "text": "Complete: 0.3 \u00d7 0.07 means 3 tenths \u00d7 7 hundredths = 21 __ = __.",
+            "answer": "thousandths; 0.021",
+            "check": "D(\"0.3\")*D(\"0.07\")==D(\"0.021\")"
+          },
+          "model": {
+            "kind": "area",
+            "rows": 10,
+            "cols": 10,
+            "shade_rows": 4,
+            "shade_cols": 6,
+            "caption": "0.6 \u00d7 0.4 = 24 hundredths."
+          },
+          "look_fors": [
+            {
+              "response": "Aligns decimal points when adding.",
+              "why": "Like-sized units must be combined.",
+              "move": "Ask the student to name each column."
+            },
+            {
+              "response": "Estimates product size before computing.",
+              "why": "An estimate catches misplaced decimals.",
+              "move": "Ask whether taking a fraction of a fraction can exceed either factor."
+            },
+            {
+              "response": "Uses cents, fractions, or a grid.",
+              "why": "Several models correctly track decimal units.",
+              "move": "Accept any valid model and connect it to the written algorithm."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Aligns the rightmost digits.",
+              "why": "Treats every digit as the same unit.",
+              "move": "Write zeros to make place-value columns visible."
+            },
+            {
+              "response": "Makes a product larger than both small factors.",
+              "why": "Keeps whole-number multiplication intuition.",
+              "move": "Take a part of one shaded part of a unit square."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: Adding zeros at the end of 4.7 changes its value.",
+            "Partner compare: How does a grid explain the decimal point in 0.6 \u00d7 0.4?"
+          ],
+          "summary_frame": "I check a decimal answer by naming the units and ___.",
+          "exit_sort": {
+            "got": "Gives 0.027 and supports its size with place value or a valid estimate.",
+            "almost": "Gives 0.027 without a clear explanation, or uses correct units with an arithmetic slip.",
+            "reteach": "Gives 0.27, 2.7, or another value from counting places incorrectly."
+          }
+        },
+        {
+          "id": 10,
+          "title": "Long division with decimals",
+          "standards": [
+            "6.NS.B.2",
+            "6.NS.B.3"
+          ],
+          "goal": "I can divide with decimals by preserving equal groups and checking my quotient.",
+          "key_idea": "Multiplying the dividend and divisor by the same power of ten preserves the quotient.",
+          "prerequisite": "Whole-number multiplication and decimal place value.",
+          "materials": [
+            "place-value paper",
+            "pencil"
+          ],
+          "vocab": [
+            {
+              "term": "Remainder",
+              "meaning": "The amount left after equal groups are made.",
+              "example": "17 \u00f7 5 gives 3 groups with 2 left."
+            },
+            {
+              "term": "Equivalent division",
+              "meaning": "A new dividend and divisor with the same quotient.",
+              "example": "6.4 \u00f7 0.8 = 64 \u00f7 8."
+            },
+            {
+              "term": "Decimal quotient",
+              "meaning": "A division result with fractional places written in decimals.",
+              "example": "7 \u00f7 2 = 3.5."
+            }
+          ],
+          "problems": [
+            {
+              "text": "Use long division to find 672 \u00f7 24.",
+              "answer": "28",
+              "skill": "D-DIV",
+              "case": "Three-digit by two-digit exact quotient",
+              "check": "672//24==28 and 28*24==672",
+              "worked": "24 goes into 67 twice, leaving 19 tens. Bring down 2 ones. 192 \u00f7 24 = 8.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 27 \u00f7 8. Continue into decimal places.",
+              "answer": "3.375",
+              "skill": "D-DIV",
+              "case": "Whole numbers with decimal quotient",
+              "check": "D(27)/8==D(\"3.375\")",
+              "worked": "After 3 groups, 3 remains. Rename it as 30 tenths, then continue through hundredths and thousandths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 8.4 \u00f7 7.",
+              "answer": "1.2",
+              "skill": "D-DIV",
+              "case": "Decimal divided by whole number",
+              "check": "D(\"8.4\")/7==D(\"1.2\")",
+              "worked": "84 tenths shared among 7 gives 12 tenths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 6.3 \u00f7 0.09 by writing an equivalent division with a whole-number divisor.",
+              "answer": "70",
+              "skill": "D-DIV",
+              "case": "Decimal divided by decimal",
+              "check": "D(\"6.3\")/D(\"0.09\")==70 and D(\"630\")/9==70",
+              "worked": "Multiply both amounts by 100: 630 \u00f7 9 = 70.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 7 \u00f7 20.",
+              "answer": "0.35",
+              "skill": "D-DIV",
+              "case": "Quotient below one",
+              "check": "D(7)/20==D(\"0.35\")",
+              "worked": "Seven twentieths equals thirty-five hundredths.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "A 3.6-meter ribbon is cut into 0.4-meter pieces. How many pieces?",
+              "answer": "9 pieces",
+              "skill": "D-DIV",
+              "case": "Divisor below one makes larger quotient",
+              "check": "D(\"3.6\")/D(\"0.4\")==9",
+              "worked": "Rename both in tenths: 36 tenths \u00f7 4 tenths = 9.",
+              "wrong": "",
+              "error": ""
+            },
+            {
+              "text": "Find 1,176 \u00f7 28 and check by multiplication.",
+              "answer": "42",
+              "skill": "N-DIV",
+              "case": "Four-digit dividend and two-digit divisor",
+              "check": "1176//28==42 and 42*28==1176",
+              "worked": "28 \u00d7 40 = 1,120. Two more groups make 56, so 42 groups make 1,176.",
+              "wrong": "",
+              "error": ""
+            }
+          ],
+          "exit": {
+            "text": "Find 8.4 \u00f7 0.07. Write an equivalent division and check by multiplication.",
+            "answer": "120",
+            "skill": "D-DIV",
+            "case": "Exit: scale both numbers and place quotient",
+            "check": "D(\"8.4\")/D(\"0.07\")==120 and D(\"0.07\")*120==D(\"8.4\")",
+            "worked": "Multiply both by 100: 840 \u00f7 7 = 120. Check 120 \u00d7 0.07 = 8.4.",
+            "wrong": "1.2",
+            "error": "Changing only the divisor changes the quotient."
+          },
+          "error": {
+            "text": "Lina changes 6.3 \u00f7 0.09 into 6.3 \u00f7 9 and gets 0.7. Which change is missing?",
+            "correction": "Both amounts must scale by 100. Use 630 \u00f7 9 = 70.",
+            "wrong": "0.7",
+            "why": "She changes the group size without changing the available amount by the same factor.",
+            "move": "Compare 63 tenths with nine hundredths by renaming both in hundredths.",
+            "check": "D(\"6.3\")/9==D(\"0.7\") and D(630)/9==70"
+          },
+          "example": {
+            "text": "Find 4.8 \u00f7 0.06.",
+            "answer": "80",
+            "steps": [
+              "Rename both quantities in hundredths.",
+              "4.8 is 480 hundredths; 0.06 is 6 hundredths.",
+              "480 \u00f7 6 = 80. Check 80 \u00d7 0.06 = 4.8."
+            ],
+            "check": "D(\"4.8\")/D(\"0.06\")==80 and 80*D(\"0.06\")==D(\"4.8\")"
+          },
+          "fade": {
+            "text": "Complete: 5.4 \u00f7 0.03 = __ \u00f7 3 = __.",
+            "answer": "540; 180",
+            "check": "D(\"5.4\")/D(\"0.03\")==180 and 540//3==180"
+          },
+          "model": {
+            "kind": "ratio",
+            "labels": [
+              "dividend",
+              "divisor"
+            ],
+            "rows": [
+              [
+                "4.8",
+                "0.06"
+              ],
+              [
+                "480",
+                "6"
+              ]
+            ],
+            "caption": "Multiply both quantities by 100. The quotient stays 80."
+          },
+          "look_fors": [
+            {
+              "response": "Scales both numbers equally.",
+              "why": "Preserves the number of groups.",
+              "move": "Ask for the factor written beside each number."
+            },
+            {
+              "response": "Adds zeros after a decimal point to continue.",
+              "why": "A remainder can be renamed in smaller units.",
+              "move": "Ask what three remaining ones become in tenths."
+            },
+            {
+              "response": "Checks quotient \u00d7 divisor.",
+              "why": "The reverse operation tests correctness.",
+              "move": "Accept long division or equal-group reasoning with a multiplication check."
+            }
+          ],
+          "misconceptions": [
+            {
+              "response": "Moves only one decimal point.",
+              "why": "Uses a memorized instruction without equivalence.",
+              "move": "Rename both quantities in the same unit."
+            },
+            {
+              "response": "Stops at a nonzero remainder.",
+              "why": "Does not yet rename the leftover amount.",
+              "move": "Write a decimal point and trade one unit for ten smaller units."
+            }
+          ],
+          "discussion": [
+            "Agree or disagree: 3.6 \u00f7 0.4 must be less than 3.6 because it is division.",
+            "Partner compare: Why do 4.8 \u00f7 0.06 and 480 \u00f7 6 count the same number of groups?"
+          ],
+          "summary_frame": "To keep a quotient unchanged, I multiply both ___ and ___ by the same number.",
+          "exit_sort": {
+            "got": "Gives 120, writes 840 \u00f7 7, and verifies 120 \u00d7 0.07 = 8.4.",
+            "almost": "Uses the correct equivalent division but makes a minor calculation slip, or omits the check.",
+            "reteach": "Scales only one number, gives 1.2, or places the quotient decimal using a guess."
+          }
+        }
+      ],
+      "bank": [
+        {
+          "text": "Three notebooks cost $2.45 each. What is the total cost?",
+          "answer": "$7.35",
+          "skill": "D-MULT",
+          "case": "Decimal times whole number",
+          "check": "D(\"2.45\")*3==D(\"7.35\")",
+          "worked": "245 cents times three equals 735 cents.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "A ball costs $4.65 and a card costs $2.78. Find the change from $10.",
+          "answer": "$2.57",
+          "skill": "D-MONEY",
+          "case": "Money with two steps",
+          "check": "D(10)-D(\"4.65\")-D(\"2.78\")==D(\"2.57\")",
+          "worked": "The cost is $7.43. Subtract that from $10.00.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 0.8 \u00d7 0.7. Is the product below both factors?",
+          "answer": "0.56; yes",
+          "skill": "D-MULT",
+          "case": "Product below both factors",
+          "check": "D(\"0.8\")*D(\"0.7\")==D(\"0.56\") and D(\"0.56\")<D(\"0.7\")<D(\"0.8\")",
+          "worked": "Eight tenths of seven tenths covers fifty-six hundredths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 1.45 + 3.078.",
+          "answer": "4.528",
+          "skill": "D-ADD",
+          "case": "Different lengths",
+          "check": "(D(\"1.45\")+D(\"3.078\")) == D('4.528')",
+          "worked": "Line up decimal points. Add digits in the same place-value columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 10 \u2212 1.286.",
+          "answer": "8.714",
+          "skill": "D-SUB",
+          "case": "Subtract across zeros",
+          "check": "(D(10)-D(\"1.286\")) == D('8.714')",
+          "worked": "Write 10.000 and regroup through the zero columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 0.25 \u00d7 0.02.",
+          "answer": "0.0050",
+          "skill": "D-MULT",
+          "case": "Leading-zero product",
+          "check": "(D(\"0.25\")*D(\"0.02\")) == D('0.0050')",
+          "worked": "One fourth of the second factor must be smaller than it. Use this to check the decimal position.",
+          "wrong": "0.0500",
+          "error": "The decimal point is one place too far right. Check the product against both factors.",
+          "session_id": 9
+        },
+        {
+          "text": "Find 2.45 + 4.078.",
+          "answer": "6.528",
+          "skill": "D-ADD",
+          "case": "Different lengths",
+          "check": "(D(\"2.45\")+D(\"4.078\")) == D('6.528')",
+          "worked": "Line up decimal points. Add digits in the same place-value columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 10 \u2212 2.286.",
+          "answer": "7.714",
+          "skill": "D-SUB",
+          "case": "Subtract across zeros",
+          "check": "(D(10)-D(\"2.286\")) == D('7.714')",
+          "worked": "Write 10.000 and regroup through the zero columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 0.25 \u00d7 0.03.",
+          "answer": "0.0075",
+          "skill": "D-MULT",
+          "case": "Leading-zero product",
+          "check": "(D(\"0.25\")*D(\"0.03\")) == D('0.0075')",
+          "worked": "One fourth of the second factor must be smaller than it. Use this to check the decimal position.",
+          "wrong": "0.0750",
+          "error": "The decimal point is one place too far right. Check the product against both factors.",
+          "session_id": 9
+        },
+        {
+          "text": "Find 3.45 + 5.078.",
+          "answer": "8.528",
+          "skill": "D-ADD",
+          "case": "Different lengths",
+          "check": "(D(\"3.45\")+D(\"5.078\")) == D('8.528')",
+          "worked": "Line up decimal points. Add digits in the same place-value columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 10 \u2212 3.286.",
+          "answer": "6.714",
+          "skill": "D-SUB",
+          "case": "Subtract across zeros",
+          "check": "(D(10)-D(\"3.286\")) == D('6.714')",
+          "worked": "Write 10.000 and regroup through the zero columns.",
+          "wrong": "",
+          "error": "",
+          "session_id": 9
+        },
+        {
+          "text": "Find 0.25 \u00d7 0.04.",
+          "answer": "0.0100",
+          "skill": "D-MULT",
+          "case": "Leading-zero product",
+          "check": "(D(\"0.25\")*D(\"0.04\")) == D('0.0100')",
+          "worked": "One fourth of the second factor must be smaller than it. Use this to check the decimal position.",
+          "wrong": "0.1000",
+          "error": "The decimal point is one place too far right. Check the product against both factors.",
+          "session_id": 9
+        },
+        {
+          "text": "Find 9.6 \u00f7 8.",
+          "answer": "1.2",
+          "skill": "D-DIV",
+          "case": "Decimal by whole number",
+          "check": "D(\"9.6\")/8==D(\"1.2\")",
+          "worked": "Ninety-six tenths shared among eight gives twelve tenths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 9 \u00f7 40.",
+          "answer": "0.225",
+          "skill": "D-DIV",
+          "case": "Quotient below one",
+          "check": "D(9)/40==D(\"0.225\")",
+          "worked": "Use long division into tenths, hundredths, and thousandths.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 1,344 \u00f7 32. Verify by multiplication.",
+          "answer": "42",
+          "skill": "N-DIV",
+          "case": "Four-digit by two-digit division",
+          "check": "1344//32==42 and 42*32==1344",
+          "worked": "Thirty-two times forty is 1,280. Two more groups add 64.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 288 \u00f7 24.",
+          "answer": "12",
+          "skill": "N-DIV",
+          "case": "Two-digit divisor",
+          "check": "(F(288,24)) == F(12,1)",
+          "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 1.4 \u00f7 0.07.",
+          "answer": "20",
+          "skill": "D-DIV",
+          "case": "Scale both numbers",
+          "check": "(D(\"1.4\")/D(\"0.07\")) == D('2E+1')",
+          "worked": "Multiply both dividend and divisor by 100, then divide by 7.",
+          "wrong": "0.2",
+          "error": "Changing only the divisor changes the quotient. Scale both quantities by 100.",
+          "session_id": 10
+        },
+        {
+          "text": "Find 3 \u00f7 8.",
+          "answer": "0.375",
+          "skill": "D-DIV",
+          "case": "Decimal quotient",
+          "check": "(D(3)/8) == D('0.375')",
+          "worked": "Continue the long division into tenths, hundredths, and thousandths until the remainder is zero.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 312 \u00f7 24.",
+          "answer": "13",
+          "skill": "N-DIV",
+          "case": "Two-digit divisor",
+          "check": "(F(312,24)) == F(13,1)",
+          "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 2.1 \u00f7 0.07.",
+          "answer": "30",
+          "skill": "D-DIV",
+          "case": "Scale both numbers",
+          "check": "(D(\"2.1\")/D(\"0.07\")) == D('3E+1')",
+          "worked": "Multiply both dividend and divisor by 100, then divide by 7.",
+          "wrong": "0.3",
+          "error": "Changing only the divisor changes the quotient. Scale both quantities by 100.",
+          "session_id": 10
+        },
+        {
+          "text": "Find 5 \u00f7 8.",
+          "answer": "0.625",
+          "skill": "D-DIV",
+          "case": "Decimal quotient",
+          "check": "(D(5)/8) == D('0.625')",
+          "worked": "Continue the long division into tenths, hundredths, and thousandths until the remainder is zero.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 336 \u00f7 24.",
+          "answer": "14",
+          "skill": "N-DIV",
+          "case": "Two-digit divisor",
+          "check": "(F(336,24)) == F(14,1)",
+          "worked": "Use long division and verify quotient \u00d7 24 equals the dividend.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        },
+        {
+          "text": "Find 2.8 \u00f7 0.07.",
+          "answer": "40",
+          "skill": "D-DIV",
+          "case": "Scale both numbers",
+          "check": "(D(\"2.8\")/D(\"0.07\")) == D('4E+1')",
+          "worked": "Multiply both dividend and divisor by 100, then divide by 7.",
+          "wrong": "0.4",
+          "error": "Changing only the divisor changes the quotient. Scale both quantities by 100.",
+          "session_id": 10
+        },
+        {
+          "text": "Find 7 \u00f7 8.",
+          "answer": "0.875",
+          "skill": "D-DIV",
+          "case": "Decimal quotient",
+          "check": "(D(7)/8) == D('0.875')",
+          "worked": "Continue the long division into tenths, hundredths, and thousandths until the remainder is zero.",
+          "wrong": "",
+          "error": "",
+          "session_id": 10
+        }
+      ]
+    }
+  ]
+}

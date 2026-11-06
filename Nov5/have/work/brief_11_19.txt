@@ -1,0 +1,416 @@
+PAGE 11
+Double Advanced Math Program: build brief
+Page 11
+S14. Sunday, Dec 20. Polygons, nets, and surface area
+•
+Standards. 6.G.A.1, 6.G.A.4.
+•
+Goals. Find the area of a composite polygon by decomposing it or by subtracting. Draw and read nets of
+prisms and pyramids. Treat surface area as the sum of the areas of all faces. Tell square units from cubic
+units.
+•
+Cases. An L-shaped polygon split two ways. A rectangular prism net (3 × 4 × 5 box, 94 square units). A
+triangular prism net (two triangles and three rectangles). A square pyramid net (one square and four
+triangles). A surface-area calculation with one face missing, for the student to find the error.
+•
+Misconceptions. Leaving out hidden faces. Using the volume formula. Wrong units. Forgetting the 1/2 on
+triangular faces.
+•
+Exit ticket target. A triangular prism whose triangle has sides 3, 4, 5 cm and whose length is 10 cm (surface
+area 132 square cm).
+S15. Saturday, Dec 26. Negative numbers: opposites, order, absolute value
+•
+Standards. 6.NS.C.5 to 6.NS.C.7.
+•
+Goals. Use positive and negative numbers for temperature, elevation, and money. Locate them on a number
+line. Understand opposites. Understand absolute value as distance from zero. Order and compare rational
+numbers, including fractions and decimals. Interpret statements such as −8 < −3.
+•
+Cases. Contexts (below zero, below sea level, owes money). Integers on a number line. Fractions and
+decimals on a number line (−3.5, −1/2). The opposite of −7 and the opposite of the opposite. Absolute value
+of positive and negative numbers. Comparing numbers versus comparing absolute values (−7 and −4).
+Real-world statements.
+•
+Misconceptions. −8 > −3 because 8 > 3. Absolute value means "drop the sign" with no sense of distance.
+−(−5) = −5.
+•
+Exit ticket target. Order −5, 2, −1/2, −3.5 from least to greatest, and name which has the greatest absolute
+value (−5, −3.5, −1/2, 2; greatest absolute value is −5).
+S16. Sunday, Dec 27. The coordinate plane and inequalities
+•
+Standards. 6.NS.C.6, 6.NS.C.8, 6.EE.B.5, 6.EE.B.8.
+•
+Timing. Coordinate plane 35 minutes. Inequalities 25 minutes. Teach GCF and LCM in the weekday
+packets and study guide this week, not in the session.
+•
+Goals. Plot and read points in all four quadrants. Reflect points across the axes. Find distances between
+points on the same horizontal or vertical line. Write and graph inequalities on a number line.
+•
+Cases. Points in each quadrant. Coordinates read from a graph. Reflections of (−3, 2) across each axis.
+Distance between (−3, 2) and (−3, −5). A polygon on the plane with its perimeter. Open and closed circles (x
+> 3 and x ≥ 3). Whether 3 is a solution of x > 3. Writing an inequality from words ("at least 12").
+•
+Misconceptions. Swapping x and y. Sign errors by quadrant. Reflecting across the wrong axis. Confusing
+"at least" with "more than."
+•
+Exit ticket target. Reflect A(−3, 2) across the y-axis and give the distance from A to its image (A′ = (3, 2),
+distance 6).
+
+
+PAGE 12
+Double Advanced Math Program: build brief
+Page 12
+S17. Saturday, Jan 2. Data: statistical questions, displays, mean and median
+•
+Standards. 6.SP.A.1 to 6.SP.A.3, 6.SP.B.4, 6.SP.B.5.
+•
+Goals. Recognize a statistical question. Build and read dot plots and histograms. Describe center: the mean
+as a fair share and as a balance point, and the median as the middle. Describe the shape of a distribution.
+Choose a measure of center.
+•
+Cases. Statistical versus non-statistical questions. A dot plot from data. A histogram with given bins. The
+mean of a small data set. A median with an odd number of values. A median with an even number of values.
+The effect of an outlier on the mean versus the median. A missing value that produces a given mean.
+•
+Misconceptions. Finding the median without ordering the data. Forgetting to average the two middle values.
+Mixing up mean and most common value. Confusing a histogram with a bar graph.
+•
+Exit ticket target. Data 7, 3, 9, 4, 12, 4: find the median and the mean (median 5.5, mean 6.5).
+S18. Sunday, Jan 3. Variability: range, MAD, IQR, box plots. Includes the Grade 6 Cumulative
+Check
+•
+Standards. 6.SP.A.2, 6.SP.A.3, 6.SP.B.5.
+•
+Timing. Lesson 40 minutes, Grade 6 Cumulative Check 30 minutes.
+•
+Goals. Measure spread with the range, the IQR, and the MAD. Build and read box plots from a five-number
+summary. Compare two data sets using center and spread.
+•
+Cases. Range. The five-number summary for an odd and for an even number of values. IQR. MAD
+computed step by step. Reading a box plot (what a quarter of the data means). Two data sets with similar
+centers and different spreads. The effect of an outlier on the range versus the IQR.
+•
+Misconceptions. Finding quartiles by splitting the range instead of the data. Forgetting absolute value in the
+MAD. Thinking a longer box means more data values.
+•
+Exit ticket target. Data 2, 4, 4, 5, 7, 8, 10, 12: find Q1, the median, Q3, and the IQR (4, 6, 9, 5).
+•
+Grade 6 Cumulative Check. 20 to 24 items across all Grade 6 units, with a key and a skill-by-skill scoring
+grid.
+S19. Saturday, Jan 9. Bridge to the rest of IMT1: scale drawings and proportional relationships
+•
+Standards. 7.G.A.1, 7.RP.A.1, 7.RP.A.2.
+•
+Goals. Understand scaled copies (all lengths multiplied by a scale factor, angles unchanged, area multiplied
+by the square of the factor). Read map and drawing scales and find actual lengths. Understand a proportional
+relationship through its constant of proportionality k = y/x, the equation y = kx, tables, and graphs through
+the origin. Tell proportional from non-proportional relationships.
+•
+Cases. A whole-number scale factor. A fractional scale factor. A map scale with units (1 cm to 50 km). The
+area of a scaled copy (factor 3 makes the area 9 times as large). A proportional table where k is the unit rate.
+A non-proportional relationship (a taxi fare of $3 plus $2 per mile). A graph through the origin and one that
+is not. An equation from a story.
+•
+Misconceptions. Applying the scale factor to area. Additive scaling. Treating a linear but non-proportional
+relationship as proportional. Reversing x and y when computing k.
+•
+Exit ticket target. A table with points (2, 5), (4, 9), (6, 13): is it proportional? (No. It is linear, y = 2x + 1,
+but not through the origin. A student who notices the constant difference may wrongly say yes.)
+
+
+PAGE 13
+Double Advanced Math Program: build brief
+Page 13
+S20. Sunday, Jan 10. Circles, previews of IMT2, and a mixed review
+•
+Standards. 7.G.B.4, 7.RP.A.3 (preview), 7.NS.A.1 (preview).
+•
+Timing. Circles 35 minutes. Previews 15 minutes. Final mixed review 15 minutes.
+•
+Goals. Use the terms radius, diameter, and circumference. Use C = πd and A = πr², giving answers both in
+terms of π and with 3.14. See that C ÷ d is the same for every circle. Preview percent increase and decrease.
+Preview adding signed numbers on a number line.
+•
+Cases. Circumference from diameter and from radius. Area from radius and from diameter (halve first).
+Answers in terms of π and approximate. Percent increase (40 to 50 is a 25% increase) and percent decrease,
+and why a 25% increase and a 25% decrease do not cancel. Signed-number addition on a number line (−3 +
+5, −4 + −2, 3 − 7).
+•
+Misconceptions. Squaring the diameter. Mixing up the circumference and area formulas. Treating π as
+exactly 3.14. Taking percent change relative to the wrong starting value.
+•
+Exit ticket target. A circle has diameter 10 cm: find its area in terms of π and with 3.14 (25π square cm,
+about 78.5 square cm).
+4.3 Weekday packets
+Every weekend has five packets after it (Monday to Thursday are standard, Friday is the weekly check). Part 7
+gives the format. In short: Monday reinforces Saturday's topic, Tuesday reinforces Sunday's topic, Wednesday
+is mixed spiral review with a brain teaser, Thursday is word problems and error analysis (with a clearly labeled
+"Stretch" preview section in weeks 8 to 10), and Friday is the weekly check.
+
+
+PAGE 14
+Double Advanced Math Program: build brief
+Page 14
+Part 5. How to design the lessons and practice
+These rules apply to every slide, handout, packet, and study guide. They come from research on how children
+learn math and from standard lesson-design practice. Follow them, and where you can improve on them for this
+student, say so in the Design Decisions note.
+5.1 Shape of a Saturday session (about 75 minutes)
+1.
+Retrieval warm-up (7 min). Four or five closed-book questions on earlier weeks, answered from memory,
+then checked right away with feedback. Spacing and self-testing are among the best-supported learning
+techniques.
+2.
+Launch (8 min). One problem he can start before any teaching, with no hints. The tutor asks what he
+notices and what he would try.
+3.
+Explore (20 min). Two or three tasks using concrete or visual models. The tutor mostly asks questions
+("How do you know?", "Can you draw it another way?") and does not demonstrate procedures first.
+4.
+Discuss (15 min). He explains, and the tutor and student compare two methods or agree or disagree with a
+planted worked solution that contains an error. Use at least one named talk move (turn-and-talk with a
+sibling, partner compare, agree or disagree). Write specific prompts for each discussion, never generic ones
+such as "What do you think?"
+5.
+Synthesize (7 min). He completes a one- or two-sentence summary in his own words, and the key idea
+goes in his notebook.
+6.
+Exit ticket (8 min). One problem, always the structurally hardest case from the session's blueprint (see
+5.3). The tutor sorts the response into Got it, Almost there, or Needs re-teaching using the explicit criteria
+you write for that session.
+7.
+Wrap-up (5 min). A preview of the week's packets, and any question he has.
+That is 70 minutes with 5 minutes of slack. Sunday sessions (60 to 75 minutes) follow the same shape but
+compress the warm-up to 5 minutes, put 10 minutes of interleaved mixed review (drawn from the last three
+weeks) before the exit ticket, and allow 12 minutes for Discuss. Exact timings for the diagnostic, S16, S18, and
+S20 are in Part 4. Add up the timings on every session plan and make sure they fit.
+5.2 Concrete, then pictorial, then abstract
+Introduce an idea with objects or a drawing, then connect it to a diagram, and only then to a rule or algorithm.
+Do not show an algorithm (invert and multiply, cross-multiply, "move the decimal") before the model that
+explains it. The models for this program are number lines, fraction strips, tape diagrams, double number lines,
+ratio tables, area models, base-ten diagrams, hanger diagrams, nets, and the coordinate plane. Use the same
+model, drawn the same way, in the slides, the handouts, and the study guide.
+5.3 Problem sets must have structural variety
+Before writing the practice problems for a topic, list the structural cases of the skill from the baseline case (the
+one every student must clear) to the hardest case (the one students most often get wrong). Then make sure every
+case appears as a numbered, required problem. Rules:
+•
+A case mentioned only in prose does not count as covered. If the plan's text names a case, a numbered
+problem must present it.
+
+
+PAGE 15
+Double Advanced Math Program: build brief
+Page 15
+•
+Emphasizing the hardest case never allows you to drop the baseline case. A set of only hard problems fails
+coverage exactly as a set of only easy ones does.
+•
+The number domain is part of the variety: if the standard involves rational numbers, at least one required
+problem uses fractions or decimals.
+•
+Never put a required case in an optional extension or bonus.
+•
+For every session, produce a coverage table (case to problem number) in the tutor run sheet so a gap is
+visible at a glance.
+5.4 Exit tickets catch the misconception
+The exit ticket is the hardest case from the blueprint. Apply the misconception test: a student who holds the
+session's main misconception must get the exit ticket wrong. If that student would get it right, you picked a case
+that merely affirms the idea, so swap it for one that discriminates. Verify each exit ticket and its answer by
+actually working the problem in code. The operation count must match the standard.
+5.5 Error analysis in every session
+Each session includes a planted wrong solution from a named student (use ordinary, varied first names) and
+asks him to find the mistake, explain why it happens, and fix it. The wrong solutions must come from the real
+misconceptions listed in the blueprints, not from random slips.
+5.6 Retrieval, spacing, interleaving
+•
+Daily practice should mix topics. Do not group a packet by one topic only.
+•
+Use the spiral rules in Part 7.
+•
+Prefer closed-book recall with feedback to rereading, highlighting, or summarizing.
+•
+Interleaved practice helps most after some blocked practice has built the basic idea, so a new topic first
+appears in a blocked set (Saturday and Sunday sheets, Monday and Tuesday packets) and then moves into
+mixed sets.
+5.7 Worked examples that fade
+Alternate worked examples with problems to solve. Early in a topic, show a complete worked example and then
+a similar problem. Later, show a partly worked example for him to finish ("complete the worked example").
+Annotate the thinking behind each step, not only the steps.
+5.8 Explaining and drawing
+Ask for one or two "explain it" or "draw it" items per packet, and at most two per session sheet. A sentence
+frame is allowed only when writing the explanation is itself the hard part of the problem. Self-explanation takes
+longer, so do not overuse it. He should do most of the explaining and drawing, and the tutor should not
+demonstrate procedures before he has tried.
+5.9 Language
+•
+Define each math term in plain words the first time it appears, with an example, and use the same term every
+time afterward in slides, packets, and guides.
+
+
+PAGE 16
+Double Advanced Math Program: build brief
+Page 16
+•
+Typical sentence length is 20 words or fewer. Contexts must be familiar to a 9 or 10 year old (food, sports,
+games, pets, maps, money, building things). Avoid trivia that needs special background. Vary names. Avoid
+violent contexts.
+•
+Never label a problem "easy" or "hard" in student text. Avoid "just" ("just multiply").
+5.10 Fluency
+Short fluency work is part of every weekday packet (the warm-up), but accuracy comes before speed, and no
+timer is ever used to pressure him. A timed multiplication-fact check can appear in the diagnostic and in Mini
+Check A and the Friday checks of weeks 3, 6, and 9, framed as "beat your own time."
+5.11 Gifted considerations
+He needs depth and interesting problems, not only speed. Include one original brain teaser per week
+(Wednesday packet), a few clearly marked optional Stretch problems, and "why does this work?" questions. Do
+not use acceleration as a reason to skip understanding.
+5.12 Realistic timing
+Do not overload sessions or packets. A computation problem takes about 1 to 2 minutes, a multi-step word
+problem 3 to 5 minutes, an explain item 2 to 3 minutes. Count the items and check each packet against 15 to 20
+minutes. Check each session against its stated minutes.
+
+
+PAGE 17
+Double Advanced Math Program: build brief
+Page 17
+Part 6. The slide deck
+6.1 What to deliver
+One PowerPoint file named DoubleAdvanced_Weekend_Slides.pptx that contains all 20 sessions in order. It is
+used on a TV or laptop, with the tutor and student side by side. The deck must open correctly in PowerPoint,
+Keynote, and Google Slides.
+•
+16:9, 13.333 by 7.5 inches.
+•
+Front matter: slide 1 is a plain title slide. Slide 2 is "How a session runs" (the routine from 5.1 in kid-friendly
+words). Slide 3 is the map of all 20 sessions with dates.
+•
+Each session has 16 to 20 slides, except S1 (about 10 to 12, because the diagnostic is on paper), and S18 and
+S20 (about 16, because part of the session is a paper check or mixed review). The total will be roughly 330
+to 380 slides. That is intended.
+•
+Each session begins with a title slide ("Week 3, Saturday. Rates and unit rates") and ends with a hidden tutor
+slide holding the answers, the timing map, and the exit-ticket sort criteria. Mark that slide hidden so it does
+not appear in slideshow mode.
+•
+Speaker notes on every slide (see 6.5).
+•
+No animations, transitions, audio, or video. Where something must be revealed step by step, use consecutive
+slides ("build slides") that add one element each.
+•
+File size under 30 MB. Build all diagrams from native shapes, lines, and tables, not from images, so they
+stay sharp and editable.
+6.2 Slide order inside a session
+1.
+Session title slide.
+2.
+Today: one or two sentences of the goal in student words, and the agenda with minutes.
+3.
+Retrieval warm-up questions (one slide with 4 or 5 numbered questions), then the answers slide.
+4.
+Launch problem (one problem, plenty of white space), plus a "notice and wonder" prompt slide if useful.
+5.
+Explore tasks, 3 to 5 slides: the task, then the model that helps, built up in steps.
+6.
+Worked example slides, 2 or 3: "Watch the thinking" then "Your turn."
+7.
+Discuss, 2 or 3 slides: a comparison of two methods, the error-analysis slide, and the specific discussion
+prompts.
+8.
+Vocabulary or key idea slide, with a plain definition and an example.
+9.
+Synthesize: a sentence frame for his own summary.
+10.
+Exit ticket: one problem, large, with room to work.
+11.
+Preview: what the week's packets will practice.
+12.
+Hidden tutor slide.
+Mix the layouts. A deck where every slide looks the same reads as machine-made.
+
+
+PAGE 18
+Double Advanced Math Program: build brief
+Page 18
+6.3 Layout catalogue
+Define a small set of layouts and reuse them with care: title, goal and agenda, quiz list, single problem, model
+with caption, worked example (steps on the left, diagram on the right), compare (two methods side by side),
+error analysis ("Sam wrote this. What went wrong?"), vocabulary, sentence frame, exit ticket, preview, and
+tutor.
+6.4 Design: it must not look like an AI template
+The design should look like it was made by a thoughtful teacher with good taste. Quiet, readable, and a little
+old-fashioned in a good way.
+Do.
+•
+Left-align text. Put titles at the top left. Use one consistent grid and generous margins (0.7 inch).
+•
+Use a warm white background (#FAF7F0) or plain white, near-black text (#1F1F1F), one primary accent
+(deep teal #1F5A63), one secondary accent (muted brick #A3472B), and a mid-gray (#6B6B6B) for footers.
+Use a soft yellow (#F2D46B) only to highlight a number or a phrase.
+•
+Use at most two typefaces. Georgia for titles. Calibri for body text. Do math expressions in Georgia or
+Cambria Math so numerals and fractions look clean. These fonts are safe across PowerPoint, Keynote, and
+Google Slides.
+•
+Body text at least 26 point (28 preferred), titles 34 to 40 point, diagram labels at least 20 point. No more than
+about 40 words of body text per slide, not counting math.
+•
+One idea per slide. Let white space do work.
+•
+Use color to mean something. Quantity A is always teal, quantity B always brick, and a correct or
+highlighted result may use the soft yellow. Never rely on color alone: also label.
+•
+Draw diagrams precisely and to scale: evenly spaced tick marks on number lines, aligned rectangles for tape
+diagrams, true right angles, labels placed clear of lines. Use line widths of 2 to 3 point.
+•
+Put a small footer in gray at the bottom left ("Week 3 · Saturday · Rates") and the slide number at the bottom
+right.
+Do not.
+•
+No stock photos, clip art, emoji, icons, cartoon mascots, or decorative shapes.
+•
+No gradients, drop shadows, glow, 3D effects, or semi-transparent overlays.
+•
+No purple-to-blue or neon palettes. No glassy cards. No grids of rounded-corner cards with icons. No hero
+numbers. No underline bar under every title. No centered, all-caps titles.
+•
+No walls of bold text. No more than one bold phrase per slide.
+•
+No slide that is only a title with a decorative background.
+Render the whole deck to images and look at it (see Part 12). If a slide looks like a default template, redo it.
+6.5 Speaker notes
+Every slide has notes the tutor can read at a glance, in this order and at most about 120 words (Discuss slides
+may run longer):
+1.
+Say. A short script in plain spoken language.
+2.
+Ask. The exact questions to put to him.
+
+
+PAGE 19
+Double Advanced Math Program: build brief
+Page 19
+3.
+Expect. The answers or strategies he is likely to give, including common wrong ones.
+4.
+If stuck. One or two moves that help without giving the answer away.
+5.
+Time. How many minutes this slide should take.
+6.6 Writing style for the slides
+Write like a patient, competent tutor talking at a board. Plain, concrete, direct. Address the student as "you."
+Short sentences. Statements instead of questions in titles.
+•
+Titles are plain noun phrases or statements: "Equivalent ratios," "Same ratio, different amounts," "Dividing
+by a fraction."
+•
+No hype, no cheerleading, and no filler. Praise belongs in the tutor's mouth, not on the slide.
+•
+Avoid these phrases and patterns entirely: "Let's dive in," "Let's explore," "journey," "unlock," "delve,"
+"embark," "In today's lesson we will," "Key takeaways," "Great job," "Awesome," "Ready to master,"
+"power of," "game-changer," "not just X, but Y," three-item rhetorical lists, and rhetorical questions as titles.
+•
+No emoji. Use no more than two exclamation marks in an entire session.
+•
+Limit em dashes. In student-facing sentences, prefer periods and commas.
+•
+Appendix B shows good and bad examples.

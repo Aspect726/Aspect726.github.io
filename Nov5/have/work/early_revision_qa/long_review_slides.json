@@ -1,0 +1,430 @@
+[
+  {
+    "number": 232,
+    "source_slide": null,
+    "source_title": "The meaning of fraction division (3/4)",
+    "title": "The meaning of fraction division (3/4)",
+    "session": 0,
+    "week": 4,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "The meaning of fraction division (3/4)\nP4\n1 {1/4} groups\nP5\n{2/5} of a scoop\nP6\n{9/10} liter\nP7\n1 {1/2} groups. Stories vary.\nF\n2 eighths; 2 {1/2} groups",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. 1 {1/4} groups One group is four sixths. Five sixths is five fourths of that group.\nP5. {2/5} of a scoop One scoop has five sixths. One third is two sixths, so it fills two of five equal scoop parts.\nP6. {9/10} liter Two thirds of the jar hold three fifths liter. One third holds three tenths, so three thirds hold nine tenths.\nP7. 1 {1/2} groups. Stories vary. Example: A pitcher has three fourths liter. How many half-liter servings does it hold, including part of a serving?\nF. 2 eighths; 2 {1/2} groups Use the worked example in the slides to check each step.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "F"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 022 \u00b7 Workbook pp. 91, 92 \u00b7 Items P4, P5, P6, P7, F",
+    "answer_ids": [
+      "S07:P4",
+      "S07:P5",
+      "S07:P6",
+      "S07:P7",
+      "S07:F"
+    ]
+  },
+  {
+    "number": 542,
+    "source_slide": null,
+    "source_title": "Data displays and center (2/4)",
+    "title": "Data displays and center (2/4)",
+    "session": 0,
+    "week": 9,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Data displays and center (2/4)\nS\nAnswers vary. A statistical question expects different answers. Mean shares the total equally; median locates the ordered middle.\nP1\nThe shelf question; page counts can vary across books.\nP2\nSeven dots; counts 1, 2, 1, 2, 1 at 1 through 5. Symmetric around 3.\nP3\nBin counts: 3, 3, 2",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "S. Answers vary. A statistical question expects different answers. Mean shares the total equally; median locates the ordered middle. Accept an accurate explanation supported by a matching example.\nP1. The shelf question; page counts can vary across books. The first asks for one fixed book. The second expects several different values.\nP2. Seven dots; counts 1, 2, 1, 2, 1 at 1 through 5. Symmetric around 3. Stack one dot for each student at that student\u2019s number of books.\nP3. Bin counts: 3, 3, 2 A boundary value such as 2 goes into the bin that starts at 2.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "S",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 057 \u00b7 Workbook pp. 223, 224 \u00b7 Items S, P1, P2, P3",
+    "answer_ids": [
+      "S17:S",
+      "S17:P1",
+      "S17:P2",
+      "S17:P3"
+    ]
+  },
+  {
+    "number": 611,
+    "source_slide": null,
+    "source_title": "Circles and first previews (2/3)",
+    "title": "Circles and first previews (2/3)",
+    "session": 0,
+    "week": 10,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Circles and first previews (2/3)\nP6\n25% increase; 20% decrease\nP7\n75 tokens; the decrease uses the larger whole 100\nP8\n3; \u22127; \u22124\nF\n8; 8; 64\nD\nRadius = 7 cm, so area = 49\u03c0 square cm.",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P6. 25% increase; 20% decrease The same change of 20 is compared with different starting amounts.\nP7. 75 tokens; the decrease uses the larger whole 100 First add 20. Then subtract 25 from 100. The percent applies to a new starting amount.\nP8. 3; \u22127; \u22124 A positive addend moves right. A negative addend or subtracting a positive moves left.\nF. 8; 8; 64 Use the worked example in the slides to check each step.\nD. Radius = 7 cm, so area = 49\u03c0 square cm. Uses diameter where the formula requires radius. Mark the center and split the diameter into two equal radii.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P6",
+      "P7",
+      "P8",
+      "F",
+      "D"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 065 \u00b7 Workbook pp. 258, 259, 260 \u00b7 Items P6, P7, P8, F, D",
+    "answer_ids": [
+      "S20:P6",
+      "S20:P7",
+      "S20:P8",
+      "S20:F",
+      "S20:D"
+    ]
+  },
+  {
+    "number": 418,
+    "source_slide": null,
+    "source_title": "Area from a base and height (3/4)",
+    "title": "Area from a base and height (3/4)",
+    "session": 0,
+    "week": 7,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Area from a base and height (3/4)\nP4\n60 square cm\nP5\n6 square cm\nP6\n6 square cm; no, the height must be perpendicular\nF\n2.5; 10 square cm\nD\nThe triangle is half the parallelogram: 18 square cm.",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. 60 square cm The height splits the base into two 5 cm parts. Area = {1/2} \u00d7 10 \u00d7 12.\nP5. 6 square cm The base AB is 4 cm. The perpendicular height is 3 cm even though it lies outside.\nP6. 6 square cm; no, the height must be perpendicular Area = {1/2} \u00d7 5 \u00d7 2.4. A slanted side usually gives the wrong distance between base and vertex.\nF. 2.5; 10 square cm Use the worked example in the slides to check each step.\nD. The triangle is half the parallelogram: 18 square cm. Counts both copies of the triangle. Place two matching paper triangles together.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "P6",
+      "F",
+      "D"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 043 \u00b7 Workbook pp. 168, 169 \u00b7 Items P4, P5, P6, F, D",
+    "answer_ids": [
+      "S13:P4",
+      "S13:P5",
+      "S13:P6",
+      "S13:F",
+      "S13:D"
+    ]
+  },
+  {
+    "number": 237,
+    "source_slide": null,
+    "source_title": "Fraction division and reciprocals (4/5)",
+    "title": "Fraction division and reciprocals (4/5)",
+    "session": 0,
+    "week": 4,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Fraction division and reciprocals (4/5)\nD\nKeep the dividend {7/8}. Multiply by the reciprocal of the divisor: {7/8} \u00d7 4 = 3 {1/2}.\nM1\n2\nM2\n3 cups\nM3\n0.65 dollars per marker",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "D. Keep the dividend {7/8}. Multiply by the reciprocal of the divisor: {7/8} \u00d7 4 = 3 {1/2}. She reverses the dividend instead of changing the size of the divisor-sized group. Check whether {2/7} groups of one fourth could make seven eighths.\nM1. 2 Count two thirds for each whole-number group, then rename the result.\nM2. 3 cups Find the number of recipe batches by dividing the rice amount by 3. Each batch needs 2 cups beans.\nM3. 0.65 dollars per marker Use the named units, calculate, then check with the inverse operation.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "D",
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 023 \u00b7 Workbook pp. 99, 100 \u00b7 Items D, M1, M2, M3",
+    "answer_ids": [
+      "S08:D",
+      "S08:M1",
+      "S08:M2",
+      "S08:M3"
+    ]
+  },
+  {
+    "number": 543,
+    "source_slide": null,
+    "source_title": "Data displays and center (3/4)",
+    "title": "Data displays and center (3/4)",
+    "session": 0,
+    "week": 9,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Data displays and center (3/4)\nP4\nMean 5; deviations \u22123, \u22121, 0, 4 sum to 0\nP5\n(a) 4; (b) 5\nP6\nMean: 4 to 8. Median: 4 to 4. The median changes less.\nP7\n9\nF\n6; 4.5",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. Mean 5; deviations \u22123, \u22121, 0, 4 sum to 0 There are 20 counters for four jars. Move four from the jar of 9 to fill the two low jars.\nP5. (a) 4; (b) 5 (a) 2, 4, 4, 7, 8. (b) 2, 3, 5, 5, 6, 9; average the two middle 5s.\nP6. Mean: 4 to 8. Median: 4 to 4. The median changes less. The outlier increases the total by 20, so the five-value mean increases by 4. The middle value stays 4.\nP7. 9 The total must be 24. The known scores total 15, leaving 9.\nF. 6; 4.5 Use the worked example in the slides to check each step.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "F"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 057 \u00b7 Workbook pp. 225, 226 \u00b7 Items P4, P5, P6, P7, F",
+    "answer_ids": [
+      "S17:P4",
+      "S17:P5",
+      "S17:P6",
+      "S17:P7",
+      "S17:F"
+    ]
+  },
+  {
+    "number": 300,
+    "source_slide": null,
+    "source_title": "Long division with decimals (4/4)",
+    "title": "Long division with decimals (4/4)",
+    "session": 0,
+    "week": 5,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Long division with decimals (4/4)\nD\nBoth amounts must scale by 100. Use 630 \u00f7 9 = 70.\nM1\n{3/8}\nM2\n1.8000 dollars\nM3\n3 {1/3}\nE\n120",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "D. Both amounts must scale by 100. Use 630 \u00f7 9 = 70. She changes the group size without changing the available amount by the same factor. Compare 63 tenths with nine hundredths by renaming both in hundredths.\nM1. {3/8} Count all eight cups before forming the fraction.\nM2. 1.8000 dollars Ten percent is $1.50 and two percent is $0.30. Add them.\nM3. 3 {1/3} Rename the mixed number as an improper fraction, then count groups of three fourths.\nE. 120 Multiply both by 100: 840 \u00f7 7 = 120. Check 120 \u00d7 0.07 = 8.4.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "D",
+      "M1",
+      "M2",
+      "M3",
+      "E"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 030 \u00b7 Workbook pp. 124, 125, 126 \u00b7 Items D, M1, M2, M3, E",
+    "answer_ids": [
+      "S10:D",
+      "S10:M1",
+      "S10:M2",
+      "S10:M3",
+      "S10:E"
+    ]
+  },
+  {
+    "number": 49,
+    "source_slide": null,
+    "source_title": "Fraction operations with models (3/4)",
+    "title": "Fraction operations with models (3/4)",
+    "session": 0,
+    "week": 1,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Fraction operations with models (3/4)\nP4\n6 < 8; 10 > 8\nP5\n12 pieces\nP6\n{1/12} liter\nP7\n10 groups; {1/10} in each share. Stories vary.\nF\n{3/4} \u00d7 {2/3} = {1/2}",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. 6 < 8; 10 > 8 Three fourths takes less than all eight. Five fourths takes more than all eight.\nP5. 12 pieces There are four fourths per meter. Three meters hold twelve fourths.\nP6. {1/12} liter Split one fourth into three equal parts. Each is one twelfth of a liter.\nP7. 10 groups; {1/10} in each share. Stories vary. Example: cut 2 meters into fifth-meter pieces; share a fifth-meter piece equally between two people.\nF. {3/4} \u00d7 {2/3} = {1/2} Use the worked example in the slides to check each step.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "F"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 002 \u00b7 Workbook pp. 17, 18 \u00b7 Items P4, P5, P6, P7, F",
+    "answer_ids": [
+      "S02:P4",
+      "S02:P5",
+      "S02:P6",
+      "S02:P7",
+      "S02:F"
+    ]
+  },
+  {
+    "number": 295,
+    "source_slide": null,
+    "source_title": "Decimal place value and products (3/4)",
+    "title": "Decimal place value and products (3/4)",
+    "session": 0,
+    "week": 5,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Decimal place value and products (3/4)\nP4\n0.24; yes\nP5\n0.003\nP6\n$4.48\nF\nthousandths; 0.021\nD\nSix tenths times four tenths is twenty-four hundredths, or 0.24.",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. 0.24; yes Six tenths of four tenths is twenty-four hundredths.\nP5. 0.003 Fifteen hundredths times two hundredths is thirty ten-thousandths, or three thousandths.\nP6. $4.48 Add costs: $5.52. Subtract from $10.00 to get $4.48.\nF. thousandths; 0.021 Use the worked example in the slides to check each step.\nD. Six tenths times four tenths is twenty-four hundredths, or 0.24. He counts digits without tracking the size of the units. Shade six tenths across and four tenths down on a hundred-square grid.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "P6",
+      "F",
+      "D"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 029 \u00b7 Workbook pp. 118, 119 \u00b7 Items P4, P5, P6, F, D",
+    "answer_ids": [
+      "S09:P4",
+      "S09:P5",
+      "S09:P6",
+      "S09:F",
+      "S09:D"
+    ]
+  },
+  {
+    "number": 107,
+    "source_slide": null,
+    "source_title": "Equivalent ratios (3/4)",
+    "title": "Equivalent ratios (3/4)",
+    "session": 0,
+    "week": 2,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Equivalent ratios (3/4)\nP4\n6 cups\nP5\n6 cups yellow\nP6\n12 builders\nF\n2 batches; 4 cups seeds\nD\nNo. Two copies would give 8 : 6, not 7 : 6.",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. 6 cups Nine is 1 {1/2} times six. Multiply four by the same factor.\nP5. 6 cups yellow Fifteen cups blue makes three batches. Each batch uses two cups yellow.\nP6. 12 builders Eight testers make four groups of two. Four groups need twelve builders.\nF. 2 batches; 4 cups seeds Use the worked example in the slides to check each step.\nD. No. Two copies would give 8 : 6, not 7 : 6. She uses equal additions rather than equal multiplication. Build two full copies of the original group and compare.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "P6",
+      "F",
+      "D"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 008 \u00b7 Workbook pp. 38, 39 \u00b7 Items P4, P5, P6, F, D",
+    "answer_ids": [
+      "S03:P4",
+      "S03:P5",
+      "S03:P6",
+      "S03:F",
+      "S03:D"
+    ]
+  },
+  {
+    "number": 376,
+    "source_slide": null,
+    "source_title": "Weekly check (2/2)",
+    "title": "Weekly check (2/2)",
+    "session": 0,
+    "week": 6,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Weekly check (2/2)\n6\n0.0100\n7\n0.0050\n8\n40 shells\n9\n15 blue tiles\n10\n5z + 10. Each of the five groups contains two extra units.",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "6. 0.0100 One fourth of the second factor must be smaller than it. Use this to check the decimal position.\n7. 0.0050 One fourth of the second factor must be smaller than it. Use this to check the decimal position.\n8. 40 shells Divide the given amount into three 10% groups, then take ten such groups.\n9. 15 blue tiles The number of batches is 9 \u00f7 3. Multiply that count by 5.\n10. 5z + 10. Each of the five groups contains two extra units. 5z + 10. Each of the five groups contains two extra units.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 042 \u00b7 Workbook p. 165 \u00b7 Items 6, 7, 8, 9, 10",
+    "answer_ids": [
+      "Day042_Practice:6",
+      "Day042_Practice:7",
+      "Day042_Practice:8",
+      "Day042_Practice:9",
+      "Day042_Practice:10"
+    ]
+  },
+  {
+    "number": 111,
+    "source_slide": null,
+    "source_title": "Ratio tables and comparisons (3/4)",
+    "title": "Ratio tables and comparisons (3/4)",
+    "session": 0,
+    "week": 2,
+    "phase": "review",
+    "minutes": 0,
+    "hidden": false,
+    "text": "Ratio tables and comparisons (3/4)\nP4\n14 cups yellow and 21 cups blue\nP5\nYes\nF\n6 per part; 24 green; 6 white\nD\nThere are five parts in all. Yellow is {2/5} of the paint.\nM1\nLarger; 8",
+    "notes": {
+      "say": "Read the matching student item before showing its answer. Discuss any method that gives an equivalent result.",
+      "ask": "Which part of the method needs another look?",
+      "expect": "P4. 14 cups yellow and 21 cups blue Five equal ratio parts total 35. Each part is 7 cups.\nP5. Yes Each y-value is three times its x-value. Zero bags have zero marbles.\nF. 6 per part; 24 green; 6 white Use the worked example in the slides to check each step.\nD. There are five parts in all. Yellow is {2/5} of the paint. He uses the other part as the whole. Join the two yellow parts and three blue parts into one total strip.\nM1. Larger; 8 Four thirds takes one whole six plus one third of six.",
+      "if_stuck": "Return to the matching student-workbook item and rebuild its model.",
+      "time": "As needed."
+    },
+    "problem_numbers": [
+      "P4",
+      "P5",
+      "F",
+      "D",
+      "M1"
+    ],
+    "visual_description": "A readable answer table with exact workbook references.",
+    "review_section": true,
+    "follow_along": "Follow along: Day 009 \u00b7 Workbook pp. 45, 46, 47 \u00b7 Items P4, P5, F, D, M1",
+    "answer_ids": [
+      "S04:P4",
+      "S04:P5",
+      "S04:F",
+      "S04:D",
+      "S04:M1"
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+import fs from 'node:fs/promises';
+import {Presentation,PresentationFile} from '@oai/artifact-tool';
+import {box,rich,diagram,C} from './deck_helpers.mjs';
+const p=Presentation.create({slideSize:{width:1280,height:720}}); const s=p.slides.add();s.background.fill=C.bg;
+box(s,'Fractions as distances',70,50,1100,90,48,'Georgia',C.teal);
+rich(s,'Place {3/4} and 1 {1/2} on the number line.',70,170,1070);
+diagram(s,{kind:'numberline',min:0,max:2,steps:8,values:[.75,1.5]},100,290,1000,220);
+s.speakerNotes.text='Say. Read the line. Ask. Where is one whole? Expect. Halfway. If stuck. Fold a strip. Time. 3 minutes.';
+await (await PresentationFile.exportPptx(p)).save('work/deck_probe.pptx');
+const png=await p.export({slide:s,format:'png',scale:1}); await fs.writeFile('work/deck_probe.png',new Uint8Array(await png.arrayBuffer()));
+console.log('ok');

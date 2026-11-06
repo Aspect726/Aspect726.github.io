@@ -1,0 +1,63 @@
+{
+  "reviewer": "curriculum_early",
+  "coverage": {
+    "student_workbook_pages": "1\u2013144 (contacts00\u201311)",
+    "revised_lesson_slides": "All181lesson slides for sessions1\u201310",
+    "teacher_guides": "Contacts012\u2013022, plus full pages W6 23\u201326 and W10 28\u201330 after heading fix",
+    "final_target_slides": [
+      10,
+      13,
+      23,
+      33,
+      195,
+      196,
+      203,
+      205,
+      218,
+      225,
+      226,
+      259,
+      260,
+      269,
+      306,
+      111
+    ],
+    "extra_answer_review_slides": [
+      232,
+      542,
+      611,
+      418,
+      237,
+      543,
+      300,
+      49,
+      295,
+      107,
+      376,
+      111
+    ]
+  },
+  "mapping_audit": {
+    "checks": 8188,
+    "issues": [],
+    "days": 70,
+    "student_items": 1092,
+    "answer_items": 1092,
+    "pages": 277
+  },
+  "student_fixes_verified_in_source": [
+    "Plot grids enlarged without repagination",
+    "Draw/plot/build/place commands blank any tape solution",
+    "Wednesday continued practice header distinct from puzzle",
+    "Mon/Tue current-topic boosters retain earlier-topic review"
+  ],
+  "teacher_status": "No clipped text, overlap, or missing answer blocks seen. Orphan heading fix visually verified; decimal display normalization confirmed in final answer data.",
+  "deck_pending_requested_fixes": [],
+  "positive_findings": [
+    "Worked mathematical models accurate in reviewed lessons",
+    "Blank task scaffolds avoid premature answers except mismatched generic scaffolds noted",
+    "New deck uses coherent diagrams, staged worked examples, visual workspace, and final page references",
+    "All1,092 student answers appear exactly once in weekly slide answer sections"
+  ],
+  "deck_final_status": "All requested early target corrections visually verified. Ordinary-decimal answers and review pagination verified. Ready."
+}

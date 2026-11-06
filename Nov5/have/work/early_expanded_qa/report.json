@@ -1,0 +1,94 @@
+{
+  "content": {
+    "weeks": 5,
+    "days": 35,
+    "challenges": 70,
+    "practice_items": 535,
+    "exact_checks_passed": 615
+  },
+  "independent_late_challenge_review": {
+    "count": 70,
+    "math": "pass",
+    "semantic_fixes_sent": [
+      "W8 Fri C1: integers, not whole numbers, for negative permitted values",
+      "W10 Tue C2: remove misleading final percent-change sentence"
+    ],
+    "late_agent_acknowledged": true,
+    "final_semantic_fixes_verified": true
+  },
+  "student_visual_qa": {
+    "pages": "1\u201357 of 112-page edition",
+    "full_page_samples": [
+      29,
+      30,
+      38,
+      44,
+      47
+    ],
+    "status": "pass; root confirmed both targeted fixes applied",
+    "issues": []
+  },
+  "worked_preview_qa": {
+    "sessions": "1\u201310",
+    "renders": 42,
+    "math": "pass",
+    "requested_required_fixes": [
+      "Make unshaded partition grid lines visible in S1/S2 worked models",
+      "Use actual semantic red/blue and orange/purple colors in S3/S4 color-count models",
+      "Delay S9 full answer row until last cumulative-reveal stage"
+    ],
+    "final_status": "All three requested fixes verified in final render."
+  },
+  "teacher_visual_qa": {
+    "contacts": "007\u2013012",
+    "status": "pass after removal of orphan closing-note pages",
+    "remaining_issues": []
+  },
+  "final_deck_visual_qa": {
+    "sessions": "1\u201310",
+    "non_review_slides_inspected": 289,
+    "status": "pass",
+    "required_corrections": {
+      "13": "Exact blank 0\u20132 number line instead of generic tapes",
+      "24, 51": "Shorten overlapping point labels on narrow reveal number lines",
+      "251": "Separate joined questions with spaces or numbered lines",
+      "319, 322 and global": "Add visible spaces between prose and following fraction runs",
+      "401": "Use different model values so P4 on 402 is not already answered",
+      "S01:F": "Add missing fade-practice prompt to an existing lesson slide; review coverage already present"
+    },
+    "other_slides": "pass",
+    "s9_progressive_reveal": "pass",
+    "verified_targets": [
+      13,
+      15,
+      24,
+      51,
+      251,
+      319,
+      322,
+      401,
+      402
+    ],
+    "remaining": []
+  },
+  "independent_answer_audit": {
+    "days": 70,
+    "answers": 1547,
+    "exact_checks": 1527,
+    "exact_checks_passed": 1527,
+    "daily_item_counts": "20 normal/25 Wednesday; all pass",
+    "daily_challenges": "C1/C2 exactly; all pass",
+    "unique_item_ids": "pass",
+    "review_coverage": "All 1547 answers appear exactly once in weekly slide review",
+    "lesson_coverage": "All assigned session items appear on lesson slides"
+  },
+  "final_mapping_audit": {
+    "checks": 15627,
+    "math_checks": 1527,
+    "answers": 1547,
+    "days": 70,
+    "slides": 966,
+    "errors": [],
+    "status": "pass"
+  }
+}
