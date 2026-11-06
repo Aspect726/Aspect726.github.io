@@ -28,10 +28,6 @@ jobs:
       - name: Build public site and verify no answer fields
         run: npm run build:pages --prefix curriculum-web
       - uses: actions/configure-pages@v5
-      - name: Use the dedicated Pages artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api --method PUT "repos/${{ github.repository }}/pages" -f build_type=workflow
       - uses: actions/upload-pages-artifact@v3
         with:
           path: curriculum-web/dist
