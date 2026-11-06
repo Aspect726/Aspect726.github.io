@@ -1,4 +1,4 @@
-name: Publish Double Advanced
+name: Verify Double Advanced
 on:
   push:
     branches: [main]
@@ -9,17 +9,12 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
   group: github-pages
   cancel-in-progress: false
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,14 +22,14 @@ jobs:
           node-version: '24'
       - name: Build public site and verify no answer fields
         run: npm run build:pages --prefix curriculum-web
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: curriculum-web/dist
-      - uses: actions/deploy-pages@v4
-        id: deployment
-      - name: Check the published website
+      - name: Verify the branch-published website
         run: |
-          curl --fail --location --retry 4 --retry-delay 5 --max-time 30 https://donteventry.me/ -o /tmp/double-advanced-home.html
-          test -s /tmp/double-advanced-home.html
-          rg -q 'Double Advanced' /tmp/double-advanced-home.html
+          for attempt in $(seq 1 30); do
+            if curl --silent --show-error --fail --location --max-time 20 "https://donteventry.me/curriculum-web/public/app.js?revision=${{ github.sha }}" -o /tmp/double-advanced-app.js && cmp -s curriculum-web/public/app.js /tmp/double-advanced-app.js; then
+              echo "Verified the exact published application over HTTPS."
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "The published site has not served this application revision yet."
+          exit 1

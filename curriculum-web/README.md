@@ -17,7 +17,7 @@ Create the teacher account with `node server.mjs --create-teacher`, supplying `T
 
 ## Hosting
 
-GitHub Pages publishes only `public/` through `.github/workflows/pages.yml`. The build explicitly checks public JSON for private answer fields. GitHub Pages is a static host: it cannot run the SQLite server. The public site remains useful for exploring lessons and opening student packets, while saved learning happens on a private hosted classroom or the local server.
+GitHub Pages uses the repository's existing branch publication. The root page opens `curriculum-web/public/`, and `_config.yml` excludes server, test, private-data, and importer paths. The workflow validates a separate public-only artifact, checks public JSON for private answer fields, and verifies the exact published JavaScript over HTTPS. GitHub Pages cannot run the SQLite server. Saved learning happens on the private hosted classroom or local server.
 
 The production classroom's URL and status are recorded in the delivery notes after deployment. It uses a separate database and protected server routes; a public static site must never receive a database, password, answer key, teacher guide, or hidden slide deck.
 
