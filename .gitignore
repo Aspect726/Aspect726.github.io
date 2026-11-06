@@ -1,0 +1,13 @@
+curriculum-web/node_modules/
+curriculum-web/data/
+curriculum-web/private/
+curriculum-web/.env*
+curriculum-web/.runtime/
+curriculum-web/*.sqlite*
+curriculum-web/.sites-runtime/
+curriculum-web/.wrangler/
+curriculum-web/dist/
+curriculum-web/test-results/
+curriculum-web/.vinext/
+.DS_Store
+*.log
