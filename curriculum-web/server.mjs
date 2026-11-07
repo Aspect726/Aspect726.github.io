@@ -38,7 +38,7 @@ function publicUser(user) { return user ? { id: user.id, username: user.username
 function audit(actor, action, detail) { db.prepare('INSERT INTO audit VALUES(?,?,?,?,?)').run(randomUUID(), actor, action, JSON.stringify(detail), now()); }
 function createUser(username, password, displayName, role, teacherId = null) {
   if (typeof username !== 'string' || !/^[a-zA-Z0-9_.-]{3,40}$/.test(username)) fail(400, 'Use a username of 3–40 letters, numbers, dots, dashes, or underscores.');
-  if (typeof password !== 'string' || password.length < 12 || password.length > 256) fail(400, 'Use a password with at least 12 characters.');
+  if (typeof password !== 'string' || password.length < 3 || password.length > 256) fail(400, 'Use a password with at least 3 characters.');
   if (typeof displayName !== 'string' || displayName.trim().length < 1 || displayName.length > 60) fail(400, 'Choose a display name of 1–60 characters.');
   const id = randomUUID();
   try { db.prepare('INSERT INTO users VALUES(?,?,?,?,?,?,?)').run(id, username.toLowerCase(), displayName.trim(), role, passwordHash(password), teacherId, now()); }

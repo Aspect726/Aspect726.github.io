@@ -13,7 +13,7 @@ npm start
 
 Open `http://127.0.0.1:3000`. Browsing the curriculum does not require an account. Saved answers require a server account. The server saves progress in `private/progress.sqlite`; keep this file on a persistent disk and back it up along with its WAL files using SQLite's backup mechanism. Do not commit databases or answer snapshots.
 
-Create the teacher account with `node server.mjs --create-teacher`, supplying `TEACHER_USERNAME`, `TEACHER_PASSWORD`, and optionally `TEACHER_NAME` as environment variables. Use a password manager and a unique password of at least 12 characters. Do not put a password in a tracked file or shell history. Sign in as the teacher and create the learner's account from the teacher screen. A nickname is sufficient; no child's email or full name is needed.
+Create the teacher account with `node server.mjs --create-teacher`, supplying `TEACHER_USERNAME`, `TEACHER_PASSWORD`, and optionally `TEACHER_NAME` as environment variables. Use a password manager and a unique password of at least 3 characters. Do not put a password in a tracked file or shell history. Sign in as the teacher and create the learner's account from the teacher screen. A nickname is sufficient; no child's email or full name is needed.
 
 ## Hosting
 
