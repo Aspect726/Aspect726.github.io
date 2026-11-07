@@ -1,88 +1,72 @@
-# Double Advanced practice
+# Double Advanced learning platform
 
-A small HTML/CSS/JavaScript client with the same Request/Response server running
-on Node 24 + SQLite locally and Cloudflare Workers + D1 through Sites in production.
+A private, server-backed learning platform for students and teachers, hosted on
+ChatGPT Sites. The November 7 redesign brief is the current specification.
 
-## First teacher and student
+Student routes: `/s/today`, `/s/map`, `/s/learn/:skill`, `/s/practice`, `/s/review`,
+`/s/library`, `/s/progress`, `/s/rewards`. Teacher routes: `/t/dashboard`,
+`/t/students/:id`, `/t/plan`, `/t/checks`, `/t/assign`, `/t/rewards`,
+`/t/questions`, `/t/settings`. `/login` is the only signed-out page.
 
-Open the hosted practice link. Its existing owner-private Sites access gate is
-preserved. On first application use, choose **Teacher setup**, a short username,
-a nickname, and a password of at least eight characters. There are no preset
-credentials. Setup disappears after the first teacher is created.
+The interface uses a 248px sidebar, 72px tablet rail, mobile drawer, full page
+URLs and a distraction-free practice mode. Lessons, course dates, daily work,
+review, rewards and teacher management all use the same persistent database.
 
-In **Settings**, create the student account with a password of at least four
-characters. Add a second teacher there, or reset the student's password. Sign out
-and sign in as the student to practise. Account and progress records live on the
-server; a new device uses the same username and password after the Sites gate.
+## Local development
 
-## Development
+Requires Node 24. Run `npm ci`, `npm test`, then `npm start`. SQLite data stays in
+ignored `private/`. Production runs the same Request/Response handlers on D1.
+Applied migrations are immutable; new platform tables preserve prior accounts,
+attempts, points and prizes. Local migrations are recorded and run once.
 
-```sh
-cd curriculum-web
-npm ci
-npm test
-npm start
+## Current practice rules
+
+Each submitted question counts once, whether right or wrong. Empty and invalid
+input does not count. An equivalent answer that needs simplest form can be fixed
+without spending the question. Default required total is 20; points are awarded
+at 35, 45, 55 and each further 10 answered questions. Learn, Library and Review
+count too. Unique answer rows and ledger keys prevent duplicate awards.
+
+Assignments lead the daily mix, followed by up to five due reviews, focus skills,
+earlier weak skills and stretch. Difficulty adjusts after three correct or two
+incorrect answers. Misses schedule fresh versions on days 1, 3 and 7. A correct
+7-day review clears the entry. Question hashes prevent program-wide repeats.
+
+Teacher settings for daily and bonus targets take effect the next day. Week
+shifts move that and all later weeks. Prize approval does not spend points;
+marking a prize given spends them atomically. Manual corrections require a note.
+Legacy production scoring endpoints return 410 and cannot bypass these rules.
+
+## Private release checks
+
+`server/plan.json` is the authoritative course. The paper/slide corpus is private
+validation input only; never put it in this repository or a public artifact.
+
 ```
-
-Node must be version 24 or later. Local state is `private/practice.sqlite`, ignored
-by Git. The local server defaults to loopback, port 3000. `PORT`, `HOST`,
-`DATABASE_PATH`, and `APP_ORIGIN` can change deployment settings. Production
-setup is restricted to the authenticated Sites owner. Do not expose a local
-first-run setup server to the Internet.
-
-## Private paper and slide check
-
-The provided `server/plan.json` defines all 70 dates, focus skills and the mix.
-The separate paper-and-slide JSON must stay outside this public repository.
-It is used only as validation input, never served or imported by a request handler.
-
-```sh
-PAPER_QUESTIONS_PATH=/private/path/paper_questions.json npm run test:paper -- --write-pool
+PAPER_QUESTIONS_PATH=/private/paper_questions.json npm run test:paper -- --write-pool
+PAPER_QUESTIONS_PATH=/private/paper_questions.json VETTED_SEEDS_PATH=private/vetted-seeds.json FRAME_REPORT_PATH=private/frame-validation.json npm run test:frames
+npm test
 npm run build
 node scripts/smoke-worker.mjs
 ```
 
-The check validates candidate generator outputs and creates
-`private/vetted-seeds.json`, containing only accepted seed identifiers and
-aggregate verification evidence. Production uses only that checked seed pool.
-The bank is ignored in this public checkout. The production private source
-repository retains it so deployments are reproducible. Regenerate the pool after
-any generator change. A missing corpus or pool fails the release check.
+The build requires checked seed and frame evidence, validates provenance hashes,
+and serves only the login shell, UI modules, styles and fonts. No corpus, seed
+pool or answer-key module is public. Frame normalization removes numbers before
+comparing templates to all printed-sheet and slide segments. Generator tests
+independently check 500 examples per template at each difficulty.
 
-The paper corpus has no skill identifiers, so the validator infers possible kinds
-from wording and lesson context. It normalizes fractions, decimals, word numbers,
-minus signs and whitespace; uncertain records are checked conservatively.
-The test also materializes all required questions and four bonus rounds per day,
-checking the previous fourteen days and the current day for repeated content.
+## Accounts and backups
 
-## Continuous integration
+The existing private Sites access policy remains. Each person then signs in with
+a student or teacher application account. Teacher Settings creates accounts and
+resets passwords. Resetting a password revokes that person's sessions. Demo
+accounts requested for acceptance are provisioned from a host secret; their
+credentials are not in source and deployment never resets an existing password.
 
-The application checks run on every push and pull request. The private paper gate
-runs on pushes and fails if its private data is not configured. Supply the gzip,
-base64-encoded private JSON as two GitHub Actions secrets named
-`PAPER_BANK_GZIP_BASE64_1` and `PAPER_BANK_GZIP_BASE64_2` (split into two equal
-parts; the combined file exceeds GitHub's per-secret size limit). Never paste the
-file into a workflow or public artifact. The workflow reconstructs it under
-`RUNNER_TEMP`, runs validation, and deletes it. These secrets require repository
-administration access and are not configured by this checkout.
+Teacher Settings can save and download a private database backup, including the
+new learning tables. Exports include password hashes and should stay private.
+The Worker has a scheduled backup handler; a host cron must be configured before
+nightly operation can be claimed.
 
-## Hosting and backups
-
-`.openai/hosting.json` retains the existing Site identity, D1 `DB` and private R2
-`BUCKET`. Build output is a bundled Worker with only the login shell, client code,
-fonts and styles exposed as assets. The source and question pool are server-only.
-Migrations preserve the existing classroom tables and add `practice_` tables.
-Previously applied migration files must never be edited.
-
-The Worker exports a scheduled handler for a nightly backup. The host must wire
-that schedule; publishing a scheduled handler alone does not configure a cron.
-Teacher **Settings → Save a backup** writes an export to private R2; **Download
-backup** returns a teacher-only export. Exports contain password hashes and must
-be kept private. Local Node runs a daily backup timer while the process is alive.
-No automatic production schedule is claimed until its host configuration is
-verified.
-
-The custom domain needs DNS routing and validation before it can serve this
-Worker. The Pages replacement redirects to the working hosted address. Remote
-branch deletion and history erasure are separate operations; deleting a branch
-alone cannot remove copies of previously public answer keys.
+See `RELEASE.md` for the current verification report and remaining limits.

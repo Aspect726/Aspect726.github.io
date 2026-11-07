@@ -45,6 +45,13 @@ jobs:
         env:
           PAPER_QUESTIONS_PATH: ${{ runner.temp }}/paper_questions.json
         run: npm run test:paper --prefix curriculum-web -- --write-pool
+      - name: Reject paper template frames and verify every approved seed
+        env:
+          PAPER_QUESTIONS_PATH: ${{ runner.temp }}/paper_questions.json
+          VETTED_SEEDS_PATH: private/vetted-seeds.json
+          FRAME_REPORT_PATH: private/frame-validation.json
+        working-directory: curriculum-web
+        run: npm run test:frames
       - run: npm run build --prefix curriculum-web
       - run: node curriculum-web/scripts/smoke-worker.mjs
       - name: Remove private test data

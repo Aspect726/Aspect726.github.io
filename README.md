@@ -1,14 +1,16 @@
 # Double Advanced
 
-A private daily mathematics practice application for one student and multiple
-teachers. The replacement source is in `curriculum-web`.
+A private student and teacher learning platform, hosted on ChatGPT Sites.
 
-- [Hosted practice](https://double-advanced-classroom.framedegret8.chatgpt.site)
-- [Setup, development and private content checks](curriculum-web/README.md)
-- [Implementation plan](PLAN.md)
-- [Decisions](DECISIONS.md)
-- [Acceptance evidence and remaining deployment work](ACCEPTANCE.md)
+- [Open the learning platform](https://double-advanced-classroom.framedegret8.chatgpt.site/)
+- [Source and setup](curriculum-web/README.md)
+- [Release checks and remaining verification](curriculum-web/RELEASE.md)
+- [Namecheap domain verification](DNS.md)
 
-GitHub Pages contains a redirect only. The application runs on a server, generates
-and checks questions there, and saves accounts and progress in a database.
-The old application is preserved locally on `legacy-chatgpt-v1`.
+Student pages cover daily practice, the course map, lessons, review, references,
+progress and rewards. Teacher pages cover student history, checks, assignments,
+course dates, rewards, question flags, accounts and settings. Records stay on
+the server; the private paper corpus is used only in release validation.
+
+The replacement Pages artifact redirects to the hosted app. Historical public
+Git objects are not erased by this change.

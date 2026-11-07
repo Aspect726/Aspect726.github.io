@@ -1,4 +1,8 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+const validationRows=[];
+after(()=>{if(process.env.GENERATOR_REPORT_DIR){mkdirSync(process.env.GENERATOR_REPORT_DIR,{recursive:true});writeFileSync(join(process.env.GENERATOR_REPORT_DIR,'statistics.json'),JSON.stringify(validationRows,null,2)+'\n');}});
 import assert from 'node:assert/strict';
 import { generateStatistics, statisticsSkills } from '../server/generators/statistics.mjs';
 
@@ -65,10 +69,10 @@ function choiceOracle(q) {
 }
 
 for (const skill of statisticsSkills) {
-  test(`${skill}: 500 seeds, all six shapes, independently checked answers and hints`, () => {
+  test(`${skill}: 500 seeds per template per level, all six shapes, independently checked answers and hints`, () => {
     const observedShapes = new Set();
-    for (let seed = 0; seed < 500; seed++) {
-      const q = generateStatistics(skill, `statistics-test-${seed}`, { shape: shapes[seed % 6], difficulty: seed % 3 + 1 });
+    for (const shape of shapes) for (let difficulty = 1; difficulty <= 3; difficulty++) for (let seed = 0; seed < 500; seed++) {
+      const q = generateStatistics(skill, `statistics-test-${seed}`, { shape, difficulty });
       observedShapes.add(q.shape);
       assert.equal(q.skill, skill);
       assert.equal(q.seed, `statistics-test-${seed}`);
@@ -100,9 +104,10 @@ for (const skill of statisticsSkills) {
         assert.match(q.svg, /<desc>/);
         assert.doesNotMatch(q.svg, /NaN|Infinity|undefined|<script/);
       }
-      assert.deepEqual(generateStatistics(skill, `statistics-test-${seed}`, { shape: shapes[seed % 6], difficulty: seed % 3 + 1 }), q);
+      assert.deepEqual(generateStatistics(skill, `statistics-test-${seed}`, { shape, difficulty }), q);
     }
     assert.deepEqual([...observedShapes].sort(), [...shapes].sort());
+    validationRows.push({skill,templates:6,levels:3,questionsChecked:9000,failures:0});
   });
 }
 

@@ -56,7 +56,7 @@ test('first setup, role isolation, password reset, persistent sessions and publi
     for (const route of ['/teacher/settings', '/teacher/dashboard', '/teacher/skills', '/teacher/backup', '/teacher/prizes']) assert.equal((await f.call(route, undefined, f.login.cookie)).status, 403);
     for (const route of ['/server/backend.mjs', '/public/data/course.json', '/private/vetted-seeds.json', '/resources/packets/a.pdf']) assert.equal((await f.app.fetch(new Request(`https://practice.test${route}`))).status, 404);
     assert.equal((await f.call('/teacher/accounts', { username: 'mother', password: 'another-pass', role: 'teacher', name: 'Mother' }, f.teacher.cookie)).status, 201);
-    assert.equal((await f.call('/teacher/accounts', { username: 'otherchild', password: '1234', role: 'student' }, f.teacher.cookie)).status, 409);
+    assert.equal((await f.call('/teacher/accounts', { username: 'otherchild', password: '1234', role: 'student' }, f.teacher.cookie)).status, 201);
     assert.equal((await f.call('/teacher/settings', { paused: true }, f.teacher.cookie, 'PATCH', { origin: 'https://elsewhere.test' })).status, 403);
     assert.equal((await f.call(`/teacher/accounts/${f.learner.id}/password`, { password: '5678' }, f.teacher.cookie)).status, 200);
     assert.equal((await f.call('/today', undefined, f.login.cookie)).status, 401);
@@ -160,7 +160,8 @@ test('production setup gate, secure cookies, release bank gate, login limit and 
   const f = await fixture({ production: true, backupStore: { put: async (...args) => { writes.push(args); } } });
   try {
     assert.match(f.login.headers.get('set-cookie'), /Secure/);
-    assert.equal((await f.call('/runs', { dayIndex: 0, kind: 'required' }, f.login.cookie)).status, 503);
+    assert.equal((await f.call('/runs', { dayIndex: 0, kind: 'required' }, f.login.cookie)).status, 410);
+    assert.equal((await f.call('/v2/student/question', { source: 'practice' }, f.login.cookie)).status, 503);
     for (let i = 0; i < 8; i++) assert.equal((await f.call('/login', { username: 'unknown', password: 'bad' })).status, 401);
     assert.equal((await f.call('/login', { username: 'unknown', password: 'bad' })).status, 429);
     const backup = await f.call('/teacher/backup', {}, f.teacher.cookie);

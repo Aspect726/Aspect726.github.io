@@ -8,9 +8,9 @@ import { createSQLiteDB } from './server/storage.mjs';
 const root = fileURLToPath(new URL('.', import.meta.url));
 const db = createSQLiteDB(process.env.DATABASE_PATH || resolve(root, 'private/practice.sqlite'));
 db.migrate();
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.woff2': 'font/woff2', '.svg': 'image/svg+xml' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.woff2': 'font/woff2', '.svg': 'image/svg+xml' };
 const assets = {};
-for (const name of ['index.html', 'app.js', 'styles.css', 'assets/favicon.svg']) {
+for (const name of ['index.html', 'app.js', 'student.mjs', 'teacher.mjs', 'styles.css', 'assets/favicon.svg']) {
   try { assets[`/${name}`] = { body: await readFile(resolve(root, 'public', name)), type: types[extname(name)] }; } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
 for (const name of await readdir(resolve(root, 'public/assets/fonts')).catch(() => [])) {

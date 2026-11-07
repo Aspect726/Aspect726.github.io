@@ -1,5 +1,5 @@
 {
-  "applicationTests": 112,
+  "applicationTests": 149,
   "failures": 0,
   "skips": 0,
   "sourceRecords": 2322,
@@ -10,8 +10,14 @@
   "twinStressTotal": 9100,
   "courseDays": 70,
   "repeatWindow": "current date plus previous 14 dates",
-  "generatorDigest": "770339c5e1319b81f779acadc5990c842362f001887ab05797455140f16dffcb",
+  "generatorDigest": "521ab4cefe950bde1fa426339fb5b468b6a8ad7924d92ff27b121f622e674948",
   "browserVerification": false,
   "poolVerifiedAtUTC": "2026-11-07T06:00:04.368Z",
-  "teacherDashboard": "Full calendar, practice previews, answers, hints, worked steps and management; student records unchanged"
+  "teacherDashboard": "Full calendar, practice previews, answers, hints, worked steps and management; student records unchanged",
+  "platformVersion": 3,
+  "templateCount": 295,
+  "independentGeneratorChecks": 592500,
+  "paperFrameChecks": 442500,
+  "paperFrameMatches": 0,
+  "wordProblemTemplates": 100
 }

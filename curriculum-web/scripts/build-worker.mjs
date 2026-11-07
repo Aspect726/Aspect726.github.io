@@ -16,7 +16,16 @@ for (const [relative, expected] of Object.entries(pool.evidence.generatorFiles))
   const actual = createHash('sha256').update(await readFile(join(root, relative))).digest('hex');
   if (actual !== expected) throw new Error(`The checked pool is stale after a change to ${relative}. Run the paper test again.`);
 }
-const types = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.txt':'text/plain; charset=utf-8' };
+const framePath = process.env.FRAME_REPORT_PATH || join(root,'private/frame-validation.json');
+let frames;
+try { frames=JSON.parse(await readFile(framePath,'utf8')); } catch { throw new Error('Run the private template frame check before building.'); }
+if(frames.paperRecords<2000 || frames.perTemplate<500 || frames.matchingTemplates!==0 || !Array.isArray(frames.poolMatchingTemplates) || frames.poolMatchingTemplates.length || !frames.poolQuestionsChecked || !frames.generatorFiles) throw new Error('Complete passing paper-frame evidence is required.');
+for(const [relative,expected] of Object.entries(frames.generatorFiles)) {
+ if(!/^(server|scripts)\/[\w/.-]+$/.test(relative)||relative.includes('..'))throw new Error('Invalid frame provenance path.');
+ if(createHash('sha256').update(await readFile(join(root,relative))).digest('hex')!==expected)throw new Error('The paper-frame report is stale: '+relative);
+}
+if(frames.poolDigest!==createHash('sha256').update(await readFile(poolPath)).digest('hex'))throw new Error('The paper-frame report does not match the seed pool.');
+const types = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.mjs':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.txt':'text/plain; charset=utf-8' };
 const assets = {};
 async function walk(directory, prefix = '') {
   for (const entry of await readdir(directory, { withFileTypes:true })) {
@@ -38,21 +47,23 @@ await mkdir(join(root,'dist/server'),{recursive:true});
 await mkdir(join(root,'dist/.openai'),{recursive:true});
 await build({entryPoints:[join(root,'worker/index.mjs')],outfile:join(root,'dist/server/index.js'),bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true,legalComments:'none'});
 await cp(join(root,'.openai/hosting.json'),join(root,'dist/.openai/hosting.json'));
-// Preserve the already-applied classroom migration; add the replacement schema.
-const sql = await readFile(join(root,'migrations/0001_practice.sql'),'utf8');
-// A trigger's BEGIN…END body is one statement, including its inner semicolon.
-const statements = sql.match(/\s*CREATE\s+TRIGGER\b[\s\S]*?\bEND\s*;|[^;]+;/gi);
-if (!statements?.length) throw new Error('The practice migration is empty.');
-const migrationCheck = new DatabaseSync(':memory:');
-try { for (const statement of statements) migrationCheck.exec(statement); }
-finally { migrationCheck.close(); }
-await writeFile(join(root,'drizzle/0001_practice.sql'),statements.map(s=>s.trim()).join('\n--> statement-breakpoint\n')+'\n');
+// Apply and validate only new versioned migrations; never rewrite deployed files.
 const journalPath = join(root,'drizzle/meta/_journal.json');
 const journal = JSON.parse(await readFile(journalPath,'utf8'));
-if (!journal.entries.some(entry=>entry.tag==='0001_practice')) {
-  journal.entries.push({idx:1,version:'6',when:1794028800000,tag:'0001_practice',breakpoints:true});
-  await writeFile(journalPath,JSON.stringify(journal,null,2)+'\n');
-}
+const migrationCheck = new DatabaseSync(':memory:');
+try {
+ for (const filename of (await readdir(join(root,'migrations'))).filter(f=>f.endsWith('.sql')).sort()) {
+  const sql=await readFile(join(root,'migrations',filename),'utf8');
+  const statements=sql.match(/\s*CREATE\s+TRIGGER\b[\s\S]*?\bEND\s*;|[^;]+;/gi);
+  for(const statement of statements||[]) migrationCheck.exec(statement);
+  const tag=filename.slice(0,-4);
+  if(!journal.entries.some(e=>e.tag===tag)){
+   await writeFile(join(root,'drizzle',filename),statements.map(s=>s.trim()).join('\n--> statement-breakpoint\n')+'\n');
+   journal.entries.push({idx:journal.entries.length,version:'6',when:1794040000000+journal.entries.length,tag,breakpoints:true});
+  }
+ }
+} finally {migrationCheck.close();}
+await writeFile(journalPath,JSON.stringify(journal,null,2)+'\n');
 await cp(join(root,'drizzle'),join(root,'dist/drizzle'),{recursive:true});
 const module = await import(new URL('../dist/server/index.js',import.meta.url));
 if (typeof module.default?.fetch !== 'function') throw new Error('Build has no Worker fetch handler.');

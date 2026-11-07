@@ -1,3 +1,4 @@
+import { provisionDemoAccounts } from '../server/bootstrap.mjs';
 import { createApp } from '../server/backend.mjs';
 import assets from '../generated/assets.json';
 import questionPool from '../generated/vetted-seeds.json';
@@ -15,7 +16,7 @@ function application(env) {
 
 export default {
   async fetch(request, env) {
-    try { return await application(env).fetch(request); }
+    try { await provisionDemoAccounts(env.DB, env.BOOTSTRAP_ACCOUNTS_JSON); return await application(env).fetch(request); }
     catch (error) {
       console.error('Practice request failed:', error.message);
       return new Response(JSON.stringify({ error: 'Practice could not load. Please try again.' }), {

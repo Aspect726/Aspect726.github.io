@@ -1,0 +1,216 @@
+// Full student pages. Accounts, questions, attempts and points stay on the server.
+let revision = 0;
+let advanceTimer;
+const number = value => Number(value || 0).toLocaleString('en-US');
+const dateText = (value, options = {}) => value ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC', ...options }).format(new Date(`${String(value).slice(0, 10)}T12:00:00Z`)) : '';
+const percent = value => value == null ? '—' : `${Math.round(Number(value))}%`;
+const labelLevel = value => ({ 'not-started': 'Not started', 'not_started': 'Not started', learning: 'Learning', practicing: 'Practicing', mastered: 'Mastered' }[value] || value || 'Not started');
+const levelClass = value => String(value || 'not-started').toLowerCase().replace(/[_ ]/g, '-');
+const addDays = (date, count) => new Date(Date.parse(`${date}T12:00:00Z`) + count * 86400000).toISOString().slice(0, 10);
+const list = value => Array.isArray(value) ? value : [];
+const eId = value => encodeURIComponent(value);
+const qSkill = value => typeof value === 'string' ? value : value?.skill || value?.id;
+const nav = (href, label, style = 'button secondary') => `<a class="${style}" data-nav href="${href}">${label}</a>`;
+const heading = (ctx, title, subtitle = '', eyebrow = '') => `<header class="page-heading"><div>${eyebrow ? `<p class="eyebrow">${ctx.escape(eyebrow)}</p>` : ''}<h1>${ctx.escape(title)}</h1>${subtitle ? `<p class="muted">${ctx.escape(subtitle)}</p>` : ''}</div></header>`;
+const empty = (ctx, title, text, link = '') => `<section class="card empty-state"><h2>${ctx.escape(title)}</h2><p>${ctx.escape(text)}</p>${link}</section>`;
+const errorHTML = '<p class="form-error" role="alert" hidden></p>';
+const iconCheck = '<svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg>';
+function chart(ctx, data, { max = 100, label = 'Accuracy by day', format = value => `${Math.round(value)}%` } = {}) {
+  const points = data.filter(item => item.value != null && Number.isFinite(Number(item.value)));
+  if (!points.length) return `<p class="muted">Nothing yet. Answer a few questions and this fills in.</p>`;
+  const width = 660, height = 180, left = 44, right = 20, top = 15, bottom = 38;
+  const x = index => left + index * (width - left - right) / Math.max(1, points.length - 1);
+  const y = value => height - bottom - Math.max(0, Math.min(max, Number(value))) / max * (height - top - bottom);
+  return `<figure class="chart"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${ctx.escape(label)}"><title>${ctx.escape(label)}</title>${[0, max / 2, max].map(value => `<line x1="${left}" x2="${width - right}" y1="${y(value)}" y2="${y(value)}" stroke="var(--line)"/><text x="${left - 8}" y="${y(value) + 4}" text-anchor="end" fill="currentColor" font-size="11">${ctx.escape(format(value))}</text>`).join('')}<polyline points="${points.map((point, index) => `${x(index)},${y(point.value)}`).join(' ')}" fill="none" stroke="var(--teal)" stroke-width="2.5"/>${points.map((point, index) => `<circle cx="${x(index)}" cy="${y(point.value)}" r="4" fill="var(--teal)"><title>${ctx.escape(point.label)}: ${ctx.escape(format(point.value))}</title></circle>${index === 0 || index === points.length - 1 ? `<text x="${x(index)}" y="${height - 12}" text-anchor="${index === 0 ? 'start' : 'end'}" fill="currentColor" font-size="11">${ctx.escape(point.label)}</text>` : ''}`).join('')}</svg><details><summary>View chart values</summary><ul>${points.map(point => `<li>${ctx.escape(point.label)}: ${ctx.escape(format(point.value))}</li>`).join('')}</ul></details></figure>`;
+}
+function masteryTiles(ctx, skills) {
+  return `<div class="mastery-grid">${list(skills).map(skill => `<a data-nav href="/s/learn/${eId(qSkill(skill))}" class="mastery-tile ${levelClass(skill.level)}"><strong>${ctx.escape(skill.name || qSkill(skill))}</strong><span>${ctx.escape(labelLevel(skill.level))}</span><small>${number(skill.attempts)} answered${skill.attempts ? ` · ${percent(skill.accuracy)} recent accuracy` : ''}</small></a>`).join('')}</div>`;
+}
+function ring(ctx, count, target) {
+  const circumference = 2 * Math.PI * 58;
+  return `<div class="progress-ring" role="img" aria-label="${number(count)} of ${number(target)} questions answered"><svg viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="58" fill="none" stroke="var(--line)" stroke-width="8"/><circle cx="70" cy="70" r="58" fill="none" stroke="${count >= target ? 'var(--good)' : 'var(--brick)'}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${circumference * (1 - Math.min(1, count / target))}" transform="rotate(-90 70 70)"/></svg><div class="ring-value"><strong>${number(Math.min(count, target))}</strong><span>/ ${number(target)}</span><small>${count >= target ? 'Daily practice complete' : 'answered today'}</small></div></div>`;
+}
+function cacheSummary(ctx, summary) { if (summary) { ctx.state.summary = summary; ctx.state.today = summary; } }
+async function today(ctx, token) {
+  const data = await ctx.api('/v2/student/summary');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  cacheSummary(ctx, data);
+  const week = data.week || {}, day = data.day || {}, target = data.dailyTarget || 20;
+  const skill = qSkill(day.focus?.[0] || week.skills?.[0]);
+  const completed = Number(data.answered) >= target;
+  const title = completed ? `${number(data.answered)} answered today` : `${Math.max(0, target - Number(data.answered || 0))} left to reach ${target}`;
+  const button = completed ? 'Keep going for bonus points' : data.answered ? 'Keep going' : 'Start practice';
+  ctx.shell(`${heading(ctx, 'Today', day.title || week.title || 'Your daily mathematics practice', `${day.week || week.week ? `Week ${day.week || week.week} · ` : ''}${dateText(data.today || data.date, { weekday: 'long' })}`)}
+    <section class="card practice-hero"><div>${ring(ctx, data.answered || 0, target)}</div><div class="hero-copy"><p class="eyebrow">${completed ? 'Daily goal reached' : 'Today’s practice'}</p><h2>${ctx.escape(title)}</h2><p>${completed ? `${number(data.untilNextPoint)} more ${Number(data.untilNextPoint) === 1 ? 'question' : 'questions'} to your next point.` : 'Take one question at a time. Each answer counts toward your daily practice.'}</p>${nav('/s/practice', button, 'button')}<p class="small">${number(data.points)} ${Number(data.points) === 1 ? 'point' : 'points'} saved for rewards</p></div></section>
+    <div class="grid-three"><section class="card"><p class="eyebrow">This week’s lesson</p><h2>${ctx.escape(day.title || week.title || 'Explore a skill')}</h2><p>Watch an example, then try it yourself.</p>${nav(skill ? `/s/learn/${eId(skill)}` : '/s/library', 'Open lesson')}</section><section class="card"><p class="eyebrow">Review due</p><h2>${number(data.reviewDue)} ${Number(data.reviewDue) === 1 ? 'skill' : 'skills'}</h2><p>Revisit the ideas you are still learning.</p>${nav('/s/review', 'Open review')}</section><section class="card"><p class="eyebrow">Your streak</p><h2>${number(data.streak)} ${Number(data.streak) === 1 ? 'day' : 'days'}</h2><p>Best: ${number(data.bestStreak)} days with your daily goal complete.</p>${nav('/s/progress', 'See progress')}</section></div>
+    <section class="card"><div class="section-heading"><h2>This week</h2>${nav('/s/map', 'Course map', 'text-link')}</div><div class="week-strip">${list(data.weekDays).map(d => `<div class="day-dot ${ctx.escape(d.status || '')}${d.date === (data.today || data.date) ? ' current' : ''}" ${d.date === (data.today || data.date) ? 'aria-current="date"' : ''}><span>${ctx.escape((d.weekday || dateText(d.date, { weekday: 'short' })).slice(0, 3))}</span><strong>${dateText(d.date, { day: 'numeric', month: undefined })}</strong><small>${number(d.answered)} answered</small><small>${d.lessonDay ? 'Lesson day' : ctx.escape(d.status || 'Upcoming')}</small></div>`).join('')}</div></section>
+    ${data.teacherNote ? `<section class="card teacher-note"><p class="eyebrow">A note from your teacher</p><p>${ctx.escape(typeof data.teacherNote === 'string' ? data.teacherNote : data.teacherNote.text)}</p></section>` : ''}`, { title: 'Today' });
+}
+async function courseMap(ctx, token) {
+  const data = await ctx.api('/v2/student/map');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  ctx.shell(`${heading(ctx, 'Course map', 'Ten weeks, one idea at a time. You can explore any skill ahead of your daily practice.')}<div class="course-path">${list(data.weeks).map(week => `<section class="week-node ${ctx.escape(week.status || 'upcoming')}"><span class="week-marker" aria-hidden="true">${week.status === 'done' ? '✓' : number(week.week)}</span><details class="card" ${week.status === 'current' ? 'open' : ''}><summary><span class="eyebrow">Week ${number(week.week)}${week.status === 'current' ? ' · You are here' : week.status === 'done' ? ' · Complete' : week.status === 'missed' ? ' · Needs practice' : ' · Upcoming'}</span><h2>${ctx.escape(week.title)}</h2><span class="muted">${dateText(week.startDate)} – ${dateText(week.endDate)}${week.status === 'done' && week.accuracy != null ? ` · ${percent(week.accuracy)} accuracy` : ''}</span><span class="small skill-preview">${list(week.skills).map(s => ctx.escape(s.name || qSkill(s))).join(' · ')}</span></summary><ul class="skill-list">${list(week.skills).map(skill => `<li><div><strong>${ctx.escape(skill.name || qSkill(skill))}</strong><span class="badge ${levelClass(skill.level)}">${ctx.escape(labelLevel(skill.level))}</span></div><div class="form-actions">${nav(`/s/learn/${eId(qSkill(skill))}`, 'Learn')}${nav(`/s/practice?source=library&skill=${eId(qSkill(skill))}&count=5`, 'Practice')}</div></li>`).join('')}</ul></details></section>`).join('')}<section class="week-node goal-node"><span class="week-marker" aria-hidden="true">✓</span><div class="card"><p class="eyebrow">Your goal</p><h2>Double Advanced test</h2><p>Use what you have learned to explain your thinking.</p></div></section></div>`, { title: 'Course map' });
+}
+async function progressPage(ctx, token) {
+  const data = await ctx.api('/v2/student/progress');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  const weeks = list(data.weeks), skills = list(data.skills), recordedDays = list(data.days);
+  const days = weeks.length ? weeks.flatMap(week => Array.from({ length: 7 }, (_, index) => { const date = addDays(week.startDate, index); return recordedDays.find(day => day.date === date) || { date, answered: 0, correct: 0, accuracy: null, pointsEarned: 0, target: data.program?.dailyTarget || 20 }; })) : recordedDays;
+  ctx.shell(`${heading(ctx, 'Your progress', 'See what is becoming familiar, and what is ready for another try.')}<div class="grid-three"><section class="card"><p class="eyebrow">Questions answered</p><h2>${number(data.totalQuestions)}</h2></section><section class="card"><p class="eyebrow">Overall accuracy</p><h2>${data.totalQuestions ? percent(data.overallAccuracy) : 'Nothing yet'}</h2></section><section class="card"><p class="eyebrow">Daily streak</p><h2>${number(data.streak)} days</h2><p>Best: ${number(data.bestStreak)} days</p></section></div><section class="card"><h2>Practice calendar</h2><p class="muted">Complete · Some practice · Nothing yet. A star marks a bonus point.</p><div class="calendar-grid">${days.map(day => `<div class="calendar-square ${day.answered >= (day.target || 20) ? 'complete' : day.answered ? 'partial' : 'empty'}" tabindex="0" aria-label="${ctx.escape(dateText(day.date))}: ${number(day.answered)} answered${day.pointsEarned ? `, ${number(day.pointsEarned)} bonus points` : ''}"><span>${dateText(day.date, { day: 'numeric', month: undefined })}</span>${day.pointsEarned ? '<span aria-hidden="true">★</span>' : ''}<small>${number(day.answered)}</small></div>`).join('')}</div></section><section class="card"><h2>Accuracy over time</h2>${chart(ctx, days.filter(d => d.answered).map(day => ({ label: dateText(day.date), value: day.accuracy })))}</section><section class="card"><h2>Friday paper checks</h2>${list(data.checks).length ? chart(ctx, data.checks.map(check => ({ label: `Week ${check.week}`, value: check.score })), { max: 21, label: 'Friday paper scores out of 21', format: value => `${value} / 21` }) : '<p class="muted">Your teacher will add your Friday paper scores here.</p>'}</section><section><div class="section-heading"><h2>Skill mastery</h2></div>${weeks.length ? weeks.map(week => `<section class="mastery-week"><h3>Week ${number(week.week)} · ${ctx.escape(week.title)}</h3>${masteryTiles(ctx, skills.filter(s => Number(s.week) === Number(week.week)).length ? skills.filter(s => Number(s.week) === Number(week.week)) : week.skills)}</section>`).join('') : masteryTiles(ctx, skills)}</section>`, { title: 'Progress' });
+}
+async function rewards(ctx, token) {
+  const data = await ctx.api('/v2/student/rewards');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  const requests = list(data.requests), active = list(data.prizes).filter(prize => prize.active);
+  ctx.shell(`${heading(ctx, 'Rewards', 'Save your points, choose a prize, and ask your teacher.')}<section class="card rewards-balance"><p class="eyebrow">Your balance</p><h2>${number(data.points)} ${Number(data.points) === 1 ? 'point' : 'points'}</h2><p>${number(data.nextPoint?.remaining)} more questions to your next point.</p>${nav('/s/practice', 'Keep practicing', 'button')}</section><section><h2>Choose a prize</h2><div class="prize-grid">${active.map(prize => { const pending = requests.some(r => (r.prizeId || r.prize_id) === prize.id && ['requested', 'approved', 'pending'].includes(r.status)); return `<article class="card prize-card"><h3>${ctx.escape(prize.name)}</h3><p class="prize-cost">${number(prize.cost)} points</p>${prize.note ? `<p>${ctx.escape(prize.note)}</p>` : ''}<button class="button secondary" data-request="${ctx.escape(prize.id)}" ${pending || Number(data.points) < Number(prize.cost) ? 'disabled' : ''}>${pending ? 'Requested' : Number(data.points) < Number(prize.cost) ? `${number(prize.cost - data.points)} more points needed` : 'Request prize'}</button></article>`; }).join('') || '<p class="muted">Your teacher has not added prizes yet.</p>'}</div></section><section class="card"><h2>Your requests</h2>${requests.length ? `<ul class="history-list">${requests.map(r => `<li class="history-row"><div><strong>${ctx.escape(r.name || r.prize_name)}</strong><p class="muted">${dateText(r.createdAt || r.created_at)} · ${number(r.cost)} points</p></div><span class="badge">${ctx.escape(r.status === 'pending' ? 'requested' : r.status)}</span></li>`).join('')}</ul>` : '<p class="muted">Your prize requests will appear here.</p>'}</section><section class="card"><h2>Points history</h2>${list(data.history).length ? `<ul class="history-list">${data.history.map(row => `<li class="history-row"><div><strong>${ctx.escape(row.note || row.kind)}</strong><p class="muted">${dateText(row.createdAt || row.created_at)}</p></div><strong>${Number(row.amount) > 0 ? '+' : ''}${number(row.amount)}</strong></li>`).join('')}</ul>` : '<p class="muted">Your first point is earned after your daily practice and the first bonus set.</p>'}</section>`, { title: 'Rewards' });
+  document.querySelectorAll('[data-request]').forEach(button => button.addEventListener('click', async () => {
+    button.disabled = true;
+    try { await ctx.api(`/v2/student/rewards/${eId(button.dataset.request)}/request`, {}); ctx.tell('Your teacher has your request.'); await rewards(ctx, token); }
+    catch (error) { ctx.tell(error.message, true); button.disabled = false; }
+  }));
+}
+function exampleHTML(ctx, example) {
+  return `<div class="example-prompt">${ctx.mathMarkup(example.prompt || example.plainPrompt || '', true)}</div>${example.svg ? `<div class="lesson-model">${example.svg}</div>` : ''}`;
+}
+async function library(ctx, token) {
+  const data = await ctx.api('/v2/student/library');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  const skills = list(data.skills), weeks = [...new Set(skills.map(s => s.week))].sort((a, b) => a - b);
+  ctx.shell(`${heading(ctx, 'Library', 'Find a rule, study an example, or try five questions.')}<div class="card"><label class="field" for="skill-search">Search skills and rules<input type="search" id="skill-search" autocomplete="off" placeholder="Try fractions, area, or mean"></label><p id="search-count" class="muted" aria-live="polite">${skills.length} skills</p></div><div id="library-skills">${weeks.map(week => `<section class="library-week"><h2>Week ${number(week)}</h2><div class="grid-two">${skills.filter(s => s.week === week).map(skill => `<article class="card library-skill" data-search="${ctx.escape(`${skill.name} ${skill.rule} ${skill.idea}`.toLowerCase())}"><h3>${ctx.escape(skill.name)}</h3><p>${ctx.mathMarkup(skill.rule)}</p><details data-reference="${ctx.escape(skill.id)}"><summary>Picture, example and common mistake</summary><div class="reference-example">${skill.model ? `<div class="lesson-model">${skill.model}</div>` : ''}${skill.example ? `${exampleHTML(ctx, skill.example)}<ol class="steps">${list(skill.example.steps || skill.example.solution).map(step => `<li>${ctx.mathMarkup(step, true)}</li>`).join('')}</ol>` : ''}${skill.trap ? `<p><strong>Common mistake:</strong> ${ctx.mathMarkup(skill.trap.text || skill.trap)}</p>` : ''}</div></details><div class="form-actions">${nav(`/s/learn/${eId(skill.id)}`, 'Learn')}${nav(`/s/practice?source=library&skill=${eId(skill.id)}&count=5`, 'Practice this skill')}</div></article>`).join('')}</div></section>`).join('')}</div><div class="grid-two"><section class="card"><h2>Vocabulary</h2><dl class="reference-list">${list(data.vocabulary).map(item => `<dt>${ctx.escape(item.term)}</dt><dd>${ctx.escape(item.definition)}<p class="muted">${ctx.mathMarkup(item.example)}</p></dd>`).join('')}</dl></section><section class="card"><h2>Formula sheet</h2><dl class="reference-list">${list(data.formulas).map(item => `<dt>${ctx.escape(item.name)}</dt><dd>${ctx.mathMarkup(item.formula)}${item.note ? `<p class="muted">${ctx.escape(item.note)}</p>` : ''}</dd>`).join('')}</dl></section></div>`, { title: 'Library' });
+  document.querySelectorAll('[data-reference]').forEach(details => {
+    let loaded = false, pending = false;
+    details.addEventListener('toggle', async () => {
+      if (!details.open || loaded || pending) return;
+      pending = true; const content = details.querySelector('.reference-example');
+      content.innerHTML = '<p class="muted" role="status">Opening the example…</p>';
+      try {
+        const lesson = await ctx.api(`/v2/student/lesson?skill=${eId(details.dataset.reference)}`);
+        if (!details.isConnected || token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+        const example = lesson.examples?.[0];
+        content.innerHTML = `${lesson.model ? `<div class="lesson-model">${lesson.model}</div>` : ''}${example ? `${exampleHTML(ctx, example)}<ol class="steps">${list(example.steps || example.solution).map(step => `<li>${ctx.mathMarkup(step, true)}</li>`).join('')}</ol>` : ''}<p><strong>Common mistake:</strong> ${ctx.mathMarkup(lesson.trap?.text || '')}</p>`;
+        loaded = true;
+      } catch (error) { if (details.isConnected) content.innerHTML = `<p role="alert">${ctx.escape(error.message)} Close and reopen to try again.</p>`; }
+      finally { pending = false; }
+    });
+  });
+  document.querySelector('#skill-search').addEventListener('input', event => {
+    const query = event.target.value.trim().toLowerCase(); let count = 0;
+    document.querySelectorAll('.library-skill').forEach(card => { card.hidden = !card.dataset.search.includes(query); if (!card.hidden) count++; });
+    document.querySelectorAll('.library-week').forEach(week => { week.hidden = ![...week.querySelectorAll('.library-skill')].some(card => !card.hidden); });
+    document.querySelector('#search-count').textContent = `${count} ${count === 1 ? 'skill' : 'skills'}${count ? '' : '. Try another word.'}`;
+  });
+}
+async function lesson(ctx, token, skill) {
+  if (!skill) return library(ctx, token);
+  const data = await ctx.api(`/v2/student/lesson?skill=${eId(skill)}`);
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  const examples = list(data.examples);
+  ctx.shell(`${heading(ctx, data.name, data.rule, `Week ${data.week} · Learn`)}<section class="card lesson-section"><p class="eyebrow">The idea</p><p class="lesson-idea">${ctx.mathMarkup(data.idea)}</p>${data.model ? `<div class="lesson-model">${data.model}</div>` : ''}</section>${examples.map((example, index) => `<section class="card lesson-section" data-example="${index}"><p class="eyebrow">${index ? 'Watch another' : 'Watch one'}</p>${exampleHTML(ctx, example)}<p class="muted">Think about the next step before revealing it.</p><ol class="steps" id="example-steps-${index}" aria-live="polite"></ol><button class="button secondary" data-next-step="${index}">Next step</button></section>`).join('')}<section class="card lesson-section"><p class="eyebrow">The trap</p><h2>A common mistake</h2>${data.trap?.answer ? `<p>Someone might write ${ctx.mathMarkup(data.trap.answer)}.</p>` : ''}<p>${ctx.mathMarkup(data.trap?.text || '')}</p></section><section class="card lesson-section"><p class="eyebrow">Your turn</p><h2>Try three questions</h2><p>Each answer counts toward today’s practice.</p><button id="lesson-start" class="button">${data.completed ? 'Try three more' : 'Start your three'}</button></section>`, { title: data.name });
+  document.querySelectorAll('[data-next-step]').forEach(button => {
+    const index = Number(button.dataset.nextStep), steps = list(examples[index].steps || examples[index].solution); let visible = 0;
+    button.addEventListener('click', () => {
+      if (visible < steps.length) { const li = document.createElement('li'); li.innerHTML = ctx.mathMarkup(steps[visible++], true); document.querySelector(`#example-steps-${index}`).append(li); }
+      if (visible >= steps.length) { button.disabled = true; button.textContent = 'Example complete'; }
+    });
+  });
+  document.querySelector('#lesson-start').addEventListener('click', () => runPractice(ctx, token, { source: 'learn', skill, count: 3, back: `/s/learn/${eId(skill)}` }));
+}
+async function review(ctx, token) {
+  const data = await ctx.api('/v2/student/review');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  ctx.shell(`${heading(ctx, 'Review', 'A fresh version of a skill helps it stick. Reviews return after 1, 3 and 7 days.')}${Number(data.count) ? `<section class="card"><p class="eyebrow">Ready today</p><h2>${number(data.count)} ${Number(data.count) === 1 ? 'review' : 'reviews'} due</h2><p>These answers count toward your daily total.</p><button id="review-start" class="button">Start review</button><ul class="skill-list">${list(data.due).map(item => `<li><div><strong>${ctx.escape(item.name || item.skill)}</strong><p class="muted">Day ${number(item.stage)} review · due ${dateText(item.dueDate)}</p></div>${nav(`/s/learn/${eId(item.skill)}`, 'Read the lesson')}</li>`).join('')}</ul></section>` : empty(ctx, 'You are up to date', 'There are no reviews due today. If an idea needs another try, it will appear here.', nav('/s/practice', 'Open practice', 'button'))}`, { title: 'Review' });
+  document.querySelector('#review-start')?.addEventListener('click', () => runPractice(ctx, token, { source: 'review', count: Number(data.count), back: '/s/review' }));
+}
+function focusProgress(ctx, summary, local) {
+  const target = Number(summary.dailyTarget || 20), answered = Number(summary.answered || 0), max = answered < target ? target : Number(summary.nextPointAt || target + 15);
+  return `<div class="focus-progress"><div class="section-heading"><span>${number(answered)} / ${number(answered < target ? target : max)} today</span>${nav(local.back || '/s/today', 'Exit', 'text-link')}</div><div class="progress-track" role="progressbar" aria-label="Today’s answers" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${Math.min(answered, max)}"><div class="progress-fill" style="width:${Math.min(100, answered / max * 100)}%"></div></div>${answered >= target ? `<p class="small">${number(summary.untilNextPoint)} more to your next point · Next milestones: ${number(max)}, ${number(max + (summary.bonusStep || 10))}, ${number(max + 2 * (summary.bonusStep || 10))}</p>` : ''}${local.count ? `<p class="small">${local.source === 'learn' ? 'Your turn' : local.source === 'review' ? 'Review' : 'Skill practice'} · ${number(local.finished)} of ${number(local.count)} answered</p>` : ''}</div>`;
+}
+async function runPractice(ctx, token, options = {}) {
+  const local = { source: 'practice', finished: 0, count: 0, back: '/s/today', ...options };
+  let summary = ctx.state.summary || await ctx.api('/v2/student/summary');
+  if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+  cacheSummary(ctx, summary);
+  const goal = local.count || Math.max(1, Number(summary.answered) < Number(summary.dailyTarget) ? Number(summary.dailyTarget) - Number(summary.answered) : Number(summary.untilNextPoint));
+  local.count = goal;
+  const results = [];
+  let busy = false, question, started, requestId, lastFeedback, completed = false;
+  async function finish() {
+    completed = true; clearTimeout(advanceTimer);
+    if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+    if (local.source === 'learn') {
+      try { await ctx.api('/v2/student/lesson-complete', { skill: local.skill }); }
+      catch (error) { completed = false; ctx.tell(error.message, true); return; }
+    }
+    if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+    cacheSummary(ctx, summary);
+    const bySkill = new Map(); for (const row of results) { const entry = bySkill.get(row.skill) || { right: 0, total: 0 }; entry.name = row.name; entry.total++; entry.right += Number(row.correct); bySkill.set(row.skill, entry); }
+    const strong = [...bySkill].filter(([, row]) => row.right === row.total).map(([skill]) => skill);
+    const next = [...bySkill].find(([, row]) => row.right < row.total)?.[0];
+    const title = local.source === 'learn' ? 'Lesson practiced' : local.source === 'review' ? 'Review complete' : summary.requiredDone && summary.answered === summary.dailyTarget ? 'Your daily practice is done' : 'Practice complete';
+    ctx.shell(`${heading(ctx, title, `${results.filter(row => row.correct).length} of ${results.length} right in this set.`)}<section class="card completion-card"><p class="eyebrow">Your progress is saved</p><h2>${number(summary.answered)} answered today</h2><p>${number(summary.points)} points in your balance · ${number(summary.untilNextPoint)} questions to your next point</p>${strong.length ? `<p>Went well: ${strong.map(skill => ctx.escape(bySkill.get(skill).name)).join(', ')}.</p>` : ''}${next ? `<p>One to work on: ${ctx.escape(bySkill.get(next).name)}.</p>${nav(`/s/learn/${eId(next)}`, 'Review the lesson')}` : '<p>Keep using these ideas in new questions.</p>'}<div class="form-actions"><button class="button" id="continue-practice">${summary.requiredDone ? 'Keep going for bonus points' : 'Continue daily practice'}</button>${nav('/s/today', 'Done for today')}${local.source === 'learn' ? nav(local.back, 'Back to lesson') : ''}</div></section>`, { title: 'Practice complete' });
+    document.querySelector('#continue-practice').addEventListener('click', () => runPractice(ctx, token));
+  }
+  async function next() {
+    if (busy || completed || token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+    clearTimeout(advanceTimer);
+    if (local.finished >= goal) return finish();
+    busy = true;
+    try {
+      const response = await ctx.api('/v2/student/question', { source: local.source, ...(local.skill ? { skill: local.skill } : {}) });
+      if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+      summary = response.summary || summary; cacheSummary(ctx, summary);
+      if (!response.question) return finish();
+      question = response.question; requestId = crypto.randomUUID(); started = Date.now(); lastFeedback = null;
+      draw();
+    } catch (error) {
+      if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+      ctx.shell(`${heading(ctx, 'Practice is waiting')}${empty(ctx, 'That question did not load', error.message, '<button class="button" id="retry-question">Try again</button>')}${nav(local.back, 'Back')}`, { title: 'Practice' });
+      document.querySelector('#retry-question')?.addEventListener('click', next);
+    } finally { busy = false; }
+  }
+  function draw() {
+    ctx.shell(`<div class="question-stage">${focusProgress(ctx, summary, local)}<article class="question-surface card">${question.offerExample ? `<aside class="example-offer"><p>Review a worked example before trying this question.</p>${nav(`/s/learn/${eId(question.skill)}`, 'Review the example')}</aside>` : ''}<p class="eyebrow">${ctx.escape(question.name || question.skill)} · Level ${number(question.level || 1)}</p><div class="question-prompt">${ctx.mathMarkup(question.prompt || question.plainPrompt, true)}</div>${question.svg ? `<div class="question-diagram">${question.svg}</div>` : ''}<form id="practice-answer-form">${list(question.choices).length ? `<fieldset class="question-choices"><legend class="sr-only">Choose your answer</legend>${question.choices.map((choice, index) => `<label class="choice"><input type="radio" name="answer" value="${ctx.escape(choice.value ?? `option-${index}`)}" required><span>${ctx.mathMarkup(choice.label, true)}</span></label>`).join('')}</fieldset>` : '<label class="field answer-field" for="practice-answer">Your answer<input id="practice-answer" name="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="100" required aria-describedby="answer-help"></label><p id="answer-help" class="small muted">You can use decimals, fractions such as 3/4, mixed numbers such as 2 1/3, or coordinate pairs.</p>'}${question.hint && ['learn', 'library'].includes(local.source) ? `<details class="question-hint"><summary>One hint</summary><p>${ctx.mathMarkup(question.hint)}</p></details>` : ''}${errorHTML}<button class="button" type="submit">Enter answer</button></form><div id="practice-feedback" aria-live="polite"></div></article></div>`, { title: local.source === 'review' ? 'Review' : 'Practice', focus: true });
+    const form = document.querySelector('#practice-answer-form');
+    const input = form.querySelector('[name=answer]'); input?.focus({ preventScroll: true });
+    form.addEventListener('submit', async event => {
+      event.preventDefault(); if (busy || lastFeedback || token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+      const answer = new FormData(form).get('answer'); if (!String(answer || '').trim()) return;
+      busy = true; const button = form.querySelector('[type=submit]'); button.disabled = true;
+      const errorElement = form.querySelector('.form-error'); errorElement.hidden = true;
+      try {
+        const result = await ctx.api('/v2/student/answer', { questionId: question.id, answer, elapsedMs: Math.max(0, Date.now() - started), requestId });
+        if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
+        if (result.formOnly) { errorElement.textContent = result.hint || 'That is the right value. Write it in simplest form.'; errorElement.hidden = false; requestId = crypto.randomUUID(); input?.focus(); return; }
+        lastFeedback = result; summary = result.summary || summary; cacheSummary(ctx, summary); local.finished++;
+        const progressElement = document.querySelector('.focus-progress'); if (progressElement) progressElement.outerHTML = focusProgress(ctx, summary, local);
+        results.push({ skill: question.skill, name: question.name || question.skill, correct: result.correct });
+        form.querySelectorAll('input,button').forEach(element => { element.disabled = true; });
+        const feedback = document.querySelector('#practice-feedback');
+        feedback.innerHTML = `<section class="feedback ${result.correct ? 'correct' : 'miss'}"><h2>${result.correct ? `${iconCheck} Correct` : 'Not quite'}</h2>${result.correct ? `<p>${ctx.mathMarkup(result.reason || result.solution?.[0] || 'Your answer fits the question.', true)}</p>` : `<p>You wrote <strong>${ctx.mathMarkup(result.submittedAnswer ?? answer)}</strong>. The answer is <strong>${ctx.mathMarkup(result.rightAnswer ?? result.answer)}</strong>.</p><p>${ctx.mathMarkup(result.hint || result.reason || result.solution?.[0] || 'Compare your first step with the worked example.', true)}</p><details><summary>See how</summary><ol class="steps">${list(result.solution).map(step => `<li>${ctx.mathMarkup(step, true)}</li>`).join('')}</ol></details>`}${result.pointsAwarded ? `<p class="point-earned">${number(result.pointsAwarded)} ${result.pointsAwarded === 1 ? 'point' : 'points'} earned. Your balance is ${number(summary.points)}.</p>` : ''}<button class="button" id="next-question">${local.finished >= goal ? 'Finish set' : 'Next question'}</button></section>`;
+        const nextButton = document.querySelector('#next-question'); nextButton.addEventListener('click', next); nextButton.focus({ preventScroll: true });
+        if (result.correct) advanceTimer = setTimeout(() => { if (nextButton.isConnected && token === revision) next(); }, 1500);
+      } catch (error) { if (token === revision && errorElement.isConnected) { errorElement.textContent = error.message; errorElement.hidden = false; } }
+      finally { busy = false; if (!lastFeedback && button.isConnected) button.disabled = false; }
+    });
+  }
+  await next();
+}
+export async function renderStudent(path, ctx) {
+  const token = ++revision; clearTimeout(advanceTimer);
+  const routeVersion = ctx.state.routeVersion, sharedState = ctx.state;
+  ctx = { ...ctx, isCurrent: () => routeVersion === sharedState.routeVersion };
+  const url = new URL(path, 'https://practice.invalid');
+  if (url.pathname === '/s/today') return today(ctx, token);
+  if (url.pathname === '/s/map') return courseMap(ctx, token);
+  if (url.pathname === '/s/progress') return progressPage(ctx, token);
+  if (url.pathname === '/s/rewards') return rewards(ctx, token);
+  if (url.pathname === '/s/library' || url.pathname === '/s/learn') return library(ctx, token);
+  if (url.pathname.startsWith('/s/learn/')) return lesson(ctx, token, decodeURIComponent(url.pathname.slice('/s/learn/'.length)));
+  if (url.pathname === '/s/review') return review(ctx, token);
+  if (url.pathname === '/s/practice') {
+    const source = ['practice', 'review', 'library', 'learn'].includes(url.searchParams.get('source')) ? url.searchParams.get('source') : 'practice';
+    return runPractice(ctx, token, { source, skill: url.searchParams.get('skill') || undefined, count: Math.max(0, Math.min(20, Number(url.searchParams.get('count')) || 0)) });
+  }
+  if (url.pathname === '/s/settings') { ctx.shell(`${heading(ctx, 'Your account')}<section class="card"><h2>${ctx.escape(ctx.state.user?.name)}</h2><p>Username: ${ctx.escape(ctx.state.user?.username)}</p><p>Your teacher can reset your password. Your answers and points are saved with your account.</p>${nav('/s/today', 'Back to Today')}</section>`, { title: 'Settings' }); return; }
+  ctx.navigate('/s/today');
+}

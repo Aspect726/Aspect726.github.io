@@ -1,4 +1,8 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+const validationRows=[];
+after(()=>{if(process.env.GENERATOR_REPORT_DIR){mkdirSync(process.env.GENERATOR_REPORT_DIR,{recursive:true});writeFileSync(join(process.env.GENERATOR_REPORT_DIR,'questions.json'),JSON.stringify(validationRows,null,2)+'\n');}});
 import assert from 'node:assert/strict';
 import { generateQuestion, gradeQuestion, publicQuestion, allSkills } from '../server/questions.mjs';
 import { arithmeticSkills } from '../server/generators/arithmetic.mjs';
@@ -24,7 +28,7 @@ function arithmeticOracle(q){
     case 'order':answer=missing?r(v.b):plus(r(v.a),times(r(v.b**(v.power??1)),r(v.c)));break;
     case 'F-ADD':answer=plus(r(v.a),r(v.b));break;
     case 'F-SUB':answer=minus(r(v.a),r(v.b));break;
-    case 'F-MULT':answer=times(r(v.a),r(v.b));break;
+    case 'F-MULT':assert.ok(!equal(r(v.a),r(1))&&!equal(r(v.b),r(1)),'Fraction multiplication must not use a factor of one.');answer=times(r(v.a),r(v.b));break;
     case 'F-DIV':answer=over(r(v.a),r(v.b));break;
     case 'ratio':answer=over(times(r(v.known),r(v.c)),r(v.a));break;
     case 'rate':answer=times(over(r(v.cost),r(v.count)),r(v.target));break;
@@ -50,6 +54,44 @@ function arithmeticOracle(q){
     default:throw new Error(`Missing independent oracle for ${v.kind}`);
   }
   assert.ok(equal(r(q.answer),answer),`${q.skill} ${q.seed} ${q.shape}: answer ${q.answer}`);
+}
+
+// Check the mathematical method independently of the generator's correct-choice
+// key. This catches an answer-key swap even when grading trusts that same key.
+function methodOracle(q) {
+ const v=q.verification;
+ const methods={
+  'D-SUB':/^Line up decimal points, then regroup/, 'D-LONG':/^Divide into equal groups and continue/,
+  'D-DIV':/^Multiply both numbers by the same power/, 'F-WHOLE':/^Divide the given amount by the numerator, then multiply by the denominator/,
+  'E-EXP':/^Multiply the base by itself/, 'E-ORDER':v.power===2?/^Evaluate the exponent, then multiply, then add/:/^Multiply first, then add/,
+  'E-DIST':/^Multiply every term inside/, 'E-FACTOR':/^Find the common factor of every term/,
+  'E-LIKE':/^Combine the coefficients of x and keep the constant separate/,
+  'E-SOLVE':v.kind==='multiply-equation'?/^Divide both sides by the coefficient/:/^Undo the added amount, then divide/,
+  'E-STORY':/^Undo the added amount, then divide/, 'E-2STEP':/^Undo the added amount, then divide/,
+  'E-RELATE':/^x is independent\. The value of y depends on x/, 'E-GRAPH':/^Use x as the input and calculate y/,
+  'N-OPP':/^Keep the distance from zero and change the sign/, 'N-ABS':/^Count the distance from zero and give a nonnegative value/,
+  'N-ORDER':/^Choose the number farther right/, 'N-COORD':/^Read horizontal movement, then vertical/,
+  'N-REFLECT':new RegExp(`^Keep the ${v.axis}-coordinate and change the other`),
+  'N-DIST':/^Add each point’s distance from zero because they are on opposite sides/,
+  'E-INEQ':/^Choose a number on the side named by the inequality/,
+  'P-PROP':new RegExp(`^Every nonzero ratio y ÷ x is ${v.k}, and the graph passes through \\(0, 0\\)`),
+  'N-ADD':/^Start at the first number and move by the signed change/,
+  'N-MULT':/^Multiply absolute values, then use the signs/,
+  'F-ADD':/^Make equal denominators, combine the numerators, then simplify/,
+  'F-SUB':/^Make equal denominators, combine the numerators, then simplify/,
+  'F-MULT':/^Multiply the numerators and denominators, then simplify/,
+  'F-DIV':/^Keep the first fraction and multiply by the reciprocal of the second/,
+  'F-COMP':/^Use equal denominators, then compare the numerators/,
+  'R-RATIO':/^Scale both parts of the ratio by the same factor/,
+  'R-RATE':/^Divide to find the unit rate, then multiply/,
+  'P-PERCENT':/^Multiply the whole amount by the percent divided by 100/,
+  'P-CHANGE':/^Divide the change by the starting amount, then multiply by 100/,
+  'N-DIV':/^Split the dividend into multiples of the divisor/, 'WARMUP':/^Keep the tens and add the ones/
+ };
+ assert.ok(methods[q.skill],`No independent method check for ${q.skill}`);
+ const correct=q.choices.filter(choice=>methods[q.skill].test(choice.label));
+ assert.equal(correct.length,1,`${q.skill} must have one mathematically sound method`);
+ assert.equal(q.answer,correct[0].value);
 }
 
 test('exact arithmetic accepts equivalent fractions, mixed numbers and decimals',()=>{
@@ -80,20 +122,22 @@ test('MathML preserves mixed forms and never groups decimal digits',()=>{
   assert.match(math('1234.125'),/<mn>1,234\.125<\/mn>/);
 });
 
-for(const skill of allSkills)test(`${skill}: 500 seeds, five shapes, exact answers and matched hints`,()=>{
+for(const skill of allSkills)test(`${skill}: 500 seeds per template per level, five shapes, exact answers and matched hints`,()=>{
   const seen=new Set();
-  for(let seed=0;seed<500;seed++){
-    const shape=['calculation','story','missing','mistake','reason'][seed%5],q=generateQuestion(skill,seed,{difficulty:seed%3+1,shape});
+  for(const shape of ['calculation','story','missing','mistake','reason'])for(let difficulty=1;difficulty<=3;difficulty++)for(let seed=0;seed<500;seed++){
+    const q=generateQuestion(skill,seed,{difficulty,shape});
+    if(/^-?\d+\/\d+$/.test(q.answer)){const [numerator,denominator]=q.answer.split('/').map(BigInt);assert.notEqual(numerator%denominator,0n,'A fractional answer must not disguise a whole number.');}
     seen.add(q.shape);assert.equal(q.skill,skill);assert.equal(q.seed,seed);assert.equal(q.shape,shape);
     assert.ok(q.prompt.length>15);assert.ok(q.solution.length>=3&&q.solution.length<=4);assert.ok(q.hints.length>=3);
     assert.equal(gradeQuestion(q,q.choices?`option-${q.choices.findIndex(c=>String(c.value)===q.answer)}`:q.answer).correct,true,`${skill}/${seed} rejects its computed answer`);
     for(const h of q.hints){const index=q.choices?.findIndex(c=>String(c.value)===String(h.answer));if(q.choices&&index<0)continue;const result=gradeQuestion(q,q.choices?`option-${index}`:h.answer);assert.equal(result.correct,false,`${skill}/${seed}: misconception is correct`);assert.equal(result.formOnly,false);assert.equal(result.hint,h.text);}
-    if(arithmeticSkills.includes(skill)&&shape!=='reason')arithmeticOracle(q);
+    if(arithmeticSkills.includes(skill)){if(shape==='reason')methodOracle(q);else arithmeticOracle(q);}
     if(q.choices){const values=q.choices.map(c=>c.value);assert.equal(new Set(values).size,values.length);const correct=q.choices.findIndex(c=>String(c.value)===q.answer);assert.notEqual(correct,-1);assert.equal(gradeQuestion(q,`option-${correct}`).correct,true);}
     const visible=publicQuestion(q);for(const field of ['answer','hints','hint','solution','numbers','verification','model','seed','generationSeed','signature'])assert.equal(field in visible,false,field);
     if(visible.choices)visible.choices.forEach((choice,i)=>assert.equal(choice.value,`option-${i}`));
   }
   assert.equal(seen.size,5);
+  validationRows.push({skill,templates:5,levels:3,questionsChecked:7500,failures:0});
 });
 
 test('seeds regenerate the identical server question and public projection',()=>{

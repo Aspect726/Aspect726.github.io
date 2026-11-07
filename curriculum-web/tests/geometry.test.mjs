@@ -1,4 +1,8 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+const validationRows=[];
+after(()=>{if(process.env.GENERATOR_REPORT_DIR){mkdirSync(process.env.GENERATOR_REPORT_DIR,{recursive:true});writeFileSync(join(process.env.GENERATOR_REPORT_DIR,'geometry.json'),JSON.stringify(validationRows,null,2)+'\n');}});
 import assert from 'node:assert/strict';
 import { generateGeometry, geometrySkills } from '../server/generators/geometry.mjs';
 import { parseNumber, eq, rational } from '../server/math.mjs';
@@ -47,10 +51,10 @@ function expected(q) {
 }
 
 for(const skill of geometrySkills) {
-  test(`${skill}: 500 seeds, exact answers, six shapes and consistent diagrams`,()=>{
+  test(`${skill}: 500 seeds per template per level, exact answers, six shapes and consistent diagrams`,()=>{
     const seen=new Set();
-    for(let seed=0;seed<500;seed++) {
-      const q=generateGeometry(skill,seed,{shape:shapes[seed%shapes.length],difficulty:seed%3+1});
+    for(const shape of shapes)for(let difficulty=1;difficulty<=3;difficulty++)for(let seed=0;seed<500;seed++) {
+      const q=generateGeometry(skill,seed,{shape,difficulty});
       seen.add(q.shape);
       if(q.shape==='reason')assert.equal(q.answer,expected(q));
       else assert.ok(eq(parseNumber(q.answer),expected(q)),`${skill} seed ${seed}: ${q.answer}`);
@@ -81,9 +85,10 @@ for(const skill of geometrySkills) {
       }
       if(skill==='G-COMP')assert.ok(m.w>m.cutW&&m.h>m.cutH);
       if(q.shape==='missing'&&skill==='P-SCALE')assert.equal(q.svg,undefined);
-      assert.deepEqual(q,generateGeometry(skill,seed,{shape:shapes[seed%shapes.length],difficulty:seed%3+1}));
+      assert.deepEqual(q,generateGeometry(skill,seed,{shape,difficulty}));
     }
     assert.equal(seen.size,6);
+    validationRows.push({skill,templates:6,levels:3,questionsChecked:9000,failures:0});
   });
 }
 

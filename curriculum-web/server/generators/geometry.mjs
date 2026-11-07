@@ -236,7 +236,7 @@ export function generateGeometry(skill, seed, options = {}) {
       'G-COMP': () => [[d.model.w*d.model.h-d.model.result,'That gives the missing corner’s area. Divide by its height.'],[d.model.w,'The full width includes the part that remains.'],[d.model.result,'Find the removed area before finding its width.'],[exact(d.model.w*d.model.h,d.model.cutH),'Subtract the remaining area before dividing by the corner height.'],[d.model.cutW*d.model.cutH*d.model.cutH,'Undo multiplication by the corner height with division.']],
       'G-SA': () => [[d.model.result,'Remove the top and bottom areas before finding the height.'],[exact(d.model.result,2*(d.model.l+d.model.w)),'The top and bottom do not depend on height. Remove them first.'],[2*val,'The side faces include two of each width. Count all four faces.'],[d.model.result-2*d.model.l*d.model.w,'That is the total side-face area. Divide by the total width of those faces.']],
       'P-SCALE': () => [[d.model.k*d.model.k,'That is the area factor. Find the length factor multiplied by itself.'],[d.model.result,'Compare the two areas first.'],[d.model.w*d.model.h,'That is the original area. The answer is a scale factor.'],[exact(1,d.model.k),'The copy is larger. Compare copy area to original area in that order.']],
-      'P-MAP': () => [[d.model.result*d.model.meters,'Undo the scale multiplication by dividing.'],[d.model.result,'The real distance is in metres. Convert it to map centimetres.'],[d.model.meters,'That is the scale, not the map distance.']],
+      'P-MAP': () => [[d.model.result*d.model.meters,'Undo the scale multiplication by dividing.'],[d.model.result,'The real distance is in metres. Convert it to map centimetres.'],[d.model.meters,'That is the scale, not the map distance.'],[exact(d.model.meters,d.model.result),'Divide the real distance by metres per centimetre, not the reverse.']],
       'G-CIRC': () => [[2*d.model.r,'Dividing circumference by π gives the diameter. Halve it for the radius.'],[d.model.result,'Circumference measures around. You need the centre-to-edge distance.'],[exact(d.model.radiusTenths,20),'Once you have the diameter, halve it only once.']],
       'G-CAREA': () => [[exact(d.model.radiusTenths*d.model.radiusTenths,100),'Dividing area by π gives radius squared. Find the radius.'],[2*d.model.r,'The question asks for the radius, not the diameter.'],[d.model.result,'First divide the total area by the number of circles, then by π.'],[exact(d.model.radiusTenths,20),'Do not halve the radius again. Only a diameter needs halving.']],
       'G-VOL': () => [[d.model.l*d.model.w,'That is the base area. Divide the volume by it.'],[d.model.result,'The volume counts all layers. Find the number of layers.'],[d.model.result/d.model.l,'You have divided by only one base dimension. Use the full base area.'],[exact(d.model.result,d.model.l*d.model.w*d.model.w),'Divide by each base dimension once.'],[d.model.result*d.model.w,'Divide by the base area rather than multiplying.']]
@@ -245,7 +245,7 @@ export function generateGeometry(skill, seed, options = {}) {
   }
   if(shape==='mistake') {
     const wrong=hints[0].answer;
-    prompt=`${d.direct} ${d.name} gets ${m(wrong)}. What is the correct value?`;
+    prompt=`${escapeHTML(d.story)} ${d.name} gets ${m(wrong)}. What is the correct value?`;
   }
   if(shape==='reason') {
     prompt=`${d.direct} Which method gives the answer?`;

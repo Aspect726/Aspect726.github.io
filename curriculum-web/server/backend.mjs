@@ -1,3 +1,6 @@
+import { createPlatform } from './platform.mjs';
+import { createManagement } from './management.mjs';
+import { createLearning } from './learning.mjs';
 import { hash, compare } from 'bcryptjs';
 import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity } from './questions.mjs';
 import { buildSlots, dayInfo, pacificDate, SKILLS } from './plan.mjs';
@@ -24,6 +27,9 @@ const readableAnswer = (q, answer) => q.choices && /^option-\d+$/.test(answer) ?
 const rightAnswer = q => q.choices ? plainLabel(q.choices.find((_, i) => gradeQuestion(q, `option-${i}`).correct)?.label ?? q.answer) : String(q.answer);
 
 export function createApp({ db, assets = {}, clock = () => new Date(), production = false, questionPool = null, backupStore = null, logger = console }) {
+  const platform = createPlatform({db, clock, production, questionPool});
+  const management = createManagement({db, clock, production, questionPool, platform});
+  const learning = createLearning({db, clock, production, questionPool});
   const now = () => new Date(clock());
   const iso = () => now().toISOString();
   const todayDate = () => pacificDate(now());
@@ -232,8 +238,9 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
   }
   async function backup() {
     const tables = ['users', 'settings', 'runs', 'questions', 'attempts', 'ledger', 'prizes', 'requests'];
-    const data = { version: 1, createdAt: iso(), tables: {} };
+    const data = { version: 2, createdAt: iso(), tables: {} };
     for (const table of tables) data.tables[`practice_${table}`] = await all(`SELECT * FROM practice_${table}`);
+    for (const table of ['platform_program','platform_questions','platform_attempts','platform_review_queue','platform_lessons','platform_examples','platform_daily_rules','platform_assignments','platform_weekly_checks','platform_teacher_notes','platform_flags','platform_prize_notes']) data.tables[table] = await all(`SELECT * FROM ${table}`);
     const date = todayDate();
     if (backupStore) await backupStore.put(`practice-backups/${date}.json`, JSON.stringify(data), { httpMetadata: { contentType: 'application/json' } });
     await run('INSERT INTO practice_backups(date,data,created_at) VALUES(?,?,?) ON CONFLICT(date) DO UPDATE SET data = excluded.data,created_at = excluded.created_at', date, JSON.stringify(backupStore ? { storedExternally: true, key: `practice-backups/${date}.json` } : data), iso());
@@ -288,7 +295,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     }
     if (!path.startsWith('/api/')) {
       const asset = assets[path] || (path === '/' ? assets['/index.html'] : null);
-      if (asset && (['/', '/index.html', '/app.js', '/styles.css'].includes(path) || path.startsWith('/fonts/') || path.startsWith('/assets/fonts/') || path === '/favicon.svg' || path === '/assets/favicon.svg')) {
+      if (asset && (['/', '/index.html', '/app.js', '/student.mjs', '/teacher.mjs', '/styles.css'].includes(path) || path.startsWith('/fonts/') || path.startsWith('/assets/fonts/') || path === '/favicon.svg' || path === '/assets/favicon.svg')) {
         if (typeof asset === 'string') return new Response(asset, { headers: { 'content-type': path.endsWith('.js') ? 'text/javascript' : path.endsWith('.css') ? 'text/css' : 'text/html; charset=utf-8' } });
         return new Response(asset.body, { headers: { 'content-type': asset.type, 'cache-control': (path.startsWith('/fonts/') || path.startsWith('/assets/fonts/')) ? 'public, max-age=31536000, immutable' : 'no-cache' } });
       }
@@ -300,6 +307,13 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       return json({ error: 'Not found.' }, 404);
     }
     if (!user) fail(401, 'Sign in first.');
+    if (production && method !== 'GET' && (/^\/api\/runs(?:\/|$)/.test(path) || /^\/api\/prizes\/[^/]+\/request$/.test(path) || /^\/api\/teacher\/(requests|points|settings)(?:\/|$)/.test(path))) fail(410, 'Open the new dashboard to continue.');
+    if (path.startsWith('/api/v2/')) {
+      if (path.startsWith('/api/v2/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');
+      if (path.startsWith('/api/v2/student/') && user.role !== 'student') fail(403, 'Use a student account for learning.');
+      for (const handler of [platform, management, learning]) { const response = await handler.handle(request, user); if (response) return response; }
+      return json({error:'Not found.'},404);
+    }
     if (path.startsWith('/api/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');
     if (!path.startsWith('/api/teacher/') && user.role !== 'student' && !['/api/prizes'].includes(path)) fail(403, 'Use the student account for practice.');
     if (path === '/api/today' && method === 'GET') {
