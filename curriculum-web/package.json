@@ -1,13 +1,25 @@
 {
-  "name": "double-advanced",
-  "version": "1.0.0",
+  "name": "double-advanced-practice",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24" },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
-    "test": "node --test tests/*.test.mjs server/*.test.mjs",
-    "build:pages": "node scripts/build-pages.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "test:paper": "node scripts/check-overlap.mjs",
+    "build": "node scripts/build-worker.mjs",
+    "build:pages": "node scripts/build-pages.mjs",
+    "test:frames": "node scripts/check-paper-frames.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.2"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "jsdom": "27.4.0"
   }
 }

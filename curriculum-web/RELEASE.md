@@ -1,0 +1,67 @@
+# November 7 platform rebuild — verification
+
+All six implementation stages are included: sidebar/login/roles; practice and
+count-based points; student dashboard/map/progress/rewards; teacher management;
+lessons/library/review/assignments/date shifts/question flags; responsive and
+keyboard handling. Existing records are preserved by additive migrations.
+
+## Passing checks
+
+- 149 application, generator, API, concurrency and DOM tests; zero failures/skips.
+- 295 templates, three difficulty levels, 500 cases per template/level. Independent
+  numeric, geometry, statistics and method-choice checks total 592,500 checks.
+  Per-skill counts and failures are in `validation/combined.json` and the three
+  detailed reports alongside it.
+- 2,322 private paper/slide records yield 2,469 frame segments (739 distinct).
+  442,500 generated examples and all 168,960 approved seed/level pairs have zero
+  matching paper templates. `validation/frames.json` contains aggregate evidence,
+  not paper content. The original 4,550-question 70-day check also passes.
+- 100 of 295 templates (33.9%) are everyday word-problem templates.
+- Production Worker build and smoke check pass: real routes and JS module types,
+  login, role isolation, private-path denial, vetted practice/lessons, saving an
+  answer, and refusal of retired scoring endpoints.
+- Tests cover 34→35→45→55 bonus thresholds, duplicate submissions, simultaneous
+  submissions, legacy earned-point reconciliation, review stages, mastery, all
+  skills' practice, delayed settings, week shifts, multi-student isolation,
+  teacher-switch races, prize approval/giving and concurrent overspend.
+
+## Limits that remain
+
+- No Safari device test or production network load timing is claimed. The shared
+  browser and preview relay fail to start, but installed sandboxed Chromium was
+  used for real rendering against the application and an isolated SQLite backend.
+  Screenshot inspection covered desktop and mobile student/teacher routes; browser
+  checks reported no page errors or horizontal document overflow.
+- Sites confirmed `donteventry.me` active with active SSL on November 7, 2026,
+  after the ownership TXT value was corrected. The domain serves this application.
+- A flagged template can be suspended and re-enabled by a teacher. Correcting the
+  underlying math template is a source-code change followed by the release checks;
+  teachers cannot replace computed answer keys with unchecked text in the browser.
+- The existing private Sites audience is retained. Test application credentials
+  do not grant a new visitor access through that host-level gate.
+- The exported scheduled backup handler has no verified host cron. Teacher backups
+  work, including every new platform table. Private CI corpus secrets are not
+  configured in the public GitHub repository; local private validation above ran.
+
+The prior interface remains preserved in Git history; no public history rewrite
+or unrequested deletion of existing accounts was performed.
+
+## Mathematics studio visual revision
+
+The latest revision restores the desktop sidebar, a compact tablet navigation
+rail, and a keyboard-accessible mobile drawer. White and pale blue surfaces with
+navy text replace beige. Graph paper, geometry, curves, number lines and the
+original geometric illustration reinforce the mathematics identity. Student home
+still leads with the actual lesson and a lesson/example/practice sequence;
+teacher home keeps current topics, preparation, notes and practice records.
+All teacher management and student learning flows are retained.
+
+Thirteen interface tests pass, including mobile navigation disclosure, Escape,
+desktop resize, authentication, saved answers and teacher actions. CSS/SVG parsing,
+production build and compiled Worker smoke checks pass. Real sandboxed Chromium
+rendering used the unchanged backend with isolated test accounts. The visual pass
+covered student and teacher routes at 1440px and key phone screens at 390px, plus
+320px, 900px and 1024px checks. Worked example steps and answer feedback were also
+rendered. Inspection found and corrected heading, skill-card, mobile header and
+navigation spacing, search-field padding and a duplicated illustration caption.
+No screenshots or test-account credentials are published in this repository.

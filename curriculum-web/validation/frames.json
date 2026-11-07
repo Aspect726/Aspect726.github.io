@@ -1,0 +1,411 @@
+{
+  "paperRecords": 2322,
+  "paperFramesLoaded": 2469,
+  "uniquePaperFrames": 739,
+  "perTemplate": 500,
+  "skills": [
+    {
+      "skill": "D-SUB",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "D-LONG",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "D-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-WHOLE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-EXP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-ORDER",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-DIST",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-FACTOR",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-LIKE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-SOLVE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-STORY",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-RELATE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-GRAPH",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-OPP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-ABS",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-ORDER",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-COORD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-REFLECT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-DIST",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-INEQ",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "P-PROP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-ADD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-MULT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-2STEP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-ADD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-SUB",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-MULT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-COMP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "R-RATIO",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "R-RATE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "P-PERCENT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "P-CHANGE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "WARMUP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-PERIM",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-PARA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-TRI",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-COMP",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-SA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "P-SCALE",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "P-MAP",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-CIRC",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-CAREA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-VOL",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-QUESTION",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-DISPLAY",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-MEAN",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-MEDIAN",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-CENTER",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-RANGE",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-IQR",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-BOX",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-MAD",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-SPREAD",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 9000,
+      "matchingTemplates": []
+    }
+  ],
+  "matchingTemplates": 0,
+  "questionsChecked": 442500,
+  "poolQuestionsChecked": 168960,
+  "poolMatchingTemplates": [],
+  "generatorFiles": {
+    "server/questions.mjs": "539f8d9bd7deb9b4cb8ee4a191b770a7ff48f7b68a483a6015b556f6e113838b",
+    "server/math.mjs": "97ed6ab83668a4d14cee9239380deeea228e27a297e9f35a139e60a6b85d5197",
+    "server/generators/common.mjs": "79082ce21b2f9fa42ecabfba80b3f86836c4e7131bb5435d2daa7d49d6a31af6",
+    "server/generators/arithmetic.mjs": "eb9d0897a13acd81138cb053ae6985af0b9ba0402b997593c7f4626375e64ac1",
+    "server/generators/geometry.mjs": "e5b3051ddaca96fbd62a99cc93986d758d7fe5de7a73cf4976355f51b24787aa",
+    "server/generators/statistics.mjs": "86287692b3b71ef93f4dc29fc7fb2607d606a5cb290ac9236c08d767c644be55",
+    "server/plan.mjs": "1fa6de92cd6eb9532b5f52bff8f09cacb6ec6166ff9911a92252ccb409cc2c28",
+    "server/plan.json": "d427e110cac36346591fe1fcb654715a8909253a8acd3dea4ea1a214f74baeed",
+    "server/overlap.mjs": "59794a7c7fdd25036517de88e0a34d46cdeabeb2e01b9ebd2f3cd03de49f4f59",
+    "scripts/check-overlap.mjs": "c6f2a110b15df0c03b7dfffa6f17b5256fbf63b8fd212954a493c063a1e2ecc8",
+    "scripts/check-paper-frames.mjs": "6c1f6fe38b0a208c0ca3f3a5a0ed693470a078725ad6e4f59d1915f3a181458a"
+  },
+  "poolDigest": "e1e1eb6eed2dc9b02cef034f16ee18ee5d94d8ee7dae5f275defd65b5ba8dff1"
+}

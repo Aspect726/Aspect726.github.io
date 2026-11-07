@@ -1,35 +1,59 @@
-name: Verify Double Advanced
+name: Verify Double Advanced practice
 on:
   push:
-    branches: [main]
-    paths:
-      - 'curriculum-web/**'
-      - '.github/workflows/pages.yml'
-      - 'CNAME'
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
-concurrency:
-  group: github-pages
-  cancel-in-progress: false
 jobs:
-  publish:
+  application:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Build public site and verify no answer fields
-        run: npm run build:pages --prefix curriculum-web
-      - name: Verify the branch-published website
+          cache: npm
+          cache-dependency-path: curriculum-web/package-lock.json
+      - run: npm ci --prefix curriculum-web
+      - run: npm test --prefix curriculum-web
+      - run: npm run build:pages --prefix curriculum-web
+  private-paper-check:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --prefix curriculum-web
+      - name: Load private paper and slide exclusion data
+        env:
+          PAPER_BANK_GZIP_BASE64_1: ${{ secrets.PAPER_BANK_GZIP_BASE64_1 }}
+          PAPER_BANK_GZIP_BASE64_2: ${{ secrets.PAPER_BANK_GZIP_BASE64_2 }}
         run: |
-          for attempt in $(seq 1 30); do
-            if curl --silent --show-error --fail --location --max-time 20 "https://donteventry.me/curriculum-web/public/app.js?revision=${{ github.sha }}" -o /tmp/double-advanced-app.js && cmp -s curriculum-web/public/app.js /tmp/double-advanced-app.js; then
-              echo "Verified the exact published application over HTTPS."
-              exit 0
-            fi
-            sleep 20
-          done
-          echo "The published site has not served this application revision yet."
-          exit 1
+          python - <<'PY'
+          import os,base64,gzip,pathlib
+          value=os.environ['PAPER_BANK_GZIP_BASE64_1']+os.environ['PAPER_BANK_GZIP_BASE64_2']
+          if not value:
+              raise SystemExit('Private paper-bank secrets are required. This release check cannot be skipped.')
+          target=pathlib.Path(os.environ['RUNNER_TEMP'])/'paper_questions.json'
+          target.write_bytes(gzip.decompress(base64.b64decode(value,validate=True)))
+          target.chmod(0o600)
+          PY
+      - name: Validate every permitted seed and all 70 days
+        env:
+          PAPER_QUESTIONS_PATH: ${{ runner.temp }}/paper_questions.json
+        run: npm run test:paper --prefix curriculum-web -- --write-pool
+      - name: Reject paper template frames and verify every approved seed
+        env:
+          PAPER_QUESTIONS_PATH: ${{ runner.temp }}/paper_questions.json
+          VETTED_SEEDS_PATH: private/vetted-seeds.json
+          FRAME_REPORT_PATH: private/frame-validation.json
+        working-directory: curriculum-web
+        run: npm run test:frames
+      - run: npm run build --prefix curriculum-web
+      - run: node curriculum-web/scripts/smoke-worker.mjs
+      - name: Remove private test data
+        if: always()
+        run: rm -f "${{ runner.temp }}/paper_questions.json"

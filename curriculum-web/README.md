@@ -1,41 +1,72 @@
-# Double Advanced
+# Double Advanced learning platform
 
-A student workspace and teacher classroom built around the expanded Double Advanced curriculum. The source lives in `curriculum-web`; the original curriculum stays on the repository's `Curriculum` branch.
+A private, server-backed learning platform for students and teachers, hosted on
+ChatGPT Sites. The November 7 redesign brief is the current specification.
 
-## Run locally
+Student routes: `/s/today`, `/s/map`, `/s/learn/:skill`, `/s/practice`, `/s/review`,
+`/s/library`, `/s/progress`, `/s/rewards`. Teacher routes: `/t/dashboard`,
+`/t/students/:id`, `/t/plan`, `/t/checks`, `/t/assign`, `/t/rewards`,
+`/t/questions`, `/t/settings`. `/login` is the only signed-out page.
 
-Use Node.js 24 or newer. The local server has no third-party runtime dependencies. Import the curriculum first using [CURRICULUM.md](CURRICULUM.md), then:
+The interface uses a 248px sidebar, 72px tablet rail, mobile drawer, full page
+URLs and a distraction-free practice mode. Lessons, course dates, daily work,
+review, rewards and teacher management all use the same persistent database.
 
-```sh
-cd curriculum-web
-npm start
+## Local development
+
+Requires Node 24. Run `npm ci`, `npm test`, then `npm start`. SQLite data stays in
+ignored `private/`. Production runs the same Request/Response handlers on D1.
+Applied migrations are immutable; new platform tables preserve prior accounts,
+attempts, points and prizes. Local migrations are recorded and run once.
+
+## Current practice rules
+
+Each submitted question counts once, whether right or wrong. Empty and invalid
+input does not count. An equivalent answer that needs simplest form can be fixed
+without spending the question. Default required total is 20; points are awarded
+at 35, 45, 55 and each further 10 answered questions. Learn, Library and Review
+count too. Unique answer rows and ledger keys prevent duplicate awards.
+
+Assignments lead the daily mix, followed by up to five due reviews, focus skills,
+earlier weak skills and stretch. Difficulty adjusts after three correct or two
+incorrect answers. Misses schedule fresh versions on days 1, 3 and 7. A correct
+7-day review clears the entry. Question hashes prevent program-wide repeats.
+
+Teacher settings for daily and bonus targets take effect the next day. Week
+shifts move that and all later weeks. Prize approval does not spend points;
+marking a prize given spends them atomically. Manual corrections require a note.
+Legacy production scoring endpoints return 410 and cannot bypass these rules.
+
+## Private release checks
+
+`server/plan.json` is the authoritative course. The paper/slide corpus is private
+validation input only; never put it in this repository or a public artifact.
+
 ```
-
-Open `http://127.0.0.1:3000`. Browsing the curriculum does not require an account. Saved answers require a server account. The server saves progress in `private/progress.sqlite`; keep this file on a persistent disk and back it up along with its WAL files using SQLite's backup mechanism. Do not commit databases or answer snapshots.
-
-Create the teacher account with `node server.mjs --create-teacher`, supplying `TEACHER_USERNAME`, `TEACHER_PASSWORD`, and optionally `TEACHER_NAME` as environment variables. Use a password manager and a unique password of at least 3 characters. Do not put a password in a tracked file or shell history. Sign in as the teacher and create the learner's account from the teacher screen. A nickname is sufficient; no child's email or full name is needed.
-
-## Hosting
-
-GitHub Pages uses the repository's existing branch publication. The root page opens `curriculum-web/public/`, and `_config.yml` excludes server, test, private-data, and importer paths. The workflow validates a separate public-only artifact, checks public JSON for private answer fields, and verifies the exact published JavaScript over HTTPS. GitHub Pages cannot run the SQLite server. Saved learning happens on the private hosted classroom or local server.
-
-The production classroom's URL and status are recorded in the delivery notes after deployment. It uses a separate database and protected server routes; a public static site must never receive a database, password, answer key, teacher guide, or hidden slide deck.
-
-For a conventional Node host, run `NODE_ENV=production`, set `APP_ORIGIN` to the exact HTTPS origin, put `DATABASE_PATH` on a persistent volume, and serve the frontend and API on the same origin through HTTPS. Keep port 3000 private behind the proxy. Import current curriculum into `data/` on that host and provide teacher resources in `private/resources/teacher/`. Production session cookies require HTTPS.
-
-## Learning and grading
-
-Weeks run Saturday through Friday. Every day has 20 required questions, except Wednesday's 25. Two challenges are included in each day's total. Optional assessments and extra practice do not silently increase the assignment. Teachers can change requirements, pause lessons, reschedule work, and record checked paper work.
-
-Equivalent numerical values use exact rational arithmetic. Format rules such as simplifying or supplying units are separate checks. Constructed explanations, drawings, and ambiguous source answers are sent to teacher review. A question is complete only when correct or approved. Hints, retries, first attempts, eventual correctness, and paper work remain distinguishable. Teacher settings control solution release and mastery criteria.
-
-## Validation
-
-```sh
+PAPER_QUESTIONS_PATH=/private/paper_questions.json npm run test:paper -- --write-pool
+PAPER_QUESTIONS_PATH=/private/paper_questions.json VETTED_SEEDS_PATH=private/vetted-seeds.json FRAME_REPORT_PATH=private/frame-validation.json npm run test:frames
 npm test
-npm run build:pages
+npm run build
+node scripts/smoke-worker.mjs
 ```
 
-Curriculum validation covers the source manifest, assigned counts, all packet page references, slide numbering, source arithmetic checks, and the generated extra bank. The importer keeps a detailed local report at `data/import-report.json`. Server tests use isolated temporary databases; they do not modify learner records.
+The build requires checked seed and frame evidence, validates provenance hashes,
+and serves only the login shell, UI modules, styles and fonts. No corpus, seed
+pool or answer-key module is public. Frame normalization removes numbers before
+comparing templates to all printed-sheet and slide segments. Generator tests
+independently check 500 examples per template at each difficulty.
 
-The source repository is public, including the original uploaded curriculum on `Curriculum`. Application authorization protects classroom endpoints and stored progress; it cannot make material already published to a public GitHub branch secret.
+## Accounts and backups
+
+The existing private Sites access policy remains. Each person then signs in with
+a student or teacher application account. Teacher Settings creates accounts and
+resets passwords. Resetting a password revokes that person's sessions. Demo
+accounts requested for acceptance are provisioned from a host secret; their
+credentials are not in source and deployment never resets an existing password.
+
+Teacher Settings can save and download a private database backup, including the
+new learning tables. Exports include password hashes and should stay private.
+The Worker has a scheduled backup handler; a host cron must be configured before
+nightly operation can be claimed.
+
+See `RELEASE.md` for the current verification report and remaining limits.

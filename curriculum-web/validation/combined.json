@@ -1,0 +1,470 @@
+{
+  "samplesPerTemplatePerLevel": 500,
+  "levels": 3,
+  "totalQuestionsChecked": 592500,
+  "totalTemplates": 295,
+  "wordProblemTemplates": 100,
+  "failures": 0,
+  "skills": [
+    {
+      "skill": "D-SUB",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "D-LONG",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "D-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "F-WHOLE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-EXP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-ORDER",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-DIST",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-FACTOR",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-LIKE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-SOLVE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-STORY",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-RELATE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-GRAPH",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-OPP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-ABS",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-ORDER",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-COORD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-REFLECT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-DIST",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-INEQ",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "P-PROP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-ADD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-MULT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "E-2STEP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "F-ADD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "F-SUB",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "F-MULT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "F-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "F-COMP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "R-RATIO",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "R-RATE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "P-PERCENT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "P-CHANGE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "N-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "WARMUP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-PERIM",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-PARA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-TRI",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-COMP",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-SA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "P-SCALE",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "P-MAP",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-CIRC",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-CAREA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "G-VOL",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 2
+    },
+    {
+      "skill": "S-QUESTION",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-DISPLAY",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-MEAN",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-MEDIAN",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-CENTER",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-RANGE",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-IQR",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-BOX",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-MAD",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    },
+    {
+      "skill": "S-SPREAD",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "wordProblemTemplates": 1
+    }
+  ]
+}
