@@ -31,7 +31,13 @@ test('full app shell authenticates, separates roles, serves real routes and save
   assert.match(w.document.querySelector('#practice-feedback').textContent,/Not quite/);
   assert.equal((await w.__api('/v2/student/summary')).answered,1);
   await w.__navigate('/s/today');await until(()=>w.document.querySelector('.sidebar'));
+  Object.defineProperty(w,'innerWidth',{value:375,writable:true});w.dispatchEvent(new w.Event('resize'));
+  assert.equal(w.document.querySelector('#school-navigation').hidden,true,'mobile course navigation starts closed');
+  assert.ok(w.document.querySelector('.school-account a[href="/s/settings"]'),'account settings remain available outside collapsed navigation');
   w.document.querySelector('#menu-toggle').click();assert.equal(w.document.querySelector('#menu-toggle').getAttribute('aria-expanded'),'true');
+  assert.equal(w.document.querySelector('#school-navigation').hidden,false,'Menu reveals every course destination');
   w.document.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(w.document.querySelector('#menu-toggle').getAttribute('aria-expanded'),'false');
+  assert.equal(w.document.querySelector('#school-navigation').hidden,true);
+  w.innerWidth=1200;w.dispatchEvent(new w.Event('resize'));assert.equal(w.document.querySelector('#school-navigation').hidden,false,'desktop course navigation stays available');
  }finally{dom.window.close();db.close();}
 });

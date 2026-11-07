@@ -45,13 +45,16 @@ keyboard handling. Existing records are preserved by additive migrations.
 The prior interface remains preserved in Git history; no public history rewrite
 or unrequested deletion of existing accounts was performed.
 
-## Visual revision
+## Education-first visual revision
 
-The latest visual revision uses warm beige graph paper, ivory panels, terracotta
-controls, mustard accents and mathematical illustrations. Shared spacing, card,
-form, navigation and responsive styles apply to every student and teacher route.
-Teacher mastery is grouped by week; course cards keep dates readable and reveal
-full skill lists on expansion. Student views separate statuses, counts and actions.
-Thirteen interface tests, CSS/SVG parsing, and the production build with compiled
-Worker smoke checks pass. Text contrast and narrow-screen CSS were reviewed.
-The managed browser remains unavailable; no visual screenshots are claimed.
+The latest revision restores the first design's geometric illustration and
+Mathematics branding, with beige paper and navy ink. A horizontal course header
+replaces the fixed sidebar. Student home leads with the actual lesson and a
+lesson/example/practice sequence; course and reference pages read as chapters.
+The teacher home is a teaching notebook with current topics, preparation, notes,
+then practice records. Teacher management and student learning flows are retained.
+
+Thirteen interface tests pass, including mobile navigation disclosure, Escape,
+desktop resize, authentication, saved answers and teacher actions. CSS/SVG parsing,
+production build and compiled Worker smoke checks pass. The managed browser still
+fails to start with the error above; rendered screenshots are not verified.

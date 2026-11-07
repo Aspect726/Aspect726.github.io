@@ -7,8 +7,9 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
 - Keep the existing server, private Sites audience and D1/R2 bindings. Preserve
   existing accounts, password hashes, progress and ledger entries with additive
   migrations; never overwrite an account from demo provisioning.
-- Use real /s and /t page URLs, a persistent sidebar and focused practice. Use
-  beige/ivory/terracotta design tokens and local Source Serif 4/Inter fonts.
+- Use real /s and /t page URLs, a horizontal mathematics-course masthead and
+  focused practice. Use beige paper, navy ink and restrained ochre/coral accents,
+  with local Source Serif 4 for reading/headings and Inter for navigation/forms.
 - Count each answered question once, right or wrong. Award points atomically at
   target + first-bonus, then each bonus-step; store per-date rules so later changes
   never rewrite history. Teacher settings apply tomorrow.
@@ -29,12 +30,14 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
   with “the gaas-browser node_repl sandbox cannot be disabled”; do not substitute
   fabricated screenshots or claim layout, Safari or load-time verification.
 
-## Whole-site visual revision
+## Education-first visual revision
 
-The latest user direction is a beige palette and better formatting throughout
-both dashboards, beyond the example screenshots. Warm graph paper, ivory panels,
-terracotta controls and mustard accents replace the earlier blue/white scheme.
-Math illustrations, graphs and symbols retain the student-facing character.
-Inter headings and serif MathML remain. Course details and mastery are grouped
-for scanning while all skills and management controls remain available.
-Decorative artwork never represents invented student data.
+The latest user direction replaces the dashboard appearance with a mathematics
+education website, drawing on the first design. The recovered geometric artwork
+and interlocking-D Mathematics branding return. The student home leads with the
+actual lesson, then examples, practice and chapter links. Statistics sit behind
+learning. Lessons read as workbook pages, the course as a chapter index, and
+teacher home as a teaching notebook with preparation and notes in the margin.
+A horizontal course header replaces the fixed sidebar; account controls remain
+available on narrow screens. Beige paper remains the base, with navy mathematical
+ink, ochre and coral accents. Every route and management action is retained.
