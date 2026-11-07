@@ -6,7 +6,10 @@ const DEFAULTS = { startDate: '2026-11-07', paused: false, pausedDates: [], bonu
 const COOKIE = 'practice_session';
 const DAY = 86400000;
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers } });
-const safeUser = row => row && ({ id: row.id, username: row.username, name: row.name, role: row.role });
+// Preserve the deployed role encoding while exposing only teacher/student roles.
+const accountRole = role => role === 'parent' ? 'teacher' : role;
+const storedRole = role => role === 'teacher' ? 'parent' : role;
+const safeUser = row => row && ({ id: row.id, username: row.username, name: row.name, role: accountRole(row.role) });
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 const dateOffset = (date, n) => new Date(Date.parse(`${date}T12:00:00Z`) + n * DAY).toISOString().slice(0, 10);
 const normalizePrompt = text => String(text).toLowerCase().replace(/\s+/g, ' ').trim();
@@ -36,7 +39,8 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
   async function getUser(request) {
     const token = request.headers.get('cookie')?.split(';').map(x => x.trim()).find(x => x.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1);
     if (!token || !/^[a-f\d-]{36}$/i.test(token)) return null;
-    return one('SELECT u.* FROM practice_users u JOIN practice_sessions s ON s.user_id = u.id WHERE s.id = ? AND s.expires_at > ?', token, now().getTime());
+    const user = await one('SELECT u.* FROM practice_users u JOIN practice_sessions s ON s.user_id = u.id WHERE s.id = ? AND s.expires_at > ?', token, now().getTime());
+    return user && { ...user, role: accountRole(user.role) };
   }
   async function newSession(user, remember) {
     const token = uuid();
@@ -44,11 +48,12 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     return json({ user: safeUser(user) }, 200, { 'set-cookie': sessionCookie(token, remember) });
   }
   function validateAccount(body, role) {
+    role = accountRole(role);
     const username = text(body.username, 24).toLowerCase();
     const name = text(body.name || body.username, 32);
     if (!/^[a-z0-9][a-z0-9_-]{1,23}$/.test(username)) fail(400, 'Use 2–24 letters, numbers, underscores or hyphens for the username.');
     if (!name) fail(400, 'Enter a first name or nickname.');
-    if (typeof body.password !== 'string' || body.password.length < (role === 'parent' ? 8 : 4) || body.password.length > 72 || new TextEncoder().encode(body.password).length > 72) fail(400, `Use a password with ${role === 'parent' ? 8 : 4}–72 characters.`);
+    if (typeof body.password !== 'string' || body.password.length < (role === 'teacher' ? 8 : 4) || body.password.length > 72 || new TextEncoder().encode(body.password).length > 72) fail(400, `Use a password with ${role === 'teacher' ? 8 : 4}–72 characters.`);
     return { username, name };
   }
   async function readBody(request) {
@@ -100,7 +105,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       exclusion.signatures.add(signature); exclusion.prompts.add(plain);
       return { ...q, signature };
     }
-    fail(503, 'This skill needs more new questions. Ask a parent to review it.');
+    fail(503, 'This skill needs more new questions. Ask a teacher to review it.');
   }
   async function ownedRun(id, user) {
     const row = await one('SELECT * FROM practice_runs WHERE id = ? AND student_id = ?', id, user.id);
@@ -236,7 +241,10 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     return { date, data };
   }
   async function route(request) {
-    const url = new URL(request.url), path = url.pathname, method = request.method;
+    const url = new URL(request.url), method = request.method;
+    // Keep old bookmarks/clients usable without retaining a separate parent role.
+    let path = url.pathname.replace(/^\/api\/parent(?=\/|$)/, '/api/teacher');
+    if (path === '/api/teacher/overview') path = '/api/teacher/dashboard';
     const isWrite = !['GET', 'HEAD', 'OPTIONS'].includes(method);
     if (isWrite) {
       const origin = request.headers.get('origin');
@@ -248,8 +256,8 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     if (path === '/api/setup' && method === 'POST') {
       if (production && !request.headers.get('oai-authenticated-user-id')) fail(403, 'Open setup through the private Site owner account.');
       if (await one('SELECT id FROM practice_users LIMIT 1')) fail(409, 'Setup is already complete. Sign in.');
-      const body = await readBody(request), values = validateAccount(body, 'parent');
-      const account = { id: uuid(), ...values, role: 'parent', password_hash: await hash(body.password, 12) };
+      const body = await readBody(request), values = validateAccount(body, 'teacher');
+      const account = { id: uuid(), ...values, role: 'teacher', password_hash: await hash(body.password, 12) };
       const result = await run("INSERT INTO practice_users(id,username,name,role,password_hash,created_at) SELECT ?,?,?,'parent',?,? WHERE NOT EXISTS(SELECT 1 FROM practice_users)", account.id, account.username, account.name, account.password_hash, iso());
       if (!result.meta.changes) fail(409, 'Setup is already complete. Sign in.');
       return newSession(account, false);
@@ -292,8 +300,8 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       return json({ error: 'Not found.' }, 404);
     }
     if (!user) fail(401, 'Sign in first.');
-    if (path.startsWith('/api/parent/') && user.role !== 'parent') fail(403, 'A parent account is needed.');
-    if (!path.startsWith('/api/parent/') && user.role !== 'student' && !['/api/prizes'].includes(path)) fail(403, 'Use the student account for practice.');
+    if (path.startsWith('/api/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');
+    if (!path.startsWith('/api/teacher/') && user.role !== 'student' && !['/api/prizes'].includes(path)) fail(403, 'Use the student account for practice.');
     if (path === '/api/today' && method === 'GET') {
       const s = await settings(), index = currentIndex(s), date = todayDate();
       const required = index >= 0 && index < 70 ? await one("SELECT * FROM practice_runs WHERE student_id = ? AND day_index = ? AND kind = 'required'", user.id, index) : null;
@@ -314,7 +322,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       if (method === 'POST' && match[2] === 'answer') return json(await answerRun(user, match[1], await readBody(request)));
       if (method === 'POST' && match[2] === 'next') return json(await nextQuestion(user, match[1], await readBody(request)));
     }
-    if ((path === '/api/prizes' || path === '/api/parent/prizes') && method === 'GET') return json(await prizeData(user.role === 'student' ? user.id : (await student())?.id));
+    if ((path === '/api/prizes' || path === '/api/teacher/prizes') && method === 'GET') return json(await prizeData(user.role === 'student' ? user.id : (await student())?.id));
     match = path.match(/^\/api\/prizes\/([^/]+)\/request$/);
     if (match && method === 'POST') {
       await readBody(request);
@@ -324,8 +332,8 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       await run("INSERT OR IGNORE INTO practice_requests(id,student_id,prize_id,prize_name,cost,status,created_at) VALUES(?,?,?,?,?,'pending',?)", uuid(), user.id, prize.id, prize.name, prize.cost, iso());
       return json({ ok: true });
     }
-    if (path === '/api/parent/settings' && method === 'GET') return json({ settings: await settings(), accounts: (await all('SELECT * FROM practice_users ORDER BY created_at')).map(safeUser), backup: { latestDate: (await one('SELECT date FROM practice_backups ORDER BY date DESC LIMIT 1'))?.date || null } });
-    if (path === '/api/parent/settings' && method === 'PATCH') {
+    if (path === '/api/teacher/settings' && method === 'GET') return json({ settings: await settings(), accounts: (await all('SELECT * FROM practice_users ORDER BY created_at')).map(safeUser), backup: { latestDate: (await one('SELECT date FROM practice_backups ORDER BY date DESC LIMIT 1'))?.date || null } });
+    if (path === '/api/teacher/settings' && method === 'PATCH') {
       const body = await readBody(request), s = await settings();
       if ('startDate' in body) { if (!validDate(body.startDate)) fail(400, 'Enter a valid start date.'); s.startDate = body.startDate; }
       if ('paused' in body) { if (typeof body.paused !== 'boolean') fail(400, 'Pause must be on or off.'); s.paused = body.paused; }
@@ -336,16 +344,16 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       await run('INSERT INTO practice_settings(id,value) VALUES(1,?) ON CONFLICT(id) DO UPDATE SET value = excluded.value', JSON.stringify(s));
       return json({ settings: s });
     }
-    if (path === '/api/parent/accounts' && method === 'POST') {
-      const body = await readBody(request), role = body.role;
-      if (!['student', 'parent'].includes(role)) fail(400, 'Choose student or parent.');
+    if (path === '/api/teacher/accounts' && method === 'POST') {
+      const body = await readBody(request), role = accountRole(body.role);
+      if (!['student', 'teacher'].includes(role)) fail(400, 'Choose student or teacher.');
       const values = validateAccount(body, role), id = uuid();
       const passwordHash = await hash(body.password, 12);
-      try { await run('INSERT INTO practice_users(id,username,name,role,password_hash,created_at) VALUES(?,?,?,?,?,?)', id, values.username, values.name, role, passwordHash, iso()); }
+      try { await run('INSERT INTO practice_users(id,username,name,role,password_hash,created_at) VALUES(?,?,?,?,?,?)', id, values.username, values.name, storedRole(role), passwordHash, iso()); }
       catch (error) { if (/UNIQUE|constraint|question_repeat/i.test(error.message)) fail(409, 'That username is in use, or the student account already exists.'); throw error; }
       return json({ user: { id, ...values, role } }, 201);
     }
-    match = path.match(/^\/api\/parent\/accounts\/([^/]+)\/password$/);
+    match = path.match(/^\/api\/teacher\/accounts\/([^/]+)\/password$/);
     if (match && method === 'POST') {
       const body = await readBody(request), account = await one('SELECT * FROM practice_users WHERE id = ?', match[1]);
       if (!account) fail(404, 'That account was not found.');
@@ -353,13 +361,13 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       await db.batch([statement('UPDATE practice_users SET password_hash = ? WHERE id = ?', await hash(body.password, 12), account.id), statement('DELETE FROM practice_sessions WHERE user_id = ?', account.id)]);
       return json({ ok: true });
     }
-    if (path === '/api/parent/prizes' && method === 'POST') {
+    if (path === '/api/teacher/prizes' && method === 'POST') {
       const body = await readBody(request), name = text(body.name, 80), cost = int(body.cost, 1, 100000, 'Point cost');
       if (!name) fail(400, 'Enter a prize name.');
       const id = uuid(); await run('INSERT INTO practice_prizes(id,name,cost,created_at) VALUES(?,?,?,?)', id, name, cost, iso());
       return json({ prize: { id, name, cost, active: true } }, 201);
     }
-    match = path.match(/^\/api\/parent\/prizes\/([^/]+)$/);
+    match = path.match(/^\/api\/teacher\/prizes\/([^/]+)$/);
     if (match && method === 'PATCH') {
       const body = await readBody(request), prize = await one('SELECT * FROM practice_prizes WHERE id = ?', match[1]);
       if (!prize) fail(404, 'That prize was not found.');
@@ -370,7 +378,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       await run('UPDATE practice_prizes SET name = ?,cost = ?,active = ? WHERE id = ?', name, cost, 'active' in body ? Number(body.active) : prize.active, prize.id);
       return json({ ok: true });
     }
-    match = path.match(/^\/api\/parent\/requests\/([^/]+)$/);
+    match = path.match(/^\/api\/teacher\/requests\/([^/]+)$/);
     if (match && method === 'POST') {
       const body = await readBody(request), prizeRequest = await one('SELECT * FROM practice_requests WHERE id = ?', match[1]);
       if (!prizeRequest) fail(404, 'That request was not found.');
@@ -387,7 +395,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       }
       return json({ ok: true });
     }
-    if (path === '/api/parent/points' && method === 'POST') {
+    if (path === '/api/teacher/points' && method === 'POST') {
       const body = await readBody(request), learner = await student();
       if (!learner) fail(409, 'Create the student account first.');
       const amount = int(body.amount, -100000, 100000, 'Points'), note = text(body.note, 200), requestId = text(body.requestId, 100);
@@ -398,7 +406,30 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       if (!(await one('SELECT id FROM practice_ledger WHERE id = ?', id))) fail(409, 'Points cannot go below zero.');
       return json({ ok: true });
     }
-    if (path === '/api/parent/overview' && method === 'GET') {
+    if (path === '/api/teacher/weeks' && method === 'GET') {
+      const learner = await student(), s = await settings(), index = currentIndex(s);
+      const rows = learner ? await all("SELECT * FROM practice_runs WHERE student_id = ? AND kind = 'required'", learner.id) : [];
+      return json({ today: todayDate(), student: safeUser(learner), days: Array.from({ length: 70 }, (_, dayIndex) => {
+        const row = rows.find(r => r.day_index === dayIndex), state = row ? JSON.parse(row.state) : null;
+        return { ...info(dayIndex, s), status: row?.done ? 'done' : dayIndex > index ? 'ahead' : dayIndex === index ? 'today' : 'missed',
+          run: state ? { completed: completed(state), total: state.slots.length, firstTryCorrect: firstTry(state), done: Boolean(row.done) } : null };
+      }) });
+    }
+    if (path === '/api/teacher/preview' && method === 'GET') {
+      if (production && !questionPool) fail(503, 'The checked question bank is not ready.');
+      const dayIndex = int(Number(url.searchParams.get('dayIndex') ?? 0), 0, 69, 'Day');
+      const kind = url.searchParams.get('kind') || 'required';
+      if (!['required', 'bonus'].includes(kind)) fail(400, 'Choose a required or bonus set.');
+      const round = int(Number(url.searchParams.get('round') ?? 0), 0, 19, 'Round');
+      const s = await settings(), exclusion = { signatures: new Set(), prompts: new Set() };
+      const questions = buildSlots(dayIndex, kind, round).map((slot, index) => {
+        const q = freshQuestion(slot.skill, `${user.id}:preview:${dayIndex}:${kind}:${round}:${index}`, slot.difficulty, exclusion);
+        return { ...publicQuestion(q), answer: rightAnswer(q), solution: q.solution, hint: q.hint,
+          hints: q.hints.map(h => ({ answer: plainLabel(q.choices?.find(choice => String(choice.value) === String(h.answer))?.label ?? h.answer), text: h.text })) };
+      });
+      return json({ day: info(dayIndex, s), kind, round, total: questions.length, questions });
+    }
+    if (path === '/api/teacher/dashboard' && method === 'GET') {
       const learner = await student(), s = await settings(), date = todayDate();
       if (!learner) return json({ student: null, days: [], misses: [], points: 0 });
       const runs = await all('SELECT * FROM practice_runs WHERE student_id = ?', learner.id);
@@ -414,7 +445,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       });
       return json({ student: safeUser(learner), days, points: await balance(learner.id), misses: attempts.filter(a => !a.correct && !a.form_only && pacificDate(new Date(a.created_at)) === date).map(a => ({ prompt: a.prompt, skill: a.skill, answer: a.answer, rightAnswer: a.right_answer, tryNumber: a.try_number, createdAt: a.created_at })) });
     }
-    if (path === '/api/parent/skills' && method === 'GET') {
+    if (path === '/api/teacher/skills' && method === 'GET') {
       const learner = await student(), attempts = learner ? await all('SELECT * FROM practice_attempts WHERE student_id = ? AND form_only = 0 ORDER BY created_at DESC', learner.id) : [];
       const skillEntries = Array.isArray(SKILLS) ? SKILLS.map(x => [x.id || x.skill, x]) : Object.entries(SKILLS);
       const skills = skillEntries.map(([skill, details]) => {
@@ -424,8 +455,8 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       const filter = url.searchParams.get('skill');
       return json({ skills, attempts: attempts.filter(a => !filter || a.skill === filter).slice(0, 100).map(a => ({ skill: a.skill, prompt: a.prompt, answer: a.answer, rightAnswer: a.right_answer, correct: Boolean(a.correct), tryNumber: a.try_number, createdAt: a.created_at })) });
     }
-    if (path === '/api/parent/backup' && method === 'POST') { await readBody(request); const result = await backup(); return json({ ok: true, date: result.date }); }
-    if (path === '/api/parent/backup' && method === 'GET') {
+    if (path === '/api/teacher/backup' && method === 'POST') { await readBody(request); const result = await backup(); return json({ ok: true, date: result.date }); }
+    if (path === '/api/teacher/backup' && method === 'GET') {
       const result = await backup();
       return json(result.data, 200, { 'content-disposition': `attachment; filename="double-advanced-${result.date}.json"` });
     }

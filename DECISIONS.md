@@ -7,7 +7,7 @@
 - Use the supplied `plan.json` as the source of truth. Week 10's editorial titles
   conflict with its focus fields; use the focus and corresponding topic title.
 - Keep every required day, including holidays. Pause prevents practice that date;
-  it does not silently erase or shift the lesson. The parent can shift the start
+  it does not silently erase or shift the lesson. The teacher can shift the start
   date explicitly, moving all lesson dates together.
 - Use plain browser JavaScript, a shared Request/Response backend, SQLite locally
   and D1 on the existing Site. Keep existing database tables untouched.
@@ -28,7 +28,7 @@
 - Freeze bonus rules when a round starts. Complete the round and award its point
   atomically on the last correct answer, so closing the tab cannot lose completion.
 - Prize costs are snapshotted when requested. Approval spends points atomically;
-  replaying approval cannot spend twice. Parent corrections require a note.
+  replaying approval cannot spend twice. Teacher corrections require a note.
 - Use bcrypt cost 12, HTTP-only secure production cookies, persistent login limits
   and origin checks. A password reset revokes the student's existing sessions.
 - Use exact rational arithmetic, native MathML, and numeric SVG diagrams. Quartiles
@@ -39,8 +39,18 @@
   short screens. Actual portrait iPad Safari rendering remains a separate check.
 - Keep the Pages artifact to a redirect. Remove old public packets/course files
   from the replacement; do not claim that this erases public Git history.
-- Store production backup exports in private R2. Provide parent downloads and a
+- Store production backup exports in private R2. Provide teacher downloads and a
   scheduled Worker handler; its nightly host schedule needs separate provisioning.
 - The Sites helper scripts were unavailable in this executor. Use ordinary Git
   with an ephemeral in-memory credential, a bundled Worker, bounded migrations,
   and the native Sites save/deploy operation. No credential is persisted.
+
+- User correction: use teacher/student roles and explicit Teacher/Student dashboards.
+  Existing accounts and sessions keep working through a storage compatibility mapping;
+  the old database role value is not a third application role. Legacy links redirect
+  to the teacher/student dashboards. No applied migration is rewritten.
+- The teacher can preview every required and bonus set, including future dates,
+  with answers, hints and worked steps. Previewing never writes student attempts,
+  progress or points. The teacher dashboard links to every management area.
+- The user explicitly authorized the new-site cutover. The domain attachment now
+  succeeds; Namecheap DNS changes remain pending because browser control failed.

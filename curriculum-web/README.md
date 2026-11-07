@@ -3,15 +3,15 @@
 A small HTML/CSS/JavaScript client with the same Request/Response server running
 on Node 24 + SQLite locally and Cloudflare Workers + D1 through Sites in production.
 
-## First parent and student
+## First teacher and student
 
 Open the hosted practice link. Its existing owner-private Sites access gate is
-preserved. On first application use, choose **Parent setup**, a short username,
+preserved. On first application use, choose **Teacher setup**, a short username,
 a nickname, and a password of at least eight characters. There are no preset
-credentials. Setup disappears after the first parent is created.
+credentials. Setup disappears after the first teacher is created.
 
 In **Settings**, create the student account with a password of at least four
-characters. Add a second parent there, or reset the student's password. Sign out
+characters. Add a second teacher there, or reset the student's password. Sign out
 and sign in as the student to practise. Account and progress records live on the
 server; a new device uses the same username and password after the Sites gate.
 
@@ -76,8 +76,8 @@ Previously applied migration files must never be edited.
 
 The Worker exports a scheduled handler for a nightly backup. The host must wire
 that schedule; publishing a scheduled handler alone does not configure a cron.
-Parent **Settings → Save a backup** writes an export to private R2; **Download
-backup** returns a parent-only export. Exports contain password hashes and must
+Teacher **Settings → Save a backup** writes an export to private R2; **Download
+backup** returns a teacher-only export. Exports contain password hashes and must
 be kept private. Local Node runs a daily backup timer while the process is alive.
 No automatic production schedule is claimed until its host configuration is
 verified.

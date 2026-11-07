@@ -12,9 +12,9 @@ async function fixture({ questionPool = null } = {}) {
     const response=await app.fetch(new Request(`https://practice.test/api${path}`,{method,headers:{...(body===undefined?{}:{'content-type':'application/json',origin:'https://practice.test'}),...(cookie?{cookie}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})}));
     return {status:response.status,value:await response.json(),cookie:response.headers.get('set-cookie')?.split(';')[0]};
   };
-  const parent=await call('/setup',{username:'parent',name:'Parent',password:'parent-password'});
-  assert.equal(parent.status,200);
-  await call('/parent/accounts',{username:'learner',name:'Learner',password:'1234',role:'student'},parent.cookie);
+  const teacher=await call('/setup',{username:'teacher',name:'Teacher',password:'teacher-password'});
+  assert.equal(teacher.status,200);
+  await call('/teacher/accounts',{username:'learner',name:'Learner',password:'1234',role:'student'},teacher.cookie);
   const learner=await call('/login',{username:'learner',password:'1234',remember:true});
   assert.equal(learner.status,200);
   const raw=async id=>{
@@ -35,7 +35,7 @@ async function fixture({ questionPool = null } = {}) {
     }
     return current;
   };
-  return {db,app,call,parent,learner,raw,answer,finish,setTime(value){time=new Date(value);}};
+  return {db,app,call,teacher,learner,raw,answer,finish,setTime(value){time=new Date(value);}};
 }
 
 test('calendar shifts cannot expose or answer a now-future required question',async()=>{
@@ -43,7 +43,7 @@ test('calendar shifts cannot expose or answer a now-future required question',as
   try {
     const run=(await f.call('/runs',{dayIndex:0,kind:'required'},f.learner.cookie)).value;
     const q=run.question;
-    assert.equal((await f.call('/parent/settings',{startDate:'2026-11-14'},f.parent.cookie,'PATCH')).status,200);
+    assert.equal((await f.call('/teacher/settings',{startDate:'2026-11-14'},f.teacher.cookie,'PATCH')).status,200);
     const calendar=await f.call('/weeks',undefined,f.learner.cookie);
     assert.equal(calendar.value.days[0].status,'ahead');
     assert.ok(!calendar.value.days[0].run?.question,'a future question must not be included in the calendar');
@@ -63,9 +63,9 @@ test('pause and Pacific midnight reject advancing a bonus with no extra points',
     const bonus=(await f.call('/runs',{dayIndex:0,kind:'bonus'},f.learner.cookie)).value;
     await f.answer(bonus.id);
     const current=await f.raw(bonus.id);
-    await f.call('/parent/settings',{paused:true},f.parent.cookie,'PATCH');
+    await f.call('/teacher/settings',{paused:true},f.teacher.cookie,'PATCH');
     assert.equal((await f.call(`/runs/${bonus.id}/next`,{questionId:current.item.id},f.learner.cookie)).status,409);
-    await f.call('/parent/settings',{paused:false},f.parent.cookie,'PATCH');
+    await f.call('/teacher/settings',{paused:false},f.teacher.cookie,'PATCH');
     f.setTime('2026-11-08T08:00:01Z');
     assert.equal((await f.call(`/runs/${bonus.id}/next`,{questionId:current.item.id},f.learner.cookie)).status,403);
     assert.equal((await f.call(`/runs/${bonus.id}`,undefined,f.learner.cookie)).status,403);
@@ -76,13 +76,13 @@ test('pause and Pacific midnight reject advancing a bonus with no extra points',
 test('parallel approvals for distinct prizes cannot overspend the ledger',async()=>{
   const f=await fixture();
   try {
-    await f.call('/parent/points',{amount:3,note:'Opening balance',requestId:crypto.randomUUID()},f.parent.cookie);
+    await f.call('/teacher/points',{amount:3,note:'Opening balance',requestId:crypto.randomUUID()},f.teacher.cookie);
     for(const name of ['Choose dinner','Choose a game']){
-      const prize=(await f.call('/parent/prizes',{name,cost:2},f.parent.cookie)).value.prize;
+      const prize=(await f.call('/teacher/prizes',{name,cost:2},f.teacher.cookie)).value.prize;
       assert.equal((await f.call(`/prizes/${prize.id}/request`,{},f.learner.cookie)).status,200);
     }
     const requests=(await f.call('/prizes',undefined,f.learner.cookie)).value.requests;
-    const outcomes=await Promise.all(requests.map(r=>f.call(`/parent/requests/${r.id}`,{action:'approve'},f.parent.cookie)));
+    const outcomes=await Promise.all(requests.map(r=>f.call(`/teacher/requests/${r.id}`,{action:'approve'},f.teacher.cookie)));
     assert.deepEqual(outcomes.map(o=>o.status).sort(),[200,409]);
     const result=(await f.call('/prizes',undefined,f.learner.cookie)).value;
     assert.equal(result.points,1);

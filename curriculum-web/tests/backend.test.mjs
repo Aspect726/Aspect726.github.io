@@ -15,9 +15,9 @@ async function fixture({ path = ':memory:', production = false, questionPool = n
     const response = await app.fetch(request);
     return { status: response.status, value: await response.json(), cookie: response.headers.get('set-cookie')?.split(';')[0], headers: response.headers };
   }
-  const parent = await call('/setup', { username: 'parent', name: 'Parent', password: 'parent-pass' }, null, 'POST', production ? { 'oai-authenticated-user-id': 'owner' } : {});
-  assert.equal(parent.status, 200, JSON.stringify(parent.value));
-  const created = await call('/parent/accounts', { username: 'learner', name: 'Learner', password: '1234', role: 'student' }, parent.cookie);
+  const teacher = await call('/setup', { username: 'teacher', name: 'Teacher', password: 'teacher-pass' }, null, 'POST', production ? { 'oai-authenticated-user-id': 'owner' } : {});
+  assert.equal(teacher.status, 200, JSON.stringify(teacher.value));
+  const created = await call('/teacher/accounts', { username: 'learner', name: 'Learner', password: '1234', role: 'student' }, teacher.cookie);
   assert.equal(created.status, 201, JSON.stringify(created.value));
   const login = await call('/login', { username: 'learner', password: '1234', remember: true });
   assert.equal(login.status, 200);
@@ -42,7 +42,7 @@ async function fixture({ path = ':memory:', production = false, questionPool = n
     }
     return current;
   }
-  return { app, db, call, parent, learner: created.value.user, login, answer, finish, rawQuestion, setDate: value => { date = new Date(value); } };
+  return { app, db, call, teacher, learner: created.value.user, login, answer, finish, rawQuestion, setDate: value => { date = new Date(value); } };
 }
 
 test('first setup, role isolation, password reset, persistent sessions and public-source denial', async () => {
@@ -52,13 +52,13 @@ test('first setup, role isolation, password reset, persistent sessions and publi
   try {
     assert.equal((await f.call('/session')).value.setupRequired, false);
     assert.equal((await f.call('/setup', { username: 'second', password: 'password2' })).status, 409);
-    for (const route of ['/today', '/weeks', '/prizes', '/parent/settings', '/parent/overview']) assert.equal((await f.call(route)).status, 401);
-    for (const route of ['/parent/settings', '/parent/overview', '/parent/skills', '/parent/backup', '/parent/prizes']) assert.equal((await f.call(route, undefined, f.login.cookie)).status, 403);
+    for (const route of ['/today', '/weeks', '/prizes', '/teacher/settings', '/teacher/dashboard']) assert.equal((await f.call(route)).status, 401);
+    for (const route of ['/teacher/settings', '/teacher/dashboard', '/teacher/skills', '/teacher/backup', '/teacher/prizes']) assert.equal((await f.call(route, undefined, f.login.cookie)).status, 403);
     for (const route of ['/server/backend.mjs', '/public/data/course.json', '/private/vetted-seeds.json', '/resources/packets/a.pdf']) assert.equal((await f.app.fetch(new Request(`https://practice.test${route}`))).status, 404);
-    assert.equal((await f.call('/parent/accounts', { username: 'mother', password: 'another-pass', role: 'parent', name: 'Mother' }, f.parent.cookie)).status, 201);
-    assert.equal((await f.call('/parent/accounts', { username: 'otherchild', password: '1234', role: 'student' }, f.parent.cookie)).status, 409);
-    assert.equal((await f.call('/parent/settings', { paused: true }, f.parent.cookie, 'PATCH', { origin: 'https://elsewhere.test' })).status, 403);
-    assert.equal((await f.call(`/parent/accounts/${f.learner.id}/password`, { password: '5678' }, f.parent.cookie)).status, 200);
+    assert.equal((await f.call('/teacher/accounts', { username: 'mother', password: 'another-pass', role: 'teacher', name: 'Mother' }, f.teacher.cookie)).status, 201);
+    assert.equal((await f.call('/teacher/accounts', { username: 'otherchild', password: '1234', role: 'student' }, f.teacher.cookie)).status, 409);
+    assert.equal((await f.call('/teacher/settings', { paused: true }, f.teacher.cookie, 'PATCH', { origin: 'https://elsewhere.test' })).status, 403);
+    assert.equal((await f.call(`/teacher/accounts/${f.learner.id}/password`, { password: '5678' }, f.teacher.cookie)).status, 200);
     assert.equal((await f.call('/today', undefined, f.login.cookie)).status, 401);
     const newSession = await f.call('/login', { username: 'learner', password: '5678', remember: true });
     assert.equal(newSession.status, 200);
@@ -100,7 +100,7 @@ test('server-only answers, atomic attempts, two misses and a fresh replacement t
     const next = await f.call(`/runs/${id}/next`, { questionId: original.id }, f.login.cookie);
     const complete = await f.finish(next.value);
     assert.equal(complete.done, true); assert.equal(complete.completed, 20); assert.equal(complete.firstTryCorrect, 19); assert.equal(complete.pointsEarned, 0);
-    const overview = await f.call('/parent/overview', undefined, f.parent.cookie);
+    const overview = await f.call('/teacher/dashboard', undefined, f.teacher.cookie);
     assert.equal(overview.value.misses.length, 2);
     assert.equal(overview.value.misses[0].answer, 'not sure');
     assert.ok(overview.value.misses[0].rightAnswer.length > 0);
@@ -124,34 +124,34 @@ test('bonus threshold, daily limit, prize approvals, ledger idempotency and cale
     assert.equal(second.value.total, 10);
     const secondDone = await f.finish(second.value, 3);
     assert.equal(secondDone.pointsEarned, 0);
-    await f.call('/parent/settings', { bonusLimit: 2 }, f.parent.cookie, 'PATCH');
+    await f.call('/teacher/settings', { bonusLimit: 2 }, f.teacher.cookie, 'PATCH');
     assert.equal((await f.call('/runs', { dayIndex: 0, kind: 'bonus' }, f.login.cookie)).status, 403);
-    const prize = (await f.call('/parent/prizes', { name: 'Choose dinner', cost: 1 }, f.parent.cookie)).value.prize;
+    const prize = (await f.call('/teacher/prizes', { name: 'Choose dinner', cost: 1 }, f.teacher.cookie)).value.prize;
     await f.call(`/prizes/${prize.id}/request`, {}, f.login.cookie);
     const prizeRequest = (await f.call('/prizes', undefined, f.login.cookie)).value.requests[0];
-    const approved = await Promise.all([f.call(`/parent/requests/${prizeRequest.id}`, { action: 'approve' }, f.parent.cookie), f.call(`/parent/requests/${prizeRequest.id}`, { action: 'approve' }, f.parent.cookie)]);
+    const approved = await Promise.all([f.call(`/teacher/requests/${prizeRequest.id}`, { action: 'approve' }, f.teacher.cookie), f.call(`/teacher/requests/${prizeRequest.id}`, { action: 'approve' }, f.teacher.cookie)]);
     approved.forEach(r => assert.equal(r.status, 200));
     let points = (await f.call('/prizes', undefined, f.login.cookie)).value;
     assert.equal(points.points, 0); assert.equal(points.history.filter(x => x.kind === 'prize').length, 1);
-    const adjustment = { amount: 3, note: 'Parent correction', requestId: crypto.randomUUID() };
-    await f.call('/parent/points', adjustment, f.parent.cookie); await f.call('/parent/points', adjustment, f.parent.cookie);
+    const adjustment = { amount: 3, note: 'Teacher correction', requestId: crypto.randomUUID() };
+    await f.call('/teacher/points', adjustment, f.teacher.cookie); await f.call('/teacher/points', adjustment, f.teacher.cookie);
     points = (await f.call('/prizes', undefined, f.login.cookie)).value;
     assert.equal(points.points, 3);
-    assert.equal((await f.call('/parent/points', { amount: -4, note: 'Correction', requestId: crypto.randomUUID() }, f.parent.cookie)).status, 409);
-    await f.call('/parent/settings', { startDate: '2026-11-06' }, f.parent.cookie, 'PATCH');
+    assert.equal((await f.call('/teacher/points', { amount: -4, note: 'Correction', requestId: crypto.randomUUID() }, f.teacher.cookie)).status, 409);
+    await f.call('/teacher/settings', { startDate: '2026-11-06' }, f.teacher.cookie, 'PATCH');
     const today = (await f.call('/today', undefined, f.login.cookie)).value;
     assert.equal(today.day.dayIndex, 1);
     assert.equal((await f.call('/runs', { dayIndex: 0, kind: 'bonus' }, f.login.cookie)).status, 403);
     const calendar = (await f.call('/weeks', undefined, f.login.cookie)).value.days;
     assert.equal(calendar[0].date, '2026-11-06'); assert.equal(calendar[0].status, 'done');
-    await f.call('/parent/settings', { startDate: '2026-11-09' }, f.parent.cookie, 'PATCH');
+    await f.call('/teacher/settings', { startDate: '2026-11-09' }, f.teacher.cookie, 'PATCH');
     assert.equal((await f.call(`/runs/${required.value.id}`, undefined, f.login.cookie)).status, 403);
     assert.equal((await f.call('/weeks', undefined, f.login.cookie)).value.days[0].run, null);
     assert.equal((await f.call(`/runs/${required.value.id}/next`, { questionId: 'old' }, f.login.cookie)).status, 403);
-    await f.call('/parent/settings', { startDate: '2026-11-06' }, f.parent.cookie, 'PATCH');
-    await f.call('/parent/settings', { paused: true }, f.parent.cookie, 'PATCH');
+    await f.call('/teacher/settings', { startDate: '2026-11-06' }, f.teacher.cookie, 'PATCH');
+    await f.call('/teacher/settings', { paused: true }, f.teacher.cookie, 'PATCH');
     assert.equal((await f.call('/runs', { dayIndex: 1, kind: 'required' }, f.login.cookie)).status, 409);
-    assert.equal((await f.call('/parent/settings', { startDate: '2026-99-99' }, f.parent.cookie, 'PATCH')).status, 400);
+    assert.equal((await f.call('/teacher/settings', { startDate: '2026-99-99' }, f.teacher.cookie, 'PATCH')).status, 400);
   } finally { f.db.close(); }
 });
 
@@ -163,10 +163,46 @@ test('production setup gate, secure cookies, release bank gate, login limit and 
     assert.equal((await f.call('/runs', { dayIndex: 0, kind: 'required' }, f.login.cookie)).status, 503);
     for (let i = 0; i < 8; i++) assert.equal((await f.call('/login', { username: 'unknown', password: 'bad' })).status, 401);
     assert.equal((await f.call('/login', { username: 'unknown', password: 'bad' })).status, 429);
-    const backup = await f.call('/parent/backup', {}, f.parent.cookie);
+    const backup = await f.call('/teacher/backup', {}, f.teacher.cookie);
     assert.equal(backup.status, 200); assert.equal(writes.length, 1); assert.match(writes[0][0], /practice-backups\/2026-11-07.json/);
     const exportData = JSON.parse(writes[0][1]);
     assert.equal(exportData.tables.practice_users.length, 2);
     assert.equal('practice_sessions' in exportData.tables, false);
+  } finally { f.db.close(); }
+});
+
+test('existing educator accounts become teachers and full previews never change student records', async () => {
+  const f = await fixture();
+  try {
+    const stored = await f.db.prepare("SELECT role FROM practice_users WHERE username = 'teacher'").first();
+    assert.equal(stored.role, 'parent', 'keep the deployed schema compatible');
+    assert.equal(f.teacher.value.user.role, 'teacher');
+    const session = await f.call('/session', undefined, f.teacher.cookie);
+    assert.equal(session.value.user.role, 'teacher');
+    assert.equal(session.value.setupRequired, false);
+    assert.equal((await f.call('/parent/overview', undefined, f.teacher.cookie)).status, 200);
+    assert.equal((await f.call('/parent/overview', undefined, f.login.cookie)).status, 403);
+    const accounts = await f.call('/teacher/settings', undefined, f.teacher.cookie);
+    assert.deepEqual(new Set(accounts.value.accounts.map(user => user.role)), new Set(['teacher', 'student']));
+    assert.equal((await f.call('/teacher/accounts', { username:'helper', name:'Helper', role:'teacher', password:'1234' }, f.teacher.cookie)).status, 400);
+    const added = await f.call('/teacher/accounts', { username:'helper', name:'Helper', role:'teacher', password:'teacher-helper' }, f.teacher.cookie);
+    assert.equal(added.value.user.role, 'teacher');
+    const weeks = await f.call('/teacher/weeks', undefined, f.teacher.cookie);
+    assert.equal(weeks.value.days.length, 70);
+    assert.equal(weeks.value.days[69].status, 'ahead');
+    const before = {};
+    for (const table of ['runs','questions','attempts','ledger']) before[table] = (await f.db.prepare(`SELECT COUNT(*) AS n FROM practice_${table}`).first()).n;
+    for (const suffix of ['', '&kind=bonus&round=0', '&kind=bonus&round=1']) {
+      const response = await f.call(`/teacher/preview?dayIndex=69${suffix}`, undefined, f.teacher.cookie);
+      assert.equal(response.status, 200, JSON.stringify(response.value));
+      assert.equal(response.value.total, suffix ? (suffix.endsWith('=0') ? 15 : 10) : 20);
+      assert.ok(response.value.questions.every(q => q.answer && q.solution.length >= 3 && q.hints.length >= 3));
+    }
+    for (const route of ['/teacher/weeks','/teacher/preview?dayIndex=69','/parent/preview?dayIndex=69']) {
+      assert.equal((await f.call(route)).status, 401);
+      assert.equal((await f.call(route, undefined, f.login.cookie)).status, 403);
+    }
+    assert.equal((await f.call('/teacher/preview?dayIndex=70', undefined, f.teacher.cookie)).status, 400);
+    for (const table of Object.keys(before)) assert.equal((await f.db.prepare(`SELECT COUNT(*) AS n FROM practice_${table}`).first()).n, before[table]);
   } finally { f.db.close(); }
 });

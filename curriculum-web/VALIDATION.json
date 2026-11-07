@@ -1,5 +1,5 @@
 {
-  "applicationTests": 111,
+  "applicationTests": 112,
   "failures": 0,
   "skips": 0,
   "sourceRecords": 2322,
@@ -12,5 +12,6 @@
   "repeatWindow": "current date plus previous 14 dates",
   "generatorDigest": "770339c5e1319b81f779acadc5990c842362f001887ab05797455140f16dffcb",
   "browserVerification": false,
-  "poolVerifiedAtUTC": "2026-11-07T06:00:04.368Z"
+  "poolVerifiedAtUTC": "2026-11-07T06:00:04.368Z",
+  "teacherDashboard": "Full calendar, practice previews, answers, hints, worked steps and management; student records unchanged"
 }

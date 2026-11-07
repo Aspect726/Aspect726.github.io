@@ -1,7 +1,7 @@
 # Double Advanced
 
 A private daily mathematics practice application for one student and multiple
-parents. The replacement source is in `curriculum-web`.
+teachers. The replacement source is in `curriculum-web`.
 
 - [Hosted practice](https://double-advanced-classroom.framedegret8.chatgpt.site)
 - [Setup, development and private content checks](curriculum-web/README.md)

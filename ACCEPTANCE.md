@@ -5,8 +5,8 @@ implementation; domain routing and actual-device checks are called out separatel
 
 | # | Status | Evidence |
 |---|---|---|
-| 1 | Not done | Login-only application built; donteventry.me attachment was rejected by automatic approval review. Existing owner-private Sites gate remains. |
-| 2 | Done | First-parent setup, student creation, password reset/session revocation and a second parent pass API and DOM tests. |
+| 1 | Not done | Login-only application built; donteventry.me is now attached with user approval, pending Namecheap DNS and certificate validation. Existing owner-private Sites gate remains. |
+| 2 | Done | First-teacher setup, student creation, password reset/session revocation and a second teacher pass API and DOM tests. |
 | 3 | Done | Supplied plan defines all 70 days, 7 November–15 January, with exact 2/10/5/3 required mix and date shifting. |
 | 4 | Done | Private paper/slide corpus used to validate permitted seeds and a complete required/bonus bank. No corpus content is tracked. See validation counts below. |
 | 5 | Done | 54 curriculum skills plus warm-up have five shapes, matched misconception hints and 500-seed checks. Geometry/statistics add picture shapes. |
@@ -14,7 +14,7 @@ implementation; domain routing and actual-device checks are called out separatel
 | 7 | Done | Two misses reveal worked steps and append a new twin; original-slot first-try status is retained. |
 | 8 | Done | Required completion, 15/10 bonus sizes, original-slot accuracy threshold, limits, midnight and replay rules tested. |
 | 9 | Done | Prize editing/request/approval/spending and ledger replay/overspend checks pass. |
-| 10 | Done | Parent Overview reports actual submitted values and human-readable chosen answers with correct answers. |
+| 10 | Done | Teacher Overview reports actual submitted values and human-readable chosen answers with correct answers. |
 | 11 | Done | Anonymous/student route isolation, server-only answer fields, opaque choices, future-date protection and private-path denial tested. |
 | 12 | Not done | Replacement removes old PDFs/course data. Remote main, Curriculum and historical public blobs are unchanged pending cleanup/cutover. Legacy is preserved locally. |
 | 13 | Not done | Anchored portrait controls and DOM flow implemented; the browser runtime failed before inspection. Actual iPad Safari remains unverified. |
@@ -23,7 +23,7 @@ implementation; domain routing and actual-device checks are called out separatel
 
 ## Validation
 
-- 111 application test groups passed with zero failures or skips on the integrated
+- 112 application test groups passed with zero failures or skips on the integrated
   implementation, including 500 seeds for each of 55 generators and independent
   exact-arithmetic checks.
 - Real-backend DOM test covers family setup, questions, twins, completion, account
@@ -41,16 +41,16 @@ implementation; domain routing and actual-device checks are called out separatel
 
 ## Remaining operational work
 
-- Approve the custom-domain attachment/cutover, configure its returned DNS records,
-  and verify HTTPS at donteventry.me. Automatic approval review rejected this action
-  because explicit domain-cutover authorization had not been established.
+- The user authorized the custom-domain cutover. The attachment succeeded; apply
+  the Namecheap records in DNS.md and verify HTTPS at donteventry.me. Browser
+  access is unavailable here, so the DNS edits remain pending.
 - Review and merge the source/Pages change; decide how to remove the old public
   Curriculum branch and historical answers. A branch deletion cannot erase copies
   already downloaded or public historical objects.
 - Configure the two private GitHub Actions paper-bank secrets. The private release
   check intentionally fails without them; no passing CI run is claimed yet.
 - Configure a nightly host schedule for the exported Worker scheduled handler.
-  Parent-triggered private R2 exports and downloads work; an exported handler alone
+  Teacher-triggered private R2 exports and downloads work; an exported handler alone
   does not establish that nightly backups run.
 - Verify portrait iPad Safari, actual font/diagram layout and the under-two-second
   home-Wi-Fi load target. Browser initialization failed with
