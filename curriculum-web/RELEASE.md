@@ -31,9 +31,8 @@ keyboard handling. Existing records are preserved by additive migrations.
   or real network load timing can be claimed. The managed browser fails at startup
   with “the gaas-browser node_repl sandbox cannot be disabled”. DOM tests verify
   interactions; responsive CSS and keyboard drawer handling are implemented.
-- `donteventry.me` provider routing and SSL are active, but Sites still reports
-  overall domain verification pending. The exact remaining TXT is in `DNS.md`.
-  The Sites URL is the verified deployment address until validation completes.
+- Sites confirmed `donteventry.me` active with active SSL on November 7, 2026,
+  after the ownership TXT value was corrected. The domain serves this application.
 - A flagged template can be suspended and re-enabled by a teacher. Correcting the
   underlying math template is a source-code change followed by the release checks;
   teachers cannot replace computed answer keys with unchecked text in the browser.
@@ -48,7 +47,11 @@ or unrequested deletion of existing accounts was performed.
 
 ## Visual revision
 
-The subsequent student-facing revision replaces dark green surfaces with a light
-blue/white graph-paper theme, math illustrations, blue graph lines and coral/gold
-geometry accents. Thirteen interface tests and the compiled Worker smoke checks
-pass. The shared browser remains unavailable; no visual screenshots are claimed.
+The latest visual revision uses warm beige graph paper, ivory panels, terracotta
+controls, mustard accents and mathematical illustrations. Shared spacing, card,
+form, navigation and responsive styles apply to every student and teacher route.
+Teacher mastery is grouped by week; course cards keep dates readable and reveal
+full skill lists on expansion. Student views separate statuses, counts and actions.
+Thirteen interface tests, CSS/SVG parsing, and the production build with compiled
+Worker smoke checks pass. Text contrast and narrow-screen CSS were reviewed.
+The managed browser remains unavailable; no visual screenshots are claimed.
