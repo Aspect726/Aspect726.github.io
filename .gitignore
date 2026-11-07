@@ -11,3 +11,9 @@ curriculum-web/test-results/
 curriculum-web/.vinext/
 .DS_Store
 *.log
+paper_questions.json
+**/paper_questions.json
+curriculum-web/generated/
+curriculum-web/.openai/artifacts/
+curriculum-web/backups/
+curriculum-web/dist-pages/

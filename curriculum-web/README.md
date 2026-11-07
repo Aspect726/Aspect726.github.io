@@ -1,41 +1,88 @@
-# Double Advanced
+# Double Advanced practice
 
-A student workspace and teacher classroom built around the expanded Double Advanced curriculum. The source lives in `curriculum-web`; the original curriculum stays on the repository's `Curriculum` branch.
+A small HTML/CSS/JavaScript client with the same Request/Response server running
+on Node 24 + SQLite locally and Cloudflare Workers + D1 through Sites in production.
 
-## Run locally
+## First parent and student
 
-Use Node.js 24 or newer. The local server has no third-party runtime dependencies. Import the curriculum first using [CURRICULUM.md](CURRICULUM.md), then:
+Open the hosted practice link. Its existing owner-private Sites access gate is
+preserved. On first application use, choose **Parent setup**, a short username,
+a nickname, and a password of at least eight characters. There are no preset
+credentials. Setup disappears after the first parent is created.
+
+In **Settings**, create the student account with a password of at least four
+characters. Add a second parent there, or reset the student's password. Sign out
+and sign in as the student to practise. Account and progress records live on the
+server; a new device uses the same username and password after the Sites gate.
+
+## Development
 
 ```sh
 cd curriculum-web
+npm ci
+npm test
 npm start
 ```
 
-Open `http://127.0.0.1:3000`. Browsing the curriculum does not require an account. Saved answers require a server account. The server saves progress in `private/progress.sqlite`; keep this file on a persistent disk and back it up along with its WAL files using SQLite's backup mechanism. Do not commit databases or answer snapshots.
+Node must be version 24 or later. Local state is `private/practice.sqlite`, ignored
+by Git. The local server defaults to loopback, port 3000. `PORT`, `HOST`,
+`DATABASE_PATH`, and `APP_ORIGIN` can change deployment settings. Production
+setup is restricted to the authenticated Sites owner. Do not expose a local
+first-run setup server to the Internet.
 
-Create the teacher account with `node server.mjs --create-teacher`, supplying `TEACHER_USERNAME`, `TEACHER_PASSWORD`, and optionally `TEACHER_NAME` as environment variables. Use a password manager and a unique password of at least 3 characters. Do not put a password in a tracked file or shell history. Sign in as the teacher and create the learner's account from the teacher screen. A nickname is sufficient; no child's email or full name is needed.
+## Private paper and slide check
 
-## Hosting
-
-GitHub Pages uses the repository's existing branch publication. The root page opens `curriculum-web/public/`, and `_config.yml` excludes server, test, private-data, and importer paths. The workflow validates a separate public-only artifact, checks public JSON for private answer fields, and verifies the exact published JavaScript over HTTPS. GitHub Pages cannot run the SQLite server. Saved learning happens on the private hosted classroom or local server.
-
-The production classroom's URL and status are recorded in the delivery notes after deployment. It uses a separate database and protected server routes; a public static site must never receive a database, password, answer key, teacher guide, or hidden slide deck.
-
-For a conventional Node host, run `NODE_ENV=production`, set `APP_ORIGIN` to the exact HTTPS origin, put `DATABASE_PATH` on a persistent volume, and serve the frontend and API on the same origin through HTTPS. Keep port 3000 private behind the proxy. Import current curriculum into `data/` on that host and provide teacher resources in `private/resources/teacher/`. Production session cookies require HTTPS.
-
-## Learning and grading
-
-Weeks run Saturday through Friday. Every day has 20 required questions, except Wednesday's 25. Two challenges are included in each day's total. Optional assessments and extra practice do not silently increase the assignment. Teachers can change requirements, pause lessons, reschedule work, and record checked paper work.
-
-Equivalent numerical values use exact rational arithmetic. Format rules such as simplifying or supplying units are separate checks. Constructed explanations, drawings, and ambiguous source answers are sent to teacher review. A question is complete only when correct or approved. Hints, retries, first attempts, eventual correctness, and paper work remain distinguishable. Teacher settings control solution release and mastery criteria.
-
-## Validation
+The provided `server/plan.json` defines all 70 dates, focus skills and the mix.
+The separate paper-and-slide JSON must stay outside this public repository.
+It is used only as validation input, never served or imported by a request handler.
 
 ```sh
-npm test
-npm run build:pages
+PAPER_QUESTIONS_PATH=/private/path/paper_questions.json npm run test:paper -- --write-pool
+npm run build
+node scripts/smoke-worker.mjs
 ```
 
-Curriculum validation covers the source manifest, assigned counts, all packet page references, slide numbering, source arithmetic checks, and the generated extra bank. The importer keeps a detailed local report at `data/import-report.json`. Server tests use isolated temporary databases; they do not modify learner records.
+The check validates candidate generator outputs and creates
+`private/vetted-seeds.json`, containing only accepted seed identifiers and
+aggregate verification evidence. Production uses only that checked seed pool.
+The bank is ignored in this public checkout. The production private source
+repository retains it so deployments are reproducible. Regenerate the pool after
+any generator change. A missing corpus or pool fails the release check.
 
-The source repository is public, including the original uploaded curriculum on `Curriculum`. Application authorization protects classroom endpoints and stored progress; it cannot make material already published to a public GitHub branch secret.
+The paper corpus has no skill identifiers, so the validator infers possible kinds
+from wording and lesson context. It normalizes fractions, decimals, word numbers,
+minus signs and whitespace; uncertain records are checked conservatively.
+The test also materializes all required questions and four bonus rounds per day,
+checking the previous fourteen days and the current day for repeated content.
+
+## Continuous integration
+
+The application checks run on every push and pull request. The private paper gate
+runs on pushes and fails if its private data is not configured. Supply the gzip,
+base64-encoded private JSON as two GitHub Actions secrets named
+`PAPER_BANK_GZIP_BASE64_1` and `PAPER_BANK_GZIP_BASE64_2` (split into two equal
+parts; the combined file exceeds GitHub's per-secret size limit). Never paste the
+file into a workflow or public artifact. The workflow reconstructs it under
+`RUNNER_TEMP`, runs validation, and deletes it. These secrets require repository
+administration access and are not configured by this checkout.
+
+## Hosting and backups
+
+`.openai/hosting.json` retains the existing Site identity, D1 `DB` and private R2
+`BUCKET`. Build output is a bundled Worker with only the login shell, client code,
+fonts and styles exposed as assets. The source and question pool are server-only.
+Migrations preserve the existing classroom tables and add `practice_` tables.
+Previously applied migration files must never be edited.
+
+The Worker exports a scheduled handler for a nightly backup. The host must wire
+that schedule; publishing a scheduled handler alone does not configure a cron.
+Parent **Settings → Save a backup** writes an export to private R2; **Download
+backup** returns a parent-only export. Exports contain password hashes and must
+be kept private. Local Node runs a daily backup timer while the process is alive.
+No automatic production schedule is claimed until its host configuration is
+verified.
+
+The custom domain needs DNS routing and validation before it can serve this
+Worker. The Pages replacement redirects to the working hosted address. Remote
+branch deletion and history erasure are separate operations; deleting a branch
+alone cannot remove copies of previously public answer keys.

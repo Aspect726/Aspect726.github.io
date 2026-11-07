@@ -1,0 +1,901 @@
+{
+ "program": "Double Advanced, 10 weeks",
+ "timezone": "America/Los_Angeles",
+ "start_date": "2026-11-07",
+ "week_runs": "Saturday to Friday",
+ "focus_rule": "Saturday and Monday practise the Saturday topic; Sunday and Tuesday the Sunday topic; Wednesday, Thursday and Friday mix both.",
+ "required_mix": {
+  "warm_up": 2,
+  "todays_focus": 10,
+  "recent_two_weeks": 5,
+  "older_and_strengths": 3
+ },
+ "strength_skills": [
+  "F-ADD",
+  "F-SUB",
+  "F-MULT",
+  "F-DIV",
+  "F-COMP",
+  "R-RATIO",
+  "R-RATE",
+  "P-PERCENT",
+  "P-CHANGE",
+  "N-DIV",
+  "G-VOL"
+ ],
+ "skills": {
+  "D-SUB": "Subtract decimals, including from whole numbers (regrouping across zeros)",
+  "D-LONG": "Divide whole numbers past the decimal point (terminating decimals)",
+  "D-DIV": "Divide by a decimal by scaling both numbers",
+  "F-WHOLE": "Find a whole from a fraction or decimal part",
+  "E-EXP": "Whole-number exponents, including fraction and decimal bases",
+  "E-ORDER": "Order of operations with exponents",
+  "E-DIST": "Distributive property: expand a(b + c)",
+  "E-FACTOR": "Factor out the greatest common factor",
+  "E-LIKE": "Combine like terms; test equivalence by substitution",
+  "E-SOLVE": "Solve x + p = q and px = q with whole numbers, decimals and fractions",
+  "E-STORY": "Write and solve equations from stories",
+  "G-PERIM": "Rectangle perimeter equations (two lengths, two widths)",
+  "E-RELATE": "Independent and dependent variables; use a rule forwards and backwards",
+  "E-GRAPH": "Rules, tables and first-quadrant graphs",
+  "G-PARA": "Area of parallelograms with perpendicular height; area vs perimeter",
+  "G-TRI": "Area of triangles, including height outside the triangle",
+  "G-COMP": "Area of composite shapes",
+  "G-SA": "Nets and surface area of prisms and pyramids",
+  "N-OPP": "Opposites, including -(-a)",
+  "N-ABS": "Absolute value as distance from zero",
+  "N-ORDER": "Order and compare signed numbers, including fractions and decimals",
+  "N-COORD": "Four-quadrant coordinates",
+  "N-REFLECT": "Reflect points across the x-axis and y-axis",
+  "N-DIST": "Distance between points with a shared x or y",
+  "E-INEQ": "Write and graph inequalities",
+  "S-QUESTION": "Statistical questions",
+  "S-DISPLAY": "Dot plots, histograms, frequency tables",
+  "S-MEAN": "Mean as fair share; missing value from a mean",
+  "S-MEDIAN": "Median, odd and even counts",
+  "S-CENTER": "Effect of an unusual value; choosing mean or median",
+  "S-RANGE": "Range",
+  "S-IQR": "Quartiles and IQR",
+  "S-BOX": "Read and draw box plots",
+  "S-MAD": "Mean absolute deviation",
+  "S-SPREAD": "Compare data sets by center and spread",
+  "P-PROP": "Proportional relationships: k, y = kx, tables, graphs through the origin",
+  "P-SCALE": "Scale factors and area of scaled copies",
+  "P-MAP": "Map and drawing scales",
+  "G-CIRC": "Circumference and pi",
+  "G-CAREA": "Area of a circle; choosing circumference or area",
+  "N-ADD": "Add and subtract signed numbers",
+  "N-MULT": "Multiply signed numbers",
+  "E-2STEP": "Two-step equations px + q = r and p(x + q) = r",
+  "F-ADD": "Add and subtract fractions (strength)",
+  "F-SUB": "Subtract fractions (strength)",
+  "F-MULT": "Multiply fractions (strength)",
+  "F-DIV": "Divide fractions (strength)",
+  "F-COMP": "Compare fractions (strength)",
+  "R-RATIO": "Ratios, equivalent ratios, part-part-whole (strength)",
+  "R-RATE": "Unit rates (strength)",
+  "P-PERCENT": "Percent of, find the whole, find the percent (strength)",
+  "P-CHANGE": "Percent increase and decrease (strength)",
+  "N-DIV": "Long division (strength)",
+  "G-VOL": "Volume of boxes, fractional edges (strength)"
+ },
+ "weeks": [
+  {
+   "week": 1,
+   "title": "Decimals: regrouping and dividing",
+   "saturday": {
+    "date": "Nov 7",
+    "topic": "Subtracting across zeros, and division that keeps going",
+    "skills": [
+     "D-SUB",
+     "D-LONG"
+    ]
+   },
+   "sunday": {
+    "date": "Nov 8",
+    "topic": "Dividing by a decimal, and finding the whole",
+    "skills": [
+     "D-DIV",
+     "F-WHOLE"
+    ]
+   },
+   "notes": [
+    "Fractions were 7 for 7, including dividing fractions and the box volume. These move to short review, so lesson time goes to what he missed.",
+    "He wrote 12 − 4.685 = 8.315. This is a regrouping slip, not a lack of understanding: the answer is exactly one whole too big.",
+    "He marked 4.8 ÷ 0.6 as “not sure.” Dividing by a decimal is new for him.",
+    "He skipped the stretch question about a bottle that is {3/4} full. Finding a whole from a part uses the same “how many in one group” idea."
+   ]
+  },
+  {
+   "week": 2,
+   "title": "Exponents and the distributive property",
+   "saturday": {
+    "date": "Nov 14",
+    "topic": "Exponents count equal factors",
+    "skills": [
+     "E-EXP",
+     "E-ORDER"
+    ]
+   },
+   "sunday": {
+    "date": "Nov 15",
+    "topic": "The distributive property",
+    "skills": [
+     "E-DIST",
+     "E-FACTOR",
+     "E-LIKE"
+    ]
+   },
+   "notes": [
+    "He wrote ({2/3})² = {4/6}: squared the top, doubled the bottom.",
+    "He chose 7x for 4(x + 3): added the 4 and 3. This is the single most important algebra habit to fix before IMT1-level work.",
+    "He evaluated 2a + 5, wrote 5n for “5 sheets at n dollars”, solved x + 7 = 19 and 4b = 28, and simplified x + x + x + 2x. Those are secure and appear only in review."
+   ]
+  },
+  {
+   "week": 3,
+   "title": "Equations and relationships",
+   "saturday": {
+    "date": "Nov 21",
+    "topic": "Solving equations with tape diagrams",
+    "skills": [
+     "E-SOLVE",
+     "E-STORY",
+     "G-PERIM"
+    ]
+   },
+   "sunday": {
+    "date": "Nov 22",
+    "topic": "Inputs and outputs: rules, tables, graphs",
+    "skills": [
+     "E-RELATE",
+     "E-GRAPH"
+    ]
+   },
+   "notes": [
+    "He solved x + 7 = 19 and 4b = 28. Equations with decimals and fractions are next.",
+    "On the perimeter stretch question he got x = 10.5 instead of 5: he used one length, not two.",
+    "He skipped “which is the input in c = 2.5n?” and guessed that a ratio graph passes through (0, 0)."
+   ]
+  },
+  {
+   "week": 4,
+   "title": "Area and surface area",
+   "saturday": {
+    "date": "Nov 28",
+    "topic": "Area of parallelograms and triangles",
+    "skills": [
+     "G-PARA",
+     "G-TRI"
+    ]
+   },
+   "sunday": {
+    "date": "Nov 29",
+    "topic": "Nets and surface area",
+    "skills": [
+     "G-COMP",
+     "G-SA"
+    ]
+   },
+   "notes": [
+    "For a parallelogram with base 7, height 4 and slanted side 5 he wrote 24: the perimeter, not the area.",
+    "He found the right-triangle area (24) but marked it “a little unsure.”",
+    "He skipped the surface-area question. Composite area (a rectangle with a corner removed) was right, so he has the building block.",
+    "Thanksgiving falls on Thursday. Lessons are planned for 60 minutes, and Thursday’s sheet is optional."
+   ]
+  },
+  {
+   "week": 5,
+   "title": "Negative numbers and the coordinate plane",
+   "saturday": {
+    "date": "Dec 5",
+    "topic": "Negative numbers, opposites and absolute value",
+    "skills": [
+     "N-OPP",
+     "N-ABS",
+     "N-ORDER"
+    ]
+   },
+   "sunday": {
+    "date": "Dec 6",
+    "topic": "The coordinate plane, reflections and inequalities",
+    "skills": [
+     "N-COORD",
+     "N-REFLECT",
+     "N-DIST",
+     "E-INEQ"
+    ]
+   },
+   "notes": [
+    "He reflected (−2, 3) across the x-axis and got (2, 3): the wrong coordinate changed.",
+    "He skipped |−8| and the question about drawing x ≥ 2, and guessed −(−9).",
+    "Ordering integers, quadrants, a vertical distance, GCF and LCM were all right. GCF and LCM appear only in review."
+   ]
+  },
+  {
+   "week": 6,
+   "title": "Statistics: data, displays and center",
+   "saturday": {
+    "date": "Dec 12",
+    "topic": "Statistical questions and data displays",
+    "skills": [
+     "S-QUESTION",
+     "S-DISPLAY"
+    ]
+   },
+   "sunday": {
+    "date": "Dec 13",
+    "topic": "Mean and median",
+    "skills": [
+     "S-MEAN",
+     "S-MEDIAN",
+     "S-CENTER"
+    ]
+   },
+   "notes": [
+    "Statistics was his lowest area: 2 of 10, with 8 marked “not sure”. This is new content, not a gap in effort.",
+    "He got the range right and correctly guessed which question was statistical.",
+    "Weeks 6 and 7 cover all of Grade 6 statistics. Week 7 adds quartiles, box plots and MAD."
+   ]
+  },
+  {
+   "week": 7,
+   "title": "Statistics: spread, box plots and MAD",
+   "saturday": {
+    "date": "Dec 19",
+    "topic": "Range, quartiles and box plots",
+    "skills": [
+     "S-RANGE",
+     "S-IQR",
+     "S-BOX"
+    ]
+   },
+   "sunday": {
+    "date": "Dec 20",
+    "topic": "Mean absolute deviation and comparing data",
+    "skills": [
+     "S-MAD",
+     "S-SPREAD"
+    ]
+   },
+   "notes": [
+    "He skipped quartiles, IQR, box plots and MAD on the check-in: none have been taught yet.",
+    "He found the range correctly, and last week covered mean and median.",
+    "Holiday week (December 19–25). Lessons are about an hour, and Friday’s check can move to Thursday."
+   ]
+  },
+  {
+   "week": 8,
+   "title": "Proportional relationships and scale",
+   "saturday": {
+    "date": "Dec 26",
+    "topic": "Proportional relationships: y = kx",
+    "skills": [
+     "P-PROP"
+    ]
+   },
+   "sunday": {
+    "date": "Dec 27",
+    "topic": "Scale drawings, maps and area",
+    "skills": [
+     "P-SCALE",
+     "P-MAP"
+    ]
+   },
+   "notes": [
+    "He skipped finding k from a table and guessed that a ratio graph passes through (0, 0).",
+    "He solved the map-scale question correctly but skipped the area of a scaled copy.",
+    "New Year week. Lessons are about an hour; Friday’s check can move to Thursday."
+   ]
+  },
+  {
+   "week": 9,
+   "title": "Circles",
+   "saturday": {
+    "date": "Jan 2",
+    "topic": "Circumference and π",
+    "skills": [
+     "G-CIRC"
+    ]
+   },
+   "sunday": {
+    "date": "Jan 3",
+    "topic": "Area of a circle",
+    "skills": [
+     "G-CAREA"
+    ]
+   },
+   "notes": [
+    "He could not start the circle question on the check-in (circumference and area for radius 3). Circles are new.",
+    "His Week 8 work on scaled area sets up why doubling a radius makes the area 4 times as big."
+   ]
+  },
+  {
+   "week": 10,
+   "title": "Bridge to IMT2 and the final check",
+   "saturday": {
+    "date": "Jan 9",
+    "topic": "Signed-number operations and two-step equations",
+    "skills": [
+     "N-ADD",
+     "N-MULT",
+     "E-2STEP"
+    ]
+   },
+   "sunday": {
+    "date": "Jan 10",
+    "topic": "The final check",
+    "skills": [
+     "ALL"
+    ]
+   },
+   "notes": [
+    "Saturday is a first look at IMT2: operations with signed numbers and two-step equations. He already added two negatives correctly in November.",
+    "Sunday is a cumulative check of all ten weeks with new numbers, including the November stretch questions. Compare it with the check-in.",
+    "Weekday sheets mix everything, two or three weeks of topics per day."
+   ]
+  }
+ ],
+ "days": [
+  {
+   "day": 1,
+   "week": 1,
+   "weekday": "Saturday",
+   "date": "Nov 7, 2026",
+   "focus": "saturday",
+   "title": "Subtracting across zeros, and division that keeps going"
+  },
+  {
+   "day": 2,
+   "week": 1,
+   "weekday": "Sunday",
+   "date": "Nov 8, 2026",
+   "focus": "sunday",
+   "title": "Dividing by a decimal, and finding the whole"
+  },
+  {
+   "day": 3,
+   "week": 1,
+   "weekday": "Monday",
+   "date": "Nov 9, 2026",
+   "focus": "saturday",
+   "title": "Subtracting across zeros"
+  },
+  {
+   "day": 4,
+   "week": 1,
+   "weekday": "Tuesday",
+   "date": "Nov 10, 2026",
+   "focus": "sunday",
+   "title": "Dividing by a decimal"
+  },
+  {
+   "day": 5,
+   "week": 1,
+   "weekday": "Wednesday",
+   "date": "Nov 11, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 6,
+   "week": 1,
+   "weekday": "Thursday",
+   "date": "Nov 12, 2026",
+   "focus": "mixed",
+   "title": "Word problems and finding mistakes"
+  },
+  {
+   "day": 7,
+   "week": 1,
+   "weekday": "Friday",
+   "date": "Nov 13, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: decimals"
+  },
+  {
+   "day": 8,
+   "week": 2,
+   "weekday": "Saturday",
+   "date": "Nov 14, 2026",
+   "focus": "saturday",
+   "title": "Exponents count equal factors"
+  },
+  {
+   "day": 9,
+   "week": 2,
+   "weekday": "Sunday",
+   "date": "Nov 15, 2026",
+   "focus": "sunday",
+   "title": "The distributive property"
+  },
+  {
+   "day": 10,
+   "week": 2,
+   "weekday": "Monday",
+   "date": "Nov 16, 2026",
+   "focus": "saturday",
+   "title": "Exponents"
+  },
+  {
+   "day": 11,
+   "week": 2,
+   "weekday": "Tuesday",
+   "date": "Nov 17, 2026",
+   "focus": "sunday",
+   "title": "The distributive property"
+  },
+  {
+   "day": 12,
+   "week": 2,
+   "weekday": "Wednesday",
+   "date": "Nov 18, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 13,
+   "week": 2,
+   "weekday": "Thursday",
+   "date": "Nov 19, 2026",
+   "focus": "mixed",
+   "title": "Word problems and finding mistakes"
+  },
+  {
+   "day": 14,
+   "week": 2,
+   "weekday": "Friday",
+   "date": "Nov 20, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: exponents and the distributive property"
+  },
+  {
+   "day": 15,
+   "week": 3,
+   "weekday": "Saturday",
+   "date": "Nov 21, 2026",
+   "focus": "saturday",
+   "title": "Solving equations with tape diagrams"
+  },
+  {
+   "day": 16,
+   "week": 3,
+   "weekday": "Sunday",
+   "date": "Nov 22, 2026",
+   "focus": "sunday",
+   "title": "Inputs and outputs: rules, tables, graphs"
+  },
+  {
+   "day": 17,
+   "week": 3,
+   "weekday": "Monday",
+   "date": "Nov 23, 2026",
+   "focus": "saturday",
+   "title": "Solving equations"
+  },
+  {
+   "day": 18,
+   "week": 3,
+   "weekday": "Tuesday",
+   "date": "Nov 24, 2026",
+   "focus": "sunday",
+   "title": "Rules, tables and graphs"
+  },
+  {
+   "day": 19,
+   "week": 3,
+   "weekday": "Wednesday",
+   "date": "Nov 25, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 20,
+   "week": 3,
+   "weekday": "Thursday",
+   "date": "Nov 26, 2026",
+   "focus": "mixed",
+   "title": "Word problems and finding mistakes"
+  },
+  {
+   "day": 21,
+   "week": 3,
+   "weekday": "Friday",
+   "date": "Nov 27, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: equations and relationships"
+  },
+  {
+   "day": 22,
+   "week": 4,
+   "weekday": "Saturday",
+   "date": "Nov 28, 2026",
+   "focus": "saturday",
+   "title": "Area of parallelograms and triangles"
+  },
+  {
+   "day": 23,
+   "week": 4,
+   "weekday": "Sunday",
+   "date": "Nov 29, 2026",
+   "focus": "sunday",
+   "title": "Nets and surface area"
+  },
+  {
+   "day": 24,
+   "week": 4,
+   "weekday": "Monday",
+   "date": "Nov 30, 2026",
+   "focus": "saturday",
+   "title": "Area of parallelograms and triangles"
+  },
+  {
+   "day": 25,
+   "week": 4,
+   "weekday": "Tuesday",
+   "date": "Dec 1, 2026",
+   "focus": "sunday",
+   "title": "Nets and surface area"
+  },
+  {
+   "day": 26,
+   "week": 4,
+   "weekday": "Wednesday",
+   "date": "Dec 2, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 27,
+   "week": 4,
+   "weekday": "Thursday",
+   "date": "Dec 3, 2026",
+   "focus": "mixed",
+   "title": "Word problems (optional on Thanksgiving)"
+  },
+  {
+   "day": 28,
+   "week": 4,
+   "weekday": "Friday",
+   "date": "Dec 4, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: area and surface area"
+  },
+  {
+   "day": 29,
+   "week": 5,
+   "weekday": "Saturday",
+   "date": "Dec 5, 2026",
+   "focus": "saturday",
+   "title": "Negative numbers, opposites and absolute value"
+  },
+  {
+   "day": 30,
+   "week": 5,
+   "weekday": "Sunday",
+   "date": "Dec 6, 2026",
+   "focus": "sunday",
+   "title": "The coordinate plane, reflections and inequalities"
+  },
+  {
+   "day": 31,
+   "week": 5,
+   "weekday": "Monday",
+   "date": "Dec 7, 2026",
+   "focus": "saturday",
+   "title": "Negative numbers and absolute value"
+  },
+  {
+   "day": 32,
+   "week": 5,
+   "weekday": "Tuesday",
+   "date": "Dec 8, 2026",
+   "focus": "sunday",
+   "title": "Reflections, distance and inequalities"
+  },
+  {
+   "day": 33,
+   "week": 5,
+   "weekday": "Wednesday",
+   "date": "Dec 9, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 34,
+   "week": 5,
+   "weekday": "Thursday",
+   "date": "Dec 10, 2026",
+   "focus": "mixed",
+   "title": "Word problems and finding mistakes"
+  },
+  {
+   "day": 35,
+   "week": 5,
+   "weekday": "Friday",
+   "date": "Dec 11, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: negative numbers and the coordinate plane"
+  },
+  {
+   "day": 36,
+   "week": 6,
+   "weekday": "Saturday",
+   "date": "Dec 12, 2026",
+   "focus": "saturday",
+   "title": "Statistical questions and data displays"
+  },
+  {
+   "day": 37,
+   "week": 6,
+   "weekday": "Sunday",
+   "date": "Dec 13, 2026",
+   "focus": "sunday",
+   "title": "Mean and median"
+  },
+  {
+   "day": 38,
+   "week": 6,
+   "weekday": "Monday",
+   "date": "Dec 14, 2026",
+   "focus": "saturday",
+   "title": "Statistical questions and displays"
+  },
+  {
+   "day": 39,
+   "week": 6,
+   "weekday": "Tuesday",
+   "date": "Dec 15, 2026",
+   "focus": "sunday",
+   "title": "Mean and median"
+  },
+  {
+   "day": 40,
+   "week": 6,
+   "weekday": "Wednesday",
+   "date": "Dec 16, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 41,
+   "week": 6,
+   "weekday": "Thursday",
+   "date": "Dec 17, 2026",
+   "focus": "mixed",
+   "title": "Word problems and finding mistakes"
+  },
+  {
+   "day": 42,
+   "week": 6,
+   "weekday": "Friday",
+   "date": "Dec 18, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: data, displays and center"
+  },
+  {
+   "day": 43,
+   "week": 7,
+   "weekday": "Saturday",
+   "date": "Dec 19, 2026",
+   "focus": "saturday",
+   "title": "Range, quartiles and box plots"
+  },
+  {
+   "day": 44,
+   "week": 7,
+   "weekday": "Sunday",
+   "date": "Dec 20, 2026",
+   "focus": "sunday",
+   "title": "Mean absolute deviation and comparing data"
+  },
+  {
+   "day": 45,
+   "week": 7,
+   "weekday": "Monday",
+   "date": "Dec 21, 2026",
+   "focus": "saturday",
+   "title": "Quartiles and box plots"
+  },
+  {
+   "day": 46,
+   "week": 7,
+   "weekday": "Tuesday",
+   "date": "Dec 22, 2026",
+   "focus": "sunday",
+   "title": "MAD and comparing data"
+  },
+  {
+   "day": 47,
+   "week": 7,
+   "weekday": "Wednesday",
+   "date": "Dec 23, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 48,
+   "week": 7,
+   "weekday": "Thursday",
+   "date": "Dec 24, 2026",
+   "focus": "mixed",
+   "title": "Word problems (holiday-friendly)"
+  },
+  {
+   "day": 49,
+   "week": 7,
+   "weekday": "Friday",
+   "date": "Dec 25, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: spread, box plots and MAD"
+  },
+  {
+   "day": 50,
+   "week": 8,
+   "weekday": "Saturday",
+   "date": "Dec 26, 2026",
+   "focus": "saturday",
+   "title": "Proportional relationships: y = kx"
+  },
+  {
+   "day": 51,
+   "week": 8,
+   "weekday": "Sunday",
+   "date": "Dec 27, 2026",
+   "focus": "sunday",
+   "title": "Scale drawings, maps and area"
+  },
+  {
+   "day": 52,
+   "week": 8,
+   "weekday": "Monday",
+   "date": "Dec 28, 2026",
+   "focus": "saturday",
+   "title": "Proportional relationships"
+  },
+  {
+   "day": 53,
+   "week": 8,
+   "weekday": "Tuesday",
+   "date": "Dec 29, 2026",
+   "focus": "sunday",
+   "title": "Scale drawings and maps"
+  },
+  {
+   "day": 54,
+   "week": 8,
+   "weekday": "Wednesday",
+   "date": "Dec 30, 2026",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 55,
+   "week": 8,
+   "weekday": "Thursday",
+   "date": "Dec 31, 2026",
+   "focus": "mixed",
+   "title": "Word problems (holiday-friendly)"
+  },
+  {
+   "day": 56,
+   "week": 8,
+   "weekday": "Friday",
+   "date": "Jan 1, 2026",
+   "focus": "mixed",
+   "title": "Weekly check: proportional relationships and scale"
+  },
+  {
+   "day": 57,
+   "week": 9,
+   "weekday": "Saturday",
+   "date": "Jan 2, 2027",
+   "focus": "saturday",
+   "title": "Circumference and π"
+  },
+  {
+   "day": 58,
+   "week": 9,
+   "weekday": "Sunday",
+   "date": "Jan 3, 2027",
+   "focus": "sunday",
+   "title": "Area of a circle"
+  },
+  {
+   "day": 59,
+   "week": 9,
+   "weekday": "Monday",
+   "date": "Jan 4, 2027",
+   "focus": "saturday",
+   "title": "Circumference"
+  },
+  {
+   "day": 60,
+   "week": 9,
+   "weekday": "Tuesday",
+   "date": "Jan 5, 2027",
+   "focus": "sunday",
+   "title": "Area of a circle"
+  },
+  {
+   "day": 61,
+   "week": 9,
+   "weekday": "Wednesday",
+   "date": "Jan 6, 2027",
+   "focus": "mixed",
+   "title": "Mixed review and a puzzle"
+  },
+  {
+   "day": 62,
+   "week": 9,
+   "weekday": "Thursday",
+   "date": "Jan 7, 2027",
+   "focus": "mixed",
+   "title": "Word problems and finding mistakes"
+  },
+  {
+   "day": 63,
+   "week": 9,
+   "weekday": "Friday",
+   "date": "Jan 8, 2027",
+   "focus": "mixed",
+   "title": "Weekly check: circles"
+  },
+  {
+   "day": 64,
+   "week": 10,
+   "weekday": "Saturday",
+   "date": "Jan 9, 2027",
+   "focus": "saturday",
+   "title": "Signed-number operations and two-step equations"
+  },
+  {
+   "day": 65,
+   "week": 10,
+   "weekday": "Sunday",
+   "date": "Jan 10, 2027",
+   "focus": "sunday",
+   "title": "Final check: all ten weeks"
+  },
+  {
+   "day": 66,
+   "week": 10,
+   "weekday": "Monday",
+   "date": "Jan 11, 2027",
+   "focus": "saturday",
+   "title": "Review: decimals, expressions, equations"
+  },
+  {
+   "day": 67,
+   "week": 10,
+   "weekday": "Tuesday",
+   "date": "Jan 12, 2027",
+   "focus": "sunday",
+   "title": "Review: geometry and signed numbers"
+  },
+  {
+   "day": 68,
+   "week": 10,
+   "weekday": "Wednesday",
+   "date": "Jan 13, 2027",
+   "focus": "mixed",
+   "title": "Review: statistics and a puzzle"
+  },
+  {
+   "day": 69,
+   "week": 10,
+   "weekday": "Thursday",
+   "date": "Jan 14, 2027",
+   "focus": "mixed",
+   "title": "Review: proportions, scale and circles"
+  },
+  {
+   "day": 70,
+   "week": 10,
+   "weekday": "Friday",
+   "date": "Jan 15, 2027",
+   "focus": "mixed",
+   "title": "Weekly check: everything"
+  }
+ ]
+}

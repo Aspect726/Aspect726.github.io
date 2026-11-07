@@ -1,0 +1,16 @@
+{
+  "applicationTests": 111,
+  "failures": 0,
+  "skips": 0,
+  "sourceRecords": 2322,
+  "sourceSegments": 2469,
+  "ambiguousSegmentsConservativelyChecked": 73,
+  "approvedSeedDifficultyPairs": 168960,
+  "scheduledQuestions": 4550,
+  "twinStressTotal": 9100,
+  "courseDays": 70,
+  "repeatWindow": "current date plus previous 14 dates",
+  "generatorDigest": "770339c5e1319b81f779acadc5990c842362f001887ab05797455140f16dffcb",
+  "browserVerification": false,
+  "poolVerifiedAtUTC": "2026-11-07T06:00:04.368Z"
+}

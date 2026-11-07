@@ -1,16 +1,14 @@
 # Double Advanced
 
-A complete course explorer and private mathematics classroom for the expanded
-Double Advanced curriculum.
+A private daily mathematics practice application for one student and multiple
+parents. The replacement source is in `curriculum-web`.
 
-- [Public learning site](https://donteventry.me/)
-- [Private classroom](https://double-advanced-classroom.framedegret8.chatgpt.site)
-- [Local setup and architecture](curriculum-web/README.md)
-- [Curriculum import and verification](curriculum-web/CURRICULUM.md)
-- [Implementation checklist](curriculum-web/IMPLEMENTATION.md)
+- [Hosted practice](https://double-advanced-classroom.framedegret8.chatgpt.site)
+- [Setup, development and private content checks](curriculum-web/README.md)
+- [Implementation plan](PLAN.md)
+- [Decisions](DECISIONS.md)
+- [Acceptance evidence and remaining deployment work](ACCEPTANCE.md)
 
-The course contains 10 weeks, 70 days, 1,450 required questions, 140 challenges,
-97 separate optional assessment questions, and 360 extra-practice questions.
-Source materials remain on the `Curriculum` branch. The Pages artifact contains
-student-facing content only; saved progress and protected teacher routes run in
-the private classroom's persistent database service.
+GitHub Pages contains a redirect only. The application runs on a server, generates
+and checks questions there, and saves accounts and progress in a database.
+The old application is preserved locally on `legacy-chatgpt-v1`.
