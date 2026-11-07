@@ -28,3 +28,11 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
 - Screenshot and actual-device evidence must be real. The managed browser failed
   with “the gaas-browser node_repl sandbox cannot be disabled”; do not substitute
   fabricated screenshots or claim layout, Safari or load-time verification.
+
+## Student-facing visual revision
+
+The user explicitly replaced the warm-paper/green textbook palette with a bright
+math-workbook style: white and light graph paper, blue controls, coral geometry,
+yellow points and math illustrations. Bold Inter headings replace serif headings;
+MathML keeps the serif mathematics font. Existing learning and account logic stays
+unchanged. SVG artwork is decorative and never represents invented student data.

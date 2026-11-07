@@ -295,7 +295,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     }
     if (!path.startsWith('/api/')) {
       const asset = assets[path] || (path === '/' ? assets['/index.html'] : null);
-      if (asset && (['/', '/index.html', '/app.js', '/student.mjs', '/teacher.mjs', '/styles.css'].includes(path) || path.startsWith('/fonts/') || path.startsWith('/assets/fonts/') || path === '/favicon.svg' || path === '/assets/favicon.svg')) {
+      if (asset && (['/', '/index.html', '/app.js', '/student.mjs', '/teacher.mjs', '/styles.css'].includes(path) || path.startsWith('/fonts/') || path.startsWith('/assets/fonts/') || path === '/favicon.svg' || ['/assets/favicon.svg','/assets/math-playground.svg','/assets/graph-paper.svg'].includes(path))) {
         if (typeof asset === 'string') return new Response(asset, { headers: { 'content-type': path.endsWith('.js') ? 'text/javascript' : path.endsWith('.css') ? 'text/css' : 'text/html; charset=utf-8' } });
         return new Response(asset.body, { headers: { 'content-type': asset.type, 'cache-control': (path.startsWith('/fonts/') || path.startsWith('/assets/fonts/')) ? 'public, max-age=31536000, immutable' : 'no-cache' } });
       }

@@ -10,6 +10,7 @@ try {
   const shell=await worker.fetch(request('/'),{DB:db});
   assert.equal(shell.status,200);assert.match(await shell.text(),/Double Advanced/);
   assert.equal((await worker.fetch(request('/api/today'),{DB:db})).status,401);
+  for(const path of ['/assets/math-playground.svg','/assets/graph-paper.svg']) { const art=await worker.fetch(request(path),{DB:db}); assert.equal(art.status,200);assert.match(art.headers.get('content-type'),/image\/svg/); }
   const font=await worker.fetch(request('/assets/fonts/inter-latin.woff2'),{DB:db});
   assert.equal(font.status,200);assert.match(font.headers.get('content-type'),/font\/woff2/);
   for(const path of ['/server/questions.mjs','/private/vetted-seeds.json','/data/course.json','/resources/packets/Day_001_Sat_Week_01.pdf'])

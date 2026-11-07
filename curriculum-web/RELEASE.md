@@ -45,3 +45,10 @@ keyboard handling. Existing records are preserved by additive migrations.
 
 The prior interface remains preserved in Git history; no public history rewrite
 or unrequested deletion of existing accounts was performed.
+
+## Visual revision
+
+The subsequent student-facing revision replaces dark green surfaces with a light
+blue/white graph-paper theme, math illustrations, blue graph lines and coral/gold
+geometry accents. Thirteen interface tests and the compiled Worker smoke checks
+pass. The shared browser remains unavailable; no visual screenshots are claimed.
