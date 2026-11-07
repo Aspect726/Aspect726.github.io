@@ -27,10 +27,11 @@ keyboard handling. Existing records are preserved by additive migrations.
 
 ## Limits that remain
 
-- No stage screenshots, actual 1440px/390px visual inspection, Safari device test
-  or real network load timing can be claimed. The managed browser fails at startup
-  with “the gaas-browser node_repl sandbox cannot be disabled”. DOM tests verify
-  interactions; responsive CSS and keyboard drawer handling are implemented.
+- No Safari device test or production network load timing is claimed. The shared
+  browser and preview relay fail to start, but installed sandboxed Chromium was
+  used for real rendering against the application and an isolated SQLite backend.
+  Screenshot inspection covered desktop and mobile student/teacher routes; browser
+  checks reported no page errors or horizontal document overflow.
 - Sites confirmed `donteventry.me` active with active SSL on November 7, 2026,
   after the ownership TXT value was corrected. The domain serves this application.
 - A flagged template can be suspended and re-enabled by a teacher. Correcting the
@@ -45,16 +46,22 @@ keyboard handling. Existing records are preserved by additive migrations.
 The prior interface remains preserved in Git history; no public history rewrite
 or unrequested deletion of existing accounts was performed.
 
-## Education-first visual revision
+## Mathematics studio visual revision
 
-The latest revision restores the first design's geometric illustration and
-Mathematics branding, with beige paper and navy ink. A horizontal course header
-replaces the fixed sidebar. Student home leads with the actual lesson and a
-lesson/example/practice sequence; course and reference pages read as chapters.
-The teacher home is a teaching notebook with current topics, preparation, notes,
-then practice records. Teacher management and student learning flows are retained.
+The latest revision restores the desktop sidebar, a compact tablet navigation
+rail, and a keyboard-accessible mobile drawer. White and pale blue surfaces with
+navy text replace beige. Graph paper, geometry, curves, number lines and the
+original geometric illustration reinforce the mathematics identity. Student home
+still leads with the actual lesson and a lesson/example/practice sequence;
+teacher home keeps current topics, preparation, notes and practice records.
+All teacher management and student learning flows are retained.
 
 Thirteen interface tests pass, including mobile navigation disclosure, Escape,
 desktop resize, authentication, saved answers and teacher actions. CSS/SVG parsing,
-production build and compiled Worker smoke checks pass. The managed browser still
-fails to start with the error above; rendered screenshots are not verified.
+production build and compiled Worker smoke checks pass. Real sandboxed Chromium
+rendering used the unchanged backend with isolated test accounts. The visual pass
+covered student and teacher routes at 1440px and key phone screens at 390px, plus
+320px, 900px and 1024px checks. Worked example steps and answer feedback were also
+rendered. Inspection found and corrected heading, skill-card, mobile header and
+navigation spacing, search-field padding and a duplicated illustration caption.
+No screenshots or test-account credentials are published in this repository.

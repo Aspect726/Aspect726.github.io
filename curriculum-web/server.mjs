@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { parseArgs } from 'node:util';
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, extname } from 'node:path';
@@ -19,8 +20,9 @@ for (const name of await readdir(resolve(root, 'public/assets/fonts')).catch(() 
 let questionPool = null;
 try { questionPool = JSON.parse(await readFile(resolve(root, 'private/vetted-seeds.json'), 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const app = createApp({ db, assets, questionPool, production: process.env.NODE_ENV === 'production' });
-const port = Number(process.env.PORT || 3000);
-const host = process.env.HOST || '127.0.0.1';
+const { values: cli } = parseArgs({ options: { port: { type: 'string' }, host: { type: 'string' }, strictPort: { type: 'boolean' } } });
+const port = Number(process.env.PORT || cli.port || 3000);
+const host = process.env.HOST || cli.host || '127.0.0.1';
 const server = createServer(async (req, res) => {
   try {
     const origin = process.env.APP_ORIGIN || `http://${req.headers.host}`;

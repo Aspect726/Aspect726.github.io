@@ -1,6 +1,6 @@
 @font-face{font-family:Inter;src:url('/assets/fonts/inter-latin.woff2') format('woff2');font-weight:100 900;font-display:swap}
 @font-face{font-family:'Source Serif 4';src:url('/assets/fonts/source-serif-4-latin.woff2') format('woff2');font-weight:200 900;font-display:swap}
-:root{--paper:#F5F0E5;--card:#FFFCF5;--ink:#263B50;--deep:#20364B;--ink-soft:#566272;--muted:#566272;--body:var(--ink);--teal:#385B80;--accent-dark:#233F5C;--accent-soft:#E6ECF0;--brick:#A95135;--gold:#DDB96B;--gold-soft:#F3E4BD;--warm-soft:#F4E4D6;--good:#6D572B;--miss:#A95135;--line:#DAD2C1;--line-strong:#B5AA94;--track:#E6DECD;--serif:'Source Serif 4',Georgia,serif;--sans:Inter,Arial,sans-serif;color-scheme:light}
+:root{--paper:#F5F7FC;--card:#FFFFFF;--ink:#21334F;--deep:#1E3352;--ink-soft:#55657D;--muted:#55657D;--body:var(--ink);--teal:#345EC2;--accent-dark:#23458E;--accent-soft:#EAF0FC;--brick:#A44D39;--gold:#EDBD64;--gold-soft:#FFF2CF;--warm-soft:#FFF0E9;--good:#665021;--miss:#A44D39;--line:#DCE3F0;--line-strong:#9AAAC4;--track:#E5EBF5;--serif:'Source Serif 4',Georgia,serif;--sans:Inter,Arial,sans-serif;color-scheme:light}
 *{box-sizing:border-box}
 html{scroll-padding-top:24px}
 body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
@@ -22,7 +22,7 @@ math{font-family:var(--serif);font-size:1.12em}math[display=block]{margin:20px 0
 .skip-link{position:fixed;top:-100px;left:16px;z-index:120;background:var(--card);padding:12px}.skip-link:focus{top:12px}
 .initial{margin:18vh auto;max-width:440px;padding:24px}.noscript{padding:24px}
 .nav-icon{width:18px;height:18px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-/* A course masthead, with all classroom destinations in one horizontal row. */
+/* Shared brand and header primitives. Sidebar layout is defined below. */
 .school-header{background:var(--card);border-top:5px solid var(--ink);border-bottom:1px solid var(--line)}
 .school-masthead,.school-navigation,.topbar,.page-content,.app-footer{max-width:1240px;margin:0 auto;padding-left:40px;padding-right:40px}
 .school-masthead{min-height:101px;display:flex;align-items:center;justify-content:space-between;gap:24px}
@@ -30,7 +30,7 @@ math{font-family:var(--serif);font-size:1.12em}math[display=block]{margin:20px 0
 .brand-mark{width:44px;height:44px;flex-shrink:0}
 .brand small{display:block;font-size:8px;letter-spacing:1.65px;font-weight:600;color:var(--muted);margin-top:8px}
 .school-account{display:flex;align-items:center;gap:13px;min-width:0}
-.avatar{height:36px;width:36px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:#EEE4CF;font-size:13px;font-weight:600;flex-shrink:0}
+.avatar{height:36px;width:36px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:#E9EFFB;font-size:13px;font-weight:600;flex-shrink:0}
 .school-person{min-width:0;max-width:180px;margin-right:14px}
 .school-person strong{display:block;font-size:12px;overflow-wrap:anywhere}
 .school-person small{display:block;font-size:10px;color:var(--muted)}
@@ -57,10 +57,10 @@ math{font-family:var(--serif);font-size:1.12em}math[display=block]{margin:20px 0
 .page-content>*{min-width:0}
 .app-footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:11px;color:var(--muted)}
 .footer-brand{font-size:15px;font-family:var(--serif);color:var(--ink);font-weight:600}.footer-brand small{display:block;font:9px var(--sans);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
-.footer-math{font:24px var(--serif);color:#A58A50}
+.footer-math{font:24px var(--serif);color:#7590B9}
 .page-heading{margin-bottom:34px}.page-heading h1{margin-bottom:12px}.page-heading p:last-child{margin-bottom:0}.page-heading>div>p{max-width:68ch}
 .page-heading.with-math{display:flex;align-items:center;justify-content:space-between;gap:28px}
-.page-heading.with-math>div{min-width:0}.page-math{flex:0 0 110px;color:#76889C}.page-math svg{width:110px;height:68px}
+.page-heading.with-math>div{min-width:0}.page-math{flex:0 0 110px;color:#7590B9}.page-math svg{width:110px;height:68px}
 .eyebrow{font-size:10px;font-weight:650;letter-spacing:1.8px;text-transform:uppercase;color:var(--brick);line-height:1.5;margin-bottom:12px}
 .page-intro,.section-description{color:var(--muted);max-width:68ch;margin-bottom:28px}
 /* Paper surfaces are reserved for lessons, exercises and records. */
@@ -77,7 +77,7 @@ math{font-family:var(--serif);font-size:1.12em}math[display=block]{margin:20px 0
 .section-heading>*{min-width:0}
 .button,button[type=submit]{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:12px 21px;border:1px solid var(--ink);border-radius:5px;background:var(--ink);color:#fff;font-size:12px;line-height:1.5;font-weight:650;text-decoration:none;text-align:center;transition:background .15s,border-color .15s}
 .button:hover:not(:disabled),button[type=submit]:hover:not(:disabled){background:#39556C;border-color:#39556C}
-.button.secondary{background:transparent;color:var(--ink);border-color:var(--line-strong)}.button.secondary:hover{background:#EEE7D7;border-color:var(--line-strong)}
+.button.secondary{background:transparent;color:var(--ink);border-color:var(--line-strong)}.button.secondary:hover{background:#EDF2FD;border-color:var(--line-strong)}
 .button.gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}.button.gold:hover{background:#E7C77E;border-color:#E7C77E}
 .button.danger{background:transparent;color:var(--brick);border-color:var(--brick)}.button.danger:hover{background:var(--warm-soft)}
 .button.small,.button.compact{padding:8px 13px;font-size:11px}.button.wide{width:100%}
@@ -88,24 +88,24 @@ math{font-family:var(--serif);font-size:1.12em}math[display=block]{margin:20px 0
 .field label>input,.field label>select,.field label>textarea{display:block;margin-top:8px}
 .field-help{font-size:11px;line-height:1.7}
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}.form-grid .full{grid-column:1/-1}
-input:not([type=checkbox]):not([type=radio]),select,textarea{width:100%;min-height:44px;padding:11px 13px;border:1px solid var(--line-strong);background:#FFFDF8;border-radius:4px;font-size:14px}
+input:not([type=checkbox]):not([type=radio]),select,textarea{width:100%;min-height:44px;padding:11px 13px;border:1px solid var(--line-strong);background:#FFFFFF;border-radius:4px;font-size:14px}
 textarea{min-height:100px;resize:vertical}
 .check-label{display:flex;align-items:flex-start;gap:10px;min-height:44px;font-size:12px;line-height:1.7}
 input[type=checkbox],input[type=radio]{width:18px;height:18px;flex-shrink:0;accent-color:var(--teal);margin-top:3px}
 .form-error,.inline-error{color:var(--brick);border-left:3px solid var(--brick);padding:12px 16px;background:var(--warm-soft);margin:18px 0;font-size:13px}
 .notice{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);max-width:calc(100% - 32px);padding:14px 20px;background:var(--ink);color:#fff;z-index:100;border-radius:5px;font-size:13px}.notice.error{background:var(--brick)}
 .notice-inline{padding:12px 16px;background:var(--gold-soft);font-size:12px}
-.empty-state,.empty{padding:26px;background:#F6F0E3;border-left:2px solid var(--gold);color:var(--muted);font-size:13px}
+.empty-state,.empty{padding:26px;background:#EDF3FC;border-left:2px solid var(--gold);color:var(--muted);font-size:13px}
 .empty-state h2,.empty-state h3{color:var(--ink);font-family:var(--serif);font-size:24px}.empty-state p:last-child,.empty p:last-child{margin-bottom:0}
 .badge{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:3px 8px;border:1px solid var(--line);background:var(--paper);border-radius:3px;font-size:10px;font-weight:500;line-height:1.5}
-.badge.good,.badge.mastered{color:var(--good);background:var(--gold-soft);border-color:#D6C38F}.badge.miss{color:var(--brick);background:var(--warm-soft)}
+.badge.good,.badge.mastered{color:var(--good);background:var(--gold-soft);border-color:#D7BF7C}.badge.miss{color:var(--brick);background:var(--warm-soft)}
 .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border-block:1px solid var(--line);margin:24px 0 30px}
 .summary-stat{min-width:0;padding:20px 24px;background:var(--card)}
 .summary-stat strong{display:block;font:600 32px/1.2 var(--serif);color:var(--ink);margin:9px 0 4px;overflow-wrap:anywhere}.summary-stat .label{font-size:11px;color:var(--muted)}.summary-stat p{margin:6px 0 0}
 .table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto}
 table{width:100%;min-width:480px;border-collapse:collapse;text-align:left;font-size:12px;line-height:1.7}
 th,td{padding:15px 13px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
-th{font-size:10px;font-weight:600;background:#F4EDDD;color:var(--muted);letter-spacing:.3px}
+th{font-size:10px;font-weight:600;background:#F0F4FA;color:var(--muted);letter-spacing:.3px}
 tbody tr:last-child td{border-bottom:0}td p{margin:6px 0 0}td .button{white-space:normal;min-width:90px}
 .section-nav{display:flex;gap:25px;flex-wrap:wrap;margin:24px 0 30px;border-bottom:1px solid var(--line)}
 .section-nav a{min-height:44px;display:inline-flex;align-items:center;padding:9px 0 12px;font-size:12px;text-decoration:none;border-bottom:3px solid transparent;color:var(--muted)}
@@ -114,19 +114,19 @@ tbody tr:last-child td{border-bottom:0}td p{margin:6px 0 0}td .button{white-spac
 .progress-track{height:5px;background:var(--track);overflow:hidden}.progress-fill{height:100%;background:var(--teal)}
 .week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:22px 0}
 .day-dot,.day-summary{padding:14px 5px;text-align:center;border:1px solid var(--line);background:var(--card);font-size:11px;border-radius:4px;min-width:0}
-.day-dot strong{display:grid;place-items:center;width:32px;height:32px;margin:9px auto;border-radius:50%;background:#F1EAD9;font:600 17px var(--serif)}
-.day-dot small,.day-summary small{display:block;font-size:9px}.day-dot.today,.day-dot.current{background:var(--gold-soft);border-color:#BFAA74}.day-dot.current strong,.day-dot.today strong{background:var(--ink);color:#fff}.day-dot.done strong{background:#DCC991;color:var(--ink)}
-.teacher-note{border:0;border-left:2px solid var(--gold);background:#EFE5CD;padding:24px}
+.day-dot strong{display:grid;place-items:center;width:32px;height:32px;margin:9px auto;border-radius:50%;background:#ECF1FB;font:600 17px var(--serif)}
+.day-dot small,.day-summary small{display:block;font-size:9px}.day-dot.today,.day-dot.current{background:var(--gold-soft);border-color:#8FA7D9}.day-dot.current strong,.day-dot.today strong{background:var(--ink);color:#fff}.day-dot.done strong{background:#CCDDF7;color:var(--ink)}
+.teacher-note{border:0;border-left:2px solid var(--gold);background:#EEF4FE;padding:24px}
 .course-path{padding:0}.week-node{margin-bottom:20px;min-width:0}.week-marker{display:none}
-.course-path>.week-node>.card{padding:28px}.week-node.current>.card{border-color:#BCA36B}.week-node summary{cursor:pointer;min-height:44px}
+.course-path>.week-node>.card{padding:28px}.week-node.current>.card{border-color:#8EA5D2}.week-node summary{cursor:pointer;min-height:44px}
 .skill-list{list-style:none;margin:22px 0 0;padding:0}.skill-list li{padding:18px 0;border-top:1px solid var(--line)}
 .mastery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));gap:14px;margin:20px 0}
 .mastery-tile{display:flex;flex-direction:column;gap:10px;min-width:0;padding:20px;border:1px solid var(--line);background:var(--card);text-decoration:none;color:var(--ink)}
-.mastery-tile strong{font-size:14px;line-height:1.6;overflow-wrap:anywhere}.mastery-tile:hover{border-color:var(--line-strong);background:#F4EDDF}
+.mastery-tile strong{font-size:14px;line-height:1.6;overflow-wrap:anywhere}.mastery-tile:hover{border-color:var(--line-strong);background:#EDF3FF}
 .mastery-tile small{font-size:11px;color:var(--muted)}
 .calendar-grid{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:6px;margin:20px 0}
 .calendar-square{padding:6px 2px;min-height:52px;display:grid;align-content:center;justify-items:center;gap:2px;border:1px solid var(--line);background:var(--card);font-size:11px;line-height:1.5}
-.calendar-square.complete,.calendar-square.done{background:#E2D0A1;border-color:#BFA367}.calendar-square.partial{background:#F0E4C9}.calendar-square.empty{border-left:1px solid var(--line);background:var(--card)}
+.calendar-square.complete,.calendar-square.done{background:#C6D8F5;border-color:#7899D4}.calendar-square.partial{background:#E5EDFA}.calendar-square.empty{border-left:1px solid var(--line);background:var(--card)}
 .calendar-square small{font-size:9px}.calendar-square.today{outline:2px solid var(--brick)}
 .chart,.score-chart{margin:24px 0 0;max-width:100%}.chart>svg{width:100%;max-height:240px}.score-chart figcaption{font-size:11px;color:var(--muted)}
 .chart details{font-size:12px;margin-top:14px}.chart summary{cursor:pointer;min-height:44px}.chart details li{padding:4px 0}
@@ -135,7 +135,7 @@ tbody tr:last-child td{border-bottom:0}td p{margin:6px 0 0}td .button{white-spac
 .prize-card .price,.prize-cost,.points-number{font:600 29px var(--serif);color:var(--ink)}.prize-card>.button{margin-top:auto}.prize-card p{font-size:13px}
 .history-list{list-style:none;margin:0;padding:0}.history-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 0;border-bottom:1px solid var(--line)}.history-row:last-child{border-bottom:0}.history-row>div{min-width:0}.history-row p{font-size:11px;margin:6px 0 0}
 .reference-list dt{font-weight:600;margin-top:20px;font-size:14px}.reference-list dd{margin:8px 0 20px;color:var(--muted);font-size:13px}
-.example,.lesson-example{background:#F6EFDF;border:1px solid var(--line);padding:24px;margin:20px 0}.steps{padding-left:24px}.steps li{padding:8px 0}.steps li::marker{color:var(--brick)}
+.example,.lesson-example{background:#F0F4FC;border:1px solid var(--line);padding:24px;margin:20px 0}.steps{padding-left:24px}.steps li{padding:8px 0}.steps li::marker{color:var(--brick)}
 .lesson-section{margin-bottom:24px}.lesson-section svg,.lesson-model svg{max-height:280px;margin:24px auto}
 .trap{border-left:3px solid var(--brick);padding:20px;background:var(--warm-soft)}
 .teacher-app .page-content{font-size:13px}.teacher-app .page-heading h1{font-size:42px}.teacher-app .panel h2{font-size:26px}
@@ -151,24 +151,24 @@ tbody tr:last-child td{border-bottom:0}td p{margin:6px 0 0}td .button{white-spac
 .practice-brand{display:flex;align-items:baseline;justify-content:space-between;font-family:var(--serif);font-size:21px;text-decoration:none;color:var(--ink);margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--line)}
 .practice-brand span{font:9px var(--sans);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
 .focus-progress{margin:20px 0 28px}.focus-progress .section-heading{align-items:center;font-size:12px;margin-bottom:12px}.focus-progress .small{margin:12px 0 0;font-size:11px}
-.question-surface{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);padding:38px;margin:24px 0;box-shadow:0 5px 20px #263B5005}
+.question-surface{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);padding:38px;margin:24px 0;box-shadow:0 5px 20px #21334F05}
 .question-prompt{font:23px/1.8 var(--serif);margin-bottom:28px;overflow-wrap:anywhere}.question-stage svg,.question-surface svg{max-height:300px;margin:20px auto}
-.question-stage fieldset{border:0;padding:0}.question-stage fieldset label{display:flex;align-items:flex-start;gap:12px;padding:15px;border:1px solid var(--line);margin:10px 0;font-size:15px}.question-stage fieldset label:has(input:checked){background:var(--gold-soft);border-color:#B49C5F}
+.question-stage fieldset{border:0;padding:0}.question-stage fieldset label{display:flex;align-items:flex-start;gap:12px;padding:15px;border:1px solid var(--line);margin:10px 0;font-size:15px}.question-stage fieldset label:has(input:checked){background:var(--gold-soft);border-color:#87A2D9}
 .question-stage .field input{font-size:23px;min-height:54px}
-.feedback{padding:24px;border-left:3px solid var(--teal);background:#EBF0F1;margin-top:28px}.feedback.correct{border-color:var(--good);background:var(--gold-soft)}.feedback.miss{border-color:var(--brick);background:var(--warm-soft)}
+.feedback{padding:24px;border-left:3px solid var(--teal);background:#EEF3FC;margin-top:28px}.feedback.correct{border-color:var(--good);background:var(--gold-soft)}.feedback.miss{border-color:var(--brick);background:var(--warm-soft)}
 .feedback h2{display:flex;align-items:center;gap:10px;font-size:28px}.feedback details{margin:20px 0}.feedback summary{cursor:pointer;min-height:44px}.feedback li{padding:6px 0}
 .answer-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .point-earned{border-top:1px solid var(--line);padding-top:16px;font-weight:600}.keypad{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:20px}.keypad button{min-height:46px;border:1px solid var(--line);background:var(--card);border-radius:3px}.keypad button:hover{background:var(--gold-soft)}
 .finish-card,.completion-card{max-width:760px;margin:30px 0;padding:32px;border-block:1px solid var(--line);background:var(--card)}.goal-node{padding:30px 0;text-align:center}
 /* Sign-in opens the course, rather than introducing a software product. */
 .login-layout{display:grid;grid-template-columns:1.15fr 1fr;min-height:100dvh;max-width:1440px;margin:auto}
-.login-story{position:relative;padding:45px 60px;display:flex;flex-direction:column;gap:30px;background:#EFE6D3;border-right:1px solid var(--line)}
+.login-story{position:relative;padding:45px 60px;display:flex;flex-direction:column;gap:30px;background:#EDF3FF;border-right:1px solid var(--line)}
 .login-story-content{position:relative;flex:1;max-width:550px;margin:auto;padding-top:35px}
 .login-story h1{font:600 clamp(42px,4.6vw,66px)/1.03 var(--serif);letter-spacing:-2px;margin-bottom:22px}
-.login-story-content>p:not(.eyebrow){font-size:16px;color:#5C6873;line-height:1.75}
+.login-story-content>p:not(.eyebrow){font-size:16px;color:#55657D;line-height:1.75}
 .login-art{width:270px;height:285px;object-fit:contain;margin:0 0 0 auto}
 .login-story>small{font-size:10px;color:var(--muted);letter-spacing:.3px}
-.login-math-tags{display:flex;gap:15px;flex-wrap:wrap;border-top:1px solid #D8C9AA;padding-top:20px;margin-top:4px;font-size:10px;font-weight:600;color:var(--ink)}
+.login-math-tags{display:flex;gap:15px;flex-wrap:wrap;border-top:1px solid #D4DFF3;padding-top:20px;margin-top:4px;font-size:10px;font-weight:600;color:var(--ink)}
 .login-form-area{display:grid;align-items:center;justify-items:center;padding:50px;background:var(--card)}
 .auth-panel{width:100%;max-width:360px}.auth-panel h1{font:600 40px var(--serif)}.auth-panel>.muted{font-size:13px}
 .auth-panel form{margin-top:32px}.auth-panel .field{margin-bottom:21px}.auth-panel .wide{margin-top:16px}.login-note{font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:22px;margin-top:30px}
@@ -213,8 +213,8 @@ h2{font-size:26px}.card,.panel,.lesson-section,.question-preview{padding:22px}.g
 .mastery-meta { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:auto; }
 .mastery-meta > small,.mastery-accuracy { color:var(--muted); font-size:12px; }
 .teacher-app .mastery-status { white-space:nowrap; font-weight:500; border-color:var(--line); background:var(--paper); color:var(--muted); }
-.teacher-app .mastery-status.mastered { background:#e9dfc6; color:#62502b; }
-.teacher-app .mastery-status.learning,.teacher-app .mastery-status.practicing { background:#f0dfd0; color:var(--brick); }
+.teacher-app .mastery-status.mastered { background:#EAF0FC; color:#34558E; }
+.teacher-app .mastery-status.learning,.teacher-app .mastery-status.practicing { background:#FFF0E9; color:var(--brick); }
 .teacher-course-plan { display:grid; gap:16px; }
 .plan-week { display:grid; grid-template-columns:48px minmax(0,1fr) auto; align-items:start; gap:20px; border:1px solid var(--line); border-radius:16px; padding:26px; background:var(--card); }
 .plan-week.current { border-color:var(--brick); box-shadow:inset 3px 0 var(--brick); }
@@ -225,7 +225,7 @@ h2{font-size:26px}.card,.panel,.lesson-section,.question-preview{padding:22px}.g
 .plan-week-label { font-weight:700; color:var(--ink); }
 .plan-date { white-space:nowrap; }
 .plan-week-meta .badge { font-size:11px; padding:3px 8px; }
-.plan-week-meta .badge.current { color:var(--brick); background:#f0dfd0; border-color:#dbc1ac; }
+.plan-week-meta .badge.current { color:var(--brick); background:#FFF0E9; border-color:#DFC5BD; }
 .plan-week h2 { font-size:18px; line-height:1.5; margin:0 0 8px; overflow-wrap:anywhere; }
 .plan-week-actions { padding-top:3px; }
 .plan-week-actions .button { white-space:nowrap; font-size:12px; }
@@ -307,7 +307,7 @@ details[open]>.course-summary .course-open-label{display:none}
 .mastery-status{display:block}.mastery-tile small span{display:block}
 .calendar-legend{list-style:none;display:flex;flex-wrap:wrap;gap:12px 22px;padding:0;margin:0 0 22px;font-size:11px;color:var(--muted)}
 .calendar-legend li{display:flex;align-items:center;gap:8px}.legend-key{width:12px;height:12px;border:1px solid var(--line);background:var(--card);padding:0;display:block}
-.legend-key.complete{background:#E2D0A1;border-color:#BFA367}.legend-key.partial{background:#F0E4C9}.legend-key.empty{padding:0;background:var(--card);border:1px solid var(--line)}
+.legend-key.complete{background:#C6D8F5;border-color:#7899D4}.legend-key.partial{background:#E5EDFA}.legend-key.empty{padding:0;background:var(--card);border:1px solid var(--line)}
 .library-search{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border:0;border-block:1px solid var(--line);background:transparent;border-radius:0;padding:22px 0;margin:0 0 32px}
 .library-search .field{width:min(100%,580px);margin:0;font-size:12px;font-weight:600}.library-search #search-count{font-size:11px;color:var(--muted);white-space:nowrap;margin:0 0 10px}
 .library-week{margin:32px 0}.library-skill{display:flex;flex-direction:column;min-width:0}.library-skill>details{margin:8px 0 22px;border-top:1px solid var(--line);padding-top:8px}.library-skill>details>summary{cursor:pointer;min-height:44px;padding:11px 0;color:var(--teal);font-size:12px}
@@ -340,7 +340,7 @@ details[open]>.course-summary .course-open-label{display:none}
 .edu-dateline{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 .edu-dateline p{margin:0}
 .edu-dateline>p:last-child{font-size:13px;color:var(--muted);letter-spacing:.2px}
-.edu-lesson-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);gap:36px;align-items:center;padding:40px;background:#eee1c7;color:var(--ink);border:1px solid #deccab;border-radius:4px;margin:0}
+.edu-lesson-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);gap:36px;align-items:center;padding:40px;background:#EAF1FE;color:var(--ink);border:1px solid #CBD9F1;border-radius:4px;margin:0}
 .edu-lesson-copy{min-width:0}
 .edu-chapter-kicker{font-size:11px;line-height:1.7;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--brick);margin:0 0 18px}
 .edu-lesson-hero h1{font-family:var(--serif);font-size:clamp(32px,3.2vw,45px);font-weight:600;line-height:1.14;letter-spacing:-.6px;color:var(--ink);max-width:23ch;margin:0 0 24px}
@@ -357,7 +357,7 @@ details[open]>.course-summary .course-open-label{display:none}
 .edu-practice-note strong{display:block;font-size:14px;line-height:1.5;color:var(--ink);margin-bottom:4px}
 .edu-practice-note span,.edu-practice-note>p{font-size:12px;color:var(--muted);line-height:1.7;margin:0}
 .edu-practice-note>.text-link{font-size:13px;min-height:44px;display:inline-flex;align-items:center}
-.edu-teacher-annotation{margin:0 0 38px;padding:18px 24px;border:0;border-left:3px solid var(--gold);border-radius:0;background:#f4ecda}
+.edu-teacher-annotation{margin:0 0 38px;padding:18px 24px;border:0;border-left:3px solid var(--gold);border-radius:0;background:#EEF4FE}
 .edu-teacher-annotation .eyebrow{font-size:10px;margin-bottom:8px}
 .edu-teacher-annotation>p:last-child{font-family:var(--serif);font-size:18px;line-height:1.75;color:var(--ink);max-width:75ch;margin:0}
 .edu-section-title{margin-bottom:24px}
@@ -392,7 +392,7 @@ details[open]>.course-summary .course-open-label{display:none}
 .edu-week-journal .week-strip{margin:24px 0 0}
 .edu-week-journal .day-dot{border-width:0 1px 0 0;border-radius:0;background:transparent;padding:12px 6px}
 .edu-week-journal .day-dot:last-child{border-right:0}
-.edu-week-journal .day-dot.current{border-width:0 1px 0 0;outline:1px solid var(--brick);outline-offset:-1px;background:#f0e3cf}
+.edu-week-journal .day-dot.current{border-width:0 1px 0 0;outline:1px solid var(--brick);outline-offset:-1px;background:#E9F0FF}
 .edu-week-journal .day-dot>span{font-size:11px;text-transform:uppercase;letter-spacing:1px}
 .edu-week-journal .day-dot>strong{font-family:var(--serif);font-size:24px;font-weight:500;border:0;border-radius:0;background:transparent;color:var(--ink);margin:8px auto;line-height:1.2}
 .edu-week-journal .day-dot>small{font-size:10px;line-height:1.7}
@@ -430,10 +430,10 @@ details[open]>.course-summary .course-open-label{display:none}
 .edu-workbook .lesson-heading h2{font-family:var(--serif);font-size:29px;font-weight:600}
 .edu-workbook .lesson-number{font-family:var(--serif);font-style:italic;font-size:29px}
 .edu-workbook .lesson-idea{font-family:var(--serif);font-size:21px;line-height:1.85;max-width:68ch}
-.edu-workbook .lesson-model{padding:20px;background:#f2e8d6;border:1px solid var(--line);border-radius:2px;margin:24px 0}
+.edu-workbook .lesson-model{padding:20px;background:#F0F5FD;border:1px solid var(--line);border-radius:2px;margin:24px 0}
 .edu-workbook .example-prompt{font-family:var(--serif);font-size:22px;line-height:1.8}
 .edu-workbook .steps{font-family:var(--serif);font-size:19px;line-height:1.8}
-.edu-workbook .lesson-trap{border-left:3px solid var(--brick);padding:24px;background:#f4e7d5;margin-bottom:20px}
+.edu-workbook .lesson-trap{border-left:3px solid var(--brick);padding:24px;background:#FFF0E8;margin-bottom:20px}
 .edu-workbook .lesson-turn{border:1px solid var(--line);padding:28px;background:var(--card)}
 .student-app .mastery-week{border-top:1px solid var(--line);padding-top:22px;margin-top:28px}
 .student-app .mastery-week>h3{font-family:var(--serif);font-size:23px;line-height:1.4;margin-bottom:18px}
@@ -446,7 +446,7 @@ details[open]>.course-summary .course-open-label{display:none}
 .edu-journal-summary>.card:last-child{border:0}
 .edu-journal-summary h2{font-family:var(--serif);font-size:25px}
 .edu-journal-summary .eyebrow{font-size:9px;line-height:1.8}
-.edu-reward-note{border-radius:2px;background:#f2e8d0;border:1px solid #d7c69e;padding:28px 32px;margin-bottom:34px}
+.edu-reward-note{border-radius:2px;background:#EEF3FD;border:1px solid #CFDDF4;padding:28px 32px;margin-bottom:34px}
 .edu-reward-note h2{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--ink)}
 .edu-reward-note h2>span{font-size:20px;font-weight:400}
 .edu-reward-note .reward-next{max-width:400px}
@@ -598,3 +598,138 @@ details[open]>.course-summary .course-open-label{display:none}
 .teacher-paper-note .button{color:var(--ink);border-color:var(--line-strong)}
 .teacher-paper-note .button:hover{color:var(--ink);background:var(--gold-soft);border-color:var(--line-strong)}
 .teacher-app .summary-grid>.summary-stat{border:0}
+
+/* Clear mathematics studio: navigation at the side, aligned learning surfaces. */
+body{background-color:var(--paper);background-image:url('/assets/graph-paper.svg')}
+h1{font-family:var(--sans);font-weight:750;letter-spacing:-1.15px;line-height:1.15}
+.sidebar{position:fixed;inset:0 auto 0 0;width:232px;z-index:50;padding:30px 18px 20px;background:#FFFFFF;border-right:1px solid var(--line);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.sidebar .brand{font-size:18px;letter-spacing:-.5px;gap:10px;align-items:center;margin:0 2px 0}
+.sidebar .brand-mark{width:39px;height:39px}
+.sidebar .brand>span{min-width:0;max-width:135px;line-height:1.2}
+.sidebar .brand small{font-size:8px;letter-spacing:1.6px;margin-top:6px}
+.sidebar-person{display:flex;align-items:center;gap:11px;padding:21px 5px;margin:20px 0 18px;border-block:1px solid var(--line)}
+.sidebar-person .avatar{background:var(--accent-soft);border-color:var(--line);color:var(--teal);border-radius:12px}
+.sidebar .school-person{display:block;margin:0;min-width:0;max-width:140px}
+.sidebar .school-person strong{font-size:12px;overflow-wrap:anywhere}
+.sidebar .school-person small{display:block;font-size:10px;line-height:1.6;margin-top:3px}
+.nav-label{font-size:9px;font-weight:650;letter-spacing:1.5px;color:var(--muted);margin:0 12px 12px}
+.sidebar-navigation nav{display:grid;gap:5px}
+.sidebar .side-link{display:flex;align-items:center;gap:11px;min-height:44px;padding:11px 12px;border:1px solid transparent;border-radius:8px;font-size:12px;font-weight:550;color:var(--muted);white-space:normal}
+.sidebar .side-link .nav-icon{display:block;width:19px;height:19px}
+.sidebar .side-link.active{background:#EAF0FE;color:#2E52A1;border-color:#D8E3F8;font-weight:650}
+.sidebar .side-link:hover{background:#F2F5FC;color:var(--teal)}
+.sidebar-bottom{margin-top:auto;padding-top:25px}
+.sidebar-maths{background:#F2F6FE;border:1px solid #E1E9F7;border-radius:10px;margin:0 3px 20px;padding:14px 15px;color:#577BB5}
+.sidebar-maths svg{width:100%;height:auto}
+.sidebar-maths p{font:italic 16px/1.45 var(--serif);color:var(--ink);margin:5px 0 0}
+.sidebar .school-account{display:grid;justify-content:stretch;gap:3px;margin:0;padding:12px 0 0;border-top:1px solid var(--line)}
+.sidebar .account-link{display:flex;align-items:center;gap:11px;min-height:42px;padding:9px 12px;text-decoration:none;color:var(--muted);font-size:11px;border:0;background:transparent;text-align:left;border-radius:6px}
+.sidebar .account-link:hover{background:#F2F5FC;color:var(--teal)}
+.sidebar .account-link .nav-icon{width:18px;height:18px}
+.workspace{margin-left:232px;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:30;max-width:none;padding:16px 38px;min-height:72px;border-bottom:1px solid var(--line);background:#FFFFFFF5;backdrop-filter:blur(10px);font-size:12px}
+.topbar-start{gap:12px;min-width:0}.topbar-status{gap:14px}
+.topbar-status select{font-size:12px;background:#F8FAFE;border-color:#C5D2E8;max-width:180px;min-height:38px}
+.points-pill{border:1px solid #E6D2A2;background:#FFF4D9;color:#6D5322;padding:5px 10px;border-radius:20px;font-size:10px;white-space:nowrap}
+.menu-button{display:none;min-width:42px;font-size:20px;padding:5px 8px;border:0;margin:0}
+.page-content{max-width:1260px;margin-inline:auto;padding:36px 38px 60px;min-height:calc(100vh - 180px)}
+.app-footer{max-width:1260px;padding:24px 38px;background:transparent}
+.drawer-shade{position:fixed;inset:0;border:0;background:#14233D66;z-index:49}
+.page-heading,.teacher-app .teacher-chapter-heading{display:flex;align-items:center;justify-content:space-between;gap:28px;min-height:110px}
+.page-heading>div,.teacher-chapter-heading>div{min-width:0;flex:1}
+.page-heading h1,.teacher-app .teacher-chapter-heading h1{font:750 clamp(29px,3vw,42px)/1.15 var(--sans);letter-spacing:-1.05px;margin:0 0 12px}
+.math-heading-decoration{flex:0 0 146px;color:#6D88B7;align-self:center;pointer-events:none}
+.math-heading-decoration svg{width:146px;height:92px}
+.math-heading-decoration text{fill:currentColor;stroke:none}
+.page-heading .muted,.teacher-chapter-intro{max-width:65ch}
+.edu-dateline{align-items:center;margin-bottom:22px}
+.edu-dateline:after{content:'π  ×  √  ∞';font:25px var(--serif);letter-spacing:8px;color:#8AA0C4;margin-left:auto;white-space:nowrap}
+.edu-lesson-hero{background:linear-gradient(120deg,#EAF1FF,#F2F6FF);border:1px solid #CDDDF6;border-radius:16px;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:28px;padding:34px}
+.edu-lesson-hero h1{font-family:var(--sans);font-weight:750;font-size:clamp(29px,2.8vw,40px);line-height:1.17;letter-spacing:-1px;max-width:24ch}
+.edu-lesson-intro{font-size:18px;line-height:1.65}
+.edu-hero-illustration{padding:16px 12px;background:#FFFFFF88;border:1px solid #DCE6F8;border-radius:14px}
+.edu-hero-illustration>img{max-height:300px}
+.edu-hero-illustration>figcaption{font-size:11px;color:var(--muted)}
+.edu-lesson-actions>.button{background:#315CAB;border-color:#315CAB;border-radius:8px}
+.edu-lesson-actions>.button:hover{background:#244582;border-color:#244582}
+.edu-practice-note{gap:18px;padding-inline:0}.edu-practice-note>div{min-width:0}
+.edu-reading-columns{gap:34px;grid-template-columns:minmax(0,1fr) minmax(205px,.45fr);align-items:start}
+.edu-method>li{align-items:flex-start}.edu-method>li>span{min-width:26px}
+.edu-resource-notes{padding-left:25px}
+.edu-chapter-list>li{align-items:flex-start}.edu-chapter-number{min-width:30px;line-height:1.3;padding-top:5px}
+.edu-chapter-list>li>.text-link{margin-top:0;align-self:center}
+.edu-week-journal{background:white;border:1px solid var(--line);border-top:3px solid #9BB6E5;border-radius:10px;padding:25px}
+.edu-week-journal .week-strip{margin-top:18px}.edu-week-journal .day-dot.current{outline-color:#89A7DE;background:#EDF3FF}
+.edu-week-journal .day-dot>small{overflow-wrap:anywhere}
+.card,.panel,.question-preview{border-radius:10px;background:#fff}
+.teacher-app .teacher-chapter-heading{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+.teaching-notebook{grid-template-columns:minmax(0,1.95fr) minmax(220px,1fr);gap:34px}
+.teaching-margin{padding-left:24px}.teacher-app .teaching-lesson>h2{font-size:32px;max-width:28ch}
+.teaching-focus-skills li{padding-top:14px;padding-bottom:14px}
+.teacher-app .teacher-paper-note{background:#F0F5FE;box-shadow:3px 3px 0 #DCE7FA;border-color:#D1DFF4;border-radius:6px}
+.plan-week{grid-template-columns:40px minmax(0,1fr) auto;gap:20px;border-radius:10px}
+.plan-week.current{border-color:#96B0DF;box-shadow:inset 3px 0 #537BBE}
+.plan-week h2{font-family:var(--sans);font-size:17px}
+.plan-week-actions{align-self:start}.plan-week-actions .button{min-width:144px}
+.teacher-app .teacher-mastery-tile{border-radius:8px;min-height:116px}
+.teacher-mastery-grid{align-items:stretch}
+.teacher-app .mastery-status.mastered{background:#EAF1FE;color:#335B99}
+.lesson-heading{align-items:flex-start}.lesson-heading .lesson-number{line-height:1.2;min-width:49px;padding-top:5px}
+.edu-workbook .lesson-model{background:#F0F5FE;border-color:#D7E3F6;border-radius:8px}
+.edu-workbook .lesson-trap{background:#FFF3EC;border-radius:0 8px 8px 0}
+.edu-workbook .lesson-turn{border-radius:10px}
+.edu-reference-page{border-top-color:#8BA9DF;border-radius:8px;display:flex;flex-direction:column}
+.edu-reference-page .library-rule{margin-bottom:20px}.edu-reference-page .form-actions{align-items:center}
+.student-app .mastery-tile{border-left-color:#92ABD6}
+.student-app .mastery-tile.mastered{border-left-color:#3E65A4}.student-app .mastery-tile.learning{border-left-color:#C98B64}
+.edu-reward-note{background:#EDF3FF;border-color:#CEDDF6;border-radius:12px}
+.prize-card{border-radius:10px;border-top:3px solid #E9BE6E}.prize-card .button{margin-top:auto}
+.question-surface{border-radius:12px;border-top-color:#7E9DD6;box-shadow:0 8px 28px #253E6507}
+.practice-brand:after{content:'x² + y²';font:italic 18px var(--serif);color:#7892BD}.practice-brand span{margin-left:auto;margin-right:20px}
+.login-layout{max-width:none}.login-story{background:#EDF3FF;background-image:url('/assets/graph-paper.svg');border-color:#DCE6F8}
+.login-story h1{font-family:var(--sans);font-weight:750;font-size:clamp(40px,4.3vw,62px);letter-spacing:-2px;line-height:1.1}
+.login-art{width:300px;height:310px;margin-top:10px}.login-math-tags{border-color:#C7D8F1}
+.login-form-area{background:#fff}.auth-panel h1{font:700 36px var(--sans);letter-spacing:-.8px}
+.button,button[type=submit]{border-radius:7px}.button.secondary{border-color:#A8B9D5}.button.secondary:hover{background:#EFF4FF}
+input:not([type=checkbox]):not([type=radio]),select,textarea{border-color:#A8B9D5;border-radius:6px}
+.summary-grid{border:1px solid var(--line);border-radius:8px;overflow:hidden}.summary-stat{background:#fff}
+/* Match server-rendered teaching diagrams to the current interface palette. */
+.lesson-model [fill="#FBF8F2"]{fill:#FFFFFF}.lesson-model [stroke="#E2DACB"]{stroke:#CBD9EF}
+.lesson-model [stroke="#1F5A63"]{stroke:#6C8BC1}.lesson-model [fill="#173F45"],.lesson-model [fill="#1E2A2C"]{fill:var(--ink)}
+.edu-today{max-width:none}
+.library-search{padding:22px 24px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.teaching-focus-skills .text-link{display:inline;min-height:0;font-size:14px;font-weight:500;line-height:1.7;text-decoration:none}
+.mastery-grid,.teacher-mastery-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.student-app .mastery-tile strong{flex:1}
+@media(max-width:1119px){.mastery-grid,.teacher-mastery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.mastery-grid,.teacher-mastery-grid{grid-template-columns:1fr}.library-search{padding:20px}.topbar-status .today-count{white-space:nowrap}}
+@media(min-width:768px) and (max-width:1119px){
+.sidebar{width:76px;padding:25px 10px}.sidebar .brand{justify-content:center;margin:0}.sidebar .brand>span,.sidebar-person,.nav-label,.sidebar-maths,.sidebar .side-link>span,.sidebar .account-link>span{display:none}
+.sidebar-navigation{margin-top:32px}.sidebar .side-link,.sidebar .account-link{justify-content:center;padding:12px 8px}.sidebar .side-link .nav-icon{width:20px;height:20px}.sidebar .school-account{display:grid;margin:0;padding-top:16px}.sidebar-bottom{padding-top:25px}
+.workspace{margin-left:76px}.topbar{padding-inline:28px}.page-content,.app-footer{padding-left:28px;padding-right:28px}.sidebar .side-link:hover:after,.sidebar .account-link:hover:after{content:attr(title);position:fixed;left:72px;padding:8px 12px;background:var(--ink);color:white;border-radius:5px;font-size:12px;white-space:nowrap;z-index:80}
+}
+@media(max-width:1200px){.edu-lesson-hero{padding:28px;gap:20px}.edu-lesson-hero h1{font-size:32px}.teaching-notebook{gap:25px}.teaching-margin{padding-left:22px}.teaching-week-record{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1120px) and (max-width:1279px){.teaching-notebook{grid-template-columns:1fr}.teaching-margin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;border-left:0;border-top:1px solid var(--line);padding:26px 0 0}.teaching-margin>section{margin:0;padding:0 0 20px}}
+@media(max-width:900px){.edu-reading-columns{grid-template-columns:1fr}.edu-resource-notes{border-left:0;border-top:1px solid var(--line);padding:24px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:25px}.edu-resource-notes>section+section{border:0;padding-top:4px}.edu-dateline:after{display:none}}
+@media(max-width:767px){
+.sidebar{width:250px;padding:27px 18px 20px;transform:translateX(-100%);transition:transform .18s}.drawer-open .sidebar{transform:translateX(0)}.drawer-open{overflow:hidden}
+.sidebar .brand{font-size:18px}.sidebar .brand>span{display:block;max-width:145px}.sidebar .brand small{display:block}.sidebar .school-account{display:grid;grid-column:auto;grid-row:auto;gap:4px;padding-top:12px}.sidebar .account-link{font-size:12px;min-height:44px}.sidebar .school-person{display:block}.sidebar .school-person strong{font-size:12px}.sidebar .school-person small{display:block}
+.workspace{margin-left:0}.topbar{padding:12px 18px;min-height:64px}.menu-button{display:block}.topbar-start{gap:8px}.topbar-start>span:last-child{max-width:200px}.topbar .course-breadcrumb,.topbar .breadcrumb-divider{display:none}.topbar-status{gap:8px}.topbar-status select{max-width:145px}.topbar-status .today-count{font-size:10px}.points-pill{font-size:10px;padding:4px 8px}
+.page-content{padding:28px 20px 45px}.app-footer{padding:22px 20px}.page-heading,.teacher-app .teacher-chapter-heading{gap:16px;min-height:80px}.page-heading h1,.teacher-app .teacher-chapter-heading h1{font-size:31px;letter-spacing:-.8px}.math-heading-decoration{flex-basis:90px}.math-heading-decoration svg{width:90px;height:66px}
+.edu-lesson-hero{grid-template-columns:1fr;display:grid;padding:26px;gap:12px}.edu-lesson-hero h1{font-size:32px;max-width:25ch}.edu-hero-illustration{max-width:360px;width:100%;margin:15px auto 0;padding:10px}.edu-hero-illustration>img{max-height:220px}.edu-hero-illustration>figcaption{font-size:11px}.edu-dateline{display:block}
+.edu-reading-columns{gap:28px}.edu-resource-notes{display:block}.edu-resource-notes>section+section{border-top:1px solid var(--line);padding-top:22px}.edu-week-journal{padding:22px 16px}.edu-week-journal .day-dot>small{font-size:9px}.edu-week-journal .day-dot>span{font-size:10px}
+.teaching-notebook{grid-template-columns:1fr}.teaching-margin{border-left:0;padding:24px 0 0;border-top:1px solid var(--line)}.teacher-app .teaching-lesson>h2{font-size:29px}.plan-week{grid-template-columns:1fr;padding:22px}.plan-week-number{display:none}.plan-week-actions{grid-column:1}.plan-week-actions .button{min-width:0}
+.practice-brand:after{display:none}.practice-brand span{margin:0}.login-story h1{font-size:40px}.login-art{width:210px;height:220px}.login-story .brand>span{max-width:none}
+}
+@media(max-width:420px){.topbar-start>span:last-child{max-width:115px}.topbar-status .today-count{max-width:100px;line-height:1.4}.math-heading-decoration{flex-basis:62px}.math-heading-decoration svg{width:62px;height:52px}.edu-lesson-hero{padding:23px 20px}.edu-lesson-hero h1{font-size:29px}.edu-week-journal .week-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.page-heading h1,.teacher-app .teacher-chapter-heading h1{font-size:28px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+
+@media(max-width:767px){
+.sidebar-maths{display:none}.sidebar-bottom{padding-top:18px}
+.login-story-content{display:grid;grid-template-columns:minmax(0,1fr) 95px;gap:12px 16px}
+.login-story-content>.eyebrow{grid-column:1/-1;margin:0}
+.login-story-content h1{grid-column:1;font-size:32px;letter-spacing:-1px;margin:0}
+.login-story-content>p:not(.eyebrow){grid-column:1;font-size:12px;margin:0}
+.login-story-content>.login-art{grid-column:2;grid-row:2/4;width:95px;height:125px;align-self:center;margin:0}
+.login-math-tags{grid-column:1/-1;margin:0}
+}

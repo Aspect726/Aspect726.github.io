@@ -7,9 +7,10 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
 - Keep the existing server, private Sites audience and D1/R2 bindings. Preserve
   existing accounts, password hashes, progress and ledger entries with additive
   migrations; never overwrite an account from demo provisioning.
-- Use real /s and /t page URLs, a horizontal mathematics-course masthead and
-  focused practice. Use beige paper, navy ink and restrained ochre/coral accents,
-  with local Source Serif 4 for reading/headings and Inter for navigation/forms.
+- Use real /s and /t page URLs, a persistent desktop sidebar, compact tablet rail,
+  mobile drawer and focused practice. Use white/pale blue surfaces, navy text and
+  restrained gold/coral accents, with local Source Serif 4 for reading and Inter
+  for page titles, navigation and forms.
 - Count each answered question once, right or wrong. Award points atomically at
   target + first-bonus, then each bonus-step; store per-date rules so later changes
   never rewrite history. Teacher settings apply tomorrow.
@@ -26,18 +27,16 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
   carry source hashes; builds reject stale evidence.
 - Keep the old public files out of the replacement branch. Do not claim this
   erases historical Git objects or copies previously downloaded by visitors.
-- Screenshot and actual-device evidence must be real. The managed browser failed
-  with “the gaas-browser node_repl sandbox cannot be disabled”; do not substitute
-  fabricated screenshots or claim layout, Safari or load-time verification.
+- Screenshot evidence must be real. Installed sandboxed Chromium renders the
+  actual application against an isolated backend for desktop/mobile visual QA.
+  The shared browser and relay failed; do not claim production browser, Safari
+  device or network load-time verification from these isolated checks.
 
-## Education-first visual revision
+## Mathematics studio visual revision
 
-The latest user direction replaces the dashboard appearance with a mathematics
-education website, drawing on the first design. The recovered geometric artwork
-and interlocking-D Mathematics branding return. The student home leads with the
-actual lesson, then examples, practice and chapter links. Statistics sit behind
-learning. Lessons read as workbook pages, the course as a chapter index, and
-teacher home as a teaching notebook with preparation and notes in the margin.
-A horizontal course header replaces the fixed sidebar; account controls remain
-available on narrow screens. Beige paper remains the base, with navy mathematical
-ink, ochre and coral accents. Every route and management action is retained.
+The latest user direction rejects beige and restores the sidebar. Keep the
+education-first structure: actual lessons, workbook examples, chapter index,
+reference library and teaching notebook. White and pale blue with navy text
+provide a clearer base; graph paper, curves, triangles and number lines appear
+across the site. Use shared page gutters and responsive grids to align headings,
+forms and skill records. Every route and management action is retained.
