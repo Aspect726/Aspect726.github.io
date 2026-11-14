@@ -388,30 +388,124 @@
       "levels": 3,
       "questionsChecked": 9000,
       "matchingTemplates": []
+    },
+    {
+      "skill": "N-PLACE",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-ROUND",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-WMULT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "D-ADD",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "D-MULT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "M-CONVERT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "F-UNITDIV",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-NUM",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "E-PATTERN",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-FACTORS",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "N-SDIV",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-CLASS",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "G-WVOL",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-LINEPLOT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-PROB",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
+    },
+    {
+      "skill": "S-SAMPLE",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "matchingTemplates": []
     }
   ],
   "matchingTemplates": 0,
-  "questionsChecked": 442500,
-  "poolQuestionsChecked": 168960,
-  "storyPoolQuestionsChecked": 264000,
+  "questionsChecked": 490500,
+  "poolQuestionsChecked": 218112,
+  "storyPoolQuestionsChecked": 340800,
   "poolMatchingTemplates": [],
-  "storyPoolMatchingTemplates": [],
-  "generatorFiles": {
-    "server/questions.mjs": "def52c5bcdba70e4e9e551731b0f4988608d5dd2b093953a597277e29dfd9f61",
-    "server/math.mjs": "97ed6ab83668a4d14cee9239380deeea228e27a297e9f35a139e60a6b85d5197",
-    "server/generators/common.mjs": "79082ce21b2f9fa42ecabfba80b3f86836c4e7131bb5435d2daa7d49d6a31af6",
-    "server/generators/arithmetic.mjs": "eb9d0897a13acd81138cb053ae6985af0b9ba0402b997593c7f4626375e64ac1",
-    "server/generators/geometry.mjs": "e5b3051ddaca96fbd62a99cc93986d758d7fe5de7a73cf4976355f51b24787aa",
-    "server/generators/statistics.mjs": "86287692b3b71ef93f4dc29fc7fb2607d606a5cb290ac9236c08d767c644be55",
-    "server/generators/story-arithmetic.mjs": "9840a34f841ef302b336188ee03bc7904e9473dde310757e04269aa890480cad",
-    "server/generators/story-geometry.mjs": "76b8f436877341cb89a68cc47223089e0cc44391e7a84782e79607233b1d521e",
-    "server/generators/story-statistics.mjs": "748890d3d585466000372421aee0b4fc490b33874eb5b087c3540188611057cb",
-    "scripts/check-story-bank.mjs": "1214e4b508c40df13042a42ef85b6341e32f03bb005cf1d49fd548cccccd14c9",
-    "scripts/check-paper-frames.mjs": "aec6f00b9e2ea3e2930f5485d4c693b04077abe658987913404fa75c88eba228",
-    "server/plan.mjs": "1fa6de92cd6eb9532b5f52bff8f09cacb6ec6166ff9911a92252ccb409cc2c28",
-    "server/plan.json": "d427e110cac36346591fe1fcb654715a8909253a8acd3dea4ea1a214f74baeed",
-    "server/overlap.mjs": "59794a7c7fdd25036517de88e0a34d46cdeabeb2e01b9ebd2f3cd03de49f4f59",
-    "scripts/check-overlap.mjs": "b88b20cd1f9ac9cb26d1d13d51e0f1813a62235178d9128af7613be5ec73cad7"
-  },
-  "poolDigest": "18e03781864a10bb97781535bbd06d36b2f5d35f5846631f000ce57c4688f3f2"
+  "storyPoolMatchingTemplates": []
 }

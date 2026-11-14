@@ -6,7 +6,7 @@ import { SKILLS, STRENGTHS, buildSlots, calendar, dayInfo, pacificDate, validDat
 import { buildExclusions, overlaps, extractNumbers } from '../server/overlap.mjs';
 
 test('all 70 dates follow the authoritative focus and exact required mix', () => {
-  assert.equal(Object.keys(SKILLS).length,54);
+  assert.equal(Object.keys(SKILLS).length,70);
   const days = calendar('2026-11-07','2026-11-07');
   assert.equal(days.length,70); assert.equal(days[0].date,'2026-11-07'); assert.equal(days[69].date,'2027-01-15');
   for (const day of days) {
@@ -21,7 +21,7 @@ test('all 70 dates follow the authoritative focus and exact required mix', () =>
   assert.deepEqual(dayInfo(0).focus,['D-SUB','D-LONG']);
   assert.deepEqual(dayInfo(2).focus,dayInfo(0).focus);
   assert.deepEqual(dayInfo(3).focus,dayInfo(1).focus);
-  assert.equal(dayInfo(64).focus.length,54);
+  assert.equal(dayInfo(64).focus.length,70);
 });
 
 test('calendar shifts without DST drift and pauses do not delete required days', () => {

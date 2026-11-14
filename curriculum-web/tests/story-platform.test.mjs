@@ -4,6 +4,7 @@ import {createSQLiteDB} from '../server/storage.mjs';
 import {createPlatform} from '../server/platform.mjs';
 import {generateQuestion,gradeQuestion,formatQuestionAnswer,publicQuestion,decodeStorySeed,storyScenarios,STORY_SHAPES} from '../server/questions.mjs';
 import {SKILLS,addDays} from '../server/plan.mjs';
+import {introducedSkills} from '../server/course-schedule.mjs';
 
 async function fixture(options={}){
  const db=createSQLiteDB();db.migrate();let date='2026-11-07';
@@ -35,10 +36,11 @@ test('units and comparison choice are checked without consuming format-only answ
 test('every day of the 70-day course contains six warmups and fourteen distinct dependent stories', {timeout:120000},async()=>{
  const f=await fixture();try{
   for(let day=0;day<70;day++){
-   f.setDate(addDays('2026-11-07',day));const stories=[],warmups=[];
+   const date=addDays('2026-11-07',day);f.setDate(date);const stories=[],warmups=[],categories=[];
    for(let index=0;index<20;index++){
     const {question}=await f.platform.question('alice',{source:'practice'}),q=await f.raw(question.id);
     assert.equal(question.setPosition,index+1);assert.equal(question.setNumber,1);
+    categories.push(question.courseCategory);assert.ok(introducedSkills({startDate:'2026-11-07'},date).has(q.skill),`${date}: ${q.skill} has not been introduced`);
     if(q.story){stories.push(q);assert.ok(q.answerUnit);assert.ok(q.solution.length>=2&&q.solution.length<=4);}
     else{warmups.push(q);assert.ok(['calculation','missing'].includes(q.shape));}
     const result=await f.answer(question);assert.equal(result.correct,true,`${day}/${index}`);assert.equal(result.summary.answered,index+1);
@@ -46,6 +48,7 @@ test('every day of the 70-day course contains six warmups and fourteen distinct 
    assert.equal(warmups.length,6,`day ${day+1}`);assert.equal(stories.length,14,`day ${day+1}`);
    assert.equal(new Set(stories.map(q=>q.scenarioId)).size,14,`day ${day+1}`);
    assert.equal(new Set(stories.map(q=>q.storyShape)).size,5,`day ${day+1}`);
+   assert.deepEqual(Object.fromEntries(['foundation','focus','recent','older'].map(category=>[category,categories.filter(item=>item===category).length])),{foundation:2,focus:10,recent:5,older:3});
   }
  }finally{f.db.close();}
 });
@@ -56,7 +59,7 @@ test('assigned, review, lesson and library questions share one story quota',asyn
   await f.db.prepare("INSERT INTO platform_review_queue VALUES('review','alice','F-ADD','2026-11-07',1,'previous','2026-11-07',NULL)").run();
   const qs=[];
   for(let i=0;i<20;i++){
-   const request=i<5?{source:'practice'}:i%2?{source:'learn',skill:'D-DIV'}:{source:'library',skill:'D-SUB'};
+   const request=i<4?{source:'practice'}:i===4?{source:'review'}:i%2?{source:'learn',skill:'D-DIV'}:{source:'library',skill:'D-SUB'};
    const {question}=await f.platform.question('alice',request);qs.push(await f.raw(question.id));
    if(i<4)assert.equal(question.source,'assigned');if(i===4)assert.equal(question.source,'review');
    await f.answer(question);

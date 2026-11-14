@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { buildExclusions, overlaps } from '../server/overlap.mjs';
 import { SKILLS, buildSlots } from '../server/plan.mjs';
-import { generateQuestion, questionIdentity } from '../server/questions.mjs';
+import { generateQuestion, questionIdentity, warmupShapesForSkill } from '../server/questions.mjs';
 import { buildStoryPools, checkStoryPool } from './check-story-bank.mjs';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -18,7 +18,7 @@ const reserveTwins=process.argv.includes('--with-twins');
 const seedTarget=Number(process.env.VETTED_SEED_TARGET || 1024);
 const candidateLimit=Number(process.env.VETTED_CANDIDATE_LIMIT || 16000);
 const allSkills=[...Object.keys(SKILLS),'WARMUP'];
-const generatorPaths=['server/questions.mjs','server/math.mjs','server/generators/common.mjs','server/generators/arithmetic.mjs','server/generators/geometry.mjs','server/generators/statistics.mjs','server/generators/story-arithmetic.mjs','server/generators/story-geometry.mjs','server/generators/story-statistics.mjs','scripts/check-story-bank.mjs','scripts/check-paper-frames.mjs','server/plan.mjs','server/plan.json','server/overlap.mjs','scripts/check-overlap.mjs'];
+const generatorPaths=['server/questions.mjs','server/math.mjs','server/generators/common.mjs','server/generators/arithmetic.mjs','server/generators/geometry.mjs','server/generators/statistics.mjs','server/generators/story-arithmetic.mjs','server/generators/story-geometry.mjs','server/generators/story-statistics.mjs','server/generators/foundation-arithmetic.mjs','server/generators/foundation-geometry.mjs','server/generators/foundation-statistics.mjs','scripts/check-story-bank.mjs','scripts/check-paper-frames.mjs','server/plan.mjs','server/plan.json','server/course-schedule.mjs','server/curriculum.mjs','server/overlap.mjs','scripts/check-overlap.mjs'];
 const generatorFiles=Object.fromEntries(generatorPaths.map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')]));
 const generatorDigest=createHash('sha256').update(Object.entries(generatorFiles).map(([file,digest])=>`${file}:${digest}\n`).join('')).digest('hex');
 let pool;
@@ -60,7 +60,7 @@ for(const skill of allSkills)for(const difficulty of [1,2,3]) {
     shapeCoverage[skill][difficulty][q.shape]=(shapeCoverage[skill][difficulty][q.shape]??0)+1;
     verifiedSeeds++;
   }
-  const requiredShapes=['calculation','story','missing','mistake','reason',...(/^[GS]-/.test(skill)||['P-SCALE','P-MAP'].includes(skill)?['picture']:[])];
+  const requiredShapes=warmupShapesForSkill(skill);
   for(const shape of requiredShapes)if(!shapeCoverage[skill][difficulty][shape])throw new Error(`Vetted pool lost the ${shape} shape for ${skill}/${difficulty}.`);
 }
 

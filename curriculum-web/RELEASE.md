@@ -1,98 +1,91 @@
-# November 14 learning-site revision — verification
+# November 14 daily learning and curriculum revision
 
-The standard daily set now contains six warm-ups and 14 multi-step stories.
-Stories use named people, concrete quantities, two to four dependent steps,
-clean computed answers and units. Fourteen distinct scenarios appear in each
-set, across missing amounts, comparisons, working backward, mistake correction
-and what-if questions. Every question includes a hint and full worked answer.
-Exact code grading remains authoritative; contextual AI feedback is separate.
+Students now begin with one clear daily task: 20 questions a day from Saturday,
+November 7, 2026, over the supplied 70-day plan. The main page shows actual
+answers today, remaining work, a Pacific-time due-date countdown and the
+teacher’s weekly note. Extra practice and Review are the two supporting choices;
+lessons, tools and detailed progress remain available behind secondary links.
+Daily mode stops at the goal. Extra answers count on their actual completion
+date and do not erase missed earlier goals. Teacher views show the same daily
+counts and all 70 scheduled dates, including unanswered days.
 
-The student experience leads with lessons, examples and practice. Cobalt, violet,
-yellow and coral accents, graphs and geometric illustrations replace the earlier
-beige/navy treatment. Desktop sidebar, tablet rail, mobile drawer, aligned
-workbook layouts and all teacher management controls are retained. Short
-animations respect reduced-motion settings. Additive migrations preserve
-accounts, existing attempts, progress and points.
+## Curriculum and question changes
 
-## Checked question bank
+The original plan file is unchanged. A curriculum overlay maps 70 learning targets
+to Grade 5 foundations, BSD IMT1 and selected next-course extensions. It adds 16
+explicit foundation/bridge skills, prerequisites, teaching dates, lesson notes
+and accessible diagrams. Fifth-grade knowledge is checked rather than marked
+mastered. General fraction division, ratios, rates, percentages and fractional
+volume are introduced as new learning. Same-day prerequisite topics come first.
+Automatic practice/review uses introduced topics; teachers and students can
+explicitly choose a later lesson or assignment.
 
-- Original mathematics evidence is retained: 295 templates, three difficulty
-  levels, 500 cases per template/level and 592,500 independent numeric, geometry,
-  statistics and method-choice checks. See `validation/combined.json` and its
-  detailed reports. These are the original generator totals, not story coverage.
-- New story suites check 33,600 arithmetic, 19,200 geometry and 72,000 statistics
-  cases. Additional regressions cover incorrect mistake claims, inverse-answer
-  leaks, dependent operations and the frequency-table correction sequence.
-- The private corpus has 2,322 records, yielding 2,469 paper/slide segments and
-  739 distinct number-free frames. Original exact/numeric exclusions and the
-  original 4,550-question course check still pass.
-- All 264,000 approved story seed/level entries pass exact, numeric and
-  number-free paper-frame checks. Each of 55 skills at three levels has 1,600
-  entries spanning 16 scenarios and five shapes. Candidate validation excluded
-  1,499 numeric paper overlaps and 16,073 duplicate parameter sets.
-- The 70-day story check materializes 1,400 required questions: 980 stories and
-  420 warm-ups, with 14 unique story scenarios each day and no repeated question.
-  Single-skill scenario capacity passes for all 165 skill/level combinations.
-- Frame validation additionally rechecks 442,500 legacy template samples and
-  all 168,960 approved legacy seed/level pairs, with zero paper-frame matches.
-  Aggregate evidence is in `validation/frames.json` and `validation/stories.json`.
-  The compact combined private seed pool is approximately 6.7 MB.
-- Builds require current generator hashes, pool digests and complete legacy and
-  story evidence. They reject missing or stale validation. Paper content,
-  checked seeds, secrets and private QA fixtures are excluded from the public
-  repository and public assets. Answer-key modules are never public assets.
+The added coverage includes place value, rounding from hundreds to thousandths,
+whole-number multiplication, decimal addition/multiplication, measurement
+conversion, fraction sharing, expressions, paired patterns, common factors,
+signed division, shape hierarchy, combined whole-number volume, fractional line
+plots, probability and sampling. Existing generators now include varied powers
+and bases, signed rational comparisons, fraction scaling, coordinate rectangle
+area, fractional prism edges, outside triangle heights, prism/pyramid nets and
+both odd/even median lists. See `docs/curriculum-audit.md` for official sources,
+standard mappings and the differences between published BSD course boundaries.
+This is a teaching alignment, not a placement decision or an exam specification.
 
-## Runtime and interface verification
+Each standard 20-question block retains six warm-ups and 14 multi-step stories,
+with 14 different scenarios. All five story shapes have computed answers, units,
+two to four dependent worked steps and help. Numerical grading remains in code.
+Saved tutor history, teacher visibility, account isolation and management
+controls are preserved; this release does not reset accounts, answers or points.
 
-The final full suite passes **215 tests with zero failures or skips**. The
-production Worker build and extended compiled Worker smoke check pass, including
-persistent tutor history, help events, teacher isolation and worked-help fallback.
-Independent review exercised 39 tests and found three issues; the request race,
-mistake grouping and stale teacher-navigation issues are fixed and rechecked.
+## Verification
 
-The expanded visual review rendered 31 desktop/tablet/phone views with zero page
-errors and no horizontal document overflow. Actual screenshot inspection found
-and corrected mobile table-header alignment. Student/teacher home, lessons,
-plan, story practice, worked help and AI controls are included. A further 12
-saved-history views used the production checked question pool, also with zero
-page errors or overflow. Five help events, one conversation and six answers
-persisted; reload restored the student conversation, and teacher desktop/phone
-views displayed the saved history.
-Screenshots come from real sandboxed Chromium rendering of the application
-against an isolated SQLite backend.
+- Generator reports record 640,500 checks across 327 warm-up/template shapes.
+  The full suite passes 283 tests with zero failures or skips. The final minor
+  completion-screen formatting change additionally passes all 28 student/help
+  tests. Coverage includes 70 dated goals, Pacific midnight/DST, shifted weeks,
+  same-day prerequisites, review filtering, concurrent completion, saved notes,
+  ownership, grading, history, rewards and teacher management.
+- The private corpus contains 2,322 records,2,469 segments and 739 distinct
+  number-free frames. All 218,112 approved warm-up entries and 340,800 approved
+  story entries pass the exclusion checks. All 71 question families have three
+  levels; each story pool has 1,600 entries spanning 16 scenarios and five shapes.
+- The original 4,550-question course/bonus capacity check passes. The current
+  70-day daily check materializes 1,400 questions:980 stories and 420 warm-ups,
+  with 14 distinct story scenarios per day and no repeat. Single-skill sets pass
+  for all 213 skill/level combinations.
+- Frame checks inspect 490,500 template samples plus every approved warm-up and
+  story seed, with zero matching paper frames. Source hashes and pool digests
+  block builds if that evidence becomes stale. Aggregate reports are public;
+  the paper corpus, approved seed pool and private QA fixtures are not.
+- Actual sandboxed Chromium rendered 34 desktop/tablet/phone views against an
+  isolated SQLite backend, with no page errors or horizontal document overflow.
+  Screenshot inspection corrected calendar alignment and completion density.
+  A second browser journey using the production checked pool saved exactly 20
+  answers, including 14 distinct stories, stopped Daily mode at 20, opened optional
+  extra practice, and displayed matching teacher counts and the saved note.
+  Its nine screenshots include the completed state and expanded curriculum on
+  desktop and phone. Geometry and curriculum diagrams were also rendered and
+  inspected, including extreme prism/pyramid dimensions.
+- Production Worker build and compiled smoke checks pass.
+  The smoke test exercises the 70-day schedule,70-skill library, old/new lessons,
+  persistent tutor history, role isolation, counted answers and private paths.
 
-Regression coverage includes six/14 quotas across 70 days and all learning
-sources, unique concurrent slots/scenarios, resuming pending questions, units
-and option grading, ownership-checked help, saved answers, role isolation,
-bonus thresholds, duplicate submissions, review stages, mastery, settings,
-week shifts, teacher actions and prize spending.
+## Hosting and remaining limits
 
-AI requests use computed reference answers and bounded relevant learning
-history. Conversations and help use persist separately from the seven-day
-provider request cache and are available to the student and teacher. Teacher
-settings provide enable/disable and per-student/classroom allowances. Tests use
-controlled provider responses to exercise limits, caching, failures and feedback
-without giving AI authority over grades.
+The existing ChatGPT Site and public host audience are retained. Application
+accounts protect records and teacher controls. Sites confirmed `donteventry.me`
+and SSL active with no domain error during this revision. No Namecheap DNS
+change is needed. The public GitHub source mirror excludes private validation
+inputs and credentials.
 
-## Deployment facts and remaining limits
+Direct HTTPS connections to the live custom domain and OpenAI are blocked by
+this workspace proxy with 403. Browser screenshots therefore use the actual
+application and an isolated backend, not an authenticated production session.
+Sites publication status separately establishes the deployed version. Live AI
+provider operation remains unverified from this workspace; code-computed hints
+and worked answers remain available when AI cannot respond. The existing server
+runtime key and bounded tutor-history retrieval are unchanged.
 
-- The current ChatGPT Sites audience is **public**, confirmed from site version
-  11 during this revision. Application student/teacher sign-in protects records
-  and management. Namecheap remains the DNS provider; no DNS changes are needed
-  for this interface and question-bank release.
-- Sites freshly confirmed `donteventry.me` active with active SSL on November 14,
-  2026. Publication status is reported by the saved Sites version, separately
-  from these build and application checks.
-- The provider key is a server runtime secret. Default `gpt-5-nano`/minimal
-  switches to `gpt-6-luna`/none on December 11, 2026, or an explicit
-  `404/model_not_found` response. Live OpenAI calls from the workspace are blocked
-  by its proxy with 403, so provider operation is **not yet live-verified**.
-  Worked hints and answers remain available when AI is unavailable.
-- No Safari device test or production network load timing is claimed from
-  isolated Chromium checks. Screenshots and test-account credentials are private.
-- Teachers can suspend and re-enable a question shape; changing mathematical
-  generators still requires a source change and the release checks.
-- The scheduled backup handler has no verified host cron. Teacher backups include
-  learning and tutor-history tables. Private corpus CI secrets are not configured
-  in the public GitHub repository; the private validation described above ran
-  locally. Existing Git history and accounts are preserved.
+No Safari-device or production load-timing claim is made. The scheduled backup
+handler still has no verified host cron, and private corpus CI secrets are not
+configured in the public repository. Teacher-created backups remain available.

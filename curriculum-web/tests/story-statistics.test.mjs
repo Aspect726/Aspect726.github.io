@@ -22,9 +22,9 @@ function independentlySolve(q) {
  }
  if(['S-MEAN','S-MEDIAN','S-RANGE','S-IQR','S-MAD'].includes(skill)){
   const kind={'S-MEAN':'mean','S-MEDIAN':'median','S-RANGE':'range','S-IQR':'iqr','S-MAD':'mad'}[skill],value=m[kind];
-  if(shape==='backward')return kind==='range'?i.delta:kind==='median'?order(i.values)[4]:kind==='iqr'?order(i.values)[6]:order(i.values).at(-1);
+  if(shape==='backward')return kind==='range'?i.delta:kind==='median'?(i.values.length%2?med(i.values)-Math.min(...i.values):order(i.values)[4]):kind==='iqr'?order(i.values)[6]:order(i.values).at(-1);
   if(shape==='compare')return Math.abs(value-i.reference);
-  if(shape==='mistake')return(kind==='range'?Math.max(...i.values):kind==='iqr'?m.range:2*value)-value;
+  if(shape==='mistake')return(kind==='range'?Math.max(...i.values):kind==='iqr'?m.range:kind==='median'&&i.values.length%2?order(i.values)[Math.floor(i.values.length/2)+1]:2*value)-value;
   if(shape==='what-if')return['mean','median'].includes(kind)?value+i.delta:value*i.factor;
   return['mean','median'].includes(kind)&&!['centimetres','metres'].includes(q.answerUnit)?value*i.target:i.delta;
  }
@@ -73,8 +73,31 @@ for(const skill of storyStatisticsSkills)test(`${skill}: all scenes, five shapes
  }
 });
 test('statistical misconceptions name the incorrect method, and box-plot backwards tasks do not reveal Q3',()=>{
- for(const [skill,phrase] of Object.entries({'S-MEAN':'instead of 8','S-MEDIAN':'without dividing','S-RANGE':'only the largest','S-IQR':'full range','S-MAD':'instead of 8'}))assert.ok(generateStoryStatistics(skill,'misconception',{storyShape:'mistake'}).plainPrompt.includes(phrase));
+ for(const [skill,phrase] of Object.entries({'S-MEAN':'instead of 8','S-RANGE':'only the largest','S-IQR':'full range','S-MAD':'instead of 8'}))assert.ok(generateStoryStatistics(skill,'misconception',{storyShape:'mistake'}).plainPrompt.includes(phrase));
+ const median=generateStoryStatistics('S-MEDIAN','misconception',{storyShape:'mistake'});
+ assert.match(median.plainPrompt,median.verification.inputs.values.length%2?/immediately after the single middle/:/without dividing/);
  assert.equal(generateStoryStatistics('S-BOX','backward',{storyShape:'backward'}).svg,undefined);
+});
+
+test('median stories use both parity rules and odd backwards questions require two dependent calculations',()=>{
+ for(const scenarioId of statisticsStoryScenarios('S-MEDIAN'))for(const storyShape of shapes){
+  const counts=new Set();
+  for(let seed=0;seed<100;seed++){
+   const q=generateStoryStatistics('S-MEDIAN',`median-parity:${seed}`,{scenarioId,storyShape,difficulty:1+seed%3}),{values,medianCorrection}=q.verification.inputs;
+   const odd=values.length%2===1;counts.add(values.length);
+   assert.equal(Number(q.answer),independentlySolve(q));checkOperations(q);
+   assert.match(q.hint,odd?/single middle value/:/middle pair/);
+   if(storyShape==='backward'&&odd){
+    assert.ok(medianCorrection>0&&medianCorrection<values[Math.floor(values.length/2)+1]-med(values));
+    const operations=q.verification.operations;
+    assert.equal(operations.length,2);assert.equal(operations[1].a,Number(operations[0].result));
+    assert.equal(Number(operations[0].result),med(values));
+    assert.match(q.plainPrompt,/original middle reading than the smallest/);
+   }
+   if(storyShape==='mistake')assert.notEqual(q.verification.inputs.wrong,med(values));
+  }
+  assert.deepEqual([...counts].sort(),[7,8,9],scenarioId+'/'+storyShape);
+ }
 });
 test('story selectors reject unsupported scenarios, shapes and skills',()=>{
  assert.throws(()=>generateStoryStatistics('NOPE',1));

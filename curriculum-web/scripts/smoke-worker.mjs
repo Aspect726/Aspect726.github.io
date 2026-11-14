@@ -36,7 +36,10 @@ try {
   const student=await db.prepare('SELECT id FROM practice_users WHERE username=?').bind('student').first();
   const teacherHistory=await worker.fetch(request('/api/v2/teacher/tutor-history?studentId='+student.id,null,teacherCookie),{DB:db});assert.equal(teacherHistory.status,200);assert.equal((await teacherHistory.json()).items.length,2);
   assert.equal((await worker.fetch(request('/api/v2/teacher/tutor-history?studentId='+student.id,null,studentCookie),{DB:db})).status,403);
-  const answered=await worker.fetch(request('/api/v2/student/answer',{questionId:question.id,answer:'999999',elapsedMs:2000,requestId:'compiled-smoke'},studentCookie),{DB:db});assert.equal(answered.status,200);assert.equal((await answered.json()).summary.answered,1);
-  const lesson=await worker.fetch(request('/api/v2/student/lesson?skill=D-SUB',null,studentCookie),{DB:db});assert.equal(lesson.status,200);assert.equal((await lesson.json()).examples.length,2);
+  const stored=JSON.parse((await db.prepare('SELECT q FROM platform_questions WHERE id=?').bind(question.id).first()).q);
+  const wrong=stored.choices?`option-${stored.choices.findIndex(choice=>String(choice.value)!==String(stored.answer))}`:`${stored.answerChoice?stored.answerChoice+', ':''}${stored.answer==='999999'?'999998':'999999'}${stored.answerUnit?' '+stored.answerUnit:''}`;
+  const answered=await worker.fetch(request('/api/v2/student/answer',{questionId:question.id,answer:wrong,elapsedMs:2000,requestId:'compiled-smoke'},studentCookie),{DB:db});assert.equal(answered.status,200);const result=await answered.json();assert.equal(result.formOnly,false);assert.equal(result.summary.answered,1);assert.equal(result.summary.schedule.days.length,70);assert.equal(result.summary.schedule.startDate,'2026-11-07');
+  for(const skill of ['D-SUB','N-PLACE','G-WVOL','S-LINEPLOT']){const lesson=await worker.fetch(request('/api/v2/student/lesson?skill='+skill,null,studentCookie),{DB:db});assert.equal(lesson.status,200,skill);assert.equal((await lesson.json()).examples.length,2);}
+  const library=await worker.fetch(request('/api/v2/student/library',null,studentCookie),{DB:db});assert.equal(library.status,200);assert.equal((await library.json()).skills.length,70);
   console.log('Built Worker passed real page/module delivery, login, role isolation, vetted practice/lesson, help, persistent tutor history, counted answer, retired endpoint and private-path checks.');
 } finally { db.close(); }

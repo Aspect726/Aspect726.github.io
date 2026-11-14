@@ -41,7 +41,7 @@ test('teacher routes render against real management API and preserve selected st
     for (const route of ['/t/dashboard', '/t/students/student', '/t/students/student?section=days', '/t/students/student?section=skills', '/t/students/student?section=patterns', '/t/plan', '/t/checks', '/t/assign', '/t/rewards', '/t/questions', '/t/settings']) {
       await f.render(route);
       assert.ok(document.querySelector('h1'), route);
-      assert.doesNotMatch(document.body.textContent, /undefined|\[object Object\]|NaN|lorem/i, route);
+      assert.doesNotMatch(document.body.textContent, /\b(?:undefined|NaN|lorem)\b|\[object Object\]/i, route);
     }
     await f.render('/t/questions');
     assert.equal(document.querySelectorAll('.question-preview').length, 10, 'first skill loads ten actual previews');
@@ -103,4 +103,21 @@ test('an already displayed teacher form stays bound to its student during a swit
     assert.equal((await f.db.prepare("SELECT score FROM platform_weekly_checks WHERE student_id='student'").first()).score, 17);
     assert.equal(await f.db.prepare("SELECT score FROM platform_weekly_checks WHERE student_id='other'").first(), null);
   } finally { f.close(); }
+});
+
+
+test('daily record includes missing dates and teacher note saves for the selected learner',async()=>{
+ const f=await fixture();
+ try {
+  await f.render('/t/dashboard');
+  assert.match(document.querySelector('.teacher-daily-record').textContent,/0 \/ 20 answered today/);
+  assert.match(document.querySelector('.teacher-daily-record').textContent,/60unanswered on earlier days/);
+  assert.equal(document.querySelectorAll('#teacher-note').length,1);
+  document.getElementById('teacher-note-text').value='Draw a picture before finding the answer.';
+  await f.submit('teacher-note');
+  await f.render('/t/dashboard');assert.equal(document.getElementById('teacher-note-text').value,'Draw a picture before finding the answer.');
+  await f.render('/t/students/student?section=days');
+  assert.equal(document.querySelectorAll('tbody tr').length,70);
+  assert.match(document.body.textContent,/Past due/);assert.match(document.body.textContent,/Coming up/);
+ }finally{f.close();}
 });

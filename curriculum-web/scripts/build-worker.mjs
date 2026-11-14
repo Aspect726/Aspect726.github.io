@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
-import { decodeStorySeed } from '../server/questions.mjs';
+import { decodeStorySeed, allSkills } from '../server/questions.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const poolPath = process.env.VETTED_SEEDS_PATH || join(root, 'private/vetted-seeds.json');
@@ -18,7 +18,8 @@ for (const [relative, expected] of Object.entries(pool.evidence.generatorFiles))
   if (actual !== expected) throw new Error(`The checked pool is stale after a change to ${relative}. Run the paper test again.`);
 }
 const story=pool.storyEvidence;
-const storySkillIds=Object.keys(pool.skills??{});
+const storySkillIds=allSkills;
+if(storySkillIds.some(skill=>!pool.skills?.[skill])||Object.keys(pool.skills??{}).length!==storySkillIds.length)throw new Error('The checked question bank must cover every current curriculum skill.');
 if(!pool.stories||story?.result!=='passed'||story.days!==70||story.requiredQuestions!==1400||story.storyQuestions<840||story.storiesPerDay<12||story.warmupsPerDay>8||story.uniqueScenariosPerDay<14||story.repeatQuestions!==0||story.minimumPerSkillLevel<1200||story.minimumScenarios<14||story.minimumShapes<5||story.matchingQuestions!==0||story.matchingFrames!==0)throw new Error('A complete passing 70-day story-bank validation is required.');
 for(const skill of storySkillIds)for(const level of [1,2,3]){
  const entries=pool.stories[skill]?.[level];
@@ -26,7 +27,7 @@ for(const skill of storySkillIds)for(const level of [1,2,3]){
  if(!Array.isArray(entries)||entries.length<1200||new Set(decoded.map(entry=>entry.scenarioId)).size<14||new Set(decoded.map(entry=>entry.storyShape)).size<5)throw new Error(`Incomplete checked story pool for ${skill}/${level}.`);
 }
 if(story.poolDigest!==createHash('sha256').update(JSON.stringify({encoding:pool.storyEncoding,stories:pool.stories})).digest('hex'))throw new Error('The story-bank report does not match the story seed pool.');
-for(const required of ['server/generators/story-arithmetic.mjs','server/generators/story-geometry.mjs','server/generators/story-statistics.mjs','scripts/check-story-bank.mjs','scripts/check-paper-frames.mjs'])if(!pool.evidence.generatorFiles[required])throw new Error('Story provenance is missing '+required);
+for(const required of ['server/generators/story-arithmetic.mjs','server/generators/story-geometry.mjs','server/generators/story-statistics.mjs','server/generators/foundation-arithmetic.mjs','server/generators/foundation-geometry.mjs','server/generators/foundation-statistics.mjs','server/course-schedule.mjs','server/curriculum.mjs','scripts/check-story-bank.mjs','scripts/check-paper-frames.mjs'])if(!pool.evidence.generatorFiles[required])throw new Error('Story provenance is missing '+required);
 const framePath = process.env.FRAME_REPORT_PATH || join(root,'private/frame-validation.json');
 let frames;
 try { frames=JSON.parse(await readFile(framePath,'utf8')); } catch { throw new Error('Run the private template frame check before building.'); }

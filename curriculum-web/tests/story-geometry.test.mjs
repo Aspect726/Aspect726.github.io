@@ -10,7 +10,7 @@ function measure(skill,d) {
   case 'G-PARA': return d.b*d.h;
   case 'G-TRI': return d.b*d.h/2;
   case 'G-COMP': return d.l*d.w-d.cutW*d.cutH;
-  case 'G-SA': return 6*d.edge*d.edge;
+  case 'G-SA': return d.surfaceVariant==='triangular-prism'?d.triA*d.triB+(d.triA+d.triB+d.triC)*d.prismLength:d.surfaceVariant==='square-pyramid'?d.surfaceSide*d.surfaceSide+2*d.surfaceSide*d.slant:6*d.edge*d.edge;
   case 'P-SCALE': return d.l*d.w*d.scale*d.scale;
   case 'P-MAP': return d.mapLength*d.scale;
   case 'G-CIRC': return 6.28*d.radius;
@@ -23,7 +23,7 @@ function inverse(skill,d) {
   case 'G-PERIM':return d.w;
   case 'G-PARA':case 'G-TRI':case 'G-VOL':return d.h;
   case 'G-COMP':return d.cutW*d.cutH;
-  case 'G-SA':return d.edge*d.edge;
+  case 'G-SA':return d.surfaceVariant==='triangular-prism'?d.triA*d.triB/2:d.surfaceVariant==='square-pyramid'?d.surfaceSide*d.slant/2:d.edge*d.edge;
   case 'P-SCALE':return d.l*d.w;
   case 'P-MAP':return d.mapLength;
   case 'G-CIRC':return 2*d.radius;
@@ -40,6 +40,10 @@ function operationValue({op,a,b}) {
   case 'triangle-area':return a*b/2;
   case 'subtract-rectangle':return a-b[0]*b[1];
   case 'scale-area':return a*b*b;
+  case 'surface-prism':return a+(b[0]+b[1]+b[2])*b[3];
+  case 'surface-pyramid':return a+2*b[0]*b[1];
+  case 'prism-end-area':return (a-b[0]*b[1])/2;
+  case 'pyramid-face-area':return (a-b*b)/4;
   case 'rectangle-width':return a/2-b;
   case 'triangle-height':return 2*a/b;
   case 'rectangle-cutout':return a[0]*a[1]-b;
@@ -90,4 +94,30 @@ test('every geometry skill has sixteen distinct stable scenarios and five multi-
 test('same seed and options reproduce the same computed problem',()=>{
  const opts={difficulty:2,scenarioId:'science-fair',storyShape:'backward'};
  for(const skill of storyGeometrySkills)assert.deepEqual(generateStoryGeometry(skill,'repeat',opts),generateStoryGeometry(skill,'repeat',opts));
+});
+
+test('geometry stories cover fractional volume and external triangle heights',()=>{
+ let external=0;
+ for(let seed=0;seed<100;seed++){
+  const t=generateStoryGeometry('G-TRI',seed,{storyShape:'missing'});if(t.verification.dimensions.outside){external++;assert.match(t.plainPrompt,/outside the triangle/);}
+  const v=generateStoryGeometry('G-VOL',seed,{storyShape:'backward'});const d=v.verification.dimensions;assert.ok(d.l%1&&d.h%1);assert.equal(Number(v.answer),d.h);assert.equal(v.answerUnit,'centimetres');
+ }
+ assert.ok(external>20);
+});
+
+
+test('story surface-area variants use genuine nets and inverse face areas',()=>{
+ const variants=new Set();
+ for(let seed=0;seed<150;seed++){
+  const options={scenarioId:'science-fair',difficulty:2},q=generateStoryGeometry('G-SA',seed,{...options,storyShape:'missing'}),d=q.verification.dimensions;
+  variants.add(d.surfaceVariant);
+  assert.ok(q.svg);assert.match(q.hint,/face/);
+  if(d.surfaceVariant==='triangular-prism'){assert.equal(d.triA*d.triA+d.triB*d.triB,d.triC*d.triC);assert.match(q.plainPrompt,/both triangular ends and all three rectangular sides/);}
+  if(d.surfaceVariant==='square-pyramid'){assert.ok(d.slant>d.surfaceSide/2);assert.match(q.plainPrompt,/slant height.*measured along the face/);}
+  const backwards=generateStoryGeometry('G-SA',seed,{...options,storyShape:'backward'});
+  assert.equal(backwards.svg,undefined);assert.equal(backwards.answerUnit,'square centimetres');
+  if(d.surfaceVariant==='triangular-prism')assert.doesNotMatch(backwards.plainPrompt,/perpendicular legs/);
+  if(d.surfaceVariant==='square-pyramid')assert.doesNotMatch(backwards.plainPrompt,/slant height/);
+ }
+ assert.deepEqual([...variants].sort(),['cube','square-pyramid','triangular-prism']);
 });

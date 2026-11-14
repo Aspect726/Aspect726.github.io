@@ -8,13 +8,19 @@ teacher routes or write points/checks/prizes. Account passwords use bcrypt12.
 ## Student
 
 - GET `/student/summary`: today's count, required target, bonus thresholds,
-  points, week/day, review count, streak, weekly note and day strip.
+  points, week/day, review count, streak, weekly note and day strip. `schedule`
+  contains 70 dates, per-day `expected`, `answered`, `remaining`, `dueAt` and
+  status, plus completed/overdue totals. Deadlines use America/Los_Angeles.
 - GET `/student/map`: ten weeks, shifted dates and skill mastery.
 - GET `/student/progress`: skills, daily counts and accuracy, checks and streaks.
 - GET `/student/review`: due skills and their review stages.
-- POST `/student/question` `{source,skill?}`: fresh or resumable question. Sources
+- POST `/student/question` `{source,skill?,intent?}`: fresh or resumable question. Sources
   are `practice`, `review`, `learn`, `library`; the server marks assigned work.
-  All sources share six warm-ups/14 stories per standard 20-question set.
+  `intent: "daily"` stops at the daily goal and returns no new question after
+  completion; omit it for explicit extra practice. `review` with a skill only
+  serves a due question for that skill. Automatic selection uses introduced
+  topics; explicit teacher assignments and chosen lesson/library skills are
+  allowed ahead. All sources share six warm-ups/14 stories per standard set.
   Story metadata includes `story`, `scenarioId`, `storyShape`, `stepCount`,
   `answerUnit`, `choiceLabels` when comparing, `stage` and `setPosition`.
 - POST `/student/answer` `{questionId,answer,elapsedMs,requestId}`: exact grading,
@@ -26,8 +32,10 @@ teacher routes or write points/checks/prizes. Account passwords use bcrypt12.
 - POST `/student/help` `{questionId}`: owned question's hint, worked `steps`,
   formatted `answer`, `answerUnit` and comparison `choiceLabels`. Available
   before and after submission; retrieving help does not change progress.
-- GET `/student/library`: searchable skill rules, vocabulary and formulas.
-- GET `/student/lesson?skill=...`: idea, picture, two worked examples and trap.
+- GET `/student/library`: searchable skill rules, vocabulary, formulas and
+  curriculum stages, prerequisites, standards and sources.
+- GET `/student/lesson?skill=...`: idea, picture, two worked examples, trap and
+  curriculum metadata. Foundation availability never implies mastery.
 - POST `/student/lesson-complete` `{skill}` after the three guided questions.
 - GET `/student/rewards`; POST `/student/rewards/:id/request`.
 

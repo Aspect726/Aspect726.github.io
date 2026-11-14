@@ -6,7 +6,7 @@ The host audience is public; application accounts protect learning records and
 teacher controls. The supplied course plan and the user's later instructions
 govern the learning experience.
 
-Student routes: `/s/today`, `/s/map`, `/s/learn/:skill`, `/s/practice`, `/s/review`,
+Student routes: `/s/today`, `/s/extra`, `/s/map`, `/s/learn/:skill`, `/s/practice`, `/s/review`,
 `/s/library`, `/s/progress`, `/s/rewards`. Teacher routes: `/t/dashboard`,
 `/t/students/:id`, `/t/plan`, `/t/checks`, `/t/assign`, `/t/rewards`,
 `/t/questions`, `/t/settings`. `/login` is the only signed-out page.
@@ -40,8 +40,20 @@ without spending the question. Default required total is 20; points are awarded
 at 35, 45, 55 and each further 10 answered questions. Learn, Library and Review
 count too. Unique answer rows and ledger keys prevent duplicate awards.
 
-Assignments lead the daily mix, followed by up to five due reviews, focus skills,
-earlier weak skills and stretch. Difficulty adjusts after three correct or two
+The daily task starts on Saturday, November 7, 2026, and runs for 70 days.
+The server supplies Pacific-time deadlines, including daylight-saving changes.
+The student page shows answers completed today, questions remaining and a live
+countdown. The calendar includes every scheduled date, even with no answers.
+Extra work counts on its actual completion date; it does not erase earlier
+missed daily goals. Daily mode stops at the goal; Extra practice opens five
+questions and remains available afterward.
+
+The topic mix has two foundation, ten focus, five recent and three older review
+positions. Explicit teacher assignments and due reviews can use these positions.
+Automatic practice stays within introduced topics; short teaching bridges fill
+missing prerequisites without rewriting the supplied plan. Grade 5 foundations
+are available for review, but never assumed mastered. General fraction division,
+ratios, percentages and fractional volume are introduced as new learning. Difficulty adjusts after three correct or two
 incorrect answers. Misses schedule fresh versions on days 1, 3 and 7. A correct
 7-day review clears the entry. All practice sources share the same story quota;
 concurrent requests reserve unique positions and scenarios. Question hashes
@@ -74,7 +86,11 @@ separate from mocked integration tests; see `RELEASE.md`.
 
 ## Private release checks
 
-`server/plan.json` is the authoritative course. The paper/slide corpus is private
+`server/plan.json` preserves the supplied dates and original focus topics.
+`server/curriculum.mjs` adds Grade 5, IMT1 and selected early IMT2 teaching targets,
+prerequisites and dated bridges. See `docs/curriculum-audit.md` for BSD sources,
+standard mappings and course-boundary limits. Teachers can inspect this mapping
+in Course plan. The paper/slide corpus is private
 validation input only; never put it in this repository or a public artifact.
 
 ```

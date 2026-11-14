@@ -29,12 +29,13 @@ const dividedBy = (a, n) => fraction(a[0], a[1] * BigInt(n));
 const absolute = a => [a[0] < 0n ? -a[0] : a[0], a[1]];
 const sum = xs => xs.map(x => Array.isArray(x) ? x : parse(x)).reduce(plus, [0n, 1n]);
 const avg = xs => dividedBy(sum(xs), xs.length);
+const middleOf = xs => xs.length % 2 ? parse(xs[Math.floor(xs.length / 2)]) : avg(xs.slice(xs.length / 2 - 1, xs.length / 2 + 1));
 function measures(values) {
   const sorted = values.slice().sort((a, b) => a - b);
-  const mean = avg(sorted), median = avg(sorted.slice(3, 5));
-  const q1 = avg(sorted.slice(1, 3)), q3 = avg(sorted.slice(5, 7));
+  const mean = avg(sorted), median = middleOf(sorted), middle = Math.floor(sorted.length / 2);
+  const q1 = middleOf(sorted.slice(0, middle)), q3 = middleOf(sorted.slice(middle + sorted.length % 2));
   const distances = sorted.map(x => absolute(minus(parse(x), mean)));
-  return { sorted, mean, median, q1, q3, iqr: minus(q3, q1), range: parse(sorted[7] - sorted[0]), mad: avg(distances), distances };
+  return { sorted, mean, median, q1, q3, iqr: minus(q3, q1), range: parse(sorted.at(-1) - sorted[0]), mad: avg(distances), distances };
 }
 
 function numericOracle(q) {
@@ -114,7 +115,7 @@ for (const skill of statisticsSkills) {
 test('Median first orders the list; IQR uses two halves; MAD uses absolute distances', () => {
   for (let seed = 0; seed < 50; seed++) {
     const median = generateStatistics('S-MEDIAN', seed, { shape: 'mistake' });
-    const unsortedMiddle = avg(median.model.displayed.slice(3, 5));
+    const unsortedMiddle = middleOf(median.model.displayed);
     assert.notDeepEqual(unsortedMiddle, parse(median.answer));
     assert.ok(median.hints.some(h => /order/i.test(h.text)));
     const iqr = generateStatistics('S-IQR', seed, { shape: 'calculation' });
@@ -146,16 +147,38 @@ test('Repeat signatures use visible givens rather than unused hidden source data
     assert.equal(spread.numbers.length, 2);
     assert.deepEqual(parse(spread.numbers[0]), parse(spread.model.givenMad));
     assert.deepEqual(parse(spread.numbers[1]), parse(spread.model.factor));
-    for (const skill of ['S-IQR', 'S-BOX', 'S-MEDIAN']) {
+    for (const skill of ['S-IQR', 'S-BOX']) {
       const q = generateStatistics(skill, seed, { shape: 'picture' });
       const s = measures(q.model.values);
       assert.deepEqual(q.numbers.map(parse), [parse(s.sorted[0]), s.q1, s.median, s.q3, parse(s.sorted[7])]);
     }
+    const median = generateStatistics('S-MEDIAN', seed, { shape:'picture' });
+    assert.deepEqual(median.numbers.map(parse), median.model.values.map(parse));
     for (const shape of ['calculation', 'story', 'missing', 'mistake', 'reason']) {
       const q = generateStatistics('S-QUESTION', seed, { shape });
       assert.deepEqual(q.numbers, [String(q.model.count), String(q.model.minutes)]);
       assert.ok(q.prompt.includes(`${q.model.count} children`));
       assert.ok(q.prompt.includes(`${q.model.minutes} minutes`));
     }
+  }
+});
+
+test('median warmups cover odd and even counts with matching methods and nontrivial missing values',()=>{
+  for(const shape of shapes){
+    const counts=new Set();
+    for(let seed=0;seed<120;seed++){
+      const q=generateStatistics('S-MEDIAN',`median-count:${seed}`,{shape});
+      const values=q.model.values,odd=values.length%2===1;counts.add(values.length);
+      assert.deepEqual(measures(values).median,middleOf([...values].sort((a,b)=>a-b)));
+      assert.match(q.hint,odd?/one middle value/:/two middle values/);
+      if(shape==='reason')assert.match(q.choices.find(c=>c.value===q.answer).label,odd?/single middle value/:/middle two/);
+      if(shape==='missing'&&odd){
+        assert.ok(q.model.increase>0);assert.match(q.plainPrompt,/every value increases/);
+        assert.equal(q.model.hidden,Math.floor(values.length/2));
+        assert.match(q.solution.at(-1),/Undo the increase/);
+      }
+      if(shape==='picture')assert.match(q.svg,/Each dot is one value/);
+    }
+    assert.deepEqual([...counts].sort(),[7,8,9],shape);
   }
 });

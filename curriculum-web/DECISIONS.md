@@ -16,9 +16,17 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
 - Count each answered question once, right or wrong. Award points atomically at
   target + first-bonus, then each bonus-step; store per-date rules so later changes
   never rewrite history. Teacher settings apply tomorrow.
-- Assignments and due reviews come first, then focused, weak and stretch work.
-  Keep course dates and skill lists derived from the supplied plan. Future skills
-  remain available for independent learning and practice.
+- Keep the student landing page focused on Daily questions, Extra practice and
+  Review. Put the teacher note beside the daily task. Default to 20 each day
+  from November 7, 2026, with server-derived Pacific deadlines and all70dates.
+  Credit answers on their actual completion date; extra answers do not erase
+  past missed goals. Stop Daily mode at the goal.
+- Preserve the supplied plan and overlay explicit Grade5 foundation checks,
+  IMT1 teaching prerequisites and selected next-course bridges. Baseline review
+  does not mean mastery. Automatic practice never jumps to future topics.
+  Use two foundation, ten focus, five recent and three older positions; assigned
+  work and due reviews use these positions. Future skills remain available only
+  through explicit teaching assignments or independent lesson/library choices.
 - Serve six warm-ups and 14 multi-step stories per standard set of 20, with no
   repeated scenario in the set. Custom targets retain at least 60% stories.
   All learning sources share the quota and atomically reserved question slots.

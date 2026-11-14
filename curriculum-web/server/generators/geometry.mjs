@@ -1,10 +1,10 @@
 import { rng, escapeHTML, math } from './common.mjs';
-import { rational, format } from '../math.mjs';
+import { rational, format, parseNumber, div } from '../math.mjs';
 
 export const geometrySkills = ['G-PERIM', 'G-PARA', 'G-TRI', 'G-COMP', 'G-SA', 'P-SCALE', 'P-MAP', 'G-CIRC', 'G-CAREA', 'G-VOL'];
 const shapes = ['calculation', 'story', 'missing', 'mistake', 'reason', 'picture'];
 const names = ['Maya', 'Leo', 'Sam', 'Ari', 'Nora', 'Ben', 'Zoe', 'Isha'];
-const exact = (n, d = 1) => format(rational(n, d));
+const exact = (n, d = 1) => format(div(parseNumber(String(n)), parseNumber(String(d))));
 const p = text => `<p>${text}</p>`;
 const m = value => math(String(value));
 const txt = (x, y, label, attrs = '') => `<text x="${x}" y="${y}" ${attrs}>${escapeHTML(String(label))}</text>`;
@@ -21,9 +21,9 @@ function parallelogram(b, h, offset, side, missing = false) {
   return svg('A parallelogram with a perpendicular height', `<path d="M ${x} ${y} L ${bx} ${y} L ${bx + dx} ${by} L ${x + dx} ${by} Z"/>${line(x + dx, by, x + dx, y, 'class="guide"')}<path d="M ${x + dx} ${y - 12} h 12 v 12" class="guide"/>${txt(x + b * scale / 2, y + 29, `${b} cm`, 'text-anchor="middle"')}${txt(x + dx + 17, (y + by) / 2, missing ? 'height ?' : `${h} cm`)}${txt(x + dx / 2 - 18, (y + by) / 2 - 9, `${side} cm`, 'text-anchor="end"')}`);
 }
 
-function triangle(b, h, missing = false) {
-  const scale = Math.min(345 / b, 175 / h), x = 85, y = 230, apex = x + b * scale * 0.4, top = y - h * scale;
-  return svg('A triangle with a perpendicular height', `<path d="M ${x} ${y} L ${x + b * scale} ${y} L ${apex} ${top} Z"/>${line(apex, top, apex, y, 'class="guide"')}<path d="M ${apex} ${y - 12} h 12 v 12" class="guide"/>${txt(x + b * scale / 2, y + 29, `${b} cm`, 'text-anchor="middle"')}${txt(apex + 17, top + h * scale * 0.6, missing ? 'height ?' : `${h} cm`)}`);
+function triangle(b, h, missing = false, outside = false) {
+  const scale = Math.min(310 / (b * (outside ? 1.3 : 1)), 175 / h), x = outside ? 165 : 85, y = 230, apex = x + b * scale * (outside ? -0.3 : 0.4), top = y - h * scale;
+  return svg(outside ? 'A triangle with its perpendicular height outside the triangle' : 'A triangle with a perpendicular height', `${outside ? line(apex,y,x,y,'class="guide"') : ''}<path d="M ${x} ${y} L ${x + b * scale} ${y} L ${apex} ${top} Z"/>${line(apex, top, apex, y, 'class="guide"')}<path d="M ${apex} ${y - 12} h 12 v 12" class="guide"/>${txt(x + b * scale / 2, y + 29, `${b} cm`, 'text-anchor="middle"')}${txt(apex + 17, top + h * scale * 0.6, missing ? 'height ?' : `${h} cm`)}`);
 }
 
 function composite(w, h, cutW, cutH, missing = false) {
@@ -36,6 +36,18 @@ function net(l, w, h, missing = false) {
   const x = 75, y = 50 + w * scale, L = l * scale, W = w * scale, H = h * scale;
   const rect = (rx, ry, rw, rh) => `<rect x="${rx}" y="${ry}" width="${rw}" height="${rh}"/>`;
   return svg('Six rectangles form a cuboid net', `${rect(x,y,L,H)}${rect(x+L,y,W,H)}${rect(x+L+W,y,L,H)}${rect(x+2*L+W,y,W,H)}${rect(x,y-W,L,W)}${rect(x,y+H,L,W)}${txt(x+L/2,y-W-15,`${l} cm`,'text-anchor="middle"')}${txt(x-14,y-W/2+5,`${w} cm`,'text-anchor="end"')}${txt(x+2*L+2*W+14,y+H/2+5,missing?'? cm':`${h} cm`)}`);
+}
+
+export function surfaceNet(model,missing=false) {
+  if(model.variant==='square-pyramid'){
+    const side=model.side,slant=model.slant,S=84,T=72,x=260-S/2,y=150-S/2;
+    return svg('Square-pyramid net: one square and four triangular faces',`<rect data-face="square" x="${x}" y="${y}" width="${S}" height="${S}"/><path data-face="triangle" d="M${x} ${y}L260 ${y-T}L${x+S} ${y}Z"/><path data-face="triangle" d="M${x+S} ${y}L${x+S+T} 150L${x+S} ${y+S}Z"/><path data-face="triangle" d="M${x+S} ${y+S}L260 ${y+S+T}L${x} ${y+S}Z"/><path data-face="triangle" d="M${x} ${y+S}L${x-T} 150L${x} ${y}Z"/>${line(260,y,260,y-T,'class="guide"')}<path d="M260 ${y-10}h10v10" class="guide"/>${txt(260,157,`${side} cm`,'text-anchor="middle" style="font-size:20px"')}${txt(290,y-T/2,missing?'slant height ?':`${slant} cm`,'style="font-size:18px"')}${txt(260,288,'Net not to scale. Height is measured along the face.','text-anchor="middle" style="font-size:15px"')}`,'The four triangular face heights are equal; this is slant height, not the vertical height inside the solid.');
+  }
+  if(model.variant==='triangular-prism'){
+    const {a,b,c,l}=model,A=54,B=72,C=90,L=94,x=145,y=95;
+    return svg('Triangular-prism net: two right triangles and three rectangles',`<rect data-face="rectangle" x="${x}" y="${y}" width="${A}" height="${L}"/><rect data-face="rectangle" x="${x+A}" y="${y}" width="${B}" height="${L}"/><rect data-face="rectangle" x="${x+A+B}" y="${y}" width="${C}" height="${L}"/><path data-face="triangle" d="M${x} ${y}h${A}L${x} ${y-B}Z"/><path data-face="triangle" d="M${x} ${y+L}h${A}L${x} ${y+L+B}Z"/><path d="M${x} ${y-11}h11v11 M${x} ${y+L+11}h11v-11" class="guide"/>${txt(x+A/2,y+L/2,`${a} cm`,'text-anchor="middle" style="font-size:16px"')}${txt(x+A+B/2,y+L/2,`${b} cm`,'text-anchor="middle" style="font-size:16px"')}${txt(x+A+B+C/2,y+L/2,`${c} cm`,'text-anchor="middle" style="font-size:16px"')}${txt(x+A+B+C+15,y+L/2+5,missing?'? cm':`${l} cm`,'style="font-size:18px"')}${txt(x-12,y-B/2,`${b} cm`,'text-anchor="end" style="font-size:18px"')}${txt(260,285,'Net not to scale. Rectangles share the prism length.','text-anchor="middle" style="font-size:15px"')}`,'The triangular ends have perpendicular legs a and b. The rectangles have widths equal to the three triangle sides.');
+  }
+  return net(model.l,model.w,model.h,missing);
 }
 
 function cuboid(l, w, h, missing = false) {
@@ -67,7 +79,7 @@ function uniqueHints(answer, rows) {
 
 function definition(skill, random, hard) {
   const name=random.pick(names), high=hard?16:10;
-  let model, direct, story, missing, value, missingValue, wrong, hint, solution, missingSolution, methods, picture;
+  let model, direct, story, missing, value, missingValue, wrong, hint, solution, missingSolution, methods, picture, specificMissingHints, specificReasonHints;
   if(skill==='G-PERIM') {
     const l=random.int(7,hard?30:22), w=random.int(2,hard?15:10), result=2*(l+w);
     model={l,w,result}; value=result;missingValue=l;
@@ -94,7 +106,8 @@ function definition(skill, random, hard) {
     picture=isMissing=>parallelogram(b,h,offset,side,isMissing);
   } else if(skill==='G-TRI') {
     const b=2*random.int(3,hard?16:11),h=random.int(3,hard?24:16),result=b*h/2;
-    model={b,h,result,apexFraction:0.4};value=result;missingValue=h;
+    const outside=random.int(0,1)===1;
+    model={b,h,result,apexFraction:outside?-0.3:0.4,outside};value=result;missingValue=h;
     direct=`A triangle has base ${m(b)} cm and perpendicular height ${m(h)} cm. Find its area in cm².`;
     story=`${name} makes a triangular flag with base ${b} cm and perpendicular height ${h} cm. Find its area in cm².`;
     missing=`A triangle has area ${m(result)} cm² and base ${m(b)} cm. Find its perpendicular height in cm.`;
@@ -103,7 +116,8 @@ function definition(skill, random, hard) {
     solution=[`Two matching triangles form a parallelogram.`,`Its area is ${b} × ${h} = ${b*h} cm².`,`One triangle has area ${b*h} ÷ 2 = ${result} cm².`];
     missingSolution=[`Double the triangle's area: ${result} × 2 = ${2*result} cm².`,`Divide that by the base.`,`${2*result} ÷ ${b} = ${h} cm.`];
     methods=[['Multiply base by perpendicular height, then halve.','area'],['Multiply base by perpendicular height without halving.','whole'],['Add base and perpendicular height.','sum']];
-    picture=isMissing=>triangle(b,h,isMissing);
+    if(outside) {direct+=' The height is outside the triangle and meets the extended base at a right angle.'; story+=' The perpendicular height is outside the triangle; extend the base to meet it.'; hint='Extend the base to meet the outside perpendicular height. The area rule is still base × height ÷ 2.'; solution[0]='Extend the base to locate the perpendicular height; it can lie outside the triangle.';}
+    picture=isMissing=>triangle(b,h,isMissing,outside);
   } else if(skill==='G-COMP') {
     const cutW=random.int(2,5),cutH=random.int(2,5),w=cutW+random.int(3,8),h=cutH+random.int(3,8),result=w*h-cutW*cutH;
     model={w,h,cutW,cutH,result};value=result;missingValue=cutW;
@@ -117,17 +131,46 @@ function definition(skill, random, hard) {
     methods=[['Subtract the corner’s area from the full rectangle’s area.','area'],['Add the corner’s area to the full rectangle’s area.','add'],['Multiply the two shortened sides.','shorten']];
     picture=isMissing=>composite(w,h,cutW,cutH,isMissing);
   } else if(skill==='G-SA') {
-    const l=random.int(5,hard?16:12),w=random.int(2,hard?8:6),h=random.int(3,hard?12:9),result=2*(l*w+l*h+w*h);
-    model={l,w,h,result};value=result;missingValue=h;
-    direct=`A closed box measures ${m(l)} cm by ${m(w)} cm by ${m(h)} cm. Find its surface area in cm².`;
-    story=`${name} covers all six faces of a gift box. It measures ${l} cm by ${w} cm by ${h} cm. How many cm² of paper are needed?`;
-    missing=`The closed box has surface area ${m(result)} cm². Its length is ${m(l)} cm and width is ${m(w)} cm. Find its height in cm.`;
-    wrong=[[l*w*h,'Volume counts cubes inside. Surface area counts the squares on all six faces.'],[l*w+l*h+w*h,'Each face has an opposite face of the same size. Count both.'],[2*(l+w+h),'Multiply each pair of dimensions to find the face areas.'],[2*l*w,'The top and bottom are only two of the six faces.'],[result-l*w,'This is a closed box. Include the top face as well.']];
-    hint='The net has three pairs of equal rectangles.';
-    solution=[`One of each face has area ${l*w}, ${l*h}, and ${w*h} cm².`,`Their total is ${l*w+l*h+w*h} cm².`,`Each face occurs twice: 2 × ${l*w+l*h+w*h} = ${result} cm².`];
-    missingSolution=[`Remove top and bottom: ${result} − ${2*l*w} = ${result-2*l*w} cm².`,`The four side faces have total width ${2*(l+w)} cm.`,`Height = ${result-2*l*w} ÷ ${2*(l+w)} = ${h} cm.`];
-    methods=[['Find the three face areas, add them, then double.','area'],['Multiply all three dimensions.','volume'],['Add the three dimensions, then double.','edges']];
-    picture=isMissing=>net(l,w,h,isMissing);
+    const variant=random.pick(['cuboid','triangular-prism','square-pyramid']);
+    if(variant==='triangular-prism'){
+      const t=random.int(1,hard?6:4),a=3*t,b=4*t,c=5*t,l=random.int(4,hard?24:16),end=a*b/2,sideArea=(a+b+c)*l,result=2*end+sideArea;
+      model={variant,a,b,c,l,result};value=result;missingValue=l;
+      direct=`A closed right-triangular prism has triangular-end legs ${m(a)} cm and ${m(b)} cm, with hypotenuse ${m(c)} cm. Its prism length is ${m(l)} cm. Find the total area of its two triangles and three rectangles in cm².`;
+      story=`${name} covers a triangular-prism display with no overlap. Each right-triangular end has perpendicular legs ${a} cm and ${b} cm and hypotenuse ${c} cm. The prism is ${l} cm long. Find the surface area in cm².`;
+      missing=`The triangular-prism net has total area ${m(result)} cm². Each end is a right triangle with perpendicular legs ${m(a)} cm and ${m(b)} cm and hypotenuse ${m(c)} cm. Find the shared length of the three rectangles in cm.`;
+      wrong=[[end*l,'That is the volume. Add the areas of two triangular ends and three rectangular sides.'],[end+sideArea,'There are two triangular ends. Include both of them.'],[sideArea,'Include the triangular ends as well as the rectangles.'],[2*a*b+sideArea,'Each triangle has half of base times perpendicular height.'],[a+b+c+l,'Edge lengths are not face areas. Multiply face dimensions first.']];
+      hint='Unfold the solid: two right triangles and three rectangles make its five faces.';
+      solution=[`The two triangular ends cover 2 × (${a} × ${b} ÷ 2) = ${2*end} cm².`,`The three rectangles cover (${a} + ${b} + ${c}) × ${l} = ${sideArea} cm².`,`Add the five face areas: ${2*end} + ${sideArea} = ${result} cm².`];
+      missingSolution=[`Both triangular ends cover 2 × (${a} × ${b} ÷ 2) = ${2*end} cm².`,`Remove them from the total net area: ${result} − ${2*end} = ${sideArea} cm².`,`The three rectangles share one length and have total width ${a} + ${b} + ${c} = ${a+b+c} cm.`,`Their shared length is ${sideArea} ÷ ${a+b+c} = ${l} cm.`];
+      methods=[['Add two triangle areas and the three rectangle areas.','area'],['Multiply one triangle area by prism length.','volume'],['Add only the three rectangle areas.','ends']];
+      specificMissingHints=[[result,'Remove both triangular ends before finding the common rectangle length.'],[sideArea,'That is the side-face area. Divide by the combined widths of the rectangles.'],[exact(result,a+b+c),'Remove the end areas before dividing by the perimeter of an end.'],[2*l,'There is one shared prism length, not two.']];
+      specificReasonHints=['Multiplying one end area by the prism length gives volume, not surface area.','A closed triangular prism also has two triangular ends.','Include the three rectangular side faces as well as the ends.'];
+    }else if(variant==='square-pyramid'){
+      const side=2*random.int(2,hard?12:8),slant=random.int(side/2+2,side+12),base=side*side,triangle=side*slant/2,result=base+4*triangle;
+      model={variant,side,slant,result};value=result;missingValue=slant;
+      direct=`A closed square pyramid has base edge ${m(side)} cm. Each triangular face has perpendicular slant height ${m(slant)} cm measured along that face. Find the area of its square and four triangles in cm².`;
+      story=`${name} covers a square-pyramid display, including its base. The base edge is ${side} cm and each triangular face has slant height ${slant} cm. This height is measured along the face. Find the surface area in cm².`;
+      missing=`A square-pyramid net has total area ${m(result)} cm² and base edge ${m(side)} cm. Its four triangular faces have the same unknown perpendicular height. Find that slant height in cm.`;
+      wrong=[[base+4*side*slant,'Each triangle is half of base times perpendicular height.'],[4*triangle,'The closed pyramid includes its square base.'],[base+triangle,'There are four triangular faces, not one.'],[side*side*slant,'Volume and surface area use different measurements. Count the square and triangle faces.'],[base+2*triangle,'A square pyramid has four triangular faces.']];
+      hint='The net has one square and four triangles. The triangle height lies along a face, not inside the pyramid.';
+      solution=[`The square base area is ${side} × ${side} = ${base} cm².`,`One triangular face has area ${side} × ${slant} ÷ 2 = ${triangle} cm².`,`Include the base and all four triangles: ${base} + 4 × ${triangle} = ${result} cm².`];
+      missingSolution=[`Remove the square base: ${result} − (${side} × ${side}) = ${4*triangle} cm² for the triangles.`,`Share that among four equal faces: ${4*triangle} ÷ 4 = ${triangle} cm² per triangle.`,`Undo the triangle-area rule: 2 × ${triangle} ÷ ${side} = ${slant} cm of slant height.`];
+      methods=[['Add the square area and four triangle areas.','area'],['Use base times height for each triangle without halving.','double'],['Add only one triangle to the base.','one-face']];
+      specificMissingHints=[[result-base,'That is all four triangles’ area. First find the area of just one.'],[triangle,'An area is not a height. Double one triangle’s area and divide by its base.'],[slant/2,'A triangle is half a rectangle. Undo that halving when finding its height.'],[2*slant,'Undo the triangle-area formula once, not twice.']];
+      specificReasonHints=['A triangle’s area is half of base times perpendicular face height.','The net has four equal triangular faces, not one.','Include the square base as well as the four triangles.'];
+    }else{
+      const l=random.int(5,hard?16:12),w=random.int(2,hard?8:6),h=random.int(3,hard?12:9),result=2*(l*w+l*h+w*h);
+      model={variant,l,w,h,result};value=result;missingValue=h;
+      direct=`A closed box measures ${m(l)} cm by ${m(w)} cm by ${m(h)} cm. Find its surface area in cm².`;
+      story=`${name} covers all six faces of a gift box. It measures ${l} cm by ${w} cm by ${h} cm. How many cm² of paper are needed?`;
+      missing=`The closed box has surface area ${m(result)} cm². Its length is ${m(l)} cm and width is ${m(w)} cm. Find its height in cm.`;
+      wrong=[[l*w*h,'Volume counts cubes inside. Surface area counts the squares on all six faces.'],[l*w+l*h+w*h,'Each face has an opposite face of the same size. Count both.'],[2*(l+w+h),'Multiply each pair of dimensions to find the face areas.'],[2*l*w,'The top and bottom are only two of the six faces.'],[result-l*w,'This is a closed box. Include the top face as well.']];
+      hint='The net has three pairs of equal rectangles.';
+      solution=[`One of each face has area ${l*w}, ${l*h}, and ${w*h} cm².`,`Their total is ${l*w+l*h+w*h} cm².`,`Each face occurs twice: 2 × ${l*w+l*h+w*h} = ${result} cm².`];
+      missingSolution=[`Remove top and bottom: ${result} − ${2*l*w} = ${result-2*l*w} cm².`,`The four side faces have total width ${2*(l+w)} cm.`,`Height = ${result-2*l*w} ÷ ${2*(l+w)} = ${h} cm.`];
+      methods=[['Find the three face areas, add them, then double.','area'],['Multiply all three dimensions.','volume'],['Add the three dimensions, then double.','edges']];
+    }
+    picture=isMissing=>surfaceNet(model,isMissing);
   } else if(skill==='P-SCALE') {
     const w=random.int(3,hard?14:9),h=random.int(2,hard?11:7),k=random.int(2,hard?4:3),result=w*h*k*k;
     model={w,h,k,result};value=result;missingValue=k;
@@ -179,14 +222,14 @@ function definition(skill, random, hard) {
     methods=[['Find π × radius squared, then multiply by the number of circles.','area'],['Find π × diameter squared, then multiply by the number of circles.','diameter'],['Find π × diameter, then multiply by the number of circles.','circumference']];
     picture=isMissing=>circle(r,diameter,isMissing);
   } else if(skill==='G-VOL') {
-    const l=random.int(5,hard?12:9),w=random.int(2,5),h=random.int(3,8),result=l*w*h;
+    const l=(2*random.int(2,hard?8:5)+1)/2,w=4*random.int(1,3),h=(2*random.int(1,5)+1)/2,result=l*w*h;
     model={l,w,h,result};value=result;missingValue=h;
     direct=`A box measures ${m(l)} cm by ${m(w)} cm by ${m(h)} cm. Find its volume in cm³.`;
-    story=`${name} builds a solid block from 1 cm cubes. The block measures ${l} cm by ${w} cm by ${h} cm. How many cubes are used?`;
+    story=`${name} makes a solid clay block measuring ${l} cm by ${w} cm by ${h} cm. Find the volume of clay in cm³.`;
     missing=`A box has volume ${m(result)} cm³. Its base is ${m(l)} cm by ${m(w)} cm. Find its height in cm.`;
     wrong=[[l*w,'That counts one layer. Count all the layers.'],[2*(l*w+l*h+w*h),'Surface area counts faces. Volume counts cubes inside.'],[l+w+h,'Multiply to count equal rows, then multiply by the layers.'],[l*w+h,'Each layer holds the same number of cubes. Multiply by the number of layers.']];
-    hint='Find the number of cubes in one layer, then count all the layers.';
-    solution=[`One layer holds ${l} × ${w} = ${l*w} cubes.`,`The box has ${h} layers.`,`Volume = ${l*w} × ${h} = ${result} cm³.`];
+    hint='Find the base area, then multiply by the height. Fractional edge lengths use the same volume rule.';
+    solution=[`The base area is ${l} × ${w} = ${l*w} cm².`,`Extend that base through a height of ${h} cm.`,`Volume = ${l*w} × ${h} = ${result} cm³.`];
     missingSolution=[`The base area is ${l} × ${w} = ${l*w} cm².`,`Divide volume by base area.`,`${result} ÷ ${l*w} = ${h} cm.`];
     methods=[['Multiply base area by height.','volume'],['Add length, width and height.','sum'],['Add the areas of all six faces.','surface']];
     picture=isMissing=>cuboid(l,w,h,isMissing);
@@ -196,7 +239,7 @@ function definition(skill, random, hard) {
     'G-PARA':['Multiply base by perpendicular height, then halve.','half'],
     'G-TRI':['Multiply base by perpendicular height, then divide by four.','quarter'],
     'G-COMP':['Use the full rectangle’s area without removing the corner.','full'],
-    'G-SA':['Count only the top and bottom faces.','two-faces'],
+    'G-SA':model.variant==='triangular-prism'?['Count only the two triangular ends.','two-faces']:model.variant==='square-pyramid'?['Count only the four triangular faces.','no-base']:['Count only the top and bottom faces.','two-faces'],
     'P-SCALE':['Use the original area without changing it.','unchanged'],
     'P-MAP':['Use the scale number without counting map centimetres.','one-group'],
     'G-CIRC':['Use the diameter without multiplying by π.','diameter-only'],
@@ -204,7 +247,7 @@ function definition(skill, random, hard) {
     'G-VOL':['Multiply length by width without counting layers.','one-layer']
   };
   methods.push(extraMethods[skill]);
-  const reasonHints={
+  const reasonHints=specificReasonHints??{
     'G-PERIM':['Perimeter measures the border. Add all four sides.','A rectangle has two lengths and two widths.','Include both short sides too.'],
     'G-PARA':['The slanted side is not the perpendicular height. Look for the square corner.','Area counts squares inside. Adding side lengths finds perimeter.','A parallelogram rearranges into a whole rectangle. Do not halve it.'],
     'G-TRI':['Two triangles make a parallelogram. Find half its area.','Adding lengths does not count squares inside.','Halve once. Dividing by four halves the area twice.'],
@@ -216,7 +259,7 @@ function definition(skill, random, hard) {
     'G-CAREA':['Use the radius in the area formula. Halve a diameter first.','π × diameter gives circumference. Area uses radius squared.','Radius squared still needs to be multiplied by π.'],
     'G-VOL':['Multiply to count equal rows and layers of cubes.','Adding face areas finds surface area. Volume counts cubes inside.','Length × width counts one layer. Count all the layers.']
   }[skill];
-  return {model,direct,story,missing,value:String(value),missingValue:String(missingValue),wrong,hint,solution,missingSolution,methods,reasonHints,picture,name};
+  return {model,direct,story,missing,value:String(value),missingValue:String(missingValue),wrong,hint,solution,missingSolution,methods,reasonHints,picture,name,specificMissingHints};
 }
 
 export function generateGeometry(skill, seed, options = {}) {
@@ -241,7 +284,7 @@ export function generateGeometry(skill, seed, options = {}) {
       'G-CAREA': () => [[exact(d.model.radiusTenths*d.model.radiusTenths,100),'Dividing area by π gives radius squared. Find the radius.'],[2*d.model.r,'The question asks for the radius, not the diameter.'],[d.model.result,'First divide the total area by the number of circles, then by π.'],[exact(d.model.radiusTenths,20),'Do not halve the radius again. Only a diameter needs halving.']],
       'G-VOL': () => [[d.model.l*d.model.w,'That is the base area. Divide the volume by it.'],[d.model.result,'The volume counts all layers. Find the number of layers.'],[d.model.result/d.model.l,'You have divided by only one base dimension. Use the full base area.'],[exact(d.model.result,d.model.l*d.model.w*d.model.w),'Divide by each base dimension once.'],[d.model.result*d.model.w,'Divide by the base area rather than multiplying.']]
     };
-    hints=uniqueHints(answer,missingHints[skill]());
+    hints=uniqueHints(answer,d.specificMissingHints??missingHints[skill]());
   }
   if(shape==='mistake') {
     const wrong=hints[0].answer;
@@ -261,7 +304,7 @@ export function generateGeometry(skill, seed, options = {}) {
       'G-PARA':'Read the parallelogram. Find its area in cm². Use the perpendicular height.',
       'G-TRI':'Read the triangle. Find its area in cm². Use the perpendicular height.',
       'G-COMP':'Read the L-shape. Find its area in cm².',
-      'G-SA':'This net folds into a closed box. Find its surface area in cm².',
+      'G-SA':`This net folds into a ${d.model.variant==='triangular-prism'?'closed triangular prism':d.model.variant==='square-pyramid'?'closed square pyramid':'closed box'}. Find its surface area in cm².`,
       'P-SCALE':'Read the original rectangle and its scale factor. Find the copy’s area in cm².',
       'P-MAP':'Read the map and scale. Find the real distance in metres.',
       'G-CIRC':`There are ${d.model.count} equal circles like this one. Use π = 3.14. Find their total circumference in cm.`,
@@ -278,7 +321,7 @@ export function generateGeometry(skill, seed, options = {}) {
     'G-PARA': missing?[z.result,z.b]:[z.b,z.h],
     'G-TRI': missing?[z.result,z.b]:[z.b,z.h],
     'G-COMP': missing?[z.result,z.w,z.h,z.cutH]:[z.w,z.h,z.cutW,z.cutH],
-    'G-SA': missing?[z.result,z.l,z.w]:[z.l,z.w,z.h],
+    'G-SA':z.variant==='triangular-prism'?(missing?[z.result,z.a,z.b,z.c]:[z.a,z.b,z.c,z.l]):z.variant==='square-pyramid'?(missing?[z.result,z.side]:[z.side,z.slant]):missing?[z.result,z.l,z.w]:[z.l,z.w,z.h],
     'P-SCALE': missing?[z.w*z.h,z.result]:[z.w,z.h,z.k],
     'P-MAP': missing?[z.meters,z.result]:[z.meters,z.n],
     'G-CIRC': missing?[...(z.count===1?[]:[z.count]),z.result]:[...(z.count===1?[]:[z.count]),shape==='story'?z.r:z.diameter?2*z.r:z.r],

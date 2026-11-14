@@ -6,10 +6,16 @@ import { generateStatistics, statisticsSkills } from './generators/statistics.mj
 import { generateStoryArithmetic, arithmeticStoryScenarios } from './generators/story-arithmetic.mjs';
 import { generateStoryGeometry, geometryStoryScenarios } from './generators/story-geometry.mjs';
 import { generateStoryStatistics, statisticsStoryScenarios } from './generators/story-statistics.mjs';
+import { foundationArithmeticSkills, generateFoundationArithmetic, foundationArithmeticScenarios } from './generators/foundation-arithmetic.mjs';
+import { foundationGeometrySkills, generateFoundationGeometry, foundationGeometryScenarios } from './generators/foundation-geometry.mjs';
+import { foundationStatisticsSkills, generateFoundationStatistics, foundationStatisticsScenarios } from './generators/foundation-statistics.mjs';
 
 export const STORY_SHAPES=['missing','compare','backward','mistake','what-if'];
 export const storyShapes=STORY_SHAPES;
-export function storyScenarios(skill){const canonical=skill==='N-WARM'?'WARMUP':skill;return arithmeticSkills.includes(canonical)?arithmeticStoryScenarios(canonical):geometrySkills.includes(canonical)?geometryStoryScenarios(canonical):statisticsSkills.includes(canonical)?statisticsStoryScenarios(canonical):[];}
+const foundationFamilies=[{skills:foundationArithmeticSkills,generate:generateFoundationArithmetic,scenarios:foundationArithmeticScenarios},{skills:foundationGeometrySkills,generate:generateFoundationGeometry,scenarios:foundationGeometryScenarios},{skills:foundationStatisticsSkills,generate:generateFoundationStatistics,scenarios:foundationStatisticsScenarios}];
+const foundationFor=skill=>foundationFamilies.find(family=>family.skills.includes(skill));
+export function warmupShapesForSkill(skill){return foundationFor(skill)?['calculation','missing']:['calculation','story','missing','mistake','reason',...(geometrySkills.includes(skill)||statisticsSkills.includes(skill)?['picture']:[])];}
+export function storyScenarios(skill){const canonical=skill==='N-WARM'?'WARMUP':skill,foundation=foundationFor(canonical);return foundation?foundation.scenarios(canonical):arithmeticSkills.includes(canonical)?arithmeticStoryScenarios(canonical):geometrySkills.includes(canonical)?geometryStoryScenarios(canonical):statisticsSkills.includes(canonical)?statisticsStoryScenarios(canonical):[];}
 
 
 // Compact private pools avoid duplicating the same scene and shape labels thousands
@@ -22,17 +28,17 @@ export function decodeStorySeed(skill,level,entry,pool={}){
  return {seed:`story-v1:${skill}:${level}:${entry}`,scenarioId:scenarios[sceneIndex],storyShape:shapes[shapeIndex]};
 }
 
-export const allSkills=[...arithmeticSkills,...geometrySkills,...statisticsSkills];
+export const allSkills=[...arithmeticSkills,...geometrySkills,...statisticsSkills,...foundationFamilies.flatMap(family=>family.skills)];
 export function generateQuestion(skill,seed,options={}) {
   const canonical=skill==='N-WARM'?'WARMUP':skill;
   if(options.mode==='story') {
-    const generate=arithmeticSkills.includes(canonical)?generateStoryArithmetic:geometrySkills.includes(canonical)?generateStoryGeometry:statisticsSkills.includes(canonical)?generateStoryStatistics:null;
+    const generate=foundationFor(canonical)?.generate??(arithmeticSkills.includes(canonical)?generateStoryArithmetic:geometrySkills.includes(canonical)?generateStoryGeometry:statisticsSkills.includes(canonical)?generateStoryStatistics:null);
     if(!generate)throw new Error(`Unknown story skill ${skill}`);
     const q=makeQuestion({...generate(canonical,seed,options),skill,seed,generationSeed:seed});
     if(!q.story||!q.scenarioId||!q.answerUnit||!parseNumber(q.answer)||q.solution.length<2||q.solution.length>4)throw new Error(`Incomplete story template for ${skill}`);
     return q;
   }
-  const generate=arithmeticSkills.includes(canonical)?generateArithmetic:geometrySkills.includes(canonical)?generateGeometry:statisticsSkills.includes(canonical)?generateStatistics:null;
+  const generate=foundationFor(canonical)?.generate??(arithmeticSkills.includes(canonical)?generateArithmetic:geometrySkills.includes(canonical)?generateGeometry:statisticsSkills.includes(canonical)?generateStatistics:null);
   if(!generate)throw new Error(`Unknown skill ${skill}`);
   for(let retry=0;retry<100;retry++) {
     const generationSeed=retry?`${seed}:variant:${retry}`:seed;

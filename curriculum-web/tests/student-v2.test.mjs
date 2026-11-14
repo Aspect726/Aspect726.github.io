@@ -11,12 +11,15 @@ function setup(api) {
  return {dom,ctx};
 }
 const tick = () => new Promise(resolve => setTimeout(resolve,0));
-test('student dashboard uses live counts, week and lesson links',async()=>{
+test('student home makes the daily task primary and keeps the teacher note visible',async()=>{
  const {dom,ctx}=setup(async path=>{assert.equal(path,'/v2/student/summary');return {...summary,answered:14};});
  await renderStudent('/s/today',ctx);
- assert.match(document.body.textContent,/6 left to reach 20/);
- assert.equal(document.querySelector('a[href="/s/learn/D1"]').textContent,'Open lesson');
- assert.equal(document.querySelector('[aria-current=date]').textContent.includes('Lesson day'),true);
+ assert.match(document.body.textContent,/6 questions left today/);
+ assert.equal(document.querySelector('.daily-start').getAttribute('href'),'/s/practice');
+ assert.equal(document.querySelector('a[href="/s/learn/D1"]').textContent,'Today’s lesson');
+ assert.ok(document.querySelector('.daily-teacher-note'));
+ assert.ok(document.querySelector('.daily-teacher-note').compareDocumentPosition(document.querySelector('.practice-choices')) & dom.window.Node.DOCUMENT_POSITION_FOLLOWING);
+ assert.equal(document.querySelector('.today-resources').open,false);
  assert.equal(ctx.state.summary.answered,14); dom.window.close();
 });
 test('course map exposes upcoming skill lessons and practice without locks',async()=>{
@@ -24,7 +27,7 @@ test('course map exposes upcoming skill lessons and practice without locks',asyn
  await renderStudent('/s/map',ctx);
  assert.ok(document.querySelector('a[href="/s/learn/F1"]'));
  assert.ok([...document.querySelectorAll('a')].some(a => a.getAttribute('href') === '/s/practice?source=library&skill=F1&count=5'));
- assert.match(document.body.textContent,/Double Advanced test/); dom.window.close();
+ assert.match(document.body.textContent,/Ready for your next maths challenge/); dom.window.close();
 });
 test('progress calendar includes unanswered course dates, not only attempt dates',async()=>{
  const {dom,ctx}=setup(async()=>({weeks:[{week:1,title:'Decimals',startDate:'2026-11-07',skills:[]}],skills:[],days:[{date:'2026-11-07',answered:20,target:20,accuracy:50,pointsEarned:0}],checks:[],totalQuestions:20,overallAccuracy:50,streak:1,bestStreak:1}));
@@ -100,4 +103,63 @@ test('an in-flight practice request stops when the shell changes route',async()=
  assert.equal(document.querySelector('h1').textContent,'Settings');
  assert.equal(document.querySelector('#practice-answer-form'),null);
  dom.window.close();
+});
+
+test('daily home uses the server Pacific deadline and actual schedule day',async()=>{
+ const day={date:'2026-11-07',expected:20,answered:14,remaining:6,dayNumber:1,dueAt:'2026-11-08T08:00:00.000Z'};
+ const {dom,ctx}=setup(async()=>({...summary,answered:14,teacherNote:'Use a drawing when you get stuck.',schedule:{startDate:'2026-11-07',endDate:'2027-01-15',totalDays:70,timeZone:'America/Los_Angeles',today:day,days:[day]}}));
+ try{await renderStudent('/s/today',ctx);assert.match(document.querySelector('.daily-deadline').textContent,/11:59 PM PST/);assert.match(document.querySelector('.today-dateline').textContent,/Day 1 of 70/);assert.match(document.querySelector('.daily-teacher-note').textContent,/Use a drawing/);assert.equal(document.querySelector('[role=progressbar]').getAttribute('aria-valuenow'),'14');}finally{dom.window.close();}
+});
+
+test('completed daily route refreshes stale cached counts and does not request a bonus question',async()=>{
+ let questions=0;
+ const {dom,ctx}=setup(async path=>{if(path.endsWith('/summary'))return {...summary,answered:20,requiredDone:true};if(path.endsWith('/question'))questions++;throw Error(path);});
+ ctx.state.summary={...summary,answered:0};
+ try{await renderStudent('/s/practice',ctx);assert.equal(questions,0);assert.match(document.body.textContent,/Your daily practice is done/);assert.equal(document.querySelector('#practice-answer-form'),null);assert.ok(document.querySelector('a[href="/s/extra"]'));}finally{dom.window.close();}
+});
+
+test('daily practice requests daily intent and stops exactly at the remaining count',async()=>{
+ let questions=0,answers=0;
+ const {dom,ctx}=setup(async(path,body)=>{
+  if(path.endsWith('/summary'))return {...summary,answered:19};
+  if(path.endsWith('/question')){questions++;assert.equal(body.intent,'daily');return {question:{id:'last-daily',skill:'D1',prompt:'Add 1 and 2.'},summary:{...summary,answered:19}};}
+  if(path.endsWith('/answer')){answers++;return {correct:true,rightAnswer:'3',solution:['1 + 2 = 3.'],summary:{...summary,answered:20,requiredDone:true}};}
+  throw Error(path);
+ });
+ ctx.state.summary={...summary,answered:0};
+ try{await renderStudent('/s/practice',ctx);document.querySelector('[name=answer]').value='3';document.querySelector('#practice-answer-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await tick();assert.equal(document.querySelector('#next-question').textContent,'Finish set');document.querySelector('#next-question').click();await tick();assert.equal(answers,1);assert.equal(questions,1);assert.match(document.body.textContent,/Your daily practice is done/);}finally{dom.window.close();}
+});
+
+test('daily completion in another tab is respected before drawing another question',async()=>{
+ const {dom,ctx}=setup(async path=>{if(path.endsWith('/summary'))return {...summary,answered:19};if(path.endsWith('/question'))return {question:null,done:true,summary:{...summary,answered:20,requiredDone:true}};throw Error(path);});
+ try{await renderStudent('/s/practice',ctx);assert.equal(document.querySelector('#practice-answer-form'),null);assert.match(document.body.textContent,/Your daily practice is done/);}finally{dom.window.close();}
+});
+
+test('explicit extra practice remains a five-question set after the daily goal is complete',async()=>{
+ let questions=0,answers=0;
+ const {dom,ctx}=setup(async(path,body)=>{
+  if(path.endsWith('/summary'))return {...summary,answered:20,requiredDone:true};
+  if(path.endsWith('/question')){questions++;assert.equal(body.intent,undefined);return {question:{id:`extra-${questions}`,skill:'D1',prompt:'Add 1 and 2.'},summary:{...summary,answered:20+answers,requiredDone:true}};}
+  if(path.endsWith('/answer')){answers++;return {correct:true,solution:['3'],summary:{...summary,answered:20+answers,requiredDone:true}};}
+  throw Error(path);
+ });
+ try{await renderStudent('/s/practice?source=practice&count=5',ctx);for(let i=0;i<5;i++){document.querySelector('[name=answer]').value='3';document.querySelector('#practice-answer-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await tick();document.querySelector('#next-question').click();await tick();}assert.equal(questions,5);assert.equal(answers,5);assert.match(document.body.textContent,/Practice complete/);}finally{dom.window.close();}
+});
+
+test('extra practice gives a small starting list and searches all skills',async()=>{
+ const skills=Array.from({length:12},(_,i)=>({id:`S${i}`,name:`Skill ${i}`,week:Math.floor(i/3)+1}));
+ const {dom,ctx}=setup(async path=>path.endsWith('/summary')?summary:{skills});
+ try{await renderStudent('/s/extra',ctx);assert.equal(document.querySelectorAll('.extra-skill:not([hidden])').length,8);assert.ok([...document.querySelectorAll('a')].some(link=>link.getAttribute('href')==='/s/practice?source=practice&count=5'));const input=document.querySelector('#extra-search');input.value='Skill 11';input.dispatchEvent(new dom.window.Event('input'));assert.equal(document.querySelectorAll('.extra-skill:not([hidden])').length,1);assert.ok([...document.querySelectorAll('.extra-skill:not([hidden]) a')].some(link=>link.getAttribute('href').includes('skill=S11')));input.value='';input.dispatchEvent(new dom.window.Event('input'));document.querySelector('#extra-show-all').click();assert.equal(document.querySelectorAll('.extra-skill:not([hidden])').length,12);}finally{dom.window.close();}
+});
+
+test('progress displays all seventy scheduled dates including missing and future dates',async()=>{
+ const days=Array.from({length:70},(_,i)=>({date:new Date(Date.parse('2026-11-07T12:00:00Z')+i*86400000).toISOString().slice(0,10),expected:20,answered:i===0?20:0,status:i===0?'complete':i===1?'today':'upcoming'}));
+ const {dom,ctx}=setup(async()=>({weeks:[],skills:[],days:[],totalQuestions:20,streak:1,schedule:{dailyTarget:20,today:days[1],days}}));
+ try{await renderStudent('/s/progress',ctx);assert.equal(document.querySelectorAll('.calendar-square').length,70);assert.equal(document.querySelectorAll('.calendar-square.upcoming').length,68);assert.equal(document.querySelectorAll('.calendar-square.complete').length,1);assert.match(document.querySelector('.calendar-first').textContent,/Nov 7 – Jan 15/);assert.equal(document.querySelector('.progress-detail').open,false);}finally{dom.window.close();}
+});
+
+test('review chooses due work without asking the student to select a skill',async()=>{
+ let questionBody;
+ const {dom,ctx}=setup(async(path,body)=>{if(path.endsWith('/summary'))return summary;if(path.endsWith('/review'))return {count:2,due:[{skill:'D1',name:'Decimals'},{skill:'F1',name:'Fractions'}]};if(path.endsWith('/question')){questionBody=body;return {question:{id:'review-one',skill:'D1',prompt:'Add.'},summary};}throw Error(path);});
+ try{await renderStudent('/s/review',ctx);assert.equal(document.querySelector('.review-contents').open,false);document.querySelector('#review-start').click();await tick();assert.equal(questionBody.source,'review');assert.equal(questionBody.skill,undefined);assert.equal(questionBody.intent,undefined);}finally{dom.window.close();}
 });

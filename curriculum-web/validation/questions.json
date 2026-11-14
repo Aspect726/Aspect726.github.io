@@ -383,5 +383,117 @@
     "levels": 3,
     "questionsChecked": 7500,
     "failures": 0
+  },
+  {
+    "skill": "N-PLACE",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "N-ROUND",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "N-WMULT",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "D-ADD",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "D-MULT",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "M-CONVERT",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "F-UNITDIV",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "E-NUM",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "E-PATTERN",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "N-FACTORS",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "N-SDIV",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "G-CLASS",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "G-WVOL",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "S-LINEPLOT",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "S-PROB",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
+  },
+  {
+    "skill": "S-SAMPLE",
+    "templates": 2,
+    "levels": 3,
+    "questionsChecked": 3000,
+    "failures": 0
   }
 ]

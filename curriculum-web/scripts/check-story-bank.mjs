@@ -4,7 +4,8 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { generateQuestion, questionIdentity, storyScenarios, STORY_SHAPES, decodeStorySeed } from '../server/questions.mjs';
-import { SKILLS, buildSlots } from '../server/plan.mjs';
+import { SKILLS } from '../server/plan.mjs';
+import { courseSlots } from '../server/course-schedule.mjs';
 import { parseNumber } from '../server/math.mjs';
 import { buildExclusions, overlaps } from '../server/overlap.mjs';
 import { loadPaperFrames, paperFrame } from './check-paper-frames.mjs';
@@ -100,7 +101,7 @@ export function checkStoryPool(data,pool,{onProgress=()=>{}}={}) {
 function materializeStoryCourse(pool,exclusions,paper){
  const used=new Set();let bankCount=0,storyCount=0,warmupCount=0;
  for(let day=0;day<70;day++){
-  const scenes=new Set(),slots=buildSlots(day);if(slots.length!==20)throw new Error('A daily validation set must contain 20 questions.');
+  const scenes=new Set(),slots=courseSlots(day);if(slots.length!==20)throw new Error('A daily validation set must contain 20 questions.');
   for(const [position,slot] of slots.entries()){
    const story=position>=6,entries=(story?pool.stories:pool.skills)?.[slot.skill]?.[slot.difficulty];
    if(!entries?.length)throw new Error(`Missing ${story?'story':'warm-up'} pool at day ${day+1}.`);
@@ -109,7 +110,7 @@ function materializeStoryCourse(pool,exclusions,paper){
     const entry=entries[(offset+scan)%entries.length];
     if(story&&scenes.has(decodeStorySeed(slot.skill,slot.difficulty,entry,pool).scenarioId))continue;
     const q=story?storyQuestion(slot.skill,slot.difficulty,entry,pool):generateQuestion(slot.skill,entry,{difficulty:slot.difficulty}),identity=questionIdentity(q);
-    if(used.has(identity))continue;
+    if(used.has(identity)||!story&&!['calculation','missing'].includes(q.shape))continue;
     if(paperCollision(q,exclusions,paper))throw new Error(`Unexpected private paper overlap at day ${day+1}.`);
     found={q,identity};break;
    }

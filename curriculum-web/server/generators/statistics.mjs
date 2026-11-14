@@ -21,27 +21,31 @@ const list = xs => xs.map(val).join(', ');
 const inlineList = xs => `<span class="data-list">${xs.map(n => math(val(n))).join(', ')}</span>`;
 const med = xs => xs.length % 2 ? qnum(xs[(xs.length - 1) / 2]) : average(xs.slice(xs.length / 2 - 1, xs.length / 2 + 1));
 
-// For even-sized lists, Q1 and Q3 are the medians of the two equal halves.
-// All generated lists have eight entries, avoiding competing odd-size conventions.
+// Quartile questions keep eight entries. Median questions may use odd counts;
+// exclude the central value when computing their auxiliary lower/upper halves.
 function summary(values) {
   const sorted = [...values].sort((a, b) => a - b);
   const mean = average(sorted);
   const median = med(sorted);
-  const q1 = med(sorted.slice(0, 4));
-  const q3 = med(sorted.slice(4));
+  const middle = Math.floor(sorted.length / 2);
+  const q1 = med(sorted.slice(0, middle));
+  const q3 = med(sorted.slice(middle + sorted.length % 2));
   const distances = sorted.map(x => abs(sub(qnum(x), mean)));
-  return { sorted, mean, median, q1, q3, iqr: sub(q3, q1), range: rational(sorted[7] - sorted[0]), mad: average(distances), distances, sum: total(sorted) };
+  return { sorted, mean, median, q1, q3, iqr: sub(q3, q1), range: rational(sorted.at(-1) - sorted[0]), mad: average(distances), distances, sum: total(sorted) };
 }
 
-function statsData(r, difficulty) {
+function statsData(r, difficulty, count = 8) {
   const base = r.int(4, 58);
   const step = r.int(1, difficulty > 1 ? 6 : 4);
-  const offsets = r.pick([[0, 1, 2, 3, 5, 6, 7, 12], [0, 1, 2, 4, 5, 7, 8, 13], [0, 2, 3, 4, 6, 7, 9, 13], [0, 1, 3, 4, 6, 8, 9, 13]]);
+  const offsets = count === 7 ? r.pick([[0, 1, 2, 4, 5, 7, 12], [0, 2, 3, 5, 6, 8, 13]]) : count === 9 ? r.pick([[0, 1, 2, 3, 5, 6, 8, 10, 16], [0, 1, 3, 4, 6, 7, 9, 11, 17]]) : r.pick([[0, 1, 2, 3, 5, 6, 7, 12], [0, 1, 2, 4, 5, 7, 8, 13], [0, 2, 3, 4, 6, 7, 9, 13], [0, 1, 3, 4, 6, 8, 9, 13]]);
   const values = offsets.map(x => base + x * step);
   const s = summary(values);
   let displayed = r.shuffle(values);
   // Deliberately keep the middle of the unsorted list different from the median.
-  if (val(average(displayed.slice(3, 5))) === val(s.median)) displayed = [values[6], values[2], values[5], values[0], values[1], values[7], values[3], values[4]];
+  if (val(med(displayed)) === val(s.median)) {
+    if (count % 2) { displayed = [...values]; [displayed[0], displayed[Math.floor(count / 2)]] = [displayed[Math.floor(count / 2)], displayed[0]]; }
+    else displayed = [values[6], values[2], values[5], values[0], values[1], values[7], values[3], values[4]];
+  }
   return { values, displayed, ...s };
 }
 
@@ -138,8 +142,8 @@ function commonWrong(s) {
     [s.mean, 'The mean uses every value. Check whether this question asks for the mean.'],
     [s.median, 'The median is the middle after ordering. Check the requested measure.'],
     [s.iqr, 'The IQR measures the middle half. Check which part of the data you need.'],
-    [rational(8), 'That counts the values. Use their sizes to find the requested measure.'],
-    [rational(s.sorted[7]), 'The largest value alone does not describe this measure.'],
+    [rational(s.sorted.length), 'That counts the values. Use their sizes to find the requested measure.'],
+    [rational(s.sorted.at(-1)), 'The largest value alone does not describe this measure.'],
   ];
 }
 
@@ -241,12 +245,13 @@ function displaySkill(skill, seed, shape, r) {
 }
 
 function summarySkill(skill, seed, shape, r, difficulty) {
-  const s = statsData(r, difficulty), name = r.pick(names), context = r.pick(contexts);
+  const s = statsData(r, difficulty, skill === 'S-MEDIAN' ? r.pick([7, 8, 9]) : 8), name = r.pick(names), context = r.pick(contexts);
+  const count = s.sorted.length, middle = Math.floor(count / 2), odd = count % 2 === 1;
   const values = inlineList(s.displayed);
   const numbers = [...s.sorted];
   const genericHints = {
     'S-MEAN': 'Add every value, then divide by how many values there are.',
-    'S-MEDIAN': 'Order the values. With eight values, average the two middle values.',
+    'S-MEDIAN': `Order the ${count} values. ${odd ? 'An odd count has one middle value.' : 'An even count has two middle values; average them.'}`,
     'S-RANGE': 'Subtract the smallest value from the largest value.',
     'S-IQR': 'Find the median of each half. Subtract Q1 from Q3.',
     'S-BOX': 'Read the five positions: minimum, Q1, median, Q3 and maximum.',
@@ -257,7 +262,7 @@ function summarySkill(skill, seed, shape, r, difficulty) {
   const answer = skill === 'S-BOX' ? s.q3 : s[metric.toLowerCase()];
   const solutionMap = {
     'S-MEAN': [`Add the values: ${val(s.sum)}.`, 'There are eight values.', `Divide: ${val(s.sum)} ÷ 8 = ${val(s.mean)}.`],
-    'S-MEDIAN': [`Order the values: ${list(s.sorted)}.`, `The two middle values are ${s.sorted[3]} and ${s.sorted[4]}.`, `Average them: ${val(s.median)}.`],
+    'S-MEDIAN': odd ? [`Order the values: ${list(s.sorted)}.`, `There are ${count} values, so the middle is position (${count} + 1) ÷ 2 = ${middle + 1}.`, `The value at that position is the median: ${val(s.median)}.`] : [`Order the values: ${list(s.sorted)}.`, `The two middle values are ${s.sorted[middle - 1]} and ${s.sorted[middle]}.`, `Average them: ${val(s.median)}.`],
     'S-RANGE': [`The smallest value is ${s.sorted[0]}.`, `The largest value is ${s.sorted[7]}.`, `Subtract: ${s.sorted[7]} − ${s.sorted[0]} = ${val(s.range)}.`],
     'S-IQR': [`Order the values: ${list(s.sorted)}.`, `The lower four have median Q1 = ${val(s.q1)}.`, `The upper four have median Q3 = ${val(s.q3)}.`, `IQR = Q3 − Q1 = ${val(s.iqr)}.`],
     'S-BOX': [`Order the values: ${list(s.sorted)}.`, `Use the upper four: ${list(s.sorted.slice(4))}.`, `Their middle pair is ${s.sorted[5]} and ${s.sorted[6]}.`, `Average that pair: Q3 = ${val(s.q3)}.`],
@@ -267,16 +272,16 @@ function summarySkill(skill, seed, shape, r, difficulty) {
   let svg;
   let candidates = commonWrong(s);
   if (skill === 'S-MEAN') candidates = [[s.sum, 'You found the total. Divide by the number of values.'], [s.median, 'The middle gives the median. The mean uses every value.'], [div(s.sum, rational(7)), 'Count all eight values before dividing.'], ...candidates];
-  if (skill === 'S-MEDIAN') candidates = [[average(s.displayed.slice(3, 5)), 'Put the values in order before choosing the middle.'], [rational(s.sorted[3]), 'There are two middle values. Average both.'], [rational(s.sorted[4]), 'Use both middle values, not just the upper one.'], ...candidates];
+  if (skill === 'S-MEDIAN') candidates = odd ? [[med(s.displayed), 'Put the values in order before choosing the middle.'], [rational(s.sorted[middle - 1]), 'An odd count has one middle value. Count the positions from one.'], [average(s.sorted.slice(middle, middle + 2)), 'Do not average two values when the ordered list has one middle value.'], ...candidates] : [[med(s.displayed), 'Put the values in order before choosing the middle.'], [rational(s.sorted[middle - 1]), 'There are two middle values. Average both.'], [rational(s.sorted[middle]), 'Use both middle values, not just the upper one.'], ...candidates];
   if (skill === 'S-RANGE') candidates = [[rational(s.sorted[7]), 'The maximum is only one endpoint. Subtract the minimum.'], [rational(s.sorted[7] + s.sorted[0]), 'Range is a difference, not a sum.'], [rational(-Number(s.range.n)), 'Start with the largest value so the distance is nonnegative.'], ...candidates];
   if (skill === 'S-IQR') candidates = [[s.range, 'The IQR uses the middle half, not both endpoints.'], [add(s.q1, s.q3), 'Subtract Q1 from Q3. Do not add the quartiles.'], [s.q3, 'Q3 is a boundary. The IQR is the distance between two boundaries.'], ...candidates];
   if (skill === 'S-BOX') candidates = [[s.median, 'The middle of the whole list is the median. Q3 uses the upper half.'], [s.q1, 'Q1 uses the lower half. Look at the upper half for Q3.'], [rational(s.sorted[7]), 'The upper whisker marks the maximum, not Q3.'], ...candidates];
   if (skill === 'S-MAD') candidates = [[rational(0), 'Signed differences cancel. Distances from the mean are never negative.'], [total(s.distances), 'You added the distances. Now find their mean.'], [s.mean, 'That is the mean of the data. Find distances from it, then average them.'], ...candidates];
-  if (shape === 'story') prompt = `<p>${name} ${context.activity}.</p><p>These are eight ${context.label}, in ${context.unit}.</p><p>${values}</p><p>Find the ${metric}.</p>`;
+  if (shape === 'story') prompt = `<p>${name} ${context.activity}.</p><p>These are ${skill === 'S-MEDIAN' ? count : 'eight'} ${context.label}, in ${context.unit}.</p><p>${values}</p><p>Find the ${metric}.</p>`;
   if (shape === 'picture') {
-    svg = ['S-IQR', 'S-BOX', 'S-MEDIAN'].includes(skill) ? boxplot(s) : dotplot(s.sorted, context.label, context.unit);
-    prompt = `<p>Use the ${['S-IQR', 'S-BOX', 'S-MEDIAN'].includes(skill) ? 'box plot' : 'dot plot'} to find the ${metric}.</p>`;
-    if (['S-IQR', 'S-BOX', 'S-MEDIAN'].includes(skill)) model.numbers = [s.sorted[0], val(s.q1), val(s.median), val(s.q3), s.sorted[7]];
+    svg = ['S-IQR', 'S-BOX'].includes(skill) ? boxplot(s) : dotplot(s.sorted, context.label, context.unit);
+    prompt = `<p>Use the ${['S-IQR', 'S-BOX'].includes(skill) ? 'box plot' : 'dot plot'} to find the ${metric}.</p>`;
+    if (['S-IQR', 'S-BOX'].includes(skill)) model.numbers = [s.sorted[0], val(s.q1), val(s.median), val(s.q3), s.sorted[7]];
   }
   if (shape === 'mistake') {
     const mistake = candidates.find(([candidate]) => val(candidate) !== val(answer))[0];
@@ -285,7 +290,7 @@ function summarySkill(skill, seed, shape, r, difficulty) {
   if (shape === 'reason') {
     const reasons = {
       'S-MEAN': [['mean', 'Add all the values, then divide by eight.'], ['middle', 'Choose the middle value without ordering.', 'The mean uses every value, not its position.'], ['range', 'Subtract the smallest value from the largest.', 'That finds the range, not the mean.'], ['two', 'Average only the smallest and largest values.', 'Middle values contribute to the mean too.']],
-      'S-MEDIAN': [['middle', 'Order the values, then average the middle two.'], ['unsorted', 'Average the middle two in the given order.', 'Order the values before finding the middle.'], ['mean', 'Add all the values and divide by eight.', 'That finds the mean, not the median.'], ['largest', 'Use the largest value because there are eight values.', 'The median divides ordered data into equal halves.']],
+      'S-MEDIAN': [['middle', odd ? 'Order the values, then choose the single middle value.' : 'Order the values, then average the middle two.'], ['unsorted', odd ? 'Choose the middle value in the given order.' : 'Average the middle two in the given order.', 'Order the values before finding the middle.'], ['mean', `Add all the values and divide by ${count}.`, 'That finds the mean, not the median.'], ['largest', `Use the largest value because there are ${count} values.`, 'The median divides ordered data into equal halves.']],
       'S-RANGE': [['difference', 'Subtract the smallest value from the largest.'], ['add', 'Add the smallest value to the largest.', 'Range is a distance between endpoints.'], ['mean', 'Add every value and divide by eight.', 'That finds the mean. Range uses only the endpoints.'], ['largest', 'Use the largest value without subtracting.', 'The smallest value may be greater than zero.']],
       'S-IQR': [['quartiles', 'Subtract Q1 from Q3.'], ['endpoints', 'Subtract the minimum from the maximum.', 'That finds the full range, not the middle half’s spread.'], ['add', 'Add Q1 and Q3.', 'The IQR is a distance, so use subtraction.'], ['median', 'Use the middle value of the whole list.', 'The median is a center, not a spread.']],
       'S-BOX': [['quarters', 'Each section between neighboring marks contains one quarter of the data.'], ['length', 'The longest section always contains the most values.', 'A wider section means values are more spread out.'], ['middle', 'The median must be halfway between the endpoints.', 'The median divides counts, not distances.'], ['outside', 'The box includes every observation.', 'The box spans the middle half. Whiskers extend beyond it.']],
@@ -303,6 +308,13 @@ function summarySkill(skill, seed, shape, r, difficulty) {
       ], [[sub(s.mean, known), 'The mean is not the total. Multiply it by eight first.'], [s.mean, 'The missing value does not have to equal the mean.'], [s.sum, 'This is the required total. Subtract the known values.'], ...commonWrong(s)], { ...model, kind: 'missing-mean', hidden, numbers: [8, val(s.mean), ...partial] });
     }
     if (skill === 'S-MEDIAN') {
+      if (odd) {
+        const increase = r.int(1, 6), updated = add(s.median, rational(increase));
+        const display = s.sorted.map((x, i) => i === middle ? '□' : String(x)).join(', ');
+        return numeric(skill, seed, shape, `<p>This ordered list has ${count} values: ${display}.</p><p>If every value increases by ${increase}, the new median will be ${math(val(updated))}.</p><p>Find the missing value in the original list.</p>`, s.median, [
+          `With ${count} values, position ${middle + 1} is the single middle value.`, `Increasing every value by ${increase} increases the median by ${increase}.`, `Undo the increase: ${val(updated)} − ${increase} = ${val(s.median)}.`,
+        ], [[updated, 'That is the new median. Undo the increase to find the original middle value.'], [add(updated, rational(increase)), 'Work backward by subtracting the increase, not adding it.'], [rational(s.sorted[middle - 1]), 'Count the positions from one to find the single middle value.'], ...commonWrong(s)], { ...model, kind: 'missing-median', hidden: middle, increase, numbers: [count, increase, val(updated), ...s.sorted.filter((_, i) => i !== middle)] });
+      }
       const display = s.sorted.map((x, i) => i === 3 ? '□' : String(x)).join(', ');
       return numeric(skill, seed, shape, `<p>This ordered list has median ${math(val(s.median))}.</p><p>${display}</p><p>Find the missing value.</p>`, rational(s.sorted[3]), [
         'The fourth and fifth values form the middle pair.', `Their sum is 2 × ${val(s.median)} = ${val(mul(rational(2), s.median))}.`, `Subtract the fifth value, ${s.sorted[4]}: the missing value is ${s.sorted[3]}.`,

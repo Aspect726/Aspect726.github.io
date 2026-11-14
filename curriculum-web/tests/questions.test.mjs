@@ -4,7 +4,8 @@ import { join } from 'node:path';
 const validationRows=[];
 after(()=>{if(process.env.GENERATOR_REPORT_DIR){mkdirSync(process.env.GENERATOR_REPORT_DIR,{recursive:true});writeFileSync(join(process.env.GENERATOR_REPORT_DIR,'questions.json'),JSON.stringify(validationRows,null,2)+'\n');}});
 import assert from 'node:assert/strict';
-import { generateQuestion, gradeQuestion, publicQuestion, allSkills } from '../server/questions.mjs';
+import { generateQuestion, gradeQuestion, publicQuestion, allSkills, warmupShapesForSkill, formatQuestionAnswer } from '../server/questions.mjs';
+import { SUPPLEMENTAL_SKILLS } from '../server/curriculum.mjs';
 import { arithmeticSkills } from '../server/generators/arithmetic.mjs';
 import { math } from '../server/generators/common.mjs';
 import { parseNumber, format, fraction, rational, add, sub, mul, div, isSimplest } from '../server/math.mjs';
@@ -24,7 +25,7 @@ function arithmeticOracle(q){
     case 'sub': answer=missing?r(v.b):minus(r(v.a),r(v.b));break;
     case 'div': answer=over(r(v.a),r(v.b));break;
     case 'whole':answer=over(times(r(v.part),r(v.d)),r(v.n));break;
-    case 'square':answer=missing?r(v.base):times(r(v.base),r(v.base));break;
+    case 'square':answer=missing?r(v.base):r(v.base).map(n=>n**BigInt(v.power??2));break;
     case 'order':answer=missing?r(v.b):plus(r(v.a),times(r(v.b**(v.power??1)),r(v.c)));break;
     case 'F-ADD':answer=plus(r(v.a),r(v.b));break;
     case 'F-SUB':answer=minus(r(v.a),r(v.b));break;
@@ -43,7 +44,7 @@ function arithmeticOracle(q){
     case 'proportion-constant':answer=over(r(v.y),r(v.x));break;
     case 'opposite':answer=r(-v.n);break;
     case 'absolute':answer=r(Math.abs(v.n));break;
-    case 'greater':answer=r(Math.max(v.a,v.b));break;
+    case 'greater':{const a=r(v.a),b=r(v.b);answer=a[0]*b[1]>b[0]*a[1]?a:b;break;}
     case 'coordinate':return assert.equal(q.answer,`(${v.x}, ${v.y})`);
     case 'reflection':return assert.equal(q.answer,`(${v.axis==='y'?-v.x:v.x}, ${v.axis==='x'?-v.y:v.y})`);
     case 'distance':answer=r(Math.abs(v.b-v.a));break;
@@ -122,22 +123,22 @@ test('MathML preserves mixed forms and never groups decimal digits',()=>{
   assert.match(math('1234.125'),/<mn>1,234\.125<\/mn>/);
 });
 
-for(const skill of allSkills)test(`${skill}: 500 seeds per template per level, five shapes, exact answers and matched hints`,()=>{
-  const seen=new Set();
-  for(const shape of ['calculation','story','missing','mistake','reason'])for(let difficulty=1;difficulty<=3;difficulty++)for(let seed=0;seed<500;seed++){
+for(const skill of allSkills)test(`${skill}: 500 seeds per supported template per level, exact answers and matched hints`,()=>{
+  const seen=new Set(),shapes=warmupShapesForSkill(skill).filter(shape=>shape!=='picture');
+  for(const shape of shapes)for(let difficulty=1;difficulty<=3;difficulty++)for(let seed=0;seed<500;seed++){
     const q=generateQuestion(skill,seed,{difficulty,shape});
     if(/^-?\d+\/\d+$/.test(q.answer)){const [numerator,denominator]=q.answer.split('/').map(BigInt);assert.notEqual(numerator%denominator,0n,'A fractional answer must not disguise a whole number.');}
     seen.add(q.shape);assert.equal(q.skill,skill);assert.equal(q.seed,seed);assert.equal(q.shape,shape);
-    assert.ok(q.prompt.length>15);assert.ok(q.solution.length>=3&&q.solution.length<=4);assert.ok(q.hints.length>=3);
-    assert.equal(gradeQuestion(q,q.choices?`option-${q.choices.findIndex(c=>String(c.value)===q.answer)}`:q.answer).correct,true,`${skill}/${seed} rejects its computed answer`);
-    for(const h of q.hints){const index=q.choices?.findIndex(c=>String(c.value)===String(h.answer));if(q.choices&&index<0)continue;const result=gradeQuestion(q,q.choices?`option-${index}`:h.answer);assert.equal(result.correct,false,`${skill}/${seed}: misconception is correct`);assert.equal(result.formOnly,false);assert.equal(result.hint,h.text);}
+    assert.ok(q.prompt.length>15);assert.ok(q.solution.length>=(SUPPLEMENTAL_SKILLS[skill]?1:3)&&q.solution.length<=4);assert.ok(q.hints.length>=3);
+    assert.equal(gradeQuestion(q,q.choices?`option-${q.choices.findIndex(c=>String(c.value)===q.answer)}`:formatQuestionAnswer(q)).correct,true,`${skill}/${seed} rejects its computed answer`);
+    for(const h of q.hints){const index=q.choices?.findIndex(c=>String(c.value)===String(h.answer));if(q.choices&&index<0)continue;const result=gradeQuestion(q,q.choices?`option-${index}`:`${h.answer}${q.answerUnit?' '+q.answerUnit:''}`);assert.equal(result.correct,false,`${skill}/${seed}: misconception is correct`);assert.equal(result.formOnly,false);assert.equal(result.hint,h.text);}
     if(arithmeticSkills.includes(skill)){if(shape==='reason')methodOracle(q);else arithmeticOracle(q);}
     if(q.choices){const values=q.choices.map(c=>c.value);assert.equal(new Set(values).size,values.length);const correct=q.choices.findIndex(c=>String(c.value)===q.answer);assert.notEqual(correct,-1);assert.equal(gradeQuestion(q,`option-${correct}`).correct,true);}
     const visible=publicQuestion(q);for(const field of ['answer','hints','hint','solution','numbers','verification','model','seed','generationSeed','signature'])assert.equal(field in visible,false,field);
     if(visible.choices)visible.choices.forEach((choice,i)=>assert.equal(choice.value,`option-${i}`));
   }
-  assert.equal(seen.size,5);
-  validationRows.push({skill,templates:5,levels:3,questionsChecked:7500,failures:0});
+  assert.equal(seen.size,shapes.length);
+  validationRows.push({skill,templates:shapes.length,levels:3,questionsChecked:shapes.length*1500,failures:0});
 });
 
 test('seeds regenerate the identical server question and public projection',()=>{

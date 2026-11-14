@@ -1,5 +1,7 @@
 import { SKILLS, START_DATE, dayInfo, addDays, pacificDate, validDate } from './plan.mjs';
 import { generateQuestion, publicQuestion, gradeQuestion, storyScenarios, storyShapes, formatQuestionAnswer, decodeStorySeed } from './questions.mjs';
+import { courseSchedule, scheduledCourseDays } from './course-schedule.mjs';
+import { curriculumOverview, curriculumForSkill } from './curriculum.mjs';
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 const json = (value, status=200) => new Response(JSON.stringify(value), {status, headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
@@ -8,7 +10,7 @@ const integer = (value,min,max,label) => { if (!Number.isInteger(value)||value<m
 const safeUser = u => u && ({id:u.id,name:u.name,username:u.username,role:u.role==='parent'?'teacher':u.role});
 const plain = value => String(value??'').replace(/<math\b[^>]*aria-label="([^"]*)"[^>]*>[\s\S]*?<\/math>/g,'$1').replace(/<[^>]+>/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
 const rightAnswer = q => q.choices ? plain(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer) : formatQuestionAnswer(q);
-const skillList = Object.entries(SKILLS).map(([skill,name])=>({skill,name}));
+const skillList = Object.entries(SKILLS).map(([skill,name])=>({skill,name,curriculum:curriculumForSkill(skill)}));
 const skillWeek = skill => { for(let i=0;i<70;i++) if(dayInfo(i).focus.includes(skill)) return Math.floor(i/7)+1; return 1; };
 const skillName = skill => SKILLS[skill]||skill;
 const accuracy = (correct,total) => total ? Math.round(correct/total*100) : null;
@@ -46,13 +48,12 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     return {studentId:id,startDate:row.start_date,weekOffsets:JSON.parse(row.week_offsets||'[]'),dailyTarget:row.daily_target,bonusFirst:row.bonus_first,bonusStep:row.bonus_step,pendingSettings:JSON.parse(row.pending_settings||'{}'),effectiveDate:row.effective_date};
   }
   async function weeks(id) {
-    const p=await program(id),date=today();
+    const p=await program(id),date=today(),schedule=scheduledCourseDays(p);
     return Array.from({length:10},(_,i)=>{
-      const days=Array.from({length:7},(_,j)=>dayInfo(i*7+j,p.startDate));
-      const offset=Number(p.weekOffsets[i]||0),startDate=addDays(days[0].date,offset),endDate=addDays(days[6].date,offset);
+      const days=schedule.slice(i*7,i*7+7),startDate=days[0].date,endDate=days[6].date;
       const skills=[...new Set(days.flatMap(d=>d.focus))].map(skill=>({skill,name:skillName(skill)}));
       const topics=[...new Set([days[0].title,days[1].title])];
-      return {week:i+1,topic:topics.join(' · '),startDate,endDate,status:date<startDate?'upcoming':date>endDate?'done':'current',skills};
+      return {week:i+1,topic:topics.join(' · '),startDate,endDate,bridges:[...new Map(days.flatMap(day=>day.bridges).map(bridge=>[bridge.skill,bridge])).values()],status:date<startDate?'upcoming':date>endDate?'done':'current',skills};
     });
   }
   const attemptView=a=>({id:a.id,date:a.date,skill:a.skill,templateId:a.template_id,level:a.level,question:a.question_text,questionText:a.question_text,givenAnswer:a.given_answer,correctAnswer:a.correct_answer,correct:Boolean(a.is_correct),mistakeLabel:a.mistake_label,seconds:a.seconds,source:a.source,createdAt:a.created_at});
@@ -63,7 +64,9 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     const ledger=await all('SELECT * FROM practice_ledger WHERE student_id=? ORDER BY created_at,id',id);
     const byDate=new Map();
     for(const a of rows){if(!byDate.has(a.date))byDate.set(a.date,{date:a.date,answered:0,correct:0,seconds:0});const d=byDate.get(a.date);d.answered++;d.correct+=a.is_correct?1:0;d.seconds+=a.seconds;}
-    const days=[...byDate.values()].map(d=>({...d,accuracy:accuracy(d.correct,d.answered),minutes:Math.round(d.seconds/60*10)/10,points:ledger.filter(l=>pacificDate(l.created_at)===d.date&&l.amount>0&&l.kind==='bonus').reduce((s,l)=>s+l.amount,0),target:canonical?.days.find(x=>x.date===d.date)?.target??20,status:d.answered>=(canonical?.days.find(x=>x.date===d.date)?.target??20)?'done':'partial'})).sort((a,b)=>b.date.localeCompare(a.date));
+    const schedule=canonical?.schedule??courseSchedule({program:p,attempts:rows,rules:await all('SELECT * FROM platform_daily_rules WHERE student_id=?',id),today:today()});
+    const dates=new Set([...byDate.keys(),...schedule.days.filter(day=>day.date<=today()).map(day=>day.date)]);
+    const days=[...dates].map(date=>{const d=byDate.get(date)??{date,answered:0,correct:0,seconds:0},scheduled=schedule.days.find(day=>day.date===date),target=scheduled?.expected??canonical?.days.find(x=>x.date===date)?.target??20;return {...d,accuracy:accuracy(d.correct,d.answered),minutes:Math.round(d.seconds/60*10)/10,points:ledger.filter(l=>pacificDate(l.created_at)===d.date&&l.amount>0&&l.kind==='bonus').reduce((s,l)=>s+l.amount,0),target,remaining:Math.max(0,target-d.answered),dueAt:scheduled?.dueAt??null,status:d.answered>=target?'done':date<today()?'missed':d.answered?'partial':'today'};}).sort((a,b)=>b.date.localeCompare(a.date));
     const completed=new Set(days.filter(d=>d.status==='done').map(d=>d.date));
     let bestStreak=0,chain=0,previous=null;
     for(const d of [...completed].sort()){chain=previous&&addDays(previous,1)===d?chain+1:1;bestStreak=Math.max(bestStreak,chain);previous=d;}
@@ -75,7 +78,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
       return {skill,name,week:skillWeek(skill),attempts:attempts.length,accuracy:percent,correct:last.filter(a=>a.is_correct).length,last10:last.length,level,lastPracticed:attempts.at(-1)?.date??null};
     });
     const mistakes=new Map();for(const a of rows)if(!a.is_correct&&a.mistake_label){const key=`${a.skill}|${a.mistake_label}`;if(!mistakes.has(key))mistakes.set(key,{skill:a.skill,name:skillName(a.skill),label:JSON.parse(a.result||'{}').hint||a.mistake_label,count:0,examples:[]});const m=mistakes.get(key);m.count++;if(m.examples.length<3)m.examples.push(attemptView(a));}
-    return {student,program:p,summary:{answered:rows.length,correct:rows.filter(a=>a.is_correct).length,accuracy:accuracy(rows.filter(a=>a.is_correct).length,rows.length),streak,bestStreak},days,skills,mistakes:[...mistakes.values()].filter(m=>m.count>=2).sort((a,b)=>b.count-a.count),attempts:rows.map(attemptView).reverse(),checks:await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',id)};
+    return {student,program:p,schedule,summary:{answered:rows.length,correct:rows.filter(a=>a.is_correct).length,accuracy:accuracy(rows.filter(a=>a.is_correct).length,rows.length),streak,bestStreak,schedule},days,skills,mistakes:[...mistakes.values()].filter(m=>m.count>=2).sort((a,b)=>b.count-a.count),attempts:rows.map(attemptView).reverse(),checks:await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',id)};
   }
   async function rewards(id) {
     const prizes=(await all('SELECT p.*,COALESCE(n.note,\'\') AS note FROM practice_prizes p LEFT JOIN platform_prize_notes n ON n.prize_id=p.id ORDER BY p.cost,p.created_at')).map(p=>({id:p.id,name:p.name,cost:p.cost,note:p.note,active:Boolean(p.active)}));
@@ -87,20 +90,20 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
       history:(await all('SELECT * FROM practice_ledger WHERE student_id=? ORDER BY created_at DESC,id DESC',id)).map(l=>({id:l.id,amount:l.amount,kind:l.kind,note:l.note,createdAt:l.created_at}))};
   }
   async function dashboard(learner) {
-    if(!learner)return {student:null,today:today(),week:null,days:[],attention:[],weakSkills:[],saturdayPrep:null,points:0,earnedThisWeek:0,requests:[]};
+    if(!learner)return {student:null,today:today(),week:null,days:[],schedule:null,summary:{schedule:null},attention:[],weakSkills:[],saturdayPrep:null,points:0,earnedThisWeek:0,requests:[]};
     const d=await detail(learner.id),ws=await weeks(learner.id),week=ws.find(w=>w.status==='current')||ws.find(w=>w.status==='upcoming')||ws.at(-1);
     const recent=d.attempts.filter(a=>a.date>=week.startDate&&a.date<=week.endDate);
     const weakSkills=skillList.map(({skill,name})=>{const a=recent.filter(a=>a.skill===skill),correct=a.filter(a=>a.correct).length;return {skill,name,attempts:a.length,correct,accuracy:accuracy(correct,a.length)};}).filter(s=>s.attempts>=5).sort((a,b)=>a.accuracy-b.accuracy).slice(0,5);
     const reward=await rewards(learner.id),requests=reward.requests.filter(r=>['requested','approved'].includes(r.status));
-    const days=Array.from({length:7},(_,i)=>{const date=addDays(week.startDate,i);return d.days.find(d=>d.date===date)||{date,answered:0,correct:0,accuracy:null,minutes:0,points:0,status:date>today()?'upcoming':date===today()?'today':'missed'};});
+    const days=Array.from({length:7},(_,i)=>{const date=addDays(week.startDate,i),scheduled=d.schedule.days.find(day=>day.date===date);return d.days.find(d=>d.date===date)||{date,answered:0,correct:0,accuracy:null,minutes:0,points:0,target:scheduled?.expected??20,remaining:scheduled?.remaining??20,dueAt:scheduled?.dueAt??null,status:date>today()?'upcoming':date===today()?'today':'missed'};});
     const attention=[];
     const lowCheck=d.checks.filter(c=>c.score<12).at(-1);
     if(lowCheck)attention.push({text:`Week ${lowCheck.week} paper check: ${lowCheck.score} of 21. Re-teach before new content.`,href:'/t/checks'});
     if(weakSkills[0]?.accuracy<60){const s=weakSkills[0];attention.push({text:`${s.name}: ${s.correct} of ${s.attempts} right this week. Re-teach Saturday.`,href:`/t/students/${learner.id}?section=skills&skill=${encodeURIComponent(s.skill)}`});}
-    const missed=days.filter(d=>d.status==='missed').at(-1);if(missed)attention.push({text:`No practice on ${missed.date}.`,href:`/t/students/${learner.id}?section=days&date=${missed.date}`});
+    const missed=days.filter(d=>d.status==='missed').at(-1);if(missed)attention.push({text:`${missed.remaining} questions were left on ${missed.date}.`,href:`/t/students/${learner.id}?section=days&date=${missed.date}`});
     if(requests.length)attention.push({text:`Prize request: ${requests[0].name}, ${requests[0].cost} points.`,href:'/t/rewards'});
     const next=ws.find(w=>w.startDate>today())||week;
-    return {student:learner,today:today(),week,days,attention:attention.slice(0,3),weakSkills,saturdayPrep:{topic:next.topic,suggestion:weakSkills[0]?`Start with ${weakSkills[0].name.toLowerCase()}; review the recorded answers together.`:'Review the week’s practice before introducing the next skills.'},points:reward.points,earnedThisWeek:reward.history.filter(l=>l.kind==='bonus'&&pacificDate(l.createdAt)>=week.startDate&&pacificDate(l.createdAt)<=week.endDate).reduce((n,l)=>n+l.amount,0),requests};
+    return {student:learner,today:today(),week,days,schedule:d.schedule,summary:d.summary,attention:attention.slice(0,3),weakSkills,saturdayPrep:{topic:next.topic,suggestion:weakSkills[0]?`Start with ${weakSkills[0].name.toLowerCase()}; review the recorded answers together.`:'Review the week’s practice before introducing the next skills.'},points:reward.points,earnedThisWeek:reward.history.filter(l=>l.kind==='bonus'&&pacificDate(l.createdAt)>=week.startDate&&pacificDate(l.createdAt)<=week.endDate).reduce((n,l)=>n+l.amount,0),requests};
   }
   async function questionBank(skill) {
     if(skill&&!SKILLS[skill])fail(400,'Choose a skill from the course.');
@@ -141,7 +144,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     if(path==='/api/v2/teacher/dashboard'&&method==='GET')return json(await dashboard(learner));
     let match=path.match(/^\/api\/v2\/teacher\/students\/([^/]+)$/);
     if(match&&method==='GET'){const result=await detail(match[1]),date=url.searchParams.get('date'),skill=url.searchParams.get('skill');if(date){if(!validDate(date))fail(400,'Choose a valid date.');result.attempts=result.attempts.filter(a=>a.date===date);}if(skill)result.attempts=result.attempts.filter(a=>a.skill===skill);return json(result);}
-    if(path==='/api/v2/teacher/plan'&&method==='GET')return json({student:learner,weeks:learner?await weeks(learner.id):[],program:learner?await program(learner.id):null});
+    if(path==='/api/v2/teacher/plan'&&method==='GET')return json({student:learner,weeks:learner?await weeks(learner.id):[],program:learner?await program(learner.id):null,curriculum:curriculumOverview()});
     if(path==='/api/v2/teacher/plan'&&method==='POST'){
       const id=requireStudent(),week=integer(data.week,1,10,'Week'),days=integer(data.days??7,1,28,'Delay');
       const p=await program(id),offsets=Array.from({length:10},(_,i)=>Number(p.weekOffsets[i]||0)+(i>=week-1?days:0));

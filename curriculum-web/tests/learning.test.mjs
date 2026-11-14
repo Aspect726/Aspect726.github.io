@@ -30,7 +30,7 @@ test('lessons persist two distinct worked examples and separate them from quiz q
    for(const example of a.examples){assert.ok(example.answer);assert.ok(example.steps.length>=2);}
    assert.ok(a.trap.answer);assert.ok(a.trap.text);assert.equal(a.completed,false);
   }
-  const count=await db.prepare('SELECT COUNT(*) AS n FROM platform_examples').first();assert.equal(count.n,108);
+  const count=await db.prepare('SELECT COUNT(*) AS n FROM platform_examples').first();assert.equal(count.n,Object.keys(SKILLS).length*2);
   assert.equal((await db.prepare('SELECT COUNT(*) AS n FROM platform_attempts').first()).n,0);
   assert.equal((await db.prepare('SELECT COUNT(*) AS n FROM practice_ledger').first()).n,0);
  }finally{db.close();}
@@ -41,7 +41,7 @@ test('lesson routes enforce sign-in, student role and actual Your turn attempts'
   await assert.rejects(learning.handle(req('library'),null),e=>e.status===401);
   await assert.rejects(learning.handle(req('library'),{id:'a',role:'teacher'}),e=>e.status===403);
   const user={id:'a',role:'student'};
-  const library=await(await learning.handle(req('library'),user)).json();assert.equal(library.skills.length,54);assert.ok(library.vocabulary.length>=10);assert.ok(library.formulas.length>=10);
+  const library=await(await learning.handle(req('library'),user)).json();assert.equal(library.skills.length,70);assert.equal(library.curriculum.skills.length,70);assert.ok(library.vocabulary.length>=10);assert.ok(library.formulas.length>=10);
   await assert.rejects(learning.handle(req('lesson-complete',{skill:'D-SUB'}),user),e=>e.status===409);
   await assert.rejects(learning.handle(req('lesson?skill=unknown'),user),e=>e.status===404);
   for(let i=0;i<3;i++)await db.prepare("INSERT INTO platform_attempts(id,question_id,student_id,date,skill,template_id,level,question_hash,question_text,params,given_answer,correct_answer,is_correct,seconds,source,created_at,result) VALUES(?,?,?,'2026-11-07','D-SUB','D-SUB:story',1,?,'Example','{}','1','2',0,10,'learn','2026-11-07','{}')").bind('attempt'+i,'question'+i,'a','hash'+i).run();

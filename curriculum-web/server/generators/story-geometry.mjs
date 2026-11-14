@@ -1,4 +1,5 @@
 import { rng, makeQuestion, escapeHTML } from './common.mjs';
+import { surfaceNet } from './geometry.mjs';
 
 export const storyGeometrySkills = ['G-PERIM','G-PARA','G-TRI','G-COMP','G-SA','P-SCALE','P-MAP','G-CIRC','G-CAREA','G-VOL'];
 const SHAPES = ['missing','compare','backward','mistake','what-if'];
@@ -32,6 +33,7 @@ function diagram(kind,values) {
  let drawing='';
  if(kind==='rectangle')drawing=`<rect x="95" y="35" width="250" height="115" rx="2"/>${label(220,180,values[0]+' cm')}${label(55,100,values[1]+' cm')}`;
  if(kind==='parallelogram')drawing=`<path d="M80 155 135 40h220l-55 115Z"/><path d="M135 40v115" stroke-dasharray="5 5"/><path d="M135 142h13v13"/>${label(190,185,values[0]+' cm')}${label(165,103,values[1]+' cm')}`;
+ if(kind==='outside-triangle')drawing=`<path d="M160 155 85 35 350 155Z"/><path d="M85 35v120h75" stroke-dasharray="5 5"/><path d="M85 142h13v13"/>${label(255,185,values[0]+' cm')}${label(50,100,values[1]+' cm')}`;
  if(kind==='triangle')drawing=`<path d="M85 155 175 35 350 155Z"/><path d="M175 35v120" stroke-dasharray="5 5"/><path d="M175 142h13v13"/>${label(220,185,values[0]+' cm')}${label(205,100,values[1]+' cm')}`;
  if(kind==='circle')drawing=`<circle cx="220" cy="100" r="72"/><path d="M148 100h144"/>${label(220,90,'diameter '+values[0]+' cm')}${label(220,195,'Use π = 3.14')}`;
  if(!drawing)return undefined;
@@ -51,21 +53,40 @@ function model(skill,r,difficulty,scene) {
   backwardKnown=`Each rectangular ${scene.flat.slice(2)} is ${l} cm long. Its width is unknown.`;backwardAsk='What is the width of each piece';backwardResult=w;inverse=each=>({op:'rectangle-width',a:each,b:l,result:each/2-l});
   svg=diagram('rectangle',[l,w]);
  } else if(skill==='G-PARA'||skill==='G-TRI') {
-  const b=l*2;dimensions.b=b;const triangle=skill==='G-TRI';
+  const b=l*2;dimensions.b=b;const triangle=skill==='G-TRI',outside=triangle&&r.int(0,1)===1;dimensions.outside=outside;
   quantity=op(ops,triangle?'triangle-area':'mul',b,h,triangle?b*h/2:b*h);one=`${triangle?'triangular':'parallelogram-shaped'} ${scene.flat.slice(2)}`;
   description=`Each ${one} has a base of ${b} cm and a perpendicular height of ${h} cm. Cover just one side.`;
   backwardKnown=`Each ${one} has a base of ${b} cm and an unknown perpendicular height. Cover just one side.`;backwardAsk='What is the perpendicular height of each piece';backwardResult=h;inverse=each=>({op:triangle?'triangle-height':'div',a:each,b:b,result:triangle?2*each/b:each/b});
-  svg=diagram(triangle?'triangle':'parallelogram',[b,h]);
+  if(outside)description+=' The perpendicular height lies outside the triangle and meets the extended base at a right angle.';
+  svg=diagram(triangle?(outside?'outside-triangle':'triangle'):'parallelogram',[b,h]);
  } else if(skill==='G-COMP') {
   const cutW=r.int(1,3),cutH=r.int(1,Math.min(2,w-1));dimensions.cutW=cutW;dimensions.cutH=cutH;
   const outer=op(ops,'mul',l,w,l*w);quantity=op(ops,'subtract-rectangle',outer,[cutW,cutH],outer-cutW*cutH);one=`window-shaped ${scene.flat.slice(2)}`;
   description=`Each ${one} starts as a ${l} cm by ${w} cm rectangle. A ${cutW} cm by ${cutH} cm rectangle is removed from one corner. Cover only the remaining L-shape.`;
   backwardKnown=`Each ${one} starts as a ${l} cm by ${w} cm rectangle. A rectangular corner is removed. Cover only the remaining L-shape.`;backwardAsk='What is the area removed from one piece';backwardResult=cutW*cutH;inverse=each=>({op:'rectangle-cutout',a:[l,w],b:each,result:l*w-each});
  } else if(skill==='G-SA') {
-  const edge=r.int(3,difficulty>1?10:7);dimensions.edge=edge;
-  const face=op(ops,'mul',edge,edge,edge*edge);quantity=op(ops,'mul',face,6,face*6);one=`closed cube-shaped ${scene.solid.slice(2)}`;
-  description=`Each ${one} has an edge length of ${edge} cm. Its net has six square faces. Cover all six faces, with no overlap.`;
-  backwardKnown=`Each ${one} has six equal square faces. Cover all six faces, with no overlap.`;backwardAsk='What is the area of one square face';backwardResult=edge*edge;inverse=each=>({op:'div',a:each,b:6,result:each/6});
+  const variant=r.pick(['cube','triangular-prism','square-pyramid']);dimensions.surfaceVariant=variant;
+  if(variant==='triangular-prism'){
+   const t=r.int(1,difficulty>1?5:3),a=3*t,b=4*t,c=5*t,length=r.int(4,difficulty>1?18:12);Object.assign(dimensions,{triA:a,triB:b,triC:c,prismLength:length});
+   const ends=op(ops,'mul',a,b,a*b);quantity=op(ops,'surface-prism',ends,[a,b,c,length],ends+(a+b+c)*length);one=`closed triangular-prism ${scene.solid.slice(2)}`;
+   description=`Each ${one} has two right-triangular ends with perpendicular legs ${a} cm and ${b} cm and hypotenuse ${c} cm. The prism length is ${length} cm. Cover both triangular ends and all three rectangular sides, with no overlap.`;
+   backwardKnown=`Each closed triangular-prism ${scene.solid.slice(2)} has two equal triangular ends. The perimeter of each triangular end is ${a+b+c} cm and the prism length is ${length} cm. Cover all five faces, with no overlap.`;
+   backwardAsk='What is the area of one triangular end';backwardResult=a*b/2;inverse=each=>({op:'prism-end-area',a:each,b:[a+b+c,length],result:(each-(a+b+c)*length)/2});
+   svg=surfaceNet({variant,a,b,c,l:length});
+  }else if(variant==='square-pyramid'){
+   const side=2*r.int(2,difficulty>1?9:6),slant=r.int(side/2+2,side+10);Object.assign(dimensions,{surfaceSide:side,slant});
+   const base=op(ops,'mul',side,side,side*side);quantity=op(ops,'surface-pyramid',base,[side,slant],base+2*side*slant);one=`closed square-pyramid ${scene.solid.slice(2)}`;
+   description=`Each ${one} has a square base of edge ${side} cm. Each triangular face has perpendicular slant height ${slant} cm measured along the face. Cover the square base and all four triangular faces, with no overlap.`;
+   backwardKnown=`Each closed square-pyramid ${scene.solid.slice(2)} has base edge ${side} cm and four equal triangular faces. Cover its square base and all four triangles, with no overlap.`;
+   backwardAsk='What is the area of one triangular face';backwardResult=side*slant/2;inverse=each=>({op:'pyramid-face-area',a:each,b:side,result:(each-side*side)/4});
+   svg=surfaceNet({variant,side,slant});
+  }else{
+   const edge=r.int(3,difficulty>1?10:7);dimensions.edge=edge;
+   const face=op(ops,'mul',edge,edge,edge*edge);quantity=op(ops,'mul',face,6,face*6);one=`closed cube-shaped ${scene.solid.slice(2)}`;
+   description=`Each ${one} has an edge length of ${edge} cm. Its net has six square faces. Cover all six faces, with no overlap.`;
+   backwardKnown=`Each ${one} has six equal square faces. Cover all six faces, with no overlap.`;backwardAsk='What is the area of one square face';backwardResult=edge*edge;inverse=each=>({op:'div',a:each,b:6,result:each/6});
+   svg=surfaceNet({variant:'cuboid',l:edge,w:edge,h:edge});
+  }
  } else if(skill==='P-SCALE') {
   const scale=r.int(2,4);dimensions.scale=scale;
   const original=op(ops,'mul',l,w,l*w);quantity=op(ops,'scale-area',original,scale,original*scale*scale);one=`enlarged rectangular ${scene.flat.slice(2)}`;
@@ -88,6 +109,7 @@ function model(skill,r,difficulty,scene) {
   inverse=each=>({op:skill==='G-CIRC'?'div':'circle-radius',a:each,b:3.14,result:skill==='G-CIRC'?each/3.14:Math.sqrt(each/3.14)});
   svg=diagram('circle',[2*radius]);
  } else if(skill==='G-VOL') {
+  const l=(2*r.int(2,6)+1)/2,w=4*r.int(1,3),h=(2*r.int(1,5)+1)/2;Object.assign(dimensions,{l,w,h});
   const base=op(ops,'mul',l,w,l*w);quantity=op(ops,'mul',base,h,base*h);unit='cubic centimetres';material='modelling clay';one=`solid rectangular ${scene.solid.slice(2)}`;
   description=`Each ${one} is ${l} cm long, ${w} cm wide and ${h} cm high. Make each solid block from clay with no gaps.`;
   backwardKnown=`Each solid rectangular ${scene.solid.slice(2)} is ${l} cm long and ${w} cm wide. Its height is unknown. Make each solid block from clay with no gaps.`;backwardAsk='What is the height of each block';backwardResult=h;inverse=each=>({op:'rectangular-prism-height',a:each,b:[l,w],result:each/(l*w)});
@@ -105,6 +127,10 @@ function quantitySteps(m) {
   if(d.radius&&m.unit==='centimetres')return `Find the circumference of one circle: 3.14 × ${d.radius*2} = ${result} centimetres.`;
   if(d.radius&&i===0)return `Square the radius: ${d.radius} × ${d.radius} = ${result}.`;
   if(d.radius)return `Multiply that squared radius by 3.14: ${F(x.a)} × 3.14 = ${result} square centimetres per circle.`;
+  if(d.surfaceVariant==='triangular-prism'&&i===0)return `Find both triangular end areas: 2 × (${d.triA} × ${d.triB} ÷ 2) = ${result} square centimetres.`;
+  if(d.surfaceVariant==='triangular-prism')return `Add the three rectangular faces to those end areas: ${F(x.a)} + (${d.triA} + ${d.triB} + ${d.triC}) × ${d.prismLength} = ${result} square centimetres.`;
+  if(d.surfaceVariant==='square-pyramid'&&i===0)return `Find the square base area: ${d.surfaceSide} × ${d.surfaceSide} = ${result} square centimetres.`;
+  if(d.surfaceVariant==='square-pyramid')return `Add all four triangular faces to that base area: ${F(x.a)} + 4 × (${d.surfaceSide} × ${d.slant} ÷ 2) = ${result} square centimetres.`;
   if(d.edge&&i===0)return `Find the area of one square face: ${d.edge} × ${d.edge} = ${result} square centimetres.`;
   if(d.edge)return `The six faces use that same area: ${F(x.a)} × 6 = ${result} square centimetres per cube.`;
   if(d.mapLength)return `Use the scale for one journey: ${d.mapLength} × ${d.scale} = ${result} metres.`;
@@ -118,6 +144,8 @@ function backwardStep(m,each,result) {
  if(m.inverse(each).op==='rectangle-width')return `Half that perimeter gives length + width. Width = ${F(each)} ÷ 2 − ${d.l} = ${F(result)} centimetres.`;
  if(m.inverse(each).op==='triangle-height')return `Use that triangle area to find the perpendicular height: 2 × ${F(each)} ÷ ${d.b} = ${F(result)} centimetres.`;
  if(m.inverse(each).op==='rectangle-cutout')return `Compare that remaining area with the full rectangle: (${d.l} × ${d.w}) − ${F(each)} = ${F(result)} square centimetres removed.`;
+ if(d.surfaceVariant==='triangular-prism')return `Remove the three rectangle areas from that surface area, then share the rest between the two ends: (${F(each)} − (${d.triA+d.triB+d.triC} × ${d.prismLength})) ÷ 2 = ${F(result)} square centimetres per triangular end.`;
+ if(d.surfaceVariant==='square-pyramid')return `Remove the square base from that surface area, then share the rest among four triangles: (${F(each)} − ${d.surfaceSide} × ${d.surfaceSide}) ÷ 4 = ${F(result)} square centimetres per triangular face.`;
  if(d.edge)return `Share that surface area among the six equal faces: ${F(each)} ÷ 6 = ${F(result)} square centimetres per face.`;
  if(d.scale&&!d.mapLength)return `Undo the area enlargement: ${F(each)} ÷ ${d.scale}² = ${F(result)} square centimetres.`;
  if(d.mapLength)return `Undo the map scale: ${F(each)} ÷ ${d.scale} = ${F(result)} centimetres on the map.`;
@@ -168,6 +196,6 @@ export function generateStoryGeometry(skill,seed,{difficulty=1,scenarioId,storyS
   solution=[...quantitySteps(m),`Use the result for all ${count} ${skill==='P-MAP'?'journeys':'pieces'}: ${F(m.quantity)} × ${count} = ${F(needed)} ${m.unit}.${shape==='mistake'?' The friend counted only one; every piece or journey must be included.':''}`,`Subtract that total from the ${skill==='P-MAP'?'travel goal':'supply'}: ${F(supply)} − ${F(needed)} = ${F(answer)} ${m.unit} ${skill==='P-MAP'?'still needed':'left'}.`];
  }
  const hints=[{answer:F(Number(answer)+1),text:'Check the unit and the subtraction in your final step.'},{answer:F(Number(answer)+m.quantity),text:'Use the amount for every piece or journey, not just one.'},{answer:F(Number(answer)+2*m.quantity+1),text:'First find the geometric measure, then use it in the story.'}];
- const hint=shape==='backward'?'Start with the original supply minus what is left. That tells you the amount used.':skill==='P-MAP'?'First multiply the map length by the scale to find one real journey.':skill==='G-PERIM'?'First find the full perimeter of one rectangle: twice its length plus twice its width.':skill==='G-TRI'?'First find one triangle’s area: base times perpendicular height, divided by two.':skill==='G-SA'?'First find the area of one square face, then use all six faces.':'First find the required measure of one piece. Keep that result for the next step.';
+ const hint=shape==='backward'?'Start with the original supply minus what is left. That tells you the amount used.':skill==='P-MAP'?'First multiply the map length by the scale to find one real journey.':skill==='G-PERIM'?'First find the full perimeter of one rectangle: twice its length plus twice its width.':skill==='G-TRI'?'First find one triangle’s area: base times perpendicular height, divided by two.':skill==='G-SA'?(m.dimensions.surfaceVariant==='triangular-prism'?'Unfold the net into two right triangles and three rectangles. Include all five faces.':m.dimensions.surfaceVariant==='square-pyramid'?'Unfold the net into one square and four triangles. The given slant height lies along each triangular face.':'First find the area of one square face, then use all six faces.'):'First find the required measure of one piece. Keep that result for the next step.';
  return makeQuestion({skill,seed,shape:'story-'+shape,story:true,scenarioId:scene.id,storyShape:shape,stepCount:solution.length,answer:F(answer),answerUnit:unit,unitAliases:aliases(unit),answerChoice,choiceLabels,prompt:`<p>${escapeHTML(prompt)}</p>`,plainPrompt:prompt,solution,hint,hints,numbers:prompt.match(/\d+(?:\.\d+)?/g)??[],svg:shape==='backward'?undefined:m.svg,verification:{kind:'multi-step-geometry',skill,dimensions:m.dimensions,quantity:m.quantity,inputs,operations,answer:F(answer)}});
 }

@@ -1,6 +1,7 @@
 import plan from './plan.json' with { type: 'json' };
+import { SUPPLEMENTAL_SKILLS } from './curriculum.mjs';
 
-export const SKILLS = Object.freeze({ ...plan.skills });
+export const SKILLS = Object.freeze({ ...plan.skills, ...SUPPLEMENTAL_SKILLS });
 export const START_DATE = plan.start_date;
 export const STRENGTHS = Object.freeze([...plan.strength_skills]);
 export const WEEKDAYS = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];

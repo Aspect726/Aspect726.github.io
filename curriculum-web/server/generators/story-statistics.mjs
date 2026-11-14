@@ -50,7 +50,8 @@ export function generateStoryStatistics(skill, seed, {difficulty=1,scenarioId,st
  if (!scene) throw new Error(`Unknown statistics story scenario ${scenarioId}`);
  const shape=storyShape??r.pick(SHAPES), who=name(r), other=r.pick(['Isha','Ben','Theo','Lina']);
  const step=2*r.int(1,Math.max(1,Math.min(3,difficulty))), center=r.int(24,58)+4*step;
- const values=[-4,-3,-2,-1,1,2,3,4].map(x=>center+x*step), shown=r.shuffle(values);
+ const offsets=skill==='S-MEDIAN'?r.pick([[-3,-2,-1,0,1,2,3],[-4,-3,-2,-1,1,2,3,4],[-4,-3,-2,-1,0,1,2,3,4]]):[-4,-3,-2,-1,1,2,3,4];
+ const values=offsets.map(x=>center+x*step), shown=r.shuffle(values), middle=Math.floor(values.length/2), odd=values.length%2===1;
  const {q1,q3}=quartiles(values), range=values.at(-1)-values[0], spread=q3-q1, deviation=mad(values);
  const delta=2*r.int(2,9), factor=r.int(2,4), target=r.int(3,6);
  const unit=scene.unit;
@@ -70,7 +71,7 @@ export function generateStoryStatistics(skill, seed, {difficulty=1,scenarioId,st
  const basic=(kind)=>{
    const value=measure(kind);
    if(kind==='mean')addStep(`Add all eight measurements and share the total equally: ${sum(values)} ÷ 8 = ${n(value)} ${unit}.`,operation('mean',values,null,value));
-   else if(kind==='median')addStep(`Put the measurements in order: ${list(values)}. The middle pair gives (${values[3]} + ${values[4]}) ÷ 2 = ${n(value)} ${unit}.`,operation('median',values,null,value));
+   else if(kind==='median')addStep(odd?`Put the ${values.length} measurements in order: ${list(values)}. The single middle value, at position ${middle+1}, is ${n(value)} ${unit}.`:`Put the measurements in order: ${list(values)}. The middle pair gives (${values[middle-1]} + ${values[middle]}) ÷ 2 = ${n(value)} ${unit}.`,operation('median',values,null,value));
    else if(kind==='range')addStep(`Find the range: largest − smallest = ${values.at(-1)} − ${values[0]} = ${range} ${unit}.`,operation('sub',values.at(-1),values[0],range));
    else if(kind==='iqr'){
      addStep(`Order the measurements. The lower-half median is Q1 = (${values[1]} + ${values[2]}) ÷ 2 = ${q1}; the upper-half median is Q3 = (${values[5]} + ${values[6]}) ÷ 2 = ${q3} ${unit}.`,operation('quartiles',values,null,[q1,q3].join(',')));
@@ -141,7 +142,7 @@ export function generateStoryStatistics(skill, seed, {difficulty=1,scenarioId,st
  } else if(['S-MEAN','S-MEDIAN','S-RANGE','S-IQR','S-MAD'].includes(skill)) {
    const kind={'S-MEAN':'mean','S-MEDIAN':'median','S-RANGE':'range','S-IQR':'iqr','S-MAD':'mad'}[skill];
    const label={mean:'mean',median:'median',range:'range',iqr:'interquartile range (IQR)',mad:'mean absolute deviation (MAD)'}[kind];
-   hint=kind==='mean'?'Add the measurements, then divide by how many there are.':kind==='median'?'Order all eight measurements before finding the middle pair.':kind==='range'?'Find the largest and smallest readings first.':kind==='iqr'?'Split the ordered eight readings into two halves of four; find the median of each half.':'Find the mean first, then measure every distance from it without using negative distances.';
+   hint=kind==='mean'?'Add the measurements, then divide by how many there are.':kind==='median'?`Order all ${values.length} measurements before ${odd?'choosing the single middle value':'averaging the middle pair'}.`:kind==='range'?'Find the largest and smallest readings first.':kind==='iqr'?'Split the ordered eight readings into two halves of four; find the median of each half.':'Find the mean first, then measure every distance from it without using negative distances.';
    if(shape==='backward'){
      if(kind==='mean'){
        const known=values.slice(0,7),wanted=sum(values)-sum(known);
@@ -149,9 +150,17 @@ export function generateStoryStatistics(skill, seed, {difficulty=1,scenarioId,st
        addStep(`A mean of ${center} across eight readings requires a total of ${center} × 8 = ${center*8} ${unit}.`,operation('mul',center,8,center*8));
        answer=wanted;addStep(`The seven known readings total ${sum(known)}. Subtract that total: ${center*8} − ${sum(known)} = ${answer} ${unit}.`,operation('sub',center*8,sum(known),answer));
      }else if(kind==='median'){
-       body=`The ordered ${scene.observations} are ${values[0]}, ${values[1]}, ${values[2]}, ${values[3]}, ?, ${values[5]}, ${values[6]}, ${values[7]}. Their median is ${center} ${unit}. Work backward to find the missing reading.`;
-       addStep(`The two middle readings must total twice the median: ${center} × 2 = ${center*2} ${unit}.`,operation('mul',center,2,center*2));
-       answer=values[4];addStep(`One middle reading is ${values[3]}. The other is ${center*2} − ${values[3]} = ${answer} ${unit}.`,operation('sub',center*2,values[3],answer));
+       if(odd){
+         const correction=step/2,updatedMedian=center+correction;
+         inputs.medianCorrection=correction;
+         body=`The ${values.length} records for ${scene.observations}, put in order, are ${values.map((value,index)=>index===middle?'?':value).join(', ')}. The middle reading is later corrected upward by ${correction} ${correction===1?scene.aliases[0]:unit}, and the median becomes ${updatedMedian} ${unit}. Its position in the ordered list stays the same. Work backward: how much greater was the original middle reading than the smallest reading?`;
+         addStep(`An odd list has one middle reading. Undo its correction: ${updatedMedian} − ${correction} = ${center} ${unit}, the original median.`,operation('sub',updatedMedian,correction,center));
+         answer=center-values[0];addStep(`Compare that original middle reading with the smallest: ${center} − ${values[0]} = ${answer} ${unit} greater.`,operation('sub',center,values[0],answer));
+       }else{
+         body=`The ordered ${scene.observations} are ${values[0]}, ${values[1]}, ${values[2]}, ${values[3]}, ?, ${values[5]}, ${values[6]}, ${values[7]}. Their median is ${center} ${unit}. Work backward to find the missing reading.`;
+         addStep(`The two middle readings must total twice the median: ${center} × 2 = ${center*2} ${unit}.`,operation('mul',center,2,center*2));
+         answer=values[4];addStep(`One middle reading is ${values[3]}. The other is ${center*2} − ${values[3]} = ${answer} ${unit}.`,operation('sub',center*2,values[3],answer));
+       }
      }else if(kind==='range'){
        const originalMax=values.at(-1),largerRange=range+delta;
        body=`The smallest of the ${scene.observations} is ${values[0]} ${unit}, and the current largest is ${originalMax} ${unit}. A new largest reading makes the range ${largerRange} ${unit}. How much larger is the new reading than the old largest?`;
@@ -178,8 +187,8 @@ export function generateStoryStatistics(skill, seed, {difficulty=1,scenarioId,st
        body+=`Call this group A. Group B has ${label} ${n(reference)} ${unit}. ${kind==='mean'||kind==='median'?'Choose the group with the higher typical measurement.':'Choose the group with the smaller spread.'} Which group should ${who} choose, and what is the difference between those two ${label} values?`;
        compare(value,reference,kind==='mean'||kind==='median'?'higher typical measurement':'smaller spread',!['mean','median'].includes(kind));
      }else if(shape==='mistake'){
-       const wrong=kind==='range'?values.at(-1):kind==='iqr'?range:2*value;
-       const error=kind==='mean'?`divides the total by 4 instead of 8`:kind==='median'?`adds the two middle readings without dividing by 2`:kind==='range'?`uses only the largest reading`:kind==='iqr'?`uses the full range instead of the spread of the middle half`:`divides the total distance by 4 instead of 8`;
+       const wrong=kind==='range'?values.at(-1):kind==='iqr'?range:kind==='median'&&odd?values[middle+1]:2*value;
+       const error=kind==='mean'?`divides the total by 4 instead of 8`:kind==='median'?(odd?`chooses the reading immediately after the single middle reading`:`adds the two middle readings without dividing by 2`):kind==='range'?`uses only the largest reading`:kind==='iqr'?`uses the full range instead of the spread of the middle half`:`divides the total distance by 4 instead of 8`;
        inputs.wrong=wrong;
        body+=`${other} ${error} and reports a ${label} of ${wrong} ${unit}. Fix the calculation and find by how much the report is too high.`;
        answer=wrong-value;addStep(`The report should use the ${label} ${n(value)}, not ${wrong}. It is ${wrong} − ${n(value)} = ${n(answer)} ${unit} too high.`,operation('sub',wrong,value,answer));

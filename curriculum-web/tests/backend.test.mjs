@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createApp } from '../server/backend.mjs';
 import { createSQLiteDB } from '../server/storage.mjs';
+import { SUPPLEMENTAL_SKILLS } from '../server/curriculum.mjs';
 
 async function fixture({ path = ':memory:', production = false, questionPool = null, backupStore = null } = {}) {
   const db = createSQLiteDB(path); db.migrate();
@@ -197,7 +198,7 @@ test('existing educator accounts become teachers and full previews never change 
       const response = await f.call(`/teacher/preview?dayIndex=69${suffix}`, undefined, f.teacher.cookie);
       assert.equal(response.status, 200, JSON.stringify(response.value));
       assert.equal(response.value.total, suffix ? (suffix.endsWith('=0') ? 15 : 10) : 20);
-      assert.ok(response.value.questions.every(q => q.answer && q.solution.length >= 3 && q.hints.length >= 3));
+      assert.ok(response.value.questions.every(q => q.answer && q.hint && q.solution.length >= (SUPPLEMENTAL_SKILLS[q.skill]?1:3) && q.solution.length<=4 && q.solution.every(step=>typeof step==='string'&&step.trim()) && q.hints.length >= 3));
     }
     for (const route of ['/teacher/weeks','/teacher/preview?dayIndex=69','/parent/preview?dayIndex=69']) {
       assert.equal((await f.call(route)).status, 401);

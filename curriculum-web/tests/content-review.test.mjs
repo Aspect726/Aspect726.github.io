@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { generateQuestion, publicQuestion, gradeQuestion, allSkills } from '../server/questions.mjs';
+import { generateQuestion, publicQuestion, gradeQuestion, allSkills, warmupShapesForSkill } from '../server/questions.mjs';
 import { geometrySkills } from '../server/generators/geometry.mjs';
 import { math } from '../server/generators/common.mjs';
 
@@ -50,12 +50,13 @@ function choiceMeaning(choice, skill) {
 
 test('Every generated choice is unique in meaning; wrong hints are distinct and actually wrong', () => {
   for (const skill of allSkills) {
+    const supportedShapes=warmupShapesForSkill(skill);
     for (let seed = 0; seed < 100; seed++) {
-      const q = generateQuestion(skill, seed, { shape: shapes[seed % shapes.length], difficulty: 2 });
+      const q = generateQuestion(skill, seed, { shape: supportedShapes[seed % supportedShapes.length], difficulty: 2 });
       const where = `${skill} seed ${seed} ${q.shape}`;
       assert.ok(q.hints.length >= 3, where);
       assert.equal(new Set(q.hints.map(h => semanticKey(h.answer))).size, q.hints.length, `${where}: equivalent hints`);
-      for (const h of q.hints) assert.equal(gradeQuestion(q, h.answer).correct, false, `${where}: a hint targets a correct answer`);
+      for (const h of q.hints) {const result=gradeQuestion(q,`${h.answer}${q.answerUnit?' '+q.answerUnit:''}`);assert.equal(result.correct,false,`${where}: a hint targets a correct answer`);if(q.answerUnit)assert.equal(result.formOnly,false,`${where}: a wrong quantity with valid units is a real mistake`);}
       if (q.choices) {
         const meanings = q.choices.map(c => choiceMeaning(c, skill));
         assert.equal(new Set(meanings).size, meanings.length, `${where}: equivalent option labels`);
@@ -106,11 +107,20 @@ test('Parallelogram height meets the depicted base segment; geometry text anchor
   for (const skill of geometrySkills) for (let seed = 0; seed < 100; seed++) {
     const q = generateQuestion(skill, seed, { shape: 'picture', difficulty: 2 });
     if (skill === 'G-PARA') assert.ok(q.model.offset <= q.model.b, 'Perpendicular foot lies on the drawn base.');
+    const viewBox = /\bviewBox="([^"]+)"/.exec(q.svg)?.[1].split(/[\s,]+/).map(Number);
+    assert.ok(viewBox?.length === 4 && viewBox.every(Number.isFinite), `${skill}/${seed}: valid viewBox`);
+    const [left, top, width, height] = viewBox;
+    assert.ok(width > 0 && height > 0);
+    const defaultSize = Number(/text\s*\{[^}]*font-size\s*:\s*([\d.]+)px/.exec(q.svg)?.[1] || 16);
     for (const match of q.svg.matchAll(/<text\b([^>]*)>/g)) {
       const [, attrs] = match;
       const x = Number(/\bx="([^"]+)"/.exec(attrs)?.[1]);
       const y = Number(/\by="([^"]+)"/.exec(attrs)?.[1]);
-      assert.ok(x >= 0 && x <= 520 && y >= 16 && y <= 284, `${skill}/${seed}: label anchor (${x},${y}) inside diagram`);
+      const fontSize = Number(/font-size\s*[:=]\s*["']?([\d.]+)/.exec(attrs)?.[1] || defaultSize);
+      // SVG y is the text baseline. Leave room for its ascent/descent plus
+      // four units of clear margin; a small caption needs less than a 24px label.
+      assert.ok(x >= left && x <= left + width && y >= top + fontSize + 4 && y <= top + height - Math.ceil(fontSize * .3) - 4,
+        `${skill}/${seed}: ${fontSize}px label at (${x},${y}) fits viewBox ${viewBox.join(' ')}`);
     }
   }
 });

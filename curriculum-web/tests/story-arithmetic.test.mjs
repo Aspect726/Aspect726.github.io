@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { generateStoryArithmetic, storyArithmeticSkills, arithmeticStoryScenarios } from '../server/generators/story-arithmetic.mjs';
 import { arithmeticSkills } from '../server/generators/arithmetic.mjs';
+import { generateArithmetic } from '../server/generators/arithmetic.mjs';
 
 // Separate integer-pair oracle: neither the generator's rational helpers nor its
 // stored answers calculate the expected results used here.
@@ -13,7 +14,7 @@ function oracle(op,left,right){const a=pair(left),b=pair(right);switch(op){
  case 'sub':return [a[0]*b[1]-b[0]*a[1],a[1]*b[1]];
  case 'mul':return [a[0]*b[0],a[1]*b[1]];
  case 'div':assert.notEqual(b[0],0n);return [a[0]*b[1],a[1]*b[0]];
- case 'pow':assert.equal(right,'2');return [a[0]*a[0],a[1]*a[1]];
+ case 'pow':assert.ok(['2','3','4'].includes(right));return [a[0]**BigInt(right),a[1]**BigInt(right)];
  case 'abs':return [a[0]<0n?-a[0]:a[0],a[1]];
  case 'gcd':assert.equal(a[1],1n);assert.equal(b[1],1n);return [gcf(a[0],b[0]),1n];
  case 'max':return a[0]*b[1]>b[0]*a[1]?a:b;
@@ -79,7 +80,7 @@ test('story operation chains model independently checkable physical situations',
   const reflect=make('N-REFLECT'),[reflection,distance]=reflect.verification.operations;
   assert.equal(reflection.b,'-1');assert.ok(equal(pair(distance.b),pair(reflection.result)));
   const exponent=make('E-EXP'),[square,panels]=exponent.verification.operations;
-  assert.equal(square.op,'pow');assert.equal(panels.op,'mul');assert.equal(exponent.answerUnit,'square metres');
+  assert.equal(square.op,'pow');assert.equal(panels.op,'mul');assert.equal(exponent.answerUnit,'kilograms');
   const inequality=make('E-INEQ'),[budget,groups]=inequality.verification.operations;
   assert.ok(equal(oracle('add',budget.b,oracleAsString(groups.result,groups.b,'mul')),pair(budget.a)));
  }
@@ -92,8 +93,8 @@ test('inverse stories reconstruct the original rather than reveal it in the prom
   assert.ok(q.verification.operations.length>=2);
   assert.ok(q.solution.at(-1).includes(q.answer));
   if(skill==='E-EXP'){
-   assert.equal(q.verification.operations.at(-1).op,'sqrt');
-   assert.doesNotMatch(q.plainPrompt,/One side of each square is/,'The unknown side must not already be given');
+   assert.deepEqual(q.verification.operations.map(n=>n.op),['pow','div']);
+   assert.doesNotMatch(q.plainPrompt,/It starts at/,'The unknown starting amount must not already be given');
   }
  }
  const order=generateStoryArithmetic('E-ORDER','12',{scenarioId:'art-club',storyShape:'backward'});
@@ -119,4 +120,73 @@ test('invalid story options fail explicitly and seeded stories are reproducible'
  assert.throws(()=>generateStoryArithmetic('D-DIV','seed',{scenarioId:'unknown'}));
  assert.throws(()=>generateStoryArithmetic('D-DIV','seed',{storyShape:'fake'}));
  assert.throws(()=>generateStoryArithmetic('D-DIV','seed',{difficulty:4}));
+});
+
+test('whole-number exponents span powers two to four and whole, fraction and decimal bases',()=>{
+ const powers=new Set(),kinds=new Set(),storyPowers=new Set();
+ for(let seed=0;seed<300;seed++){
+  const q=generateArithmetic('E-EXP',`coverage:${seed}`,{shape:'calculation'}),v=q.verification;
+  powers.add(v.power);kinds.add(v.baseKind);
+  assert.ok(equal(oracle('pow',v.base,String(v.power)),pair(q.answer)));
+  const inverse=generateArithmetic('E-EXP',`coverage:${seed}`,{shape:'missing'});
+  assert.ok(equal(pair(inverse.answer),pair(v.base)));
+  const story=generateStoryArithmetic('E-EXP',`coverage:${seed}`,{storyShape:'missing'}),[power,total]=story.verification.operations;
+  storyPowers.add(Number(power.b));assert.equal(total.op,'mul');
+  assert.ok(equal(oracle('pow',power.a,power.b),pair(power.result)));
+  const backward=generateStoryArithmetic('E-EXP',`coverage:${seed}`,{storyShape:'backward'});
+  assert.deepEqual(backward.verification.operations.map(n=>n.op),['pow','div']);
+ }
+ assert.deepEqual([...powers].sort(),[2,3,4]);assert.deepEqual([...storyPowers].sort(),[2,3,4]);assert.deepEqual([...kinds].sort(),['decimal','fraction','whole']);
+ for(const difficulty of [1,2,3]){
+  const signatures=new Set();
+  for(let seed=0;seed<5000;seed++)signatures.add(generateArithmetic('E-EXP',seed,{difficulty,shape:'calculation'}).signature);
+  assert.ok(signatures.size>=180,`Level ${difficulty} needs enough distinct exponent parameters for the private 14-day no-repeat window`);
+ }
+});
+
+test('signed ordering includes decimals and fractions and compares negative values by position',()=>{
+ const representations=new Set();let nonWholeStories=0,bothNegative=0;
+ for(let seed=0;seed<300;seed++){
+  const q=generateArithmetic('N-ORDER',seed,{shape:'calculation'}),v=q.verification;
+  representations.add(v.representation);assert.ok(equal(oracle('max',v.a,v.b),pair(q.answer)));
+  const story=generateStoryArithmetic('N-ORDER',seed,{storyShape:'missing'}),compare=story.verification.operations[0];
+  assert.equal(compare.op,'max');assert.ok(equal(oracle('max',compare.a,compare.b),pair(compare.result)));
+  if(pair(compare.a)[1]>1n||pair(compare.b)[1]>1n)nonWholeStories++;
+  if(pair(compare.a)[0]<0n&&pair(compare.b)[0]<0n)bothNegative++;
+ }
+ assert.deepEqual([...representations].sort(),['decimal','fraction','whole']);assert.ok(nonWholeStories>150);assert.equal(bothNegative,300);
+});
+
+test('fraction multiplication assesses scaling above and below one against the unscaled option',()=>{
+ const directions=new Set();
+ for(let seed=0;seed<200;seed++){
+  const q=generateStoryArithmetic('F-MULT',seed,{storyShape:'compare'}),[scale,share,difference]=q.verification.operations,factor=pair(scale.b);
+  const grows=factor[0]>factor[1];directions.add(grows?'grows':'shrinks');
+  assert.equal(q.answerChoice,grows?'A':'B');assert.match(q.choiceLabels.B,/unscaled/);
+  const originalShare=oracle('div',scale.a,share.b),newShare=pair(share.result);
+  const [n,d]=oracle('sub',`${newShare[0]}/${newShare[1]}`,`${originalShare[0]}/${originalShare[1]}`);
+  assert.ok(equal([n<0n?-n:n,d],pair(q.answer)));assert.equal(difference.op,'sub');
+  const reason=generateArithmetic('F-MULT',seed,{shape:'reason'});
+  assert.match(reason.prompt,/scaling prediction/);assert.match(reason.choices.find(c=>c.value===reason.answer).label,/than 1, the product is/);
+  const backward=generateStoryArithmetic('F-MULT',seed,{storyShape:'backward'});
+  assert.deepEqual(backward.verification.operations.map(n=>n.op),['mul','mul'],'Early inverse sharing must not require untaught general fraction division');
+  assert.match(backward.plainPrompt,/order was 1\//);assert.equal(pair(backward.verification.operations.at(-1).b)[1],1n);
+ }
+ assert.deepEqual([...directions].sort(),['grows','shrinks']);
+});
+
+test('coordinate rectangles derive area from four vertices and invert area to find a missing side coordinate',()=>{
+ let rectangleCount=0,routeCount=0;
+ for(let seed=0;seed<250;seed++){
+  const options={scenarioId:'school-garden',storyShape:'missing'},q=generateStoryArithmetic('N-DIST',seed,options);
+  if(q.answerUnit==='square metres'){
+   rectangleCount++;assert.match(q.plainPrompt,/four vertices/);
+   const vertices=[...q.plainPrompt.matchAll(/\((-?\d+), (-?\d+)\)/g)].map(m=>m.slice(1).map(Number));assert.equal(vertices.length,4);
+   const xs=vertices.map(p=>p[0]),ys=vertices.map(p=>p[1]);
+   assert.equal(Number(q.answer),(Math.max(...xs)-Math.min(...xs))*(Math.max(...ys)-Math.min(...ys)));
+   const backward=generateStoryArithmetic('N-DIST',seed,{...options,storyShape:'backward'});assert.equal(Number(backward.answer),Math.min(...xs));
+   assert.deepEqual(backward.verification.operations.map(n=>n.op),['div','sub']);
+  }else routeCount++;
+ }
+ assert.ok(rectangleCount>60);assert.ok(routeCount>60);
 });

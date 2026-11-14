@@ -2,9 +2,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { generateQuestion, allSkills, decodeStorySeed } from '../server/questions.mjs';
-import { geometrySkills } from '../server/generators/geometry.mjs';
-import { statisticsSkills } from '../server/generators/statistics.mjs';
+import { generateQuestion, allSkills, decodeStorySeed, warmupShapesForSkill } from '../server/questions.mjs';
 
 const numberWords='zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand'.split(' ');
 export function paperFrame(value) {
@@ -28,7 +26,7 @@ export function checkFrames(data,{perTemplate=500}={}) {
  const paper=loadPaperFrames(data),report={paperRecords:paper.records,paperFramesLoaded:paper.segments,uniquePaperFrames:paper.frames.size,perTemplate,skills:[],matchingTemplates:0,questionsChecked:0};
  const collisions=new Set();
  for(const skill of allSkills) {
-  const shapes=['calculation','story','missing','mistake','reason',...(geometrySkills.includes(skill)||statisticsSkills.includes(skill)?['picture']:[])];
+  const shapes=warmupShapesForSkill(skill);
   const record={skill,templates:shapes.length,levels:3,questionsChecked:0,matchingTemplates:[]};
   for(const shape of shapes)for(let level=1;level<=3;level++)for(let index=0;index<perTemplate;index++) {
    const q=generateQuestion(skill,`frame:${index}`,{shape,difficulty:level});

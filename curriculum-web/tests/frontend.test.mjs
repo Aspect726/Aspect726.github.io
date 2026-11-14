@@ -22,12 +22,15 @@ test('full app shell authenticates, separates roles, serves real routes and save
   assert.equal(w.location.pathname,'/t/dashboard');assert.equal(w.document.querySelectorAll('.sidebar nav a').length,7);
   await w.__api('/teacher/accounts',{username:'student',name:'Learner',role:'student',password:'1234'});
   w.document.querySelector('#signout').click();await until(()=>w.document.querySelector('#auth-form'));
-  await submit({username:'student',password:'1234'});await until(()=>w.document.querySelector('.practice-hero'));
-  assert.equal(w.location.pathname,'/s/today');assert.equal(w.document.querySelectorAll('.sidebar nav a').length,8);
+  await submit({username:'student',password:'1234'});await until(()=>w.document.querySelector('.daily-task-card'));
+  assert.equal(w.location.pathname,'/s/today');assert.equal(w.document.querySelectorAll('.sidebar nav a').length,8);assert.equal(w.document.querySelector('.learning-resources').open,false);assert.ok(w.document.querySelector('.daily-teacher-note'));
   await w.__navigate('/t/dashboard');await until(()=>w.location.pathname==='/s/today');assert.equal(w.__state.user.role,'student');
-  for(const route of ['/s/map','/s/library','/s/progress','/s/rewards','/s/review']){await w.__navigate(route);await until(()=>w.document.querySelector('h1'));assert.doesNotMatch(w.document.body.textContent,/undefined|NaN|\[object Object\]/);}
-  await w.__navigate('/s/practice');await until(()=>w.document.querySelector('#practice-answer'));assert.equal(w.document.querySelector('.sidebar'),null);
-  const input=w.document.querySelector('#practice-answer');input.value='99999';input.form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await until(()=>w.document.querySelector('#next-question'));
+  for(const route of ['/s/map','/s/library','/s/progress','/s/rewards','/s/review']){await w.__navigate(route);await until(()=>w.document.querySelector('h1'));assert.doesNotMatch(w.document.body.textContent,/\b(?:undefined|NaN)\b|\[object Object\]/);}
+  await w.__navigate('/s/practice');await until(()=>w.document.querySelector('#practice-answer-form'));assert.equal(w.document.querySelector('.sidebar'),null);
+  const stored=await db.prepare('SELECT q FROM platform_questions ORDER BY rowid DESC LIMIT 1').first(),question=JSON.parse(stored.q);
+  if(question.choices?.length){const wrong=question.choices.find(choice=>choice.value!==question.answer);[...w.document.querySelectorAll('input[name=answer]')].find(input=>input.value===wrong.value).checked=true;}
+  else {if(question.answerChoice)w.document.querySelector('input[name=answerChoice]').checked=true;w.document.querySelector('#practice-answer').value='99999'+(question.answerUnit?' '+question.answerUnit:'');}
+  w.document.querySelector('#practice-answer-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await until(()=>w.document.querySelector('#next-question'));
   assert.match(w.document.querySelector('#practice-feedback').textContent,/Not quite/);
   assert.equal((await w.__api('/v2/student/summary')).answered,1);
   await w.__navigate('/s/today');await until(()=>w.document.querySelector('.sidebar'));
