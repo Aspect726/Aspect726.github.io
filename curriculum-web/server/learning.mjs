@@ -1,10 +1,10 @@
-import { generateQuestion, publicQuestion, gradeQuestion, questionIdentity } from './questions.mjs';
+import { generateQuestion, publicQuestion, gradeQuestion, questionIdentity, storyScenarios, storyShapes, formatQuestionAnswer, decodeStorySeed } from './questions.mjs';
 import { LESSONS, vocabulary, formulas } from './lessons.mjs';
 
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const fail=(status,message)=>{throw Object.assign(new Error(message),{status});};
 const strip=value=>String(value).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
-const answer=q=>q.choices?strip(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer):String(q.answer);
+const answer=q=>q.choices?strip(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer):formatQuestionAnswer(q);
 async function questionHash(q){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(questionIdentity(q))))).map(n=>n.toString(16).padStart(2,'0')).join('');}
 export function createLearning({db,clock=()=>new Date(),production=false,questionPool=null}) {
  const st=(sql,...args)=>db.prepare(sql).bind(...args),one=(sql,...args)=>st(sql,...args).first(),all=async(sql,...args)=>(await st(sql,...args).all()).results;
@@ -14,15 +14,16 @@ export function createLearning({db,clock=()=>new Date(),production=false,questio
   const result=[];
   for(let position=0;position<2;position++) {
    const cached=saved.find(row=>row.position===position),stored=cached&&JSON.parse(cached.question);
-   if(stored&&!banned.has(`${skill}:${stored.shape}`)){result.push(stored);continue;}
+   if(stored?.story&&!banned.has(`${skill}:${stored.shape}`)){result.push(stored);continue;}
    if(production&&!questionPool)fail(503,'The checked lesson examples are not ready.');
-   const level=position+1,pool=questionPool?.skills?.[skill]?.[String(level)];
+   const level=position+1,pool=questionPool?.stories?.[skill]?.[String(level)];
    if(questionPool&&!pool?.length)fail(503,'This lesson needs its checked examples.');
    const used=new Set((await all('SELECT question_hash FROM platform_questions WHERE student_id=? UNION SELECT question_hash FROM platform_examples WHERE student_id=?',studentId,studentId)).map(row=>row.question_hash));
    let selected;
    for(let offset=0;offset<(pool?.length||2000);offset++) {
-    const q=generateQuestion(skill,pool?pool[(offset+position*37)%pool.length]:`lesson:${studentId}:${skill}:${position}:${offset}`,{difficulty:level});
-    if(q.shape==='reason'||q.shape===result[0]?.shape||banned.has(`${skill}:${q.shape}`))continue;
+    const entry=pool?.[(offset+position*37)%pool.length],decoded=entry?decodeStorySeed(skill,level,entry,questionPool):null,scenes=storyScenarios(skill);
+    const q=generateQuestion(skill,decoded?.seed??`lesson-story:${studentId}:${skill}:${position}:${offset}`,{mode:'story',difficulty:level,scenarioId:decoded?.scenarioId??scenes[(offset+position)%scenes.length],storyShape:decoded?.storyShape??storyShapes[(position+offset)%storyShapes.length]});
+    if(q.shape==='reason'||q.shape===result[0]?.shape||q.scenarioId===result[0]?.scenarioId||banned.has(`${skill}:${q.shape}`))continue;
     const hash=await questionHash(q);if(used.has(hash))continue;
     const encoded=JSON.stringify(q);
     if(cached) {

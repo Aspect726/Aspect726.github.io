@@ -11,7 +11,8 @@ function application(env) {
       ? Uint8Array.from(atob(asset.body), character => character.charCodeAt(0))
       : asset.body
   }]));
-  return createApp({ db: env.DB, assets: decoded, questionPool, backupStore: env.BUCKET, production: true });
+  return createApp({ db: env.DB, assets: decoded, questionPool, backupStore: env.BUCKET, production: true,
+    ai: {apiKey:env.OPENAI_API_KEY,model:env.OPENAI_TUTOR_MODEL} });
 }
 
 export default {

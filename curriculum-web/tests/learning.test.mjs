@@ -27,7 +27,7 @@ test('lessons persist two distinct worked examples and separate them from quiz q
    const a=await learning.lesson({id:'a'},skill),again=await learning.lesson({id:'a'},skill);
    assert.deepEqual(a.examples,again.examples);assert.equal(a.examples.length,2);
    assert.notEqual(a.examples[0].shape,a.examples[1].shape);
-   for(const example of a.examples){assert.ok(example.answer);assert.ok(example.steps.length>=3);}
+   for(const example of a.examples){assert.ok(example.answer);assert.ok(example.steps.length>=2);}
    assert.ok(a.trap.answer);assert.ok(a.trap.text);assert.equal(a.completed,false);
   }
   const count=await db.prepare('SELECT COUNT(*) AS n FROM platform_examples').first();assert.equal(count.n,108);

@@ -1,5 +1,5 @@
 import { SKILLS, START_DATE, dayInfo, addDays, pacificDate, validDate } from './plan.mjs';
-import { generateQuestion, publicQuestion, gradeQuestion } from './questions.mjs';
+import { generateQuestion, publicQuestion, gradeQuestion, storyScenarios, storyShapes, formatQuestionAnswer, decodeStorySeed } from './questions.mjs';
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 const json = (value, status=200) => new Response(JSON.stringify(value), {status, headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
@@ -7,7 +7,7 @@ const text = (value, limit=500) => typeof value === 'string' ? value.trim().slic
 const integer = (value,min,max,label) => { if (!Number.isInteger(value)||value<min||value>max) fail(400,`${label} is not valid.`); return value; };
 const safeUser = u => u && ({id:u.id,name:u.name,username:u.username,role:u.role==='parent'?'teacher':u.role});
 const plain = value => String(value??'').replace(/<math\b[^>]*aria-label="([^"]*)"[^>]*>[\s\S]*?<\/math>/g,'$1').replace(/<[^>]+>/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
-const rightAnswer = q => q.choices ? plain(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer) : String(q.answer);
+const rightAnswer = q => q.choices ? plain(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer) : formatQuestionAnswer(q);
 const skillList = Object.entries(SKILLS).map(([skill,name])=>({skill,name}));
 const skillWeek = skill => { for(let i=0;i<70;i++) if(dayInfo(i).focus.includes(skill)) return Math.floor(i/7)+1; return 1; };
 const skillName = skill => SKILLS[skill]||skill;
@@ -109,12 +109,19 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     const questions=[];
     if(skill){
       if(production&&!questionPool)fail(503,'The checked question bank is not ready.');
-      const identities=new Set();
+      const identities=new Set(),scenes=new Set();
       for(let i=0;i<10;i++){
-        const level=i%3+1,pool=questionPool?.skills?.[skill]?.[String(level)];
+        const level=i%3+1,story=i>=3,pool=questionPool?.[story?'stories':'skills']?.[skill]?.[String(level)];
         if(questionPool&&!pool?.length)fail(503,'This skill needs its checked question bank.');
         let q;
-        for(let n=0;n<200;n++){q=generateQuestion(skill,pool?pool[(i*13+n)%pool.length]:`teacher-bank:${skill}:${i}:${n}`,{difficulty:level});if(!identities.has(q.plainPrompt)){identities.add(q.plainPrompt);break;}}
+        for(let n=0;n<(pool?.length??2000);n++){
+          const entry=pool?.[(i*13+n)%pool.length],decoded=story&&entry?decodeStorySeed(skill,level,entry,questionPool):null,available=storyScenarios(skill);
+          const candidate=generateQuestion(skill,decoded?.seed??entry??`teacher-bank:${skill}:${i}:${n}`,story?{mode:'story',difficulty:level,scenarioId:decoded?.scenarioId??available[(i+n)%available.length],storyShape:decoded?.storyShape??storyShapes[(i+n)%storyShapes.length]}:{difficulty:level});
+          if(!story&&!['calculation','missing'].includes(candidate.shape))continue;
+          if(identities.has(candidate.plainPrompt)||(story&&scenes.has(candidate.scenarioId)))continue;
+          q=candidate;identities.add(q.plainPrompt);if(story)scenes.add(q.scenarioId);break;
+        }
+        if(!q)fail(503,'This skill needs more checked question previews.');
         questions.push({...publicQuestion(q),answer:rightAnswer(q),solution:q.solution,hint:q.hint,templateId:`${skill}:${q.shape}`,level,flagged:flags.some(f=>f.templateId===`${skill}:${q.shape}`&&!f.resolvedAt)});
       }
     }

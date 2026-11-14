@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { buildExclusions, overlaps } from '../server/overlap.mjs';
 import { SKILLS, buildSlots } from '../server/plan.mjs';
 import { generateQuestion, questionIdentity } from '../server/questions.mjs';
+import { buildStoryPools, checkStoryPool } from './check-story-bank.mjs';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const source=process.env.PAPER_QUESTIONS_PATH;
@@ -17,12 +18,12 @@ const reserveTwins=process.argv.includes('--with-twins');
 const seedTarget=Number(process.env.VETTED_SEED_TARGET || 1024);
 const candidateLimit=Number(process.env.VETTED_CANDIDATE_LIMIT || 16000);
 const allSkills=[...Object.keys(SKILLS),'WARMUP'];
-const generatorPaths=['server/questions.mjs','server/math.mjs','server/generators/common.mjs','server/generators/arithmetic.mjs','server/generators/geometry.mjs','server/generators/statistics.mjs','server/plan.mjs','server/plan.json','server/overlap.mjs','scripts/check-overlap.mjs'];
+const generatorPaths=['server/questions.mjs','server/math.mjs','server/generators/common.mjs','server/generators/arithmetic.mjs','server/generators/geometry.mjs','server/generators/statistics.mjs','server/generators/story-arithmetic.mjs','server/generators/story-geometry.mjs','server/generators/story-statistics.mjs','scripts/check-story-bank.mjs','scripts/check-paper-frames.mjs','server/plan.mjs','server/plan.json','server/overlap.mjs','scripts/check-overlap.mjs'];
 const generatorFiles=Object.fromEntries(generatorPaths.map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')]));
 const generatorDigest=createHash('sha256').update(Object.entries(generatorFiles).map(([file,digest])=>`${file}:${digest}\n`).join('')).digest('hex');
 let pool;
 if(building) {
-  pool={version:1,sourceCount:data.questions?.length??data.length,generatedAt:new Date().toISOString(),skills:{},evidence:{generatorDigest,generatorFiles,classification:exclusions.stats,uniqueSignatures:{},rejectedCandidates:0}};
+  pool={version:2,sourceCount:data.questions?.length??data.length,generatedAt:new Date().toISOString(),skills:{},evidence:{generatorDigest,generatorFiles,classification:exclusions.stats,uniqueSignatures:{},rejectedCandidates:0}};
   for(const skill of allSkills) {
     pool.skills[skill]={}; pool.evidence.uniqueSignatures[skill]={};
     for(const difficulty of [1,2,3]) {
@@ -87,8 +88,16 @@ for(let day=0;day<70;day++) {
   }
 }
 pool.evidence={...pool.evidence,shapeCoverage,verifiedSeeds,bankCount,requiredQuestions:1400,bonusQuestions:3150,twinReserveQuestions:reserveTwins?4550:0,days:70,repeatWindowDays:14,checkedAt:new Date().toISOString()};
+if(building){
+ const built=buildStoryPools(data,{perFrame:Number(process.env.STORY_SEEDS_PER_FRAME||20),candidateLimit:Number(process.env.STORY_CANDIDATE_LIMIT||3000),onProgress:line=>console.log(line)});
+ pool.stories=built.stories;pool.storyEncoding=built.storyEncoding;pool.evidence.storyRejectedCandidates=built.rejected;
+}
+const storyReport=checkStoryPool(data,pool,{onProgress:line=>console.log(line)});
+pool.storyEvidence={...storyReport,generatorDigest,generatorFiles};
+const storyReportPath=process.env.STORY_REPORT_PATH||path.join(root,'validation/stories.json');
+fs.mkdirSync(path.dirname(storyReportPath),{recursive:true});fs.writeFileSync(storyReportPath,JSON.stringify(storyReport,null,2)+'\n');
 if(building) {
   fs.mkdirSync(path.dirname(poolPath),{recursive:true,mode:0o700});
   const temporary=poolPath+'.tmp';fs.writeFileSync(temporary,JSON.stringify(pool),{mode:0o600});fs.renameSync(temporary,poolPath);
 }
-console.log(JSON.stringify({result:'passed',sourceRecords:pool.sourceCount,verifiedSeeds,fullBankQuestions:bankCount,days:70,classification:exclusions.stats,poolWritten:building}));
+console.log(JSON.stringify({result:'passed',sourceRecords:pool.sourceCount,verifiedSeeds,fullBankQuestions:bankCount,days:70,checkedStoryQuestions:storyReport.checkedStoryQuestions,storiesPerDay:storyReport.storiesPerDay,classification:exclusions.stats,poolWritten:building}));

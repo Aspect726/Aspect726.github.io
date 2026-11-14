@@ -29,7 +29,14 @@ try {
   assert.equal((await worker.fetch(request('/api/runs',{dayIndex:0,kind:'required'},studentCookie),{DB:db})).status,410);
   const questionResponse=await worker.fetch(request('/api/v2/student/question',{source:'practice'},studentCookie),{DB:db});
   assert.equal(questionResponse.status,200);const {question}=await questionResponse.json();assert.ok(question.id);assert.equal('answer' in question,false);
+  const help=await worker.fetch(request('/api/v2/student/help',{questionId:question.id},studentCookie),{DB:db});assert.equal(help.status,200);assert.ok((await help.json()).steps.length);
+  const event=await worker.fetch(request('/api/v2/student/help-event',{questionId:question.id,kind:'hint',requestId:'compiled-help-event'},studentCookie),{DB:db});assert.equal(event.status,200);
+  const tutor=await worker.fetch(request('/api/v2/student/tutor',{questionId:question.id,message:'What should I do first?',mode:'explain',part:0,requestId:'compiled-tutor-request'},studentCookie),{DB:db});assert.equal(tutor.status,200);assert.equal((await tutor.json()).source,'worked-help');
+  const history=await worker.fetch(request('/api/v2/student/tutor-history?questionId='+question.id,null,studentCookie),{DB:db});assert.equal(history.status,200);assert.equal((await history.json()).conversations.length,1);
+  const student=await db.prepare('SELECT id FROM practice_users WHERE username=?').bind('student').first();
+  const teacherHistory=await worker.fetch(request('/api/v2/teacher/tutor-history?studentId='+student.id,null,teacherCookie),{DB:db});assert.equal(teacherHistory.status,200);assert.equal((await teacherHistory.json()).items.length,2);
+  assert.equal((await worker.fetch(request('/api/v2/teacher/tutor-history?studentId='+student.id,null,studentCookie),{DB:db})).status,403);
   const answered=await worker.fetch(request('/api/v2/student/answer',{questionId:question.id,answer:'999999',elapsedMs:2000,requestId:'compiled-smoke'},studentCookie),{DB:db});assert.equal(answered.status,200);assert.equal((await answered.json()).summary.answered,1);
   const lesson=await worker.fetch(request('/api/v2/student/lesson?skill=D-SUB',null,studentCookie),{DB:db});assert.equal(lesson.status,200);assert.equal((await lesson.json()).examples.length,2);
-  console.log('Built Worker passed real page/module delivery, login, role isolation, vetted practice/lesson, counted answer, retired endpoint and private-path checks.');
+  console.log('Built Worker passed real page/module delivery, login, role isolation, vetted practice/lesson, help, persistent tutor history, counted answer, retired endpoint and private-path checks.');
 } finally { db.close(); }

@@ -1,13 +1,13 @@
 import plan from './plan.json' with { type: 'json' };
 import { SKILLS, dayInfo, addDays, pacificDate } from './plan.mjs';
-import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity } from './questions.mjs';
+import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity, storyScenarios, storyShapes, formatQuestionAnswer, parseUnitAnswer, decodeStorySeed } from './questions.mjs';
 import { parseNumber, rational, add, sub, mul, div, eq } from './math.mjs';
 
 const json = (value, status = 200) => new Response(JSON.stringify(value), {status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
 const fail = (status,message) => { throw Object.assign(new Error(message),{status}); };
 const uuid=()=>crypto.randomUUID();
 const strip=value=>String(value??'').replace(/<math\b[^>]*aria-label="([^"]*)"[^>]*>[\s\S]*?<\/math>/g,'$1').replace(/<[^>]+>/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
-export const readableAnswer=q=>q.choices?strip(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer):String(q.answer);
+export const readableAnswer=q=>q.choices?strip(q.choices.find((_,i)=>gradeQuestion(q,`option-${i}`).correct)?.label??q.answer):formatQuestionAnswer(q);
 export async function platformQuestionHash(q){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(questionIdentity(q))))).map(x=>x.toString(16).padStart(2,'0')).join('');}
 const skillsForWeek=week=>[...new Set([...week.saturday.skills,...week.sunday.skills].flatMap(id=>id==='ALL'?Object.keys(SKILLS):[id]))];
 const skillWeek=id=>plan.weeks.find(w=>skillsForWeek(w).includes(id))?.week??1;
@@ -37,6 +37,7 @@ export function linearExpression(value) {
   try{const value=expression();return index===tokens.length?value:null;}catch{return null;}
 }
 export function platformGrade(q,input){
+  if(q.answerUnit)return gradeQuestion(q,input);
   if(['E-DIST','E-FACTOR','E-LIKE'].includes(q.skill)&&!q.choices){const actual=linearExpression(input),expected=linearExpression(q.answer);if(actual&&expected&&eq(actual.a,expected.a)&&eq(actual.b,expected.b)){const unformed=q.skill==='E-FACTOR'?!/[()]/.test(input):/[()]/.test(input)||(String(input).match(/x/gi)||[]).length>1;return unformed?{correct:false,formOnly:true,hint:q.skill==='E-FACTOR'?'Right value. Write it as a product with the common factor outside parentheses.':'Right value. Expand and combine the like terms.'}:{correct:true,formOnly:false,hint:'Correct.'};}}
   const coordinate=/^\(\s*-?\d+\s*,\s*-?\d+\s*\)$/.test(q.answer);
   return gradeQuestion(coordinate?{...q,answer:q.answer.replace(/\s/g,'')}:q,coordinate?String(input).replaceAll('−','-').replace(/\s/g,''):input);
@@ -80,11 +81,11 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     const note=await one('SELECT text FROM platform_teacher_notes WHERE student_id=? AND week=?',studentId,week.week);
     return{today:t,date:t,day,week,answered,correct:rs.filter(r=>r.is_correct).length,accuracy:accuracy(rs),dailyTarget:p.dailyTarget,points:a.points,bonusFirst:p.bonusFirst,bonusStep:p.bonusStep,nextPointAt,untilNextPoint:nextPointAt-answered,bonusEarned,requiredDone:answered>=p.dailyTarget,reviewDue:due.length,streak:a.streak,bestStreak:a.bestStreak,teacherNote:note?.text??'',weekDays:Array.from({length:7},(_,i)=>{const date=addDays(week.startDate,i),d=a.days.find(x=>x.date===date);return{date,weekday:['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'][i],index:(week.week-1)*7+i,answered:d?.answered??0,correct:d?.correct??0,status:d&&d.answered>=d.target?'done':d?.answered?'partial':date>t?'upcoming':date===t?'today':'missed',lessonDay:i<2};})};
   }
-  async function generateSample(skill,level=1,index=0,shape=null){
+  async function generateSample(skill,level=1,index=0,shape=null,options={}){
     if(!SKILLS[skill]&&skill!=='WARMUP')fail(400,'Choose a skill from the course.');
-    const pool=questionPool?.skills?.[skill]?.[String(level)];
+    const story=options.mode==='story',pool=questionPool?.[story?'stories':'skills']?.[skill]?.[String(level)];
     if(production&&!pool?.length)fail(503,'The checked question bank is not ready.');
-    for(let n=0;n<(pool?.length??2000);n++){const seed=pool?pool[(index+n)%pool.length]:`platform:${skill}:${level}:${index+n}`;const q=generateQuestion(skill,seed,{difficulty:level});if(!shape||q.shape===shape)return q;}
+    for(let n=0;n<(pool?.length??2000);n++){const entry=pool?.[(index+n)%pool.length],decoded=story&&entry?decodeStorySeed(skill,level,entry,questionPool):null,seed=decoded?.seed??entry??`platform:${skill}:${level}:${index+n}`;const q=generateQuestion(skill,seed,{difficulty:level,...options,...(decoded??{})});if(!shape||q.shape===shape)return q;}
     fail(503,'A fresh question is being prepared. Try a different skill.');
   }
   async function choose(studentId,b,c){
@@ -104,26 +105,70 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     if(position<13)return{source:'practice',skill:earlier[(position-8)%earlier.length].skill};
     return{source:'practice',skill:stretch[(position-13)%Math.max(1,stretch.length)]?.skill??focus[count%focus.length],forcedLevel:3};
   }
-  async function question(studentId,b){
-    const c=await context(studentId),selection=await choose(studentId,b,c);
+  async function ownedQuestion(studentId,questionId){
+    if(typeof questionId!=='string'||!questionId||questionId.length>100)fail(400,'Reopen the question to get help.');
+    const record=await one('SELECT * FROM platform_questions WHERE id=? AND student_id=?',questionId,studentId);
+    if(!record)fail(404,'That question was not found.');
+    return {question:JSON.parse(record.q),record};
+  }
+  async function help(studentId,b){
+    const {question:q}=await ownedQuestion(studentId,b.questionId);
+    return {questionId:b.questionId,hint:q.hint||'Identify what is known and what the question asks you to find.',steps:q.solution,answer:readableAnswer(q),answerUnit:q.answerUnit??null,choiceLabels:q.choiceLabels??null};
+  }
+  function visibleQuestion(row,c){
+    const q=JSON.parse(row.q);
+    return {...publicQuestion(q),name:SKILLS[q.skill],offerExample:Boolean(c.a.skills.find(x=>x.skill===q.skill)?.offerExample),id:row.id,level:row.level,source:row.source,helpAvailable:true,...(['learn','library'].includes(row.source)?{hint:q.hint}:{})};
+  }
+  async function question(studentId,b,retry=0){
+    if(retry>30)fail(409,'Your other tab is updating this set. Try again.');
+    const c=await context(studentId),selection=await choose(studentId,b,c),date=today();
     if(!selection)return{question:null,done:true,summary:await summary(studentId,c)};
-    const pending=await one('SELECT q.* FROM platform_questions q LEFT JOIN platform_attempts a ON a.question_id=q.id WHERE q.student_id=? AND q.date=? AND q.source=? AND q.skill=? AND a.id IS NULL ORDER BY q.created_at LIMIT 1',studentId,today(),selection.source,selection.skill);
-    if(pending){const q=JSON.parse(pending.q);return{question:{...publicQuestion(q),name:SKILLS[q.skill],offerExample:Boolean(c.a.skills.find(x=>x.skill===q.skill)?.offerExample),id:pending.id,level:pending.level,source:pending.source,...(['learn','library'].includes(pending.source)?{hint:q.hint}:{})},summary:await summary(studentId,c)};}
+    const todayAttempts=c.a.attempts.filter(x=>x.date===date),blockStart=Math.floor(todayAttempts.length/20)*20;
+    const reservations=await all('SELECT q.*,a.id AS attempt_id FROM platform_questions q LEFT JOIN platform_attempts a ON a.question_id=q.id WHERE q.student_id=? AND q.date=? AND q.slot_index>=? AND q.slot_index<? ORDER BY q.slot_index',studentId,date,blockStart,blockStart+20);
+    const pending=reservations.find(row=>!row.attempt_id&&row.source===selection.source&&row.skill===selection.skill);
+    if(pending)return{question:visibleQuestion(pending,c),summary:await summary(studentId,c)};
+    // Legacy answered work takes its existing place. New slots are atomic reservations,
+    // so a second tab cannot allocate another warm-up or repeat a scene in this set.
+    const legacyCount=todayAttempts.filter(row=>JSON.parse(row.params||'{}').slotIndex==null).length;
+    const occupied=new Set(reservations.map(row=>row.slot_index));
+    for(let i=blockStart;i<Math.min(legacyCount,blockStart+20);i++)occupied.add(i);
+    const slot=Array.from({length:20},(_,i)=>blockStart+i).find(i=>!occupied.has(i));
+    if(slot===undefined){
+      const waiting=reservations.find(row=>!row.attempt_id);
+      if(waiting)return{question:visibleQuestion(waiting,c),summary:await summary(studentId,c),resumedPending:true};
+      return question(studentId,b,retry+1);
+    }
+    const targetRemainder=c.a.program.dailyTarget-blockStart,blockTarget=targetRemainder>0&&targetRemainder<20?targetRemainder:20;
+    const firstWarmups=Math.min(6,Math.floor(blockTarget*.3)),warmupPositions=[...Array.from({length:firstWarmups},(_,i)=>i),...Array.from({length:6-firstWarmups},(_,i)=>blockTarget+i)];
+    const position=slot-blockStart,story=!warmupPositions.includes(position),storyPosition=position-warmupPositions.filter(i=>i<position).length;
     const skill=selection.skill,stats=c.a.skills.find(x=>x.skill===skill),level=selection.forcedLevel??stats?.difficulty??1;
     const banned=new Set((await all('SELECT template_id FROM platform_flags WHERE resolved_at IS NULL')).map(x=>x.template_id));
     const served=new Set((await all('SELECT question_hash FROM platform_questions WHERE student_id=?',studentId)).map(x=>x.question_hash));
     for(const example of await all('SELECT question_hash FROM platform_examples WHERE student_id=?',studentId))served.add(example.question_hash);
     const old=new Set((await all('SELECT plain_prompt FROM practice_questions WHERE student_id=?',studentId)).map(x=>x.plain_prompt.toLowerCase().replace(/\s+/g,' ').trim()));
-    const recent=c.a.attempts.slice(-4),allowChoice=recent.length>=4&&!recent.some(x=>JSON.parse(x.params)?.choices);
-    const pool=questionPool?.skills?.[skill]?.[String(level)],start=crypto.getRandomValues(new Uint32Array(1))[0]%(pool?.length??2000);
-    for(let attempt=0;attempt<(pool?.length??2000);attempt++){
-      let q=await generateSample(skill,level,start+attempt);const templateId=`${skill}:${q.shape}`,hash=await platformQuestionHash(q);
+    const scenes=new Set(reservations.map(row=>row.scenario_id).filter(Boolean));
+    const pool=questionPool?.[story?'stories':'skills']?.[skill]?.[String(level)];
+    if(production&&!pool?.length)fail(503,story?'The checked story questions are not ready yet.':'The checked question bank is not ready.');
+    const start=crypto.getRandomValues(new Uint32Array(1))[0]%(pool?.length??2000),wantedShape=storyShapes[storyPosition%storyShapes.length];
+    const warmupShapes=banned.has(`${skill}:calculation`)?['missing']:['calculation','missing'];
+    const scenarios=story?storyScenarios(skill):[];
+    for(let pass=0;pass<2;pass++)for(let attempt=0;attempt<(pool?.length??2000);attempt++){
+      const index=start+attempt,entry=pool?.[index%pool.length],decoded=story&&entry?decodeStorySeed(skill,level,entry,questionPool):null,seed=decoded?.seed??entry??`platform:${story?'story:':''}${skill}:${level}:${index}`;
+      const options=story?{mode:'story',difficulty:level,scenarioId:decoded?.scenarioId??scenarios[Math.floor(index/storyShapes.length)%scenarios.length],storyShape:decoded?.storyShape??storyShapes[index%storyShapes.length]}:{difficulty:level};
+      if(story&&pass===0&&options.storyShape!==wantedShape)continue;
+      let q=generateQuestion(skill,seed,options);
+      if(!story&&!warmupShapes.includes(q.shape))continue;
+      if(story&&scenes.has(q.scenarioId))continue;
+      const templateId=`${skill}:${q.shape}`,hash=await platformQuestionHash(q);
       if(banned.has(templateId)||served.has(hash)||old.has(questionIdentity(q)))continue;
-      if(q.choices&&(parseNumber(q.answer)||/^\(\s*-?\d+\s*,\s*-?\d+\s*\)$/.test(q.answer)||(['E-DIST','E-FACTOR','E-LIKE'].includes(skill)&&linearExpression(q.answer)))){q={...q};delete q.choices;}
-      if(q.choices&&skill==='F-COMP'&&['left','right','equal'].includes(q.answer)){const answer=q.answer==='equal'?'equal':q.answer==='left'?q.verification.a:q.verification.b;q={...q,answer,prompt:q.prompt+'<p>Type the greater fraction, or equal.</p>',plainPrompt:q.plainPrompt+' Type the greater fraction, or equal.',hints:q.hints.map(h=>({...h,answer:h.answer==='left'?q.verification.a:h.answer==='right'?q.verification.b:h.answer}))};delete q.choices;}
-      if(!allowChoice&&q.choices)continue;
-      const id=uuid();try{await run('INSERT INTO platform_questions(id,student_id,date,skill,template_id,level,question_hash,q,source,review_id,assignment_id,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',id,studentId,today(),skill,templateId,level,hash,JSON.stringify(q),selection.source,selection.reviewId??null,selection.assignmentId??null,iso());}catch(error){if(/UNIQUE|constraint/i.test(error.message)){served.add(hash);continue;}throw error;}
-      return{question:{...publicQuestion(q),name:SKILLS[q.skill],offerExample:Boolean(stats?.offerExample),id,level,source:selection.source,...(['learn','library'].includes(selection.source)?{hint:q.hint}:{})},summary:await summary(studentId,c)};
+      if(!story&&q.choices&&(parseNumber(q.answer)||/^\(\s*-?\d+\s*,\s*-?\d+\s*\)$/.test(q.answer)||(['E-DIST','E-FACTOR','E-LIKE'].includes(skill)&&linearExpression(q.answer)))){q={...q};delete q.choices;}
+      if(!story&&q.choices&&skill==='F-COMP'&&['left','right','equal'].includes(q.answer)){const answer=q.answer==='equal'?'equal':q.answer==='left'?q.verification.a:q.verification.b;q={...q,answer,prompt:q.prompt+'<p>Type the greater fraction, or equal.</p>',plainPrompt:q.plainPrompt+' Type the greater fraction, or equal.',hints:q.hints.map(h=>({...h,answer:h.answer==='left'?q.verification.a:h.answer==='right'?q.verification.b:h.answer}))};delete q.choices;}
+      if(q.choices){const recent=c.a.attempts.slice(-4);if(recent.length<4||recent.some(x=>JSON.parse(x.params)?.choices))continue;}
+      q={...q,setPosition:slot%20+1,setNumber:Math.floor(slot/20)+1,stage:story?'story':'warmup',answerInstructions:q.answerUnit?`Include ${q.answerChoice?'the option and ':''}the amount in ${q.answerUnit}.`:q.choices?'Choose the answer that fits.':'This warm-up has no measurement unit. Give the number or expression requested.'};
+      const id=uuid();
+      try{await run('INSERT INTO platform_questions(id,student_id,date,skill,template_id,level,question_hash,q,source,review_id,assignment_id,created_at,slot_index,scenario_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',id,studentId,date,skill,templateId,level,hash,JSON.stringify(q),selection.source,selection.reviewId??null,selection.assignmentId??null,iso(),slot,story?q.scenarioId:null);}
+      catch(error){if(/UNIQUE|constraint/i.test(error.message))return question(studentId,b,retry+1);throw error;}
+      return{question:visibleQuestion({id,q:JSON.stringify(q),level,source:selection.source},c),summary:await summary(studentId,c)};
     }
     fail(503,'This skill needs more checked questions. Try another skill.');
   }
@@ -133,14 +178,19 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     const row=await one('SELECT * FROM platform_questions WHERE id=? AND student_id=?',b.questionId,studentId);if(!row)fail(404,'That question was not found.');
     const existing=await one('SELECT * FROM platform_attempts WHERE question_id=? AND student_id=?',row.id,studentId);
     if(existing)return{...JSON.parse(existing.result),summary:await summary(studentId),pointsAwarded:0};
+    if(row.slot_index==null)fail(409,'This question belongs to an earlier practice version. Open a fresh question to continue.');
+    if(row.date!==today())fail(409,'A new practice day has begun. Open a fresh question for today.');
+    const answeredToday=Number((await one('SELECT COUNT(*) AS n FROM platform_attempts WHERE student_id=? AND date=?',studentId,today())).n);
+    if(row.slot_index!=null&&Math.floor(row.slot_index/20)>Math.floor(answeredToday/20))fail(409,'Finish the questions in your current set first.');
     const q=JSON.parse(row.q),grade=platformGrade(q,b.answer);
     if(grade.formOnly)return{correct:false,formOnly:true,hint:grade.hint,summary:await summary(studentId)};
     const submitted=q.choices?strip(q.choices[Number(b.answer.replace('option-',''))]?.label??b.answer):b.answer;
-    const match=q.hints.find(h=>String(h.answer).trim()===String(q.choices?q.choices[Number(b.answer.replace('option-',''))]?.value:b.answer).trim());
+    const numericalInput=q.answerUnit?parseUnitAnswer(q,b.answer).value:b.answer;
+    const match=q.hints.find(h=>String(h.answer).trim()===String(q.choices?q.choices[Number(b.answer.replace('option-',''))]?.value:numericalInput).trim());
     const result={correct:grade.correct,formOnly:false,answer:readableAnswer(q),rightAnswer:readableAnswer(q),submittedAnswer:submitted,hint:grade.correct?'':grade.hint,solution:q.solution,reason:strip(q.solution.at(-1)??`The answer is ${readableAnswer(q)}.`),mistakeLabel:match?`${q.skill}:${q.hints.indexOf(match)}`:null};
     const date=today(),time=iso(),p=await program(studentId),seconds=Math.max(0,Math.min(3600000,Number(b.elapsedMs)||0))/1000,id=`${studentId}:${b.requestId}`;
     const legacyBonus=(await all("SELECT amount,created_at FROM practice_ledger WHERE student_id=? AND kind='bonus' AND id NOT LIKE 'platform:bonus:%'",studentId)).filter(l=>pacificDate(l.created_at)===date).reduce((sum,l)=>sum+l.amount,0);
-    const statements=[st('INSERT OR IGNORE INTO platform_attempts(id,question_id,student_id,date,skill,template_id,level,question_hash,question_text,params,given_answer,correct_answer,is_correct,mistake_label,seconds,source,created_at,result) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',id,row.id,studentId,date,row.skill,row.template_id,row.level,row.question_hash,q.plainPrompt,JSON.stringify({numbers:q.numbers,choices:Boolean(q.choices),seed:q.seed}),submitted,result.rightAnswer,grade.correct?1:0,result.mistakeLabel,seconds,row.source,time,JSON.stringify(result)),st("WITH RECURSIVE thresholds(n,ordinal) AS (SELECT ?,1 UNION ALL SELECT n+?,ordinal+1 FROM thresholds WHERE n+?<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?)) INSERT OR IGNORE INTO practice_ledger(id,student_id,amount,kind,note,run_id,created_at) SELECT 'platform:bonus:'||?||':'||?||':'||n,?,1,'bonus','Answered '||n||' questions',?,? FROM thresholds WHERE n<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?) AND ordinal>? AND EXISTS(SELECT 1 FROM platform_attempts WHERE id=? AND question_id=?)",p.dailyTarget+p.bonusFirst,p.bonusStep,p.bonusStep,studentId,date,studentId,date,studentId,row.id,time,studentId,date,legacyBonus,id,row.id)];
+    const statements=[st('INSERT OR IGNORE INTO platform_attempts(id,question_id,student_id,date,skill,template_id,level,question_hash,question_text,params,given_answer,correct_answer,is_correct,mistake_label,seconds,source,created_at,result) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',id,row.id,studentId,date,row.skill,row.template_id,row.level,row.question_hash,q.plainPrompt,JSON.stringify({numbers:q.numbers,choices:Boolean(q.choices),seed:q.seed,story:Boolean(q.story),scenarioId:q.scenarioId??null,storyShape:q.storyShape??null,slotIndex:row.slot_index??null}),submitted,result.rightAnswer,grade.correct?1:0,result.mistakeLabel,seconds,row.source,time,JSON.stringify(result)),st("WITH RECURSIVE thresholds(n,ordinal) AS (SELECT ?,1 UNION ALL SELECT n+?,ordinal+1 FROM thresholds WHERE n+?<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?)) INSERT OR IGNORE INTO practice_ledger(id,student_id,amount,kind,note,run_id,created_at) SELECT 'platform:bonus:'||?||':'||?||':'||n,?,1,'bonus','Answered '||n||' questions',?,? FROM thresholds WHERE n<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?) AND ordinal>? AND EXISTS(SELECT 1 FROM platform_attempts WHERE id=? AND question_id=?)",p.dailyTarget+p.bonusFirst,p.bonusStep,p.bonusStep,studentId,date,studentId,date,studentId,row.id,time,studentId,date,legacyBonus,id,row.id)];
     if(row.review_id){
       const r=await one('SELECT * FROM platform_review_queue WHERE id=? AND student_id=?',row.review_id,studentId);
       if(r){const nextStage=grade.correct?(r.stage===1?3:r.stage===3?7:7):1,clear=grade.correct&&r.stage===7;
@@ -161,8 +211,9 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     if(route==='progress'&&method==='GET'){const a=await analytics(id);return json({...a,attempts:undefined,ledger:undefined,weeks:await weeks(id,a),checks:await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',id)});}
     if(route==='review'&&method==='GET'){const due=await all('SELECT id,skill,stage,due_date AS dueDate FROM platform_review_queue WHERE student_id=? AND cleared_at IS NULL AND due_date<=? ORDER BY due_date,id',id,today());return json({due:due.map(x=>({...x,name:SKILLS[x.skill]})),count:due.length});}
     if(route==='question'&&method==='POST')return json(await question(id,await body(request)));
+    if(route==='help'&&method==='POST')return json(await help(id,await body(request)));
     if(route==='answer'&&method==='POST')return json(await answer(id,await body(request)));
     return null;
   }
-  return{handle,analytics,program,weeks,generateSample,summary,question,answer};
+  return{handle,analytics,program,weeks,generateSample,summary,question,answer,help,ownedQuestion};
 }

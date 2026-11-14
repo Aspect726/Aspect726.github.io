@@ -2,7 +2,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { generateQuestion, allSkills } from '../server/questions.mjs';
+import { generateQuestion, allSkills, decodeStorySeed } from '../server/questions.mjs';
 import { geometrySkills } from '../server/generators/geometry.mjs';
 import { statisticsSkills } from '../server/generators/statistics.mjs';
 
@@ -42,13 +42,18 @@ export function checkFrames(data,{perTemplate=500}={}) {
  return report;
 }
 export function checkPoolFrames(data,pool) {
- const paper=loadPaperFrames(data),collisions=new Set();let checked=0;
+ const paper=loadPaperFrames(data),collisions=new Set(),storyCollisions=new Set();let checked=0,storyChecked=0;
  if(!pool?.skills)throw new Error('A checked seed pool is required.');
  for(const [skill,levels] of Object.entries(pool.skills))for(const [level,seeds] of Object.entries(levels))for(const seed of seeds) {
   const q=generateQuestion(skill,seed,{difficulty:Number(level)});checked++;
   if(paper.frames.has(paperFrame(q.prompt??q.plainPrompt)))collisions.add(`${skill}:${q.shape}`);
  }
- return {poolQuestionsChecked:checked,poolMatchingTemplates:[...collisions]};
+ for(const [skill,levels] of Object.entries(pool.stories??{}))for(const [level,entries] of Object.entries(levels))for(const entry of entries){
+  const decoded=decodeStorySeed(skill,level,entry,pool);
+  const q=generateQuestion(skill,decoded.seed,{mode:'story',difficulty:Number(level),scenarioId:decoded.scenarioId,storyShape:decoded.storyShape});storyChecked++;
+  if(paper.frames.has(paperFrame(q.prompt??q.plainPrompt)))storyCollisions.add(`${skill}:${q.scenarioId}:${q.storyShape}`);
+ }
+ return {poolQuestionsChecked:checked,storyPoolQuestionsChecked:storyChecked,poolMatchingTemplates:[...collisions],storyPoolMatchingTemplates:[...storyCollisions]};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
  const path=process.env.PAPER_QUESTIONS_PATH;if(!path)throw new Error('Set PAPER_QUESTIONS_PATH to the private paper and slide JSON.');
@@ -67,5 +72,5 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
  }
  console.log(JSON.stringify(report,null,2));
  if(process.env.FRAME_REPORT_PATH)await writeFile(process.env.FRAME_REPORT_PATH,JSON.stringify(report,null,2)+'\n',{mode:0o600});
- if(report.matchingTemplates||report.poolMatchingTemplates?.length)process.exitCode=1;
+ if(report.matchingTemplates||report.poolMatchingTemplates?.length||report.storyPoolMatchingTemplates?.length)process.exitCode=1;
 }

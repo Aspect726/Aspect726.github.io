@@ -1,6 +1,8 @@
 import { createPlatform } from './platform.mjs';
 import { createManagement } from './management.mjs';
 import { createLearning } from './learning.mjs';
+import { createTutor } from './ai-tutor.mjs';
+import { createTutorHistory } from './tutor-history.mjs';
 import { hash, compare } from 'bcryptjs';
 import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity } from './questions.mjs';
 import { buildSlots, dayInfo, pacificDate, SKILLS } from './plan.mjs';
@@ -26,10 +28,12 @@ const plainLabel = label => String(label).replace(/<math\b[^>]*aria-label="([^"]
 const readableAnswer = (q, answer) => q.choices && /^option-\d+$/.test(answer) ? plainLabel(q.choices[Number(answer.slice(7))]?.label ?? answer) : answer;
 const rightAnswer = q => q.choices ? plainLabel(q.choices.find((_, i) => gradeQuestion(q, `option-${i}`).correct)?.label ?? q.answer) : String(q.answer);
 
-export function createApp({ db, assets = {}, clock = () => new Date(), production = false, questionPool = null, backupStore = null, logger = console }) {
+export function createApp({ db, assets = {}, clock = () => new Date(), production = false, questionPool = null, backupStore = null, logger = console, ai = {} }) {
   const platform = createPlatform({db, clock, production, questionPool});
   const management = createManagement({db, clock, production, questionPool, platform});
   const learning = createLearning({db, clock, production, questionPool});
+  const tutorHistory = createTutorHistory({db, platform, clock});
+  const tutor = createTutor({db, platform, history:tutorHistory, clock, ai});
   const now = () => new Date(clock());
   const iso = () => now().toISOString();
   const todayDate = () => pacificDate(now());
@@ -240,7 +244,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     const tables = ['users', 'settings', 'runs', 'questions', 'attempts', 'ledger', 'prizes', 'requests'];
     const data = { version: 2, createdAt: iso(), tables: {} };
     for (const table of tables) data.tables[`practice_${table}`] = await all(`SELECT * FROM practice_${table}`);
-    for (const table of ['platform_program','platform_questions','platform_attempts','platform_review_queue','platform_lessons','platform_examples','platform_daily_rules','platform_assignments','platform_weekly_checks','platform_teacher_notes','platform_flags','platform_prize_notes']) data.tables[table] = await all(`SELECT * FROM ${table}`);
+    for (const table of ['platform_program','platform_questions','platform_attempts','platform_review_queue','platform_lessons','platform_examples','platform_daily_rules','platform_assignments','platform_weekly_checks','platform_teacher_notes','platform_flags','platform_prize_notes','platform_ai_settings','platform_tutor_events','platform_tutor_conversations']) data.tables[table] = await all(`SELECT * FROM ${table}`);
     const date = todayDate();
     if (backupStore) await backupStore.put(`practice-backups/${date}.json`, JSON.stringify(data), { httpMetadata: { contentType: 'application/json' } });
     await run('INSERT INTO practice_backups(date,data,created_at) VALUES(?,?,?) ON CONFLICT(date) DO UPDATE SET data = excluded.data,created_at = excluded.created_at', date, JSON.stringify(backupStore ? { storedExternally: true, key: `practice-backups/${date}.json` } : data), iso());
@@ -311,7 +315,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     if (path.startsWith('/api/v2/')) {
       if (path.startsWith('/api/v2/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');
       if (path.startsWith('/api/v2/student/') && user.role !== 'student') fail(403, 'Use a student account for learning.');
-      for (const handler of [platform, management, learning]) { const response = await handler.handle(request, user); if (response) return response; }
+      for (const handler of [tutorHistory, tutor, platform, management, learning]) { const response = await handler.handle(request, user); if (response) return response; }
       return json({error:'Not found.'},404);
     }
     if (path.startsWith('/api/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');

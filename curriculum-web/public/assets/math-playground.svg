@@ -1,1 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="340" viewBox="0 0 320 340" fill="none" ><title>Geometry, graphs and patterns to explore</title><g opacity=".32" stroke="#B4C7E8"><path d="M0 35h320M0 75h320M0 115h320M0 155h320M0 195h320M0 235h320M0 275h320M0 315h320M35 0v340M75 0v340M115 0v340M155 0v340M195 0v340M235 0v340M275 0v340M315 0v340"/></g><circle cx="223" cy="114" r="68" stroke="#6583BA" stroke-width="2"/><circle cx="223" cy="114" r="44" stroke="#6583BA" stroke-width="1.5" stroke-dasharray="4 5"/><path d="m223 46 59 102H164Z" fill="#597793" fill-opacity=".13" stroke="#4A6CA6" stroke-width="2"/><circle cx="223" cy="114" r="4" fill="#D5A344"/><path d="m90 205 86 24-24 86-86-24Z" fill="#DFB865"/><path d="m90 205 62 110m24-86L66 291" stroke="#243B53" stroke-width="1.5"/><path d="m90 205 43 12-12 43-43-12Z" fill="#F1D89A"/><path d="M175 286c19-1 27-16 32-39s10-42 31-42 24 41 40 47 24-8 33-19" stroke="#BE6C50" stroke-width="3"/><circle cx="237" cy="205" r="5" fill="#BE6C50"/><path d="M68 112h49M92 87v50" stroke="#6984B0" stroke-width="2"/><path d="m65 58 13-4-4-13-13 4Z" fill="#BE6C50"/><circle cx="293" cy="307" r="13" stroke="#6984B0" stroke-width="2"/><path d="m150 165 6 6m0-6-6 6" stroke="#D5A344" stroke-width="2"/><text x="201" y="179" fill="#456390" font-size="17" font-family="Georgia,serif" font-style="italic">a² + b²</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="360" viewBox="0 0 400 360" fill="none">
+<title>Graphs, fractions and geometry: a world of ideas</title>
+<style>@keyframes draw{from{stroke-dashoffset:180}to{stroke-dashoffset:0}}@keyframes arrive{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}.curve{stroke-dasharray:180;animation:draw 1.5s ease-out both}.idea{animation:arrive .7s ease-out both}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<circle cx="198" cy="182" r="148" fill="#E5DDFF"/>
+<path d="M33 219c-31-80 25-174 101-184m186 18c60 26 85 97 67 144M75 321c81 43 181 29 231-12" stroke="#C3B3ED" stroke-width="2" stroke-dasharray="4 8" stroke-linecap="round"/>
+<g transform="rotate(-7 117 112)">
+<rect x="20" y="30" width="186" height="179" rx="20" fill="#D5DEFA"/>
+<rect x="20" y="24" width="186" height="179" rx="20" fill="white" stroke="#BDCBEF" stroke-width="2"/>
+<g stroke="#E8ECFA"><path d="M52 63h129M52 93h129M52 123h129M52 153h129M82 52v124M112 52v124M142 52v124M172 52v124"/></g>
+<path d="M50 54v108h132" stroke="#7D8DAF" stroke-width="2" stroke-linecap="round"/>
+<path class="curve" d="m50 162 102-102" stroke="#657AE0" stroke-width="5" stroke-linecap="round"/>
+<circle cx="112" cy="100" r="6" fill="#F7C64D" stroke="white" stroke-width="3"/>
+<text x="70" y="186" fill="#485DA5" font-family="Arial,sans-serif" font-weight="700" font-size="17">y = x</text><text x="183" y="165" fill="#7D8DAF" font-family="Arial,sans-serif" font-size="12">x</text>
+</g>
+<g class="idea">
+<g transform="rotate(8 292 155)">
+<rect x="206" y="70" width="170" height="182" rx="20" fill="#E1CEF7"/>
+<rect x="206" y="64" width="170" height="182" rx="20" fill="#FFF" stroke="#CEBAEB" stroke-width="2"/>
+<path d="M235 193V105l112 88Z" fill="#FFE2C6" stroke="#D9784F" stroke-width="3" stroke-linejoin="round"/>
+<path d="M235 180h13v13" stroke="#D9784F" stroke-width="2"/>
+<text x="214" y="154" fill="#A25139" font-family="Arial,sans-serif" font-size="12">3</text><text x="288" y="211" fill="#A25139" font-family="Arial,sans-serif" font-size="12">4</text><text x="301" y="139" fill="#A25139" font-family="Arial,sans-serif" font-size="12">5</text>
+<text x="244" y="231" fill="#8A58AE" font-family="Arial,sans-serif" font-weight="700" font-size="16">a² + b² = c²</text>
+</g>
+</g>
+<g transform="rotate(-5 165 280)">
+<rect x="56" y="229" width="208" height="107" rx="20" fill="#EBD89D"/>
+<rect x="56" y="224" width="208" height="107" rx="20" fill="#FFFAE5" stroke="#E6CB7C" stroke-width="2"/>
+<circle cx="108" cy="277" r="33" fill="white" stroke="#DEC174" stroke-width="2"/>
+<path d="M108 244a33 33 0 0 1 33 33h-33Z" fill="#F5BF40"/>
+<path d="M108 244v66m-33-33h66" stroke="#C6A659" stroke-width="1.5"/>
+<text x="159" y="275" fill="#795F24" font-family="Arial,sans-serif" font-size="26" font-weight="700">¼</text>
+<text x="151" y="303" fill="#8C7339" font-family="Arial,sans-serif" font-size="11">one equal part</text>
+</g>
+<g stroke-linecap="round"><path d="M327 287v23m-11-11h23" stroke="#9975D0" stroke-width="4"/><path d="m32 262-5 5m0-5 5 5" stroke="#D57D60" stroke-width="3"/><path d="M224 21v18m-9-9h18" stroke="#E6B443" stroke-width="3"/></g>
+<path d="m350 21 4 10 11 3-11 4-4 10-4-10-10-4 10-3Z" fill="#E5AD34"/><circle cx="24" cy="106" r="5" fill="#9472CC"/><circle cx="301" cy="335" r="5" fill="#E59870"/>
+</svg>

@@ -1,6 +1,9 @@
 # Practice rebuild plan
 
-Written before implementation, 6 November 2026 (Pacific).
+Historical plan written before implementation, 6 November 2026 (Pacific).
+Current behavior and the subsequent teacher/student, story-question and AI
+updates are documented in [DECISIONS.md](DECISIONS.md) and
+[the current release](curriculum-web/RELEASE.md).
 
 Replace `curriculum-web` with a small, server-rendered shell and dependency-light
 JavaScript application. Preserve the starting commit on local `legacy-chatgpt-v1`

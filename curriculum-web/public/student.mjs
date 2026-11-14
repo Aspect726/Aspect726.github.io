@@ -9,6 +9,9 @@ const levelClass = value => String(value || 'not-started').toLowerCase().replace
 const addDays = (date, count) => new Date(Date.parse(`${date}T12:00:00Z`) + count * 86400000).toISOString().slice(0, 10);
 const list = value => Array.isArray(value) ? value : [];
 const eId = value => encodeURIComponent(value);
+// Generated solutions may carry their own numbering; the ordered list supplies it.
+const stepMarkup = (ctx, step) => ctx.mathMarkup(String(step ?? '').replace(/^\d+[.)]\s+/, ''), true);
+
 const qSkill = value => typeof value === 'string' ? value : value?.skill || value?.id;
 const nav = (href, label, style = 'button secondary') => `<a class="${style}" data-nav href="${href}">${label}</a>`;
 const mathMotif = kind => kind === 'path'
@@ -82,7 +85,7 @@ async function library(ctx, token) {
   const data = await ctx.api('/v2/student/library');
   if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
   const skills = list(data.skills), weeks = [...new Set(skills.map(s => s.week))].sort((a, b) => a - b);
-  ctx.shell(`${heading(ctx, 'The mathematics library', 'A place to look closely: definitions, visual models, and worked examples for every skill.', 'Reference shelf', 'formula')}<div class="card library-search"><label class="field" for="skill-search">Search skills and rules<input type="search" id="skill-search" autocomplete="off" placeholder="Try fractions, area, or mean"></label><p id="search-count" class="muted" aria-live="polite">${skills.length} skills</p></div><div id="library-skills" class="edu-library-shelf">${weeks.map(week => `<section class="library-week"><header class="edu-shelf-label"><p class="eyebrow">Chapter ${String(week).padStart(2, '0')}</p><h2>Week ${number(week)} · Lesson notes</h2></header><div class="grid-two">${skills.filter(s => s.week === week).map(skill => `<article class="card library-skill edu-reference-page" data-search="${ctx.escape(`${skill.name} ${skill.rule} ${skill.idea}`.toLowerCase())}"><h3>${ctx.escape(skill.name)}</h3><p class="edu-reference-label">The rule</p><p class="library-rule">${ctx.mathMarkup(skill.rule)}</p><details data-reference="${ctx.escape(skill.id)}"><summary>Picture, example and common mistake</summary><div class="reference-example">${skill.model ? `<div class="lesson-model">${skill.model}</div>` : ''}${skill.example ? `${exampleHTML(ctx, skill.example)}<ol class="steps">${list(skill.example.steps || skill.example.solution).map(step => `<li>${ctx.mathMarkup(step, true)}</li>`).join('')}</ol>` : ''}${skill.trap ? `<p><strong>Common mistake:</strong> ${ctx.mathMarkup(skill.trap.text || skill.trap)}</p>` : ''}</div></details><div class="form-actions">${nav(`/s/learn/${eId(skill.id)}`, 'Learn')}${nav(`/s/practice?source=library&skill=${eId(skill.id)}&count=5`, 'Practice this skill')}</div></article>`).join('')}</div></section>`).join('')}</div><div class="grid-two reference-grid"><section class="card"><p class="eyebrow">Words worth knowing</p><h2>Vocabulary</h2><dl class="reference-list">${list(data.vocabulary).map(item => `<dt>${ctx.escape(item.term)}</dt><dd>${ctx.escape(item.definition)}<p class="muted">${ctx.mathMarkup(item.example)}</p></dd>`).join('')}</dl></section><section class="card"><p class="eyebrow">Keep these handy</p><h2>Formula sheet</h2><dl class="reference-list">${list(data.formulas).map(item => `<dt>${ctx.escape(item.name)}</dt><dd>${ctx.mathMarkup(item.formula)}${item.note ? `<p class="muted">${ctx.escape(item.note)}</p>` : ''}</dd>`).join('')}</dl></section></div>`, { title: 'Library' });
+  ctx.shell(`${heading(ctx, 'The mathematics library', 'A place to look closely: definitions, visual models, and worked examples for every skill.', 'Reference shelf', 'formula')}<div class="card library-search"><label class="field" for="skill-search">Search skills and rules<input type="search" id="skill-search" autocomplete="off" placeholder="Try fractions, area, or mean"></label><p id="search-count" class="muted" aria-live="polite">${skills.length} skills</p></div><div id="library-skills" class="edu-library-shelf">${weeks.map(week => `<section class="library-week"><header class="edu-shelf-label"><p class="eyebrow">Chapter ${String(week).padStart(2, '0')}</p><h2>Week ${number(week)} · Lesson notes</h2></header><div class="grid-two">${skills.filter(s => s.week === week).map(skill => `<article class="card library-skill edu-reference-page" data-search="${ctx.escape(`${skill.name} ${skill.rule} ${skill.idea}`.toLowerCase())}"><h3>${ctx.escape(skill.name)}</h3><p class="edu-reference-label">The rule</p><p class="library-rule">${ctx.mathMarkup(skill.rule)}</p><details data-reference="${ctx.escape(skill.id)}"><summary>Picture, example and common mistake</summary><div class="reference-example">${skill.model ? `<div class="lesson-model">${skill.model}</div>` : ''}${skill.example ? `${exampleHTML(ctx, skill.example)}<ol class="steps">${list(skill.example.steps || skill.example.solution).map(step => `<li>${stepMarkup(ctx, step)}</li>`).join('')}</ol>` : ''}${skill.trap ? `<p><strong>Common mistake:</strong> ${ctx.mathMarkup(skill.trap.text || skill.trap)}</p>` : ''}</div></details><div class="form-actions">${nav(`/s/learn/${eId(skill.id)}`, 'Learn')}${nav(`/s/practice?source=library&skill=${eId(skill.id)}&count=5`, 'Practice this skill')}</div></article>`).join('')}</div></section>`).join('')}</div><div class="grid-two reference-grid"><section class="card"><p class="eyebrow">Words worth knowing</p><h2>Vocabulary</h2><dl class="reference-list">${list(data.vocabulary).map(item => `<dt>${ctx.escape(item.term)}</dt><dd>${ctx.escape(item.definition)}<p class="muted">${ctx.mathMarkup(item.example)}</p></dd>`).join('')}</dl></section><section class="card"><p class="eyebrow">Keep these handy</p><h2>Formula sheet</h2><dl class="reference-list">${list(data.formulas).map(item => `<dt>${ctx.escape(item.name)}</dt><dd>${ctx.mathMarkup(item.formula)}${item.note ? `<p class="muted">${ctx.escape(item.note)}</p>` : ''}</dd>`).join('')}</dl></section></div>`, { title: 'Library' });
   document.querySelectorAll('[data-reference]').forEach(details => {
     let loaded = false, pending = false;
     details.addEventListener('toggle', async () => {
@@ -93,7 +96,7 @@ async function library(ctx, token) {
         const lesson = await ctx.api(`/v2/student/lesson?skill=${eId(details.dataset.reference)}`);
         if (!details.isConnected || token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
         const example = lesson.examples?.[0];
-        content.innerHTML = `${lesson.model ? `<div class="lesson-model">${lesson.model}</div>` : ''}${example ? `${exampleHTML(ctx, example)}<ol class="steps">${list(example.steps || example.solution).map(step => `<li>${ctx.mathMarkup(step, true)}</li>`).join('')}</ol>` : ''}<p><strong>Common mistake:</strong> ${ctx.mathMarkup(lesson.trap?.text || '')}</p>`;
+        content.innerHTML = `${lesson.model ? `<div class="lesson-model">${lesson.model}</div>` : ''}${example ? `${exampleHTML(ctx, example)}<ol class="steps">${list(example.steps || example.solution).map(step => `<li>${stepMarkup(ctx, step)}</li>`).join('')}</ol>` : ''}<p><strong>Common mistake:</strong> ${ctx.mathMarkup(lesson.trap?.text || '')}</p>`;
         loaded = true;
       } catch (error) { if (details.isConnected) content.innerHTML = `<p role="alert">${ctx.escape(error.message)} Close and reopen to try again.</p>`; }
       finally { pending = false; }
@@ -115,7 +118,7 @@ async function lesson(ctx, token, skill) {
   document.querySelectorAll('[data-next-step]').forEach(button => {
     const index = Number(button.dataset.nextStep), steps = list(examples[index].steps || examples[index].solution); let visible = 0;
     button.addEventListener('click', () => {
-      if (visible < steps.length) { const li = document.createElement('li'); li.innerHTML = ctx.mathMarkup(steps[visible++], true); document.querySelector(`#example-steps-${index}`).append(li); }
+      if (visible < steps.length) { const li = document.createElement('li'); li.innerHTML = stepMarkup(ctx, steps[visible++]); document.querySelector(`#example-steps-${index}`).append(li); }
       if (visible >= steps.length) { button.disabled = true; button.textContent = 'Example complete'; }
     });
   });
@@ -166,7 +169,12 @@ async function runPractice(ctx, token, options = {}) {
       if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
       summary = response.summary || summary; cacheSummary(ctx, summary);
       if (!response.question) return finish();
-      question = response.question; requestId = crypto.randomUUID(); started = Date.now(); lastFeedback = null;
+      question = response.question;
+      if (response.resumedPending && (question.source !== local.source || (local.skill && question.skill !== local.skill))) {
+        local.source = 'practice'; local.skill = undefined; local.back = '/s/today';
+        ctx.tell('Let’s finish this saved question before opening another.');
+      }
+      requestId = crypto.randomUUID(); started = Date.now(); lastFeedback = null;
       draw();
     } catch (error) {
       if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
@@ -175,28 +183,109 @@ async function runPractice(ctx, token, options = {}) {
     } finally { busy = false; }
   }
   function draw() {
-    ctx.shell(`<div class="question-stage">${focusProgress(ctx, summary, local)}<article class="question-surface card">${question.offerExample ? `<aside class="example-offer"><p>Review a worked example before trying this question.</p>${nav(`/s/learn/${eId(question.skill)}`, 'Review the example')}</aside>` : ''}<div class="question-meta"><p class="eyebrow">${ctx.escape(question.name || question.skill)}</p><span class="badge">Level ${number(question.level || 1)}</span></div><div class="question-prompt">${ctx.mathMarkup(question.prompt || question.plainPrompt, true)}</div>${question.svg ? `<div class="question-diagram">${question.svg}</div>` : ''}<form id="practice-answer-form">${list(question.choices).length ? `<fieldset class="question-choices"><legend class="sr-only">Choose your answer</legend>${question.choices.map((choice, index) => `<label class="choice"><input type="radio" name="answer" value="${ctx.escape(choice.value ?? `option-${index}`)}" required><span>${ctx.mathMarkup(choice.label, true)}</span></label>`).join('')}</fieldset>` : '<label class="field answer-field" for="practice-answer">Your answer<input id="practice-answer" name="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="100" required aria-describedby="answer-help"></label><p id="answer-help" class="small muted">You can use decimals, fractions such as 3/4, mixed numbers such as 2 1/3, or coordinate pairs.</p>'}${question.hint && ['learn', 'library'].includes(local.source) ? `<details class="question-hint"><summary>One hint</summary><p>${ctx.mathMarkup(question.hint)}</p></details>` : ''}${errorHTML}<button class="button" type="submit">Enter answer</button></form><div id="practice-feedback" aria-live="polite"></div></article></div>`, { title: local.source === 'review' ? 'Review' : 'Practice', focus: true });
+    const answerChoices = question.answerChoices || question.choiceLabels || null;
+    const optionEntries = answerChoices && !Array.isArray(answerChoices) ? Object.entries(answerChoices) : list(answerChoices).map(x => [x.value, x.label]);
+    const shapeNames = {missing:'Find the missing amount',compare:'Compare two options',backward:'Work backwards',mistake:'Find and fix the mistake','what-if':'Explore a what if'};
+    const answerField = list(question.choices).length ? `<fieldset class="question-choices"><legend>Choose your answer</legend>${question.choices.map((choice,index)=>`<label class="choice"><input type="radio" name="answer" value="${ctx.escape(choice.value ?? `option-${index}`)}" required><span>${ctx.mathMarkup(choice.label,true)}</span></label>`).join('')}</fieldset>` : `${optionEntries.length ? `<fieldset class="question-choices story-options"><legend>Which option?</legend>${optionEntries.map(([value,label])=>`<label class="choice"><input type="radio" name="answerChoice" value="${ctx.escape(value)}" required><span><strong>${ctx.escape(value)}</strong> · ${ctx.escape(label)}</span></label>`).join('')}</fieldset>` : ''}<label class="field answer-field" for="practice-answer">${optionEntries.length?'The difference, with units':question.answerUnit?'Your answer, with units':'Your answer'}<input id="practice-answer" name="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="100" required aria-describedby="answer-help" ${question.answerUnit?`placeholder="For example: 12 ${ctx.escape(question.answerUnit)}"`:''}></label><p id="answer-help" class="small question-unit">${question.answerUnit?`Include <strong>${ctx.escape(question.answerUnit)}</strong> with your number. You can use a decimal or a fraction.`:'You can use decimals, fractions such as 3/4, mixed numbers or coordinate pairs. This question does not need a measurement unit.'}</p>`;
+    ctx.shell(`<div class="question-stage">${focusProgress(ctx,summary,local)}<article class="question-surface card ${question.story?'story-question':''}">${question.offerExample?`<aside class="example-offer"><p>A worked example can help you find your first step.</p>${nav(`/s/learn/${eId(question.skill)}`,'Review the example')}</aside>`:''}<div class="question-meta"><p class="eyebrow">${ctx.escape(question.name||question.skill)}</p><span class="badge">Level ${number(question.level||1)}</span></div><div class="practice-stage ${question.story?'is-story':'is-warmup'}"><span>${question.story?'Maths in the real world':'Quick warm-up'}</span><span>${question.story?`${number(question.stepCount)} connected steps`:'Build your confidence'}</span></div>${question.story?`<p class="story-context">${ctx.escape(shapeNames[question.storyShape]||'Think it through')}</p>`:''}<div class="question-prompt">${ctx.mathMarkup(question.prompt||question.plainPrompt,true)}</div>${question.svg?`<div class="question-diagram">${question.svg}</div>`:''}<form id="practice-answer-form">${answerField}${errorHTML}<button class="button" type="submit">Check my answer</button></form><div id="practice-feedback" aria-live="polite"></div><details class="question-help" id="question-help"><summary><span>Need a hand?</span><small>A hint, worked steps, or a question about one part</small></summary><div class="help-content" id="help-content"><p role="status">Opening your help…</p></div></details></article></div>`,{title:local.source==='review'?'Review':'Practice',focus:true});
     const form = document.querySelector('#practice-answer-form');
-    const input = form.querySelector('[name=answer]'); input?.focus({ preventScroll: true });
-    form.addEventListener('submit', async event => {
-      event.preventDefault(); if (busy || lastFeedback || token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
-      const answer = new FormData(form).get('answer'); if (!String(answer || '').trim()) return;
-      busy = true; const button = form.querySelector('[type=submit]'); button.disabled = true;
-      const errorElement = form.querySelector('.form-error'); errorElement.hidden = true;
-      try {
-        const result = await ctx.api('/v2/student/answer', { questionId: question.id, answer, elapsedMs: Math.max(0, Date.now() - started), requestId });
-        if (token !== revision || ctx.state.user?.role !== 'student' || !ctx.isCurrent()) return;
-        if (result.formOnly) { errorElement.textContent = result.hint || 'That is the right value. Write it in simplest form.'; errorElement.hidden = false; requestId = crypto.randomUUID(); input?.focus(); return; }
-        lastFeedback = result; summary = result.summary || summary; cacheSummary(ctx, summary); local.finished++;
-        const progressElement = document.querySelector('.focus-progress'); if (progressElement) progressElement.outerHTML = focusProgress(ctx, summary, local);
-        results.push({ skill: question.skill, name: question.name || question.skill, correct: result.correct });
-        form.querySelectorAll('input,button').forEach(element => { element.disabled = true; });
-        const feedback = document.querySelector('#practice-feedback');
-        feedback.innerHTML = `<section class="feedback ${result.correct ? 'correct' : 'miss'}"><h2>${result.correct ? `${iconCheck} Correct` : 'Not quite'}</h2>${result.correct ? `<p>${ctx.mathMarkup(result.reason || result.solution?.[0] || 'Your answer fits the question.', true)}</p>` : `<div class="answer-comparison"><p>You wrote <strong>${ctx.mathMarkup(result.submittedAnswer ?? answer)}</strong></p><p>The answer is <strong>${ctx.mathMarkup(result.rightAnswer ?? result.answer)}</strong></p></div><p>${ctx.mathMarkup(result.hint || result.reason || result.solution?.[0] || 'Compare your first step with the worked example.', true)}</p><details><summary>See how</summary><ol class="steps">${list(result.solution).map(step => `<li>${ctx.mathMarkup(step, true)}</li>`).join('')}</ol></details>`}${result.pointsAwarded ? `<p class="point-earned">${number(result.pointsAwarded)} ${result.pointsAwarded === 1 ? 'point' : 'points'} earned. Your balance is ${number(summary.points)}.</p>` : ''}<button class="button" id="next-question">${local.finished >= goal ? 'Finish set' : 'Next question'}</button></section>`;
-        const nextButton = document.querySelector('#next-question'); nextButton.addEventListener('click', next); nextButton.focus({ preventScroll: true });
-        if (result.correct) advanceTimer = setTimeout(() => { if (nextButton.isConnected && token === revision) next(); }, 1500);
-      } catch (error) { if (token === revision && errorElement.isConnected) { errorElement.textContent = error.message; errorElement.hidden = false; } }
-      finally { busy = false; if (!lastFeedback && button.isConnected) button.disabled = false; }
+    const input = form.querySelector('[name=answer]'); input?.focus({preventScroll:true});
+    const helpDetails=document.querySelector('#question-help'),helpContent=document.querySelector('#help-content');
+    const questionId=question.id;let helpLoaded=false,helpLoading=false,shownSteps=0;
+    const helpEvents=new Map();let tutorTurns=[],historyState='loading';
+    const stillHere=()=>questionId===question?.id&&token===revision&&ctx.state.user?.role==='student'&&ctx.isCurrent()&&helpContent.isConnected;
+    function recordHelp(kind,part=0){
+      if(!stillHere())return;
+      const key=`${kind}:${part}`;if(helpEvents.has(key))return;
+      const eventId=crypto.randomUUID();helpEvents.set(key,eventId);
+      // A logging outage must never hide help, consume an answer, or delay a save.
+      void Promise.resolve().then(()=>ctx.api('/v2/student/help-event',{questionId,kind,part,requestId:eventId})).catch(()=>{});
+    }
+    function showTutorHistory(incoming=[]){
+      if(!stillHere())return;
+      const byId=new Map(tutorTurns.map(turn=>[turn.id,turn]));
+      for(const turn of list(incoming))if(turn&&typeof turn==='object'&&typeof turn.id==='string'&&(!turn.questionId||turn.questionId===questionId))byId.set(turn.id,turn);
+      tutorTurns=[...byId.values()].sort((a,b)=>String(a.createdAt||'').localeCompare(String(b.createdAt||''))).slice(-10);
+      const history=helpContent.querySelector('#tutor-response'),statusLine=helpContent.querySelector('.tutor-history-status');
+      if(!history)return;
+      const labels={sound:'Your reasoning makes sense',needs_work:'One part to revisit',unclear:'Let’s make the thinking clearer'};
+      const existing=new Map([...history.children].map(element=>[element.dataset.turnId,element]));
+      for(const turn of tutorTurns){
+        let article=existing.get(turn.id);
+        if(!article){article=document.createElement('article');article.className='tutor-turn';article.dataset.turnId=turn.id;}
+        const part=Number(turn.part),about=Number.isInteger(part)&&part>0?`Step ${part}`:'The question';
+        article.innerHTML=`<div class="tutor-learner"><p class="eyebrow">${turn.mode==='check-reasoning'?'Your thinking':'Your question'} · ${about}</p><p>${ctx.escape(turn.studentMessage||'')}</p></div><p class="eyebrow">${turn.source==='ai'?'AI maths helper':'Worked help'}</p>${turn.assessment&&Object.hasOwn(labels,turn.assessment)?`<h4>${labels[turn.assessment]}</h4>`:''}<p>${ctx.escape(turn.tutorReply||'Try the worked steps above.')}</p>${turn.notice?`<p class="small">${ctx.escape(turn.notice)}</p>`:''}`;
+        history.append(article);existing.delete(turn.id);
+      }
+      for(const old of existing.values())old.remove();
+      history.hidden=!tutorTurns.length;
+      if(statusLine)statusLine.textContent=historyState==='loading'?'Loading earlier messages…':historyState==='unavailable'?'Earlier messages could not be loaded. Your worked help is still ready.':tutorTurns.length?'Your latest messages about this question.':'Your questions about this problem will appear here.';
+    }
+    function restoreTutorHistory(){
+      void Promise.resolve().then(()=>ctx.api(`/v2/student/tutor-history?questionId=${eId(questionId)}`)).then(result=>{
+        if(!stillHere())return;historyState='loaded';showTutorHistory(result.conversations);
+      }).catch(()=>{if(stillHere()){historyState='unavailable';showTutorHistory();}});
+    }
+    async function loadHelp(){
+      if(helpLoaded){if(helpDetails.open){recordHelp('hint');if(helpContent.querySelector('.help-answer')?.open)recordHelp('answer');}return;}
+      if(helpLoading||!helpDetails.open)return;
+      helpLoading=true;
+      try{
+        const [help,status]=await Promise.all([ctx.api('/v2/student/help',{questionId}),ctx.api('/v2/student/tutor-status').catch(()=>({available:false}))]);
+        if(!stillHere())return;
+        helpLoaded=true;
+        helpContent.innerHTML=`<section class="help-hint"><p class="eyebrow">Try this first</p><p>${ctx.mathMarkup(help.hint||'Write down what you know and what you need to find.',true)}</p></section><ol class="steps help-steps" id="help-steps" aria-live="polite"></ol><div class="help-actions"><button class="button secondary" type="button" id="reveal-help-step">Show the first step</button><details class="help-answer"><summary>Show the worked answer</summary><p>${ctx.mathMarkup(help.answer||'',true)}</p><ol class="steps">${list(help.steps).map(step=>`<li>${stepMarkup(ctx, step)}</li>`).join('')}</ol></details></div><section class="tutor-panel"><h3>Ask about this part</h3><p class="small">${status.available?'Your AI maths helper can explain a step or give feedback on your thinking.':'The worked help above is always here. Your AI maths helper is not available right now.'}</p><p class="small tutor-save-note">Your questions, helper replies and opened help are saved for learning. Your teacher can see them.</p><p class="small tutor-history-status" role="status">Loading earlier messages…</p><div class="tutor-conversation" id="tutor-response" role="log" aria-label="Your conversation about this question" aria-live="polite" hidden></div>${status.available?`<form id="tutor-form"><div class="tutor-controls"><label class="field" for="tutor-mode">I would like to<select name="mode" id="tutor-mode"><option value="explain">Ask a question</option><option value="check-reasoning">Check my thinking</option></select></label><label class="field" for="tutor-part">About<select name="part" id="tutor-part"><option value="0">The question</option>${list(help.steps).map((_,i)=>`<option value="${i+1}">Step ${i+1}</option>`).join('')}</select></label></div><label class="field" for="tutor-message">Your question or thinking<textarea id="tutor-message" name="message" maxlength="600" rows="3" required placeholder="Why do we divide in this step?"></textarea></label><p class="small muted">Keep it about the maths. There is no need to share personal information. Helper replies do not change your score; use the worked answer to check the maths.</p><button type="submit" class="button secondary">Ask my maths helper</button><p class="small tutor-status" aria-live="polite"></p></form>`:''}</section>`;
+        if(helpDetails.open)recordHelp('hint');
+        restoreTutorHistory();
+        const workedAnswer=helpContent.querySelector('.help-answer');
+        workedAnswer.addEventListener('toggle',()=>{if(workedAnswer.open&&helpDetails.open)recordHelp('answer');});
+        const reveal=helpContent.querySelector('#reveal-help-step');
+        if(!list(help.steps).length)reveal.hidden=true;
+        reveal.addEventListener('click',()=>{
+          if(!stillHere()||!helpDetails.open||shownSteps>=list(help.steps).length)return;
+          const li=document.createElement('li');li.innerHTML=`${stepMarkup(ctx, help.steps[shownSteps])}${status.available?` <button class="text-link ask-step" type="button" data-step="${shownSteps+1}">Ask about this step</button>`:''}`;
+          li.querySelector('[data-step]')?.addEventListener('click',event=>{helpContent.querySelector('#tutor-part').value=event.currentTarget.dataset.step;helpContent.querySelector('#tutor-message').focus();});
+          helpContent.querySelector('#help-steps').append(li);shownSteps++;recordHelp('step',shownSteps);
+          reveal.textContent=shownSteps>=help.steps.length?'All steps shown':'Show the next step';reveal.disabled=shownSteps>=help.steps.length;
+        });
+        const tutorForm=helpContent.querySelector('#tutor-form');
+        tutorForm?.addEventListener('submit',async event=>{
+          event.preventDefault();const button=tutorForm.querySelector('[type=submit]');if(button.disabled||!stillHere())return;
+          const values=new FormData(tutorForm),message=String(values.get('message')||'').trim();if(!message)return;
+          const mode=String(values.get('mode')),part=Number(values.get('part')),turnRequestId=crypto.randomUUID();
+          button.disabled=true;const statusLine=tutorForm.querySelector('.tutor-status');statusLine.textContent='Thinking about your question…';
+          try{
+            const result=await ctx.api('/v2/student/tutor',{questionId,message,mode,part,requestId:turnRequestId});
+            if(!stillHere())return;
+            showTutorHistory([{id:result.conversationId||turnRequestId,questionId,studentMessage:message,tutorReply:result.reply,mode,part,assessment:result.assessment,source:result.source,notice:result.notice,createdAt:result.createdAt||new Date().toISOString()}]);
+            if(tutorForm.elements.message.value.trim()===message)tutorForm.elements.message.value='';
+            statusLine.textContent='';
+          }catch(error){if(stillHere())statusLine.textContent=error.message||'Try the worked steps above while your helper reconnects.';}
+          finally{if(button.isConnected)button.disabled=false;}
+        });
+      }catch(error){if(stillHere()){helpContent.innerHTML=`<p role="alert">${ctx.escape(error.message)}</p><button class="button secondary" type="button" id="retry-help">Try help again</button>`;helpContent.querySelector('#retry-help').onclick=loadHelp;}}
+      finally{helpLoading=false;}
+    }
+    helpDetails.addEventListener('toggle',loadHelp);
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();if(busy||lastFeedback||token!==revision||ctx.state.user?.role!=='student'||!ctx.isCurrent())return;
+      const values=new FormData(form);let answer=String(values.get('answer')||'').trim();if(!answer)return;
+      if(optionEntries.length){const choice=String(values.get('answerChoice')||'');if(!choice)return;answer=`${choice}, ${answer}`;}
+      busy=true;const button=form.querySelector('[type=submit]');button.disabled=true;const errorElement=form.querySelector('.form-error');errorElement.hidden=true;
+      try{
+        const result=await ctx.api('/v2/student/answer',{questionId:question.id,answer,elapsedMs:Math.max(0,Date.now()-started),requestId});
+        if(token!==revision||ctx.state.user?.role!=='student'||!ctx.isCurrent())return;
+        if(result.formOnly){errorElement.textContent=result.hint||'Check the way your answer is written, including the units.';errorElement.hidden=false;requestId=crypto.randomUUID();input?.focus();return;}
+        lastFeedback=result;summary=result.summary||summary;cacheSummary(ctx,summary);local.finished++;
+        const progressElement=document.querySelector('.focus-progress');if(progressElement)progressElement.outerHTML=focusProgress(ctx,summary,local);
+        results.push({skill:question.skill,name:question.name||question.skill,correct:result.correct});
+        form.querySelectorAll('input,button,select').forEach(element=>{element.disabled=true;});
+        const feedback=document.querySelector('#practice-feedback');
+        feedback.innerHTML=`<section class="feedback ${result.correct?'correct':'miss'}"><h2>${result.correct?`${iconCheck} You’ve got it!`:'Not quite — let’s work it out'}</h2>${result.correct?`<p>${ctx.mathMarkup(result.reason||result.solution?.at(-1)||'Your answer fits the question.',true)}</p>`:`<div class="answer-comparison"><p>You wrote <strong>${ctx.mathMarkup(result.submittedAnswer??answer)}</strong></p><p>The answer is <strong>${ctx.mathMarkup(result.rightAnswer??result.answer)}</strong></p></div><p>${ctx.mathMarkup(result.hint||result.reason||'Compare your first step with the worked answer.',true)}</p>`}<details class="feedback-worked"><summary>See how</summary><ol class="steps">${list(result.solution).map(step=>`<li>${stepMarkup(ctx, step)}</li>`).join('')}</ol></details>${result.pointsAwarded?`<p class="point-earned">${number(result.pointsAwarded)} ${result.pointsAwarded===1?'point':'points'} earned. Your balance is ${number(summary.points)}.</p>`:''}<button class="button" id="next-question">${local.finished>=goal?'Finish set':'Next question'}</button></section>`;
+        const workedFeedback=feedback.querySelector('.feedback-worked');workedFeedback.addEventListener('toggle',()=>{if(workedFeedback.open)recordHelp('answer');});
+        const nextButton=document.querySelector('#next-question');nextButton.addEventListener('click',next);nextButton.focus({preventScroll:true});
+      }catch(error){if(token===revision&&errorElement.isConnected){errorElement.textContent=error.message;errorElement.hidden=false;}}
+      finally{busy=false;if(!lastFeedback&&button.isConnected)button.disabled=false;}
     });
   }
   await next();

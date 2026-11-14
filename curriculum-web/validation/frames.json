@@ -393,19 +393,25 @@
   "matchingTemplates": 0,
   "questionsChecked": 442500,
   "poolQuestionsChecked": 168960,
+  "storyPoolQuestionsChecked": 264000,
   "poolMatchingTemplates": [],
+  "storyPoolMatchingTemplates": [],
   "generatorFiles": {
-    "server/questions.mjs": "539f8d9bd7deb9b4cb8ee4a191b770a7ff48f7b68a483a6015b556f6e113838b",
+    "server/questions.mjs": "def52c5bcdba70e4e9e551731b0f4988608d5dd2b093953a597277e29dfd9f61",
     "server/math.mjs": "97ed6ab83668a4d14cee9239380deeea228e27a297e9f35a139e60a6b85d5197",
     "server/generators/common.mjs": "79082ce21b2f9fa42ecabfba80b3f86836c4e7131bb5435d2daa7d49d6a31af6",
     "server/generators/arithmetic.mjs": "eb9d0897a13acd81138cb053ae6985af0b9ba0402b997593c7f4626375e64ac1",
     "server/generators/geometry.mjs": "e5b3051ddaca96fbd62a99cc93986d758d7fe5de7a73cf4976355f51b24787aa",
     "server/generators/statistics.mjs": "86287692b3b71ef93f4dc29fc7fb2607d606a5cb290ac9236c08d767c644be55",
+    "server/generators/story-arithmetic.mjs": "9840a34f841ef302b336188ee03bc7904e9473dde310757e04269aa890480cad",
+    "server/generators/story-geometry.mjs": "76b8f436877341cb89a68cc47223089e0cc44391e7a84782e79607233b1d521e",
+    "server/generators/story-statistics.mjs": "748890d3d585466000372421aee0b4fc490b33874eb5b087c3540188611057cb",
+    "scripts/check-story-bank.mjs": "1214e4b508c40df13042a42ef85b6341e32f03bb005cf1d49fd548cccccd14c9",
+    "scripts/check-paper-frames.mjs": "aec6f00b9e2ea3e2930f5485d4c693b04077abe658987913404fa75c88eba228",
     "server/plan.mjs": "1fa6de92cd6eb9532b5f52bff8f09cacb6ec6166ff9911a92252ccb409cc2c28",
     "server/plan.json": "d427e110cac36346591fe1fcb654715a8909253a8acd3dea4ea1a214f74baeed",
     "server/overlap.mjs": "59794a7c7fdd25036517de88e0a34d46cdeabeb2e01b9ebd2f3cd03de49f4f59",
-    "scripts/check-overlap.mjs": "c6f2a110b15df0c03b7dfffa6f17b5256fbf63b8fd212954a493c063a1e2ecc8",
-    "scripts/check-paper-frames.mjs": "6c1f6fe38b0a208c0ca3f3a5a0ed693470a078725ad6e4f59d1915f3a181458a"
+    "scripts/check-overlap.mjs": "b88b20cd1f9ac9cb26d1d13d51e0f1813a62235178d9128af7613be5ec73cad7"
   },
-  "poolDigest": "e1e1eb6eed2dc9b02cef034f16ee18ee5d94d8ee7dae5f275defd65b5ba8dff1"
+  "poolDigest": "18e03781864a10bb97781535bbd06d36b2f5d35f5846631f000ce57c4688f3f2"
 }

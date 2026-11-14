@@ -1,15 +1,15 @@
 # Namecheap DNS cutover
 
-The Site is attached to `donteventry.me`; host and certificate validation are pending.
+The Site is attached to `donteventry.me`; domain routing and SSL were confirmed
+active by Sites on November 14, 2026. No DNS change is needed for this update.
 The user confirmed ChatGPT Sites hosting on 6 November 2026 (Pacific).
 The temporary GitHub Pages/separate-backend adaptation was cancelled. The app,
 accounts, progress, D1 database and private R2 backups stay together on Sites.
 These verification values supersede the earlier, removed domain attachment.
 
-In Namecheap **Domain List → Manage → Advanced DNS**, replace the existing apex
-(`@`) A records with the two below. Add the TXT records without changing unrelated
-mail, verification, or subdomain records. Remove old website apex AAAA records
-so IPv6 visitors do not reach the old host. Use Automatic TTL.
+The following records document the completed Namecheap cutover. Keep the current
+records, including unrelated mail and subdomain records. The ownership TXT
+value begins with the initial `o` in `openai-site-verification=`.
 
 | Type | Host | Value |
 |---|---|---|
@@ -23,8 +23,7 @@ lists custom nameservers instead of BasicDNS, make the records at that nameserve
 provider. Domain registration at Namecheap alone does not establish DNS hosting.
 
 The domain attachment ID is `appgdom_6aeed3f460248191a727097b1146e752` on Site
-`appgprj_6aed87007ef48191b00fa10ed75fe809`. Refresh its validation status after
-saving the records. Do not claim the cutover is active until the host reports it.
+`appgprj_6aed87007ef48191b00fa10ed75fe809`. Sites reports the domain and its SSL certificate active.
 
-The shared browser could not start, so these Namecheap edits have not been made
-from this workspace. The existing private Site URL remains available meanwhile.
+The user completed the Namecheap edits. The generated Sites URL also remains
+available: https://double-advanced-classroom.framedegret8.chatgpt.site/ .
