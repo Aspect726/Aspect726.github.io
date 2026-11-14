@@ -1,13 +1,30 @@
-# November 14 daily learning and curriculum revision
+# November 14 daily learning, catch-up and teacher update
 
 Students now begin with one clear daily task: 20 questions a day from Saturday,
 November 7, 2026, over the supplied 70-day plan. The main page shows actual
 answers today, remaining work, a Pacific-time due-date countdown and the
 teacher’s weekly note. Extra practice and Review are the two supporting choices;
 lessons, tools and detailed progress remain available behind secondary links.
-Daily mode stops at the goal. Extra answers count on their actual completion
-date and do not erase missed earlier goals. Teacher views show the same daily
-counts and all 70 scheduled dates, including unanswered days.
+Daily mode stops at the goal. A prominent backlog count appears across the
+student's pages and throughout teacher management. It separates earlier overdue
+work from today's remaining goal: with no answers on November 14, the count is
+160 questions behind (140 earlier, 20 today). Completing today's 20 leaves 140;
+five extra answers reduce it to 135. These values are calculated from dates and
+saved work, not hardcoded.
+
+Each date's first target answers satisfy that date; surplus answers pay down the
+oldest already-due deficits without prepaying future work. Actual dated answers
+and on-time streaks remain intact, while the calendar separately shows later
+catch-up credit. Five-question catch-up sessions follow the oldest unfinished
+lesson's introduced topics. Teacher views use the same canonical counts and
+show all 70 scheduled dates, including unanswered days.
+
+The teacher dashboard is centered on one student, with daily work, catch-up
+progress, accuracy, skills, website difficulty levels and the weekly note
+together. A dated progress update can be copied or downloaded for manual sharing.
+It includes overall and recent accuracy, focus, points and next steps, without
+raw answers or tutoring conversations. Account management remains in Settings.
+No email delivery or scheduled email automation is configured.
 
 ## Curriculum and question changes
 
@@ -40,11 +57,14 @@ controls are preserved; this release does not reset accounts, answers or points.
 ## Verification
 
 - Generator reports record 640,500 checks across 327 warm-up/template shapes.
-  The full suite passes 283 tests with zero failures or skips. The final minor
-  completion-screen formatting change additionally passes all 28 student/help
-  tests. Coverage includes 70 dated goals, Pacific midnight/DST, shifted weeks,
+  The current full suite passes 305 tests with zero failures or skips.
+  Backlog regressions cover the 160-to-135 catch-up example,
+  duplicate answers, no future prepayment and consistent role-specific counts.
+  Coverage includes 70 dated goals, Pacific midnight/DST, shifted weeks,
   same-day prerequisites, review filtering, concurrent completion, saved notes,
   ownership, grading, history, rewards and teacher management.
+  Teacher UI checks exercise the copyable report, clipboard success, manual-copy
+  fallback, text download and the single-student toolbar.
 - The private corpus contains 2,322 records,2,469 segments and 739 distinct
   number-free frames. All 218,112 approved warm-up entries and 340,800 approved
   story entries pass the exclusion checks. All 71 question families have three
@@ -57,7 +77,8 @@ controls are preserved; this release does not reset accounts, answers or points.
   story seed, with zero matching paper frames. Source hashes and pool digests
   block builds if that evidence becomes stale. Aggregate reports are public;
   the paper corpus, approved seed pool and private QA fixtures are not.
-- Actual sandboxed Chromium rendered 34 desktop/tablet/phone views against an
+- In the preceding curriculum revision, sandboxed Chromium rendered 34
+  desktop/tablet/phone views against an
   isolated SQLite backend, with no page errors or horizontal document overflow.
   Screenshot inspection corrected calendar alignment and completion density.
   A second browser journey using the production checked pool saved exactly 20
@@ -70,17 +91,23 @@ controls are preserved; this release does not reset accounts, answers or points.
   The smoke test exercises the 70-day schedule,70-skill library, old/new lessons,
   persistent tutor history, role isolation, counted answers and private paths.
 
+The current update's browser appearance could not be verified: the managed
+preview relay timed out waiting for port 4173, and the cloud browser failed at
+initialization with `gaas-browser node_repl sandbox cannot be disabled`. This
+update's UI behavior is covered by the automated tests above; the older screenshots
+do not establish the appearance of the new backlog and teacher dashboard.
+
 ## Hosting and remaining limits
 
 The existing ChatGPT Site and public host audience are retained. Application
 accounts protect records and teacher controls. Sites confirmed `donteventry.me`
-and SSL active with no domain error during this revision. No Namecheap DNS
+and SSL active with no domain error during the preceding publication. No Namecheap DNS
 change is needed. The public GitHub source mirror excludes private validation
 inputs and credentials.
 
-Direct HTTPS connections to the live custom domain and OpenAI are blocked by
-this workspace proxy with 403. Browser screenshots therefore use the actual
-application and an isolated backend, not an authenticated production session.
+Previous direct HTTPS checks of the custom domain and OpenAI were blocked by
+the workspace proxy with 403. The preceding release's screenshots used the
+actual application and an isolated backend, not an authenticated production session.
 Sites publication status separately establishes the deployed version. Live AI
 provider operation remains unverified from this workspace; code-computed hints
 and worked answers remain available when AI cannot respond. The existing server

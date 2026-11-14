@@ -6,12 +6,12 @@ import { createSQLiteDB } from '../server/storage.mjs';
 import { createManagement } from '../server/management.mjs';
 import { renderTeacher } from '../public/teacher.mjs';
 
-async function fixture() {
+async function fixture(date = '2026-11-10T20:00:00Z') {
   const db = createSQLiteDB();
   db.migrate();
   for (const file of ['0002_platform.sql', '0003_management.sql']) await db.exec(readFileSync(new URL(`../migrations/${file}`, import.meta.url), 'utf8'));
   for (const [id, name, role] of [['teacher', 'Teacher', 'parent'], ['student', 'Sahil', 'student'], ['other', 'Other', 'student']]) await db.prepare('INSERT INTO practice_users(id,username,name,role,password_hash,created_at) VALUES(?,?,?,?,?,?)').bind(id, id, name, role, 'not-used', '2026-11-07T12:00:00Z').run();
-  const service = createManagement({ db, clock: () => new Date('2026-11-10T20:00:00Z') });
+  const service = createManagement({ db, clock: () => new Date(date) });
   const dom = new JSDOM('<main id="app"></main>', { url: 'https://example.test/t/dashboard' });
   const oldDocument = globalThis.document, oldFormData = globalThis.FormData;
   globalThis.document = dom.window.document; globalThis.FormData = dom.window.FormData;
@@ -110,8 +110,10 @@ test('daily record includes missing dates and teacher note saves for the selecte
  const f=await fixture();
  try {
   await f.render('/t/dashboard');
-  assert.match(document.querySelector('.teacher-daily-record').textContent,/0 \/ 20 answered today/);
-  assert.match(document.querySelector('.teacher-daily-record').textContent,/60unanswered on earlier days/);
+  assert.match(document.querySelector('.teacher-student-stats').textContent,/Answered today0 \/ 20/);
+  assert.match(document.querySelector('.teacher-backlog-hero').textContent,/80 questions behind/);
+  assert.match(document.querySelector('.teacher-backlog-hero').textContent,/60 overdue from earlier days/);
+  assert.match(document.getElementById('teacher-progress-update').value,/Questions behind: 80 — 60 overdue from earlier days \+ 20 left today/);
   assert.equal(document.querySelectorAll('#teacher-note').length,1);
   document.getElementById('teacher-note-text').value='Draw a picture before finding the answer.';
   await f.submit('teacher-note');
@@ -120,4 +122,58 @@ test('daily record includes missing dates and teacher note saves for the selecte
   assert.equal(document.querySelectorAll('tbody tr').length,70);
   assert.match(document.body.textContent,/Past due/);assert.match(document.body.textContent,/Coming up/);
  }finally{f.close();}
+});
+
+test('one-student dashboard exposes the same backlog and copyable report as the API',async()=>{
+ const f=await fixture('2026-11-14T20:00:00Z');
+ const originalNavigator=Object.getOwnPropertyDescriptor(globalThis,'navigator');
+ try {
+  await f.render('/t/dashboard');
+  const expected=await f.ctx.api('/v2/teacher/progress-summary?studentId=student');
+  assert.equal(document.querySelector('h1').textContent,'Sahil’s maths');
+  assert.match(document.querySelector('.teacher-backlog-hero').textContent,/160 questions behind/);
+  assert.match(document.querySelector('.teacher-backlog-hero').textContent,/140 overdue from earlier days/);
+  const field=document.getElementById('teacher-progress-update');
+  assert.equal(field.value,expected.progressReport.text);
+  assert.match(field.value,/Questions behind: 160/);
+  assert.equal(document.querySelectorAll('#teacher-note').length,1);
+  assert.equal(document.querySelectorAll('.teacher-student-stats>article').length,4);
+  let copied;
+  Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async text=>{copied=text;}}}});
+  document.getElementById('copy-progress-update').click();
+  await until(()=>document.getElementById('progress-copy-status').textContent.includes('copied'));
+  assert.equal(copied,expected.progressReport.text);
+  assert.equal(f.requests.filter(r=>r.method!=='GET').length,0,'copying does not send or write a report');
+  document.getElementById('refresh-progress-update').click();
+  assert.deepEqual(f.nav,['/t/dashboard']);
+  await f.render('/t/plan');
+  assert.match(document.querySelector('.teacher-progress-ribbon').textContent,/160 questions behind/);
+ } finally {
+  if(originalNavigator)Object.defineProperty(globalThis,'navigator',originalNavigator);else delete globalThis.navigator;
+  f.close();
+ }
+});
+
+test('report copy fallback selects the update and download exports its exact text',async()=>{
+ const f=await fixture();
+ const originalNavigator=Object.getOwnPropertyDescriptor(globalThis,'navigator');
+ const create=URL.createObjectURL,revoke=URL.revokeObjectURL;
+ try {
+  await f.render('/t/dashboard');
+  Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async()=>{throw new Error('Unavailable');}}}});
+  const field=document.getElementById('teacher-progress-update');
+  document.getElementById('copy-progress-update').click();
+  await until(()=>document.getElementById('progress-copy-status').textContent.includes('selected'));
+  assert.equal(document.activeElement,field);
+  assert.equal(field.selectionStart,0);assert.equal(field.selectionEnd,field.value.length);
+  let exported,download;
+  URL.createObjectURL=blob=>{exported=blob;return 'blob:report';};URL.revokeObjectURL=()=>{};
+  f.dom.window.HTMLAnchorElement.prototype.click=function(){download={name:this.download,url:this.href};};
+  document.getElementById('download-progress-update').click();
+  assert.equal(await exported.text(),field.value+'\n');
+  assert.equal(download.name,'Sahil-math-update-2026-11-10.txt');assert.equal(download.url,'blob:report');
+ }finally{
+  if(originalNavigator)Object.defineProperty(globalThis,'navigator',originalNavigator);else delete globalThis.navigator;
+  URL.createObjectURL=create;URL.revokeObjectURL=revoke;f.close();
+ }
 });

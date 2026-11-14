@@ -58,20 +58,63 @@ export function courseSlots(dayIndex,{program={},date,round=0}={}) {
   });
 }
 
-export function courseSchedule({program,attempts=[],rules=[],today}) {
-  const counts=new Map();
-  for(const row of attempts){const count=counts.get(row.date)??{answered:0,correct:0};count.answered++;count.correct+=row.is_correct?1:0;counts.set(row.date,count);}
+export function courseSchedule({program={},attempts=[],rules=[],today}) {
+  const counts=new Map(),seen=new Set();
+  for(const row of attempts){
+    // Persisted answers are unique; also keep imported/replayed rows from earning
+    // a second credit if a caller includes the same attempt more than once.
+    const identity=row.question_id??row.id;
+    if(identity&&seen.has(identity))continue;
+    if(identity)seen.add(identity);
+    const count=counts.get(row.date)??{answered:0,correct:0};
+    count.answered++;count.correct+=row.is_correct?1:0;counts.set(row.date,count);
+  }
   const ruleMap=new Map(rules.map(rule=>[rule.date,rule.daily_target]));
   const days=scheduledCourseDays(program).map(day=>{
     const expected=ruleMap.get(day.date)??(day.date<today?20:program.dailyTarget??20);
-    const {answered=0,correct=0}=counts.get(day.date)??{},credited=Math.min(expected,answered),remaining=Math.max(0,expected-answered);
-    const status=day.date>today?'upcoming':remaining===0?'complete':day.date<today?'missed':answered?'partial':'today';
-    return {...day,dayNumber:day.index+1,expected,answered,credited,remaining,correct,accuracy:answered?Math.round(correct/answered*100):null,dueAt:courseDueAt(day.date),status};
+    const {answered=0,correct=0}=counts.get(day.date)??{};
+    const onTimeCredited=day.date<=today?Math.min(expected,answered):0;
+    return {...day,dayNumber:day.index+1,expected,answered,correct,
+      accuracy:answered?Math.round(correct/answered*100):null,dueAt:courseDueAt(day.date),
+      onTimeCredited,onTimeRemaining:expected-onTimeCredited,
+      catchupCredit:0,catchupEarned:0,credited:onTimeCredited,remaining:expected-onTimeCredited};
   });
-  const due=days.filter(day=>day.date<=today),overdue=days.filter(day=>day.date<today&&day.remaining>0),current=days.find(day=>day.date===today)??null;
-  const sum=(rows,key)=>rows.reduce((total,row)=>total+row[key],0),completed=days.filter(day=>day.date<=today&&day.remaining===0).length;
-  return {startDate:days[0].date,endDate:days.at(-1).date,timeZone:plan.timezone,dailyTarget:program.dailyTarget??20,totalDays:days.length,
-    phase:today<days[0].date?'before':today>days.at(-1).date?'finished':current?'active':'break',today:current,nextDue:days.find(day=>day.date>=today&&day.remaining>0)??null,days,
-    requiredToDate:sum(due,'expected'),answeredToDate:sum(due,'answered'),creditedToDate:sum(due,'credited'),remainingToDate:sum(due,'remaining'),remainingToday:current?.remaining??0,
-    overdueDays:overdue.length,overdueQuestions:sum(overdue,'remaining'),completedDays:completed,onTimeCompletions:completed,totalRequired:sum(days,'expected'),totalAnswered:sum(days,'answered'),totalCredited:sum(days,'credited'),totalRemaining:sum(days,'remaining')};
+  const chronological=[...days].sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
+  const startDate=chronological[0].date,endDate=chronological.at(-1).date;
+  const history=[];let actualAnsweredToDate=0,unallocatedExtra=0;
+  // Answers first fulfill that date's own goal. Only the surplus can catch up
+  // older work. Replaying chronologically never prepays a later daily goal,
+  // including during a teacher-delayed week or after the course has ended.
+  for(const [date,count] of [...counts.entries()].sort(([a],[b])=>a.localeCompare(b))){
+    if(date<startDate||date>today)continue;
+    actualAnsweredToDate+=count.answered;
+    const ownDay=days.find(day=>day.date===date);
+    let extra=Math.max(0,count.answered-(ownDay?.expected??0));
+    for(const day of chronological){
+      if(!extra||day.date>=date)break;
+      const credit=Math.min(extra,day.remaining);if(!credit)continue;
+      day.catchupCredit+=credit;day.credited+=credit;day.remaining-=credit;extra-=credit;
+      if(ownDay)ownDay.catchupEarned+=credit;
+      history.push({answerDate:date,dueDate:day.date,courseDay:day.index,questions:credit});
+    }
+    unallocatedExtra+=extra;
+  }
+  for(const day of days){
+    day.caughtUp=day.remaining===0&&day.catchupCredit>0;
+    day.status=day.date>today?'upcoming':day.remaining===0?'complete':day.date<today?'missed':day.answered?'partial':'today';
+  }
+  const due=chronological.filter(day=>day.date<=today),overdue=due.filter(day=>day.date<today&&day.remaining>0),current=days.find(day=>day.date===today)??null;
+  const sum=(rows,key)=>rows.reduce((total,row)=>total+row[key],0);
+  const completedDays=due.filter(day=>day.remaining===0).length,onTimeCompletions=due.filter(day=>day.onTimeRemaining===0).length;
+  const requiredToDate=sum(due,'expected'),completedToDate=sum(due,'credited'),behind=requiredToDate-completedToDate;
+  const backlog={requiredToDate,completedToDate,actualAnsweredToDate,behind,overdue:sum(overdue,'remaining'),remainingToday:current?.remaining??0,
+    daysEquivalent:Math.round(behind/(program.dailyTarget??20)*100)/100,overdueDays:overdue.length,
+    oldestDueDate:overdue[0]?.date??(current?.remaining?current.date:null),nextCatchupDay:overdue[0]??null,
+    catchupCredit:sum(due,'catchupCredit'),catchupToday:history.filter(item=>item.answerDate===today).reduce((n,item)=>n+item.questions,0),
+    bankedCredit:0,unallocatedExtra,history,completedDays,onTimeCompletions};
+  return {startDate,endDate,todayDate:today,timeZone:plan.timezone,dailyTarget:program.dailyTarget??20,totalDays:days.length,
+    phase:today<startDate?'before':today>endDate?'finished':current?'active':'break',today:current,nextDue:chronological.find(day=>day.date>=today&&day.remaining>0)??null,days,backlog,
+    requiredToDate,answeredToDate:actualAnsweredToDate,creditedToDate:completedToDate,remainingToDate:behind,remainingToday:backlog.remainingToday,
+    overdueDays:backlog.overdueDays,overdueQuestions:backlog.overdue,completedDays,onTimeCompletions,
+    totalRequired:sum(days,'expected'),totalAnswered:actualAnsweredToDate,totalCredited:completedToDate,totalRemaining:sum(days,'remaining')};
 }

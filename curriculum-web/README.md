@@ -43,10 +43,21 @@ count too. Unique answer rows and ledger keys prevent duplicate awards.
 The daily task starts on Saturday, November 7, 2026, and runs for 70 days.
 The server supplies Pacific-time deadlines, including daylight-saving changes.
 The student page shows answers completed today, questions remaining and a live
-countdown. The calendar includes every scheduled date, even with no answers.
-Extra work counts on its actual completion date; it does not erase earlier
-missed daily goals. Daily mode stops at the goal; Extra practice opens five
-questions and remains available afterward.
+countdown. A shared backlog count separates earlier overdue questions from work
+still due today. The calendar includes every scheduled date, even with no answers.
+Each date's first target answers fulfill that date's goal; extra answers reduce
+the oldest already-due deficits. They never prepay future goals. Actual answers
+stay on their completion date, and catch-up credit is shown separately so the
+on-time history and streak remain accurate. Daily mode stops at the goal. Extra
+practice and five-question catch-up sessions remain available afterward;
+catch-up focuses on the oldest unfinished lesson's introduced topics.
+
+The teacher dashboard opens directly to the selected student's daily work,
+backlog, accuracy, skills, practice difficulty levels and weekly note. A single
+student needs no selector. Account management stays in Settings. A dated progress
+update can be copied or downloaded as plain text for the teacher to send manually;
+no email is sent or scheduled. The update uses the same student-specific metrics
+as the visible counters and excludes raw answers and tutoring conversations.
 
 The topic mix has two foundation, ten focus, five recent and three older review
 positions. Explicit teacher assignments and due reviews can use these positions.

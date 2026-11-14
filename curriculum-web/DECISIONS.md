@@ -18,9 +18,17 @@ The latest explicit hosting choice is ChatGPT Sites. Namecheap supplies DNS.
   never rewrite history. Teacher settings apply tomorrow.
 - Keep the student landing page focused on Daily questions, Extra practice and
   Review. Put the teacher note beside the daily task. Default to 20 each day
-  from November 7, 2026, with server-derived Pacific deadlines and all70dates.
-  Credit answers on their actual completion date; extra answers do not erase
-  past missed goals. Stop Daily mode at the goal.
+  from November 7, 2026, with server-derived Pacific deadlines and all 70 dates.
+  Each date's first target answers satisfy that date; extra answers reduce the
+  oldest already-due deficits, never future goals. Keep actual dated answers,
+  catch-up credits and on-time completion separate. A shared backlog powers
+  student and teacher counters. Stop Daily mode at the goal; catch-up sessions
+  use the oldest unfinished lesson's introduced topics.
+- Optimize the teacher dashboard for one student: daily work, catch-up progress,
+  skill progress, the weekly note and a copyable/downloadable progress update.
+  Keep account management in Settings and retain any existing accounts. Reports
+  describe website difficulty levels, not grade placement or AL readiness.
+  The user cancelled email delivery; do not send or schedule reports.
 - Preserve the supplied plan and overlay explicit Grade5 foundation checks,
   IMT1 teaching prerequisites and selected next-course bridges. Baseline review
   does not mean mastery. Automatic practice never jumps to future topics.

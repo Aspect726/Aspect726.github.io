@@ -1,6 +1,6 @@
 import plan from './plan.json' with { type: 'json' };
 import { SKILLS, dayInfo, addDays, pacificDate } from './plan.mjs';
-import { courseSchedule, introducedSkills, courseSlots } from './course-schedule.mjs';
+import { courseSchedule, introducedSkills, courseSlots, FOUNDATION_SKILLS } from './course-schedule.mjs';
 import { curriculumForSkill } from './curriculum.mjs';
 import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity, storyScenarios, storyShapes, formatQuestionAnswer, parseUnitAnswer, decodeStorySeed } from './questions.mjs';
 import { parseNumber, rational, add, sub, mul, div, eq, compare } from './math.mjs';
@@ -70,11 +70,20 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     const days=Object.entries(Object.groupBy(rows,r=>r.date)).map(([date,rs])=>({date,answered:rs.length,correct:rs.filter(r=>r.is_correct).length,accuracy:accuracy(rs),seconds:Math.round(rs.reduce((n,r)=>n+r.seconds,0)),minutes:Math.round(rs.reduce((n,r)=>n+r.seconds,0)/60),pointsEarned:ledger.filter(l=>l.kind==='bonus'&&pacificDate(l.created_at)===date).reduce((n,l)=>n+l.amount,0),target:rules.find(r=>r.date===date)?.daily_target??20})).sort((a,b)=>a.date.localeCompare(b.date));
     let bestStreak=0,current=0,previous=null;for(const d of days){if(d.answered>=d.target){current=previous===addDays(d.date,-1)?current+1:1;bestStreak=Math.max(bestStreak,current);previous=d.date;}else{current=0;previous=null;}}
     let streak=0,cursor=today();if(!days.find(d=>d.date===cursor&&d.answered>=d.target))cursor=addDays(cursor,-1);while(days.find(d=>d.date===cursor&&d.answered>=d.target)){streak++;cursor=addDays(cursor,-1);}
-    return {studentId,attempts:rows,skills:skillStats(rows,learned),days,ledger,points:ledger.reduce((n,l)=>n+l.amount,0),streak,bestStreak,totalQuestions:rows.length,overallAccuracy:accuracy(rows),program:p,schedule:courseSchedule({program:p,attempts:rows,rules,today:today()})};
+    const schedule=courseSchedule({program:p,attempts:rows,rules,today:today()});
+    return {studentId,attempts:rows,skills:skillStats(rows,learned),days,ledger,points:ledger.reduce((n,l)=>n+l.amount,0),streak,bestStreak,totalQuestions:rows.length,overallAccuracy:accuracy(rows),program:p,schedule,backlog:schedule.backlog};
   }
   async function weeks(studentId,data){
     const a=data??await analytics(studentId),p=a.program,t=today();
-    return plan.weeks.map((w,i)=>{const offset=Number(p.weekOffsets[i]||0),startDate=addDays(p.startDate,i*7+offset),endDate=addDays(startDate,6),rows=a.attempts.filter(x=>x.date>=startDate&&x.date<=endDate),days=a.schedule.days.filter(day=>day.week===w.week),skillIds=[...new Set(days.flatMap(day=>day.focus))],bridges=[...new Map(days.flatMap(day=>day.bridges).map(bridge=>[bridge.skill,bridge])).values()];return{week:w.week,title:w.title,startDate,endDate,bridges,status:t<startDate?'upcoming':t<=endDate?'current':Array.from({length:7},(_,j)=>a.days.find(d=>d.date===addDays(startDate,j))).every(d=>d&&d.answered>=d.target)?'done':'missed',accuracy:accuracy(rows),skills:skillIds.map(id=>a.skills.find(s=>s.skill===id)).filter(Boolean)};});
+    return plan.weeks.map((w,i)=>{
+      const offset=Number(p.weekOffsets[i]||0),startDate=addDays(p.startDate,i*7+offset),endDate=addDays(startDate,6),rows=a.attempts.filter(x=>x.date>=startDate&&x.date<=endDate);
+      const days=a.schedule.days.filter(day=>day.week===w.week),due=days.filter(day=>day.date<=t),skillIds=[...new Set(days.flatMap(day=>day.focus))],bridges=[...new Map(days.flatMap(day=>day.bridges).map(bridge=>[bridge.skill,bridge])).values()];
+      return{week:w.week,title:w.title,startDate,endDate,bridges,
+        status:t<startDate?'upcoming':t<=endDate?'current':days.every(day=>day.remaining===0)?'done':'missed',
+        requiredToDate:due.reduce((n,day)=>n+day.expected,0),completedToDate:due.reduce((n,day)=>n+day.credited,0),remainingToDate:due.reduce((n,day)=>n+day.remaining,0),
+        catchupCredit:due.reduce((n,day)=>n+day.catchupCredit,0),onTimeCompletions:due.filter(day=>day.onTimeRemaining===0).length,
+        accuracy:accuracy(rows),skills:skillIds.map(id=>a.skills.find(s=>s.skill===id)).filter(Boolean)};
+    });
   }
   async function context(studentId){
     const a=await analytics(studentId),ws=await weeks(studentId,a),t=today(),current=ws.find(w=>w.status==='current')??[...ws].reverse().find(w=>w.startDate<=t)??ws[0];
@@ -90,7 +99,7 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     const bonusEarned=answered<p.dailyTarget+p.bonusFirst?0:1+Math.floor((answered-p.dailyTarget-p.bonusFirst)/p.bonusStep),nextPointAt=p.dailyTarget+p.bonusFirst+bonusEarned*p.bonusStep;
     const due=await dueReviews(studentId,c);
     const note=await one('SELECT text FROM platform_teacher_notes WHERE student_id=? AND week=?',studentId,week.week);
-    return{today:t,date:t,day,week,answered,correct:rs.filter(r=>r.is_correct).length,accuracy:accuracy(rs),dailyTarget:p.dailyTarget,points:a.points,bonusFirst:p.bonusFirst,bonusStep:p.bonusStep,nextPointAt,untilNextPoint:nextPointAt-answered,bonusEarned,requiredDone:answered>=p.dailyTarget,remaining:Math.max(0,p.dailyTarget-answered),dueAt:a.schedule.today?.dueAt??null,schedule:a.schedule,reviewDue:due.length,streak:a.streak,bestStreak:a.bestStreak,teacherNote:note?.text??'',weekDays:Array.from({length:7},(_,i)=>{const date=addDays(week.startDate,i),d=a.days.find(x=>x.date===date),scheduled=a.schedule.days.find(x=>x.date===date);return{date,weekday:['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'][i],index:(week.week-1)*7+i,answered:d?.answered??0,correct:d?.correct??0,remaining:scheduled?.remaining??0,dueAt:scheduled?.dueAt??null,status:d&&d.answered>=d.target?'done':date>t?'upcoming':date<t?'missed':d?.answered?'partial':'today',lessonDay:i<2};})};
+    return{today:t,date:t,day,week,answered,correct:rs.filter(r=>r.is_correct).length,accuracy:accuracy(rs),dailyTarget:p.dailyTarget,points:a.points,bonusFirst:p.bonusFirst,bonusStep:p.bonusStep,nextPointAt,untilNextPoint:nextPointAt-answered,bonusEarned,requiredDone:answered>=p.dailyTarget,remaining:Math.max(0,p.dailyTarget-answered),dueAt:a.schedule.today?.dueAt??null,schedule:a.schedule,backlog:a.backlog,reviewDue:due.length,streak:a.streak,bestStreak:a.bestStreak,teacherNote:note?.text??'',weekDays:Array.from({length:7},(_,i)=>{const date=addDays(week.startDate,i),d=a.days.find(x=>x.date===date),scheduled=a.schedule.days.find(x=>x.date===date);return{date,weekday:['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'][i],index:(week.week-1)*7+i,answered:d?.answered??0,correct:d?.correct??0,remaining:scheduled?.remaining??0,credited:scheduled?.credited??0,catchupCredit:scheduled?.catchupCredit??0,caughtUp:scheduled?.caughtUp??false,onTimeRemaining:scheduled?.onTimeRemaining??0,dueAt:scheduled?.dueAt??null,status:scheduled?.status==='complete'?'done':date>t?'upcoming':date<t?'missed':d?.answered?'partial':'today',lessonDay:i<2};})};
   }
   async function generateSample(skill,level=1,index=0,shape=null,options={}){
     if(!SKILLS[skill]&&skill!=='WARMUP')fail(400,'Choose a skill from the course.');
@@ -104,6 +113,12 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     if(b.skill&&!SKILLS[b.skill])fail(400,'Choose a skill from the course.');
     const t=today(),{a,day}=c;
     if(source==='review') {const r=(await dueReviews(studentId,c,b.skill))[0];return r?{source,skill:r.skill,reviewId:r.id,category:'review'}:null;}
+    if(b.intent==='catchup'){
+      const target=a.backlog.nextCatchupDay;if(!target)return null;
+      const skills=target.focus.filter(skill=>c.introduced.has(skill));
+      const completed=a.attempts.filter(row=>row.date===t&&JSON.parse(row.params||'{}').courseCategory==='catchup').length;
+      return{source:'practice',skill:skills[completed%skills.length]??FOUNDATION_SKILLS[0],category:'catchup',focusKind:'catchup',courseDay:target.index,catchupForDate:target.date};
+    }
     if(b.skill)return{source,skill:b.skill};
     if(source!=='practice')fail(400,'Choose a skill first.');
     const assigned=await all('SELECT * FROM platform_assignments WHERE student_id=? AND start_date<=? AND end_date>=? ORDER BY created_at,id',studentId,t,t);
@@ -130,23 +145,32 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
   }
   function visibleQuestion(row,c){
     const q=JSON.parse(row.q);
-    return {...publicQuestion(q),name:SKILLS[q.skill],courseCategory:q.courseCategory??null,focusKind:q.focusKind??null,courseDay:q.courseDay??null,offerExample:Boolean(c.a.skills.find(x=>x.skill===q.skill)?.offerExample),id:row.id,level:row.level,source:row.source,helpAvailable:true,...(['learn','library'].includes(row.source)?{hint:q.hint}:{})};
+    return {...publicQuestion(q),name:SKILLS[q.skill],courseCategory:q.courseCategory??null,focusKind:q.focusKind??null,courseDay:q.courseDay??null,catchupForDate:q.catchupForDate??null,offerExample:Boolean(c.a.skills.find(x=>x.skill===q.skill)?.offerExample),id:row.id,level:row.level,source:row.source,helpAvailable:true,...(['learn','library'].includes(row.source)?{hint:q.hint}:{})};
   }
   async function question(studentId,b,retry=0){
     if(retry>30)fail(409,'Your other tab is updating this set. Try again.');
     const requestedSource=b.source??'practice';
     if(!['practice','review','learn','library'].includes(requestedSource))fail(400,'Choose a practice source.');
     if(b.skill&&!SKILLS[b.skill])fail(400,'Choose a skill from the course.');
+    if(b.intent==='catchup'&&requestedSource!=='practice')fail(400,'Choose catch-up practice.');
     if(['learn','library'].includes(requestedSource)&&!b.skill)fail(400,'Choose a skill first.');
     const c=await context(studentId),date=today();
     if(b.intent==='daily'&&(!c.a.schedule.today||c.a.schedule.today.remaining===0))return{question:null,done:true,summary:await summary(studentId,c)};
+    // Once overdue work is cleared, the catch-up link disappears. Ordinary
+    // extra practice must still recover its saved question before opening a new
+    // set, even when the student has left the original catch-up tab.
+    const resumeClearedCatchup=requestedSource==='practice'&&!b.skill&&b.intent!=='daily'&&!c.a.backlog.nextCatchupDay;
+    const matchesIntent=row=>b.intent==='catchup'?JSON.parse(row.q).courseCategory==='catchup':JSON.parse(row.q).courseCategory!=='catchup'||resumeClearedCatchup;
     const reviewSelection=requestedSource==='review'?await choose(studentId,b,c):null;
     if(requestedSource==='review'&&!reviewSelection)return{question:null,done:true,summary:await summary(studentId,c)};
     const todayAttempts=c.a.attempts.filter(x=>x.date===date),blockStart=Math.floor(todayAttempts.length/20)*20;
     const reservations=await all('SELECT q.*,a.id AS attempt_id FROM platform_questions q LEFT JOIN platform_attempts a ON a.question_id=q.id WHERE q.student_id=? AND q.date=? AND q.slot_index>=? AND q.slot_index<? ORDER BY q.slot_index',studentId,date,blockStart,blockStart+20);
-    const automatic=(b.source??'practice')==='practice'&&!b.skill;
-    const automaticPending=automatic&&reservations.find(row=>!row.attempt_id&&(['practice','review'].includes(row.source)&&c.introduced.has(row.skill)||row.source==='assigned')&&(b.intent!=='daily'||row.slot_index<c.a.program.dailyTarget));
+    const automatic=(b.source??'practice')==='practice'&&(!b.skill||b.intent==='catchup');
+    const automaticPending=automatic&&reservations.find(row=>!row.attempt_id&&matchesIntent(row)&&(['practice','review'].includes(row.source)&&c.introduced.has(row.skill)||row.source==='assigned')&&(b.intent!=='daily'||row.slot_index<c.a.program.dailyTarget));
     if(automaticPending)return{question:visibleQuestion(automaticPending,c),summary:await summary(studentId,c)};
+    // Another tab may clear the backlog after this question was reserved. Keep
+    // that question recoverable so its slot never strands the next set.
+    if(b.intent==='catchup'&&!c.a.backlog.nextCatchupDay)return{question:null,done:true,summary:await summary(studentId,c)};
     // Legacy answered work takes its existing place. New slots are atomic reservations,
     // so a second tab cannot allocate another warm-up or repeat a scene in this set.
     const legacyCount=todayAttempts.filter(row=>JSON.parse(row.params||'{}').slotIndex==null).length;
@@ -154,14 +178,14 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     for(let i=blockStart;i<Math.min(legacyCount,blockStart+20);i++)occupied.add(i);
     const slot=Array.from({length:20},(_,i)=>blockStart+i).find(i=>!occupied.has(i)&&(b.intent!=='daily'||i<c.a.program.dailyTarget));
     if(slot===undefined){
-      const waiting=reservations.find(row=>!row.attempt_id&&(!automatic||c.introduced.has(row.skill)||row.source==='assigned')&&(requestedSource!=='review'||row.source==='review'&&row.review_id===reviewSelection.reviewId)&&(b.intent!=='daily'||row.slot_index<c.a.program.dailyTarget));
+      const waiting=reservations.find(row=>!row.attempt_id&&matchesIntent(row)&&(!automatic||c.introduced.has(row.skill)||row.source==='assigned')&&(requestedSource!=='review'||row.source==='review'&&row.review_id===reviewSelection.reviewId)&&(b.intent!=='daily'||row.slot_index<c.a.program.dailyTarget));
       if(waiting)return{question:visibleQuestion(waiting,c),summary:await summary(studentId,c),resumedPending:true};
       if(reservations.some(row=>!row.attempt_id))fail(409,'Finish an open extra-practice question before starting another set.');
       return question(studentId,b,retry+1);
     }
     const selection=reviewSelection??await choose(studentId,b,c,slot);
     if(!selection)return{question:null,done:true,summary:await summary(studentId,c)};
-    const pending=reservations.find(row=>!row.attempt_id&&row.source===selection.source&&row.skill===selection.skill&&(!selection.reviewId||row.review_id===selection.reviewId)&&(b.intent!=='daily'||row.slot_index<c.a.program.dailyTarget));
+    const pending=reservations.find(row=>!row.attempt_id&&matchesIntent(row)&&row.source===selection.source&&row.skill===selection.skill&&(!selection.reviewId||row.review_id===selection.reviewId)&&(b.intent!=='daily'||row.slot_index<c.a.program.dailyTarget));
     if(pending)return{question:visibleQuestion(pending,c),summary:await summary(studentId,c)};
     const targetRemainder=c.a.program.dailyTarget-blockStart,blockTarget=targetRemainder>0&&targetRemainder<20?targetRemainder:20;
     const firstWarmups=Math.min(6,Math.floor(blockTarget*.3)),warmupPositions=[...Array.from({length:firstWarmups},(_,i)=>i),...Array.from({length:6-firstWarmups},(_,i)=>blockTarget+i)];
@@ -189,7 +213,7 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
       if(!story&&q.choices&&(parseNumber(q.answer)||/^\(\s*-?\d+\s*,\s*-?\d+\s*\)$/.test(q.answer)||(['E-DIST','E-FACTOR','E-LIKE'].includes(skill)&&linearExpression(q.answer)))){q={...q};delete q.choices;}
       if(!story&&q.choices&&skill==='F-COMP'&&['left','right','equal'].includes(q.answer)){const answer=q.answer==='equal'?'equal':q.answer==='left'?q.verification.a:q.verification.b;q={...q,answer,prompt:q.prompt+'<p>Type the greater fraction, or equal.</p>',plainPrompt:q.plainPrompt+' Type the greater fraction, or equal.',hints:q.hints.map(h=>({...h,answer:h.answer==='left'?q.verification.a:h.answer==='right'?q.verification.b:h.answer}))};delete q.choices;}
       if(q.choices){const recent=c.a.attempts.slice(-4);if(recent.length<4||recent.some(x=>JSON.parse(x.params)?.choices))continue;}
-      q={...q,courseCategory:selection.category??(selection.source==='assigned'?'assigned':null),focusKind:selection.focusKind??null,courseDay:c.a.schedule.today?.index??null,setPosition:slot%20+1,setNumber:Math.floor(slot/20)+1,stage:story?'story':'warmup',answerInstructions:q.answerUnit?`Include ${q.answerChoice?'the option and ':''}the amount in ${q.answerUnit}.`:q.choices?'Choose the answer that fits.':'This warm-up has no measurement unit. Give the number or expression requested.'};
+      q={...q,courseCategory:selection.category??(selection.source==='assigned'?'assigned':null),focusKind:selection.focusKind??null,courseDay:selection.courseDay??c.a.schedule.today?.index??null,catchupForDate:selection.catchupForDate??null,setPosition:slot%20+1,setNumber:Math.floor(slot/20)+1,stage:story?'story':'warmup',answerInstructions:q.answerUnit?`Include ${q.answerChoice?'the option and ':''}the amount in ${q.answerUnit}.`:q.choices?'Choose the answer that fits.':'This warm-up has no measurement unit. Give the number or expression requested.'};
       const id=uuid();
       try{await run('INSERT INTO platform_questions(id,student_id,date,skill,template_id,level,question_hash,q,source,review_id,assignment_id,created_at,slot_index,scenario_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',id,studentId,date,skill,templateId,level,hash,JSON.stringify(q),selection.source,selection.reviewId??null,selection.assignmentId??null,iso(),slot,story?q.scenarioId:null);}
       catch(error){if(/UNIQUE|constraint/i.test(error.message))return question(studentId,b,retry+1);throw error;}
@@ -215,7 +239,7 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     const result={correct:grade.correct,formOnly:false,answer:readableAnswer(q),rightAnswer:readableAnswer(q),submittedAnswer:submitted,hint:grade.correct?'':grade.hint,solution:q.solution,reason:strip(q.solution.at(-1)??`The answer is ${readableAnswer(q)}.`),mistakeLabel:match?`${q.skill}:${q.hints.indexOf(match)}`:null};
     const date=today(),time=iso(),p=await program(studentId),seconds=Math.max(0,Math.min(3600000,Number(b.elapsedMs)||0))/1000,id=`${studentId}:${b.requestId}`;
     const legacyBonus=(await all("SELECT amount,created_at FROM practice_ledger WHERE student_id=? AND kind='bonus' AND id NOT LIKE 'platform:bonus:%'",studentId)).filter(l=>pacificDate(l.created_at)===date).reduce((sum,l)=>sum+l.amount,0);
-    const statements=[st('INSERT OR IGNORE INTO platform_attempts(id,question_id,student_id,date,skill,template_id,level,question_hash,question_text,params,given_answer,correct_answer,is_correct,mistake_label,seconds,source,created_at,result) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',id,row.id,studentId,date,row.skill,row.template_id,row.level,row.question_hash,q.plainPrompt,JSON.stringify({numbers:q.numbers,choices:Boolean(q.choices),seed:q.seed,story:Boolean(q.story),scenarioId:q.scenarioId??null,storyShape:q.storyShape??null,slotIndex:row.slot_index??null}),submitted,result.rightAnswer,grade.correct?1:0,result.mistakeLabel,seconds,row.source,time,JSON.stringify(result)),st("WITH RECURSIVE thresholds(n,ordinal) AS (SELECT ?,1 UNION ALL SELECT n+?,ordinal+1 FROM thresholds WHERE n+?<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?)) INSERT OR IGNORE INTO practice_ledger(id,student_id,amount,kind,note,run_id,created_at) SELECT 'platform:bonus:'||?||':'||?||':'||n,?,1,'bonus','Answered '||n||' questions',?,? FROM thresholds WHERE n<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?) AND ordinal>? AND EXISTS(SELECT 1 FROM platform_attempts WHERE id=? AND question_id=?)",p.dailyTarget+p.bonusFirst,p.bonusStep,p.bonusStep,studentId,date,studentId,date,studentId,row.id,time,studentId,date,legacyBonus,id,row.id)];
+    const statements=[st('INSERT OR IGNORE INTO platform_attempts(id,question_id,student_id,date,skill,template_id,level,question_hash,question_text,params,given_answer,correct_answer,is_correct,mistake_label,seconds,source,created_at,result) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',id,row.id,studentId,date,row.skill,row.template_id,row.level,row.question_hash,q.plainPrompt,JSON.stringify({numbers:q.numbers,choices:Boolean(q.choices),seed:q.seed,story:Boolean(q.story),scenarioId:q.scenarioId??null,storyShape:q.storyShape??null,slotIndex:row.slot_index??null,courseCategory:q.courseCategory??null,catchupForDate:q.catchupForDate??null}),submitted,result.rightAnswer,grade.correct?1:0,result.mistakeLabel,seconds,row.source,time,JSON.stringify(result)),st("WITH RECURSIVE thresholds(n,ordinal) AS (SELECT ?,1 UNION ALL SELECT n+?,ordinal+1 FROM thresholds WHERE n+?<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?)) INSERT OR IGNORE INTO practice_ledger(id,student_id,amount,kind,note,run_id,created_at) SELECT 'platform:bonus:'||?||':'||?||':'||n,?,1,'bonus','Answered '||n||' questions',?,? FROM thresholds WHERE n<=(SELECT COUNT(*) FROM platform_attempts WHERE student_id=? AND date=?) AND ordinal>? AND EXISTS(SELECT 1 FROM platform_attempts WHERE id=? AND question_id=?)",p.dailyTarget+p.bonusFirst,p.bonusStep,p.bonusStep,studentId,date,studentId,date,studentId,row.id,time,studentId,date,legacyBonus,id,row.id)];
     if(row.review_id){
       const r=await one('SELECT * FROM platform_review_queue WHERE id=? AND student_id=?',row.review_id,studentId);
       if(r){const nextStage=grade.correct?(r.stage===1?3:r.stage===3?7:7):1,clear=grade.correct&&r.stage===7;

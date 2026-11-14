@@ -163,3 +163,53 @@ test('review chooses due work without asking the student to select a skill',asyn
  const {dom,ctx}=setup(async(path,body)=>{if(path.endsWith('/summary'))return summary;if(path.endsWith('/review'))return {count:2,due:[{skill:'D1',name:'Decimals'},{skill:'F1',name:'Fractions'}]};if(path.endsWith('/question')){questionBody=body;return {question:{id:'review-one',skill:'D1',prompt:'Add.'},summary};}throw Error(path);});
  try{await renderStudent('/s/review',ctx);assert.equal(document.querySelector('.review-contents').open,false);document.querySelector('#review-start').click();await tick();assert.equal(questionBody.source,'review');assert.equal(questionBody.skill,undefined);assert.equal(questionBody.intent,undefined);}finally{dom.window.close();}
 });
+
+const dueSummary=(answered=0,overrides={})=>({...summary,today:'2026-11-14',answered,backlog:{behind:Math.max(0,160-answered),overdue:Math.max(0,140-Math.max(0,answered-20)),remainingToday:Math.max(0,20-answered),requiredToDate:160,completedToDate:Math.min(160,answered),oldestDueDate:'2026-11-07',catchupCredit:Math.max(0,answered-20),onTimeCompletions:answered>=20?1:0,...overrides}});
+test('daily home shows all160 due questions before the first answer and separates earlier work from today',async()=>{
+ const {dom,ctx}=setup(async()=>dueSummary());
+ try{await renderStudent('/s/today',ctx);const banner=document.querySelector('.backlog-banner');assert.equal(banner.querySelector('[data-questions-behind]').textContent,'160');assert.match(banner.textContent,/140 from earlier days\+20 due today/);assert.match(banner.textContent,/0 of 160 questions due so far completed/);assert.ok([...banner.querySelectorAll('a')].find(link=>link.getAttribute('href')==='/s/practice?intent=catchup&count=5'));assert.equal(document.querySelector('.daily-start').getAttribute('href'),'/s/practice');assert.ok(banner.compareDocumentPosition(document.querySelector('.daily-task-card')) & dom.window.Node.DOCUMENT_POSITION_FOLLOWING);}finally{dom.window.close();}
+});
+test('extra practice and review keep the same backlog even when no skill reviews are due',async()=>{
+ const {dom,ctx}=setup(async path=>path.endsWith('/summary')?dueSummary(20):path.endsWith('/library')?{skills:[]}:{count:0,due:[]});
+ try{for(const route of ['/s/extra','/s/review']){await renderStudent(route,ctx);assert.equal(document.querySelector('[data-questions-behind]').textContent,'140');assert.ok([...document.querySelectorAll('a')].find(link=>link.getAttribute('href')==='/s/practice?intent=catchup&count=5'));}assert.match(document.body.textContent,/Your reviews are up to date/);assert.doesNotMatch(document.body.textContent,/All caught up!/);}finally{dom.window.close();}
+});
+test('caught-up state shows zero and does not offer a catch-up set',async()=>{
+ const {dom,ctx}=setup(async()=>dueSummary(160));
+ try{await renderStudent('/s/today',ctx);assert.equal(document.querySelector('[data-questions-behind]').textContent,'0');assert.ok(document.querySelector('.backlog-banner.caught-up'));assert.match(document.querySelector('.backlog-banner').textContent,/All caught up!/);assert.equal([...document.querySelectorAll('a')].find(link=>link.getAttribute('href')==='/s/practice?intent=catchup&count=5'),undefined);}finally{dom.window.close();}
+});
+test('live counter reduces after a saved answer and completion shows the full reduction',async()=>{
+ let answered=20,questions=0;
+ const {dom,ctx}=setup(async(path,body)=>{
+  if(path.endsWith('/summary'))return dueSummary(answered);
+  if(path.endsWith('/question')){questions++;assert.equal(body.intent,'catchup');assert.equal(body.source,'practice');return {question:{id:`catchup-${questions}`,skill:'D1',name:'Decimals',prompt:'Add 1 and 2.'},summary:dueSummary(answered)};}
+  if(path.endsWith('/answer')){answered++;return {correct:answered%2===0,rightAnswer:'3',solution:['1 + 2 = 3.'],summary:dueSummary(answered)};}
+  throw Error(path);
+ });
+ try{await renderStudent('/s/practice?intent=catchup&count=5',ctx);assert.equal(document.querySelector('[data-questions-behind]').textContent,'140');for(let i=0;i<5;i++){document.querySelector('[name=answer]').value='3';document.querySelector('#practice-answer-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await tick();assert.equal(document.querySelector('[data-questions-behind]').textContent,String(139-i));assert.match(document.querySelector('.practice-backlog').textContent,new RegExp(`−${i+1} this set`));document.querySelector('#next-question').click();await tick();}assert.equal(questions,5);assert.match(document.querySelector('.completion-catchup').textContent,/5 fewer questions behind/);assert.match(document.querySelector('.completion-catchup').textContent,/140 → 135 remaining/);assert.equal(document.querySelector('[data-questions-behind]').textContent,'135');}finally{dom.window.close();}
+});
+test('daily answer reduces total160 to159 without reducing the earlier deficit',async()=>{
+ const {dom,ctx}=setup(async path=>path.endsWith('/summary')?dueSummary():path.endsWith('/question')?{question:{id:'daily-one',skill:'D1',prompt:'Add.'},summary:dueSummary()}:{correct:true,solution:['3'],summary:dueSummary(1)});
+ try{await renderStudent('/s/practice',ctx);document.querySelector('[name=answer]').value='3';document.querySelector('#practice-answer-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await tick();assert.equal(document.querySelector('[data-questions-behind]').textContent,'159');assert.match(document.querySelector('.practice-backlog').textContent,/140 earlier \+ 19 today/);}finally{dom.window.close();}
+});
+test('progress distinguishes catch-up credits from the day on which answers were actually completed',async()=>{
+ const days=[{date:'2026-11-07',expected:20,answered:0,credited:20,caughtUp:true,status:'complete'},{date:'2026-11-14',expected:20,answered:40,credited:20,status:'complete'}];
+ const {dom,ctx}=setup(async()=>({totalQuestions:40,streak:1,schedule:{days,today:days[1],backlog:dueSummary(40).backlog},weeks:[],skills:[]}));
+ try{await renderStudent('/s/progress',ctx);assert.equal(document.querySelector('[data-questions-behind]').textContent,'120');const first=document.querySelector('.calendar-square');assert.match(first.textContent,/Caught up/);assert.match(first.getAttribute('aria-label'),/0 answered on this date, 20 credited from catch-up/);assert.equal(document.querySelectorAll('.calendar-square.complete').length,2);assert.match(document.querySelector('.calendar-note').textContent,/20 answers have helped catch up earlier work/);}finally{dom.window.close();}
+});
+test('catch-up route respects the server completion when earlier work is already caught up',async()=>{
+ const current=dueSummary(0,{behind:20,overdue:0,remainingToday:20});
+ const {dom,ctx}=setup(async path=>path.endsWith('/summary')?current:{question:null,done:true,summary:current});
+ try{await renderStudent('/s/practice?intent=catchup&count=5',ctx);assert.equal(document.querySelector('#practice-answer-form'),null);assert.match(document.body.textContent,/Your earlier work is caught up/);assert.equal(document.querySelector('[data-questions-behind]').textContent,'20');}finally{dom.window.close();}
+});
+
+// A different tab can clear the deficit after the server reserves this question.
+test('catch-up resumes a reserved question even if another tab has cleared the backlog',async()=>{
+ let answered=0,requested=0;const current=dueSummary(160);
+ const {dom,ctx}=setup(async(path,body)=>{
+  if(path.endsWith('/summary'))return current;
+  if(path.endsWith('/question')){requested++;assert.equal(body.intent,'catchup');return {resumedPending:true,question:{id:'reserved-catchup',source:'practice',skill:'D1',prompt:'Add.'},summary:current};}
+  if(path.endsWith('/answer')){answered++;return {correct:true,solution:['3'],summary:{...current,answered:161}};}
+  throw Error(path);
+ });
+ try{await renderStudent('/s/practice?intent=catchup&count=5',ctx);assert.ok(document.querySelector('#practice-answer-form'));document.querySelector('[name=answer]').value='3';document.querySelector('#practice-answer-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await tick();assert.equal(document.querySelector('#next-question').textContent,'Finish set');document.querySelector('#next-question').click();await tick();assert.equal(requested,1);assert.equal(answered,1);assert.match(document.body.textContent,/Your earlier work is caught up/);}finally{dom.window.close();}
+});

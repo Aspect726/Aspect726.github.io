@@ -10,14 +10,19 @@ teacher routes or write points/checks/prizes. Account passwords use bcrypt12.
 - GET `/student/summary`: today's count, required target, bonus thresholds,
   points, week/day, review count, streak, weekly note and day strip. `schedule`
   contains 70 dates, per-day `expected`, `answered`, `remaining`, `dueAt` and
-  status, plus completed/overdue totals. Deadlines use America/Los_Angeles.
+  status, plus completed/overdue totals. `schedule.backlog` is also exposed as
+  `backlog`. Deadlines use America/Los_Angeles.
 - GET `/student/map`: ten weeks, shifted dates and skill mastery.
 - GET `/student/progress`: skills, daily counts and accuracy, checks and streaks.
 - GET `/student/review`: due skills and their review stages.
 - POST `/student/question` `{source,skill?,intent?}`: fresh or resumable question. Sources
   are `practice`, `review`, `learn`, `library`; the server marks assigned work.
   `intent: "daily"` stops at the daily goal and returns no new question after
-  completion; omit it for explicit extra practice. `review` with a skill only
+  completion; omit it for explicit extra practice. `intent: "catchup"` with
+  `source: "practice"` selects the oldest overdue lesson's introduced topics
+  and returns no new question when no overdue work remains. Catch-up questions
+  expose `courseCategory: "catchup"`, `courseDay` and `catchupForDate`.
+  `review` with a skill only
   serves a due question for that skill. Automatic selection uses introduced
   topics; explicit teacher assignments and chosen lesson/library skills are
   allowed ahead. All sources share six warm-ups/14 stories per standard set.
@@ -38,6 +43,17 @@ teacher routes or write points/checks/prizes. Account passwords use bcrypt12.
   curriculum metadata. Foundation availability never implies mastery.
 - POST `/student/lesson-complete` `{skill}` after the three guided questions.
 - GET `/student/rewards`; POST `/student/rewards/:id/request`.
+
+The canonical backlog contains `behind`, `overdue`, `remainingToday`,
+`requiredToDate`, `completedToDate`, `actualAnsweredToDate`, `catchupCredit`,
+`catchupToday`, `oldestDueDate`, `nextCatchupDay`, `overdueDays`, `completedDays`
+and `onTimeCompletions`. `behind` includes today's remaining goal; `overdue`
+includes only earlier dates. `bankedCredit` is always zero. Each date's first
+target answers count toward that date; surplus answers reduce oldest prior
+deficits without prepaying future goals. Per-day `answered`, `onTimeCredited`
+and `onTimeRemaining` retain actual/on-time history; `catchupCredit`, `credited`,
+`remaining` and `caughtUp` show later catch-up progress. Bonus points and streaks
+continue to use actual dated answers, not redistributed catch-up credits.
 
 ## Tutor and learning history
 
@@ -89,6 +105,15 @@ server. The model defaults to `gpt-5-nano` with minimal reasoning; it switches t
 GET `/teacher/students`, `/teacher/dashboard`, `/teacher/students/:id`,
 `/teacher/plan`, `/teacher/checks`, `/teacher/assignments`, `/teacher/rewards`,
 `/teacher/questions`, `/teacher/settings` expose their respective views.
+
+GET `/teacher/progress-summary?studentId=...` returns `student`, `today`,
+`backlog`, compact `schedule`, `summary` and `progressReport`. Teacher dashboard
+and student detail responses also expose the same `backlog` and `progressReport`.
+The report contains a dated plain-text `text` snapshot plus `today`, `totals`,
+`accuracy` (overall and weighted last seven days), `mastery`, `levels`, `focus`,
+`streak`, `points` and `nextAction`. It excludes raw answers, contact addresses
+and tutoring conversations. The dashboard lets the teacher copy or download
+this text; there is no email-delivery endpoint or scheduled email automation.
 
 POST `/teacher/checks` saves a week, score (0–21) and note. POST
 `/teacher/notes` saves the student's weekly note. POST `/teacher/assignments`
