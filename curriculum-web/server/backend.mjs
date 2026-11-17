@@ -10,6 +10,17 @@ import { buildSlots, dayInfo, pacificDate, SKILLS } from './plan.mjs';
 const DEFAULTS = { startDate: '2026-11-07', paused: false, pausedDates: [], bonusLimit: 4, bonusThreshold: 80, bonusPointValue: 1 };
 const COOKIE = 'practice_session';
 const DAY = 86400000;
+// Only reviewed browser assets are public, even if a server/private file is
+// accidentally placed in the build's asset map. Keep the compiled asset-graph
+// smoke check in sync whenever a new browser module or stylesheet is added.
+const PUBLIC_ASSETS = new Set([
+  '/index.html', '/app.js', '/api-client.mjs', '/student.mjs', '/teacher.mjs',
+  '/learning-character.mjs', '/tutor-panel.mjs', '/styles.css',
+  '/teacher-backlog.css', '/student-learning.css', '/tutor-panel.css',
+  '/favicon.svg', '/assets/favicon.svg', '/assets/math-playground.svg', '/assets/graph-paper.svg',
+  '/assets/fonts/inter-latin.woff2', '/assets/fonts/source-serif-4-latin.woff2',
+  '/assets/fonts/inter-LICENSE.txt', '/assets/fonts/source-serif-4-LICENSE.txt'
+]);
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers } });
 // Preserve the deployed role encoding while exposing only teacher/student roles.
 const accountRole = role => role === 'parent' ? 'teacher' : role;
@@ -262,6 +273,24 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       if (origin && origin !== url.origin) fail(403, 'This request came from another site.');
       if (request.headers.get('sec-fetch-site') === 'cross-site') fail(403, 'This request came from another site.');
     }
+    if (!path.startsWith('/api/')) {
+      const assetPath = path === '/' ? '/index.html' : path;
+      const asset = PUBLIC_ASSETS.has(assetPath) ? assets[assetPath] : null;
+      if (asset && ['GET', 'HEAD'].includes(method)) {
+        const inferredType = /\.(?:mjs|js)$/.test(assetPath) ? 'text/javascript; charset=utf-8' : assetPath.endsWith('.css') ? 'text/css; charset=utf-8' : assetPath.endsWith('.svg') ? 'image/svg+xml' : assetPath.endsWith('.woff2') ? 'font/woff2' : assetPath.endsWith('.txt') ? 'text/plain; charset=utf-8' : 'text/html; charset=utf-8';
+        return new Response(method === 'HEAD' ? null : typeof asset === 'string' ? asset : asset.body, { headers: {
+          'content-type': typeof asset === 'string' ? inferredType : asset.type,
+          'cache-control': assetPath.endsWith('.woff2') ? 'public, max-age=31536000, immutable' : 'no-cache'
+        } });
+      }
+      // Application deep links receive the sign-in shell, never a directory or
+      // unknown source path. Static assets do not need an account lookup.
+      if (['GET', 'HEAD'].includes(method) && (path === '/login' || /^\/(?:s|t)\/[\w/-]*$/.test(path)) && assets['/index.html']) {
+        const shell = assets['/index.html'];
+        return new Response(method === 'HEAD' ? null : typeof shell === 'string' ? shell : shell.body, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-cache' } });
+      }
+      return json({ error: 'Not found.' }, 404);
+    }
     const user = await getUser(request);
     if (path === '/api/session' && method === 'GET') return json({ user: safeUser(user), setupRequired: !(await one("SELECT id FROM practice_users WHERE role = 'parent' LIMIT 1")) });
     if (path === '/api/setup' && method === 'POST') {
@@ -296,19 +325,6 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
       const token = request.headers.get('cookie')?.split(';').map(x => x.trim()).find(x => x.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1);
       if (token) await run('DELETE FROM practice_sessions WHERE id = ?', token);
       return json({ ok: true }, 200, { 'set-cookie': clearedCookie() });
-    }
-    if (!path.startsWith('/api/')) {
-      const asset = assets[path] || (path === '/' ? assets['/index.html'] : null);
-      if (asset && (['/', '/index.html', '/app.js', '/student.mjs', '/teacher.mjs', '/styles.css'].includes(path) || path.startsWith('/fonts/') || path.startsWith('/assets/fonts/') || path === '/favicon.svg' || ['/assets/favicon.svg','/assets/math-playground.svg','/assets/graph-paper.svg'].includes(path))) {
-        if (typeof asset === 'string') return new Response(asset, { headers: { 'content-type': path.endsWith('.js') ? 'text/javascript' : path.endsWith('.css') ? 'text/css' : 'text/html; charset=utf-8' } });
-        return new Response(asset.body, { headers: { 'content-type': asset.type, 'cache-control': (path.startsWith('/fonts/') || path.startsWith('/assets/fonts/')) ? 'public, max-age=31536000, immutable' : 'no-cache' } });
-      }
-      // Deep links serve only the login shell, never a directory or source file.
-      if (method === 'GET' && !path.includes('.') && assets['/index.html']) {
-        const asset = assets['/index.html'];
-        return new Response(typeof asset === 'string' ? asset : asset.body, { headers: { 'content-type': 'text/html; charset=utf-8' } });
-      }
-      return json({ error: 'Not found.' }, 404);
     }
     if (!user) fail(401, 'Sign in first.');
     if (production && method !== 'GET' && (/^\/api\/runs(?:\/|$)/.test(path) || /^\/api\/prizes\/[^/]+\/request$/.test(path) || /^\/api\/teacher\/(requests|points|settings)(?:\/|$)/.test(path))) fail(410, 'Open the new dashboard to continue.');

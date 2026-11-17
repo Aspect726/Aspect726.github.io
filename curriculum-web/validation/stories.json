@@ -1,9 +1,9 @@
 {
   "version": 1,
   "result": "passed",
-  "sourceRecords": 2322,
-  "paperSegments": 2469,
-  "uniquePaperFrames": 739,
+  "sourceRecords": 4485,
+  "paperSegments": 4632,
+  "uniquePaperFrames": 1239,
   "skills": 71,
   "levels": 3,
   "checkedStoryQuestions": 340800,
@@ -5992,6 +5992,6 @@
   "uniqueScenariosPerDay": 14,
   "repeatQuestions": 0,
   "singleSkillSetsChecked": 213,
-  "poolDigest": "e2bbc587c6966dfe1a264119588bcf5d172b7d165c01f272942a5413357f3655",
-  "checkedAt": "2026-11-14T23:42:58.190Z"
+  "poolDigest": "93d2625d75a6dad0239dce5e044ea1858488581883db6f22ca8c34c9159fe470",
+  "checkedAt": "2026-11-17T23:15:02.172Z"
 }

@@ -118,8 +118,33 @@ this text; there is no email-delivery endpoint or scheduled email automation.
 POST `/teacher/checks` saves a week, score (0–21) and note. POST
 `/teacher/notes` saves the student's weekly note. POST `/teacher/assignments`
 creates skill/count/date-range work; DELETE `/teacher/assignments/:id` removes it.
-POST `/teacher/plan` shifts the chosen week and all later weeks.
-PATCH `/teacher/settings` schedules next-day daily/bonus rules.
+GET `/teacher/plan` also returns `materialSource`, `diagnostics`,
+`program.scheduleVersion`, and ten weeks with their seven `days`, skill labels,
+`materials` and `downloadUrl`. Material references are pinned to reviewed Git
+commit `604a82807488885cc5db31f6b1504b27b48076e1`.
+
+POST `/teacher/plan` accepts `{week, days?, startDate?, preview?, expectedVersion?}`.
+Choose either a signed integer `days` (at most 366 in magnitude) or an exact
+`startDate`; the chosen week and every later week move together. `preview: true`
+returns `{preview}` with `deltaDays`, before/after ranges, `affectedWeeks` and
+`expectedVersion` without saving. Applying the same change with that version
+rejects stale edits with 409. Weeks must remain ordered without overlap and dates
+must stay between 2000 and 2100. The save updates offsets only; actual answers
+and point-ledger rows are not rewritten.
+
+GET `/teacher/materials/week/:week.zip` accepts weeks 1–10 and returns a private,
+no-store ZIP download. It contains the seven canonical student PDFs, teacher
+guide and a README with current assigned dates. Source fetches have size,
+timeout, PDF-signature and pinned Git-blob-hash checks; caller-supplied URLs and
+source branch archives are not accepted. A failed source fetch returns a clear
+error, while individual reviewed PDF links remain on the curriculum page.
+
+GET `/teacher/rewards` includes `program`, `pendingSettings`, `effectiveDate` and
+`nextPoint:{answered,target,remaining,firstPointAt,every}` alongside balance,
+prizes, requests and ledger. The Points & rewards UI edits daily/bonus rules via
+PATCH `/teacher/settings`; these rules take effect the next day. Saved answers
+can both reduce backlog and satisfy bonus thresholds. Downloading a worksheet
+or recording a paper score does neither.
 
 POST `/teacher/prizes` and PATCH `/teacher/prizes/:id` manage prizes. POST
 `/teacher/requests/:id` accepts approve, decline or given; only given spends.
@@ -131,3 +156,12 @@ Existing `/api/session`, `/api/login`, `/api/logout`, `/api/setup`, teacher
 account/password and backup endpoints remain. Legacy practice/scoring mutations
 are disabled in production. UI roles are teacher/student; the original database
 encoding `parent` is retained only for compatibility with existing accounts.
+
+## Request reuse
+
+The browser API client coalesces concurrent identical GETs. Only
+`/teacher/students` has a 30-second in-memory response cache; other records are
+fetched anew. Mutations invalidate before and after execution, and late reads
+from an earlier generation refetch under the current session. No answers,
+progress or tutoring history are written to browser storage. Warm Worker service
+reuse does not bypass per-request authentication or student-specific queries.

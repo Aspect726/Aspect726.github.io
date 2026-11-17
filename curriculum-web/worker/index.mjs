@@ -1,23 +1,14 @@
 import { provisionDemoAccounts } from '../server/bootstrap.mjs';
 import { createApp } from '../server/backend.mjs';
+import { createWorkerRuntime } from './runtime.mjs';
 import assets from '../generated/assets.json';
 import questionPool from '../generated/vetted-seeds.json';
 
-function application(env) {
-  if (!env.DB) throw new Error('The practice database is not configured.');
-  const decoded = Object.fromEntries(Object.entries(assets).map(([path, asset]) => [path, {
-    type: asset.type,
-    body: asset.encoding === 'base64'
-      ? Uint8Array.from(atob(asset.body), character => character.charCodeAt(0))
-      : asset.body
-  }]));
-  return createApp({ db: env.DB, assets: decoded, questionPool, backupStore: env.BUCKET, production: true,
-    ai: {apiKey:env.OPENAI_API_KEY,model:env.OPENAI_TUTOR_MODEL} });
-}
+const application = createWorkerRuntime({ assets, questionPool, createApplication: createApp, bootstrap: provisionDemoAccounts });
 
 export default {
   async fetch(request, env) {
-    try { await provisionDemoAccounts(env.DB, env.BOOTSTRAP_ACCOUNTS_JSON); return await application(env).fetch(request); }
+    try { return await (await application(env)).fetch(request); }
     catch (error) {
       console.error('Practice request failed:', error.message);
       return new Response(JSON.stringify({ error: 'Practice could not load. Please try again.' }), {
@@ -26,6 +17,6 @@ export default {
     }
   },
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(application(env).backup());
+    ctx.waitUntil(application(env).then(app => app.backup()));
   }
 };

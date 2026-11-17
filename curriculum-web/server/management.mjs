@@ -3,6 +3,8 @@ import { generateQuestion, publicQuestion, gradeQuestion, storyScenarios, storyS
 import { courseSchedule, scheduledCourseDays } from './course-schedule.mjs';
 import { curriculumOverview, curriculumForSkill } from './curriculum.mjs';
 import { progressReport } from './progress-report.mjs';
+import { materialSource, diagnostics, weekMaterials, downloadWeek } from './course-materials.mjs';
+import { scheduleVersion, previewScheduleEdit } from './schedule-edit.mjs';
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 const json = (value, status=200) => new Response(JSON.stringify(value), {status, headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
@@ -16,7 +18,7 @@ const skillWeek = skill => { for(let i=0;i<70;i++) if(dayInfo(i).focus.includes(
 const skillName = skill => SKILLS[skill]||skill;
 const accuracy = (correct,total) => total ? Math.round(correct/total*100) : null;
 
-export function createManagement({db,clock=()=>new Date(),production=false,questionPool=null,platform=null}) {
+export function createManagement({db,clock=()=>new Date(),production=false,questionPool=null,platform=null,materialFetcher=fetch}) {
   const stmt=(sql,...args)=>db.prepare(sql).bind(...args);
   const one=(sql,...args)=>stmt(sql,...args).first();
   const all=async(sql,...args)=>(await stmt(sql,...args).all()).results;
@@ -46,23 +48,23 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
       await run("UPDATE platform_program SET daily_target=?,bonus_first=?,bonus_step=?,pending_settings='{}',effective_date=NULL WHERE student_id=? AND effective_date=?",p.dailyTarget??row.daily_target,p.bonusFirst??row.bonus_first,p.bonusStep??row.bonus_step,id,row.effective_date);
       row=await one('SELECT * FROM platform_program WHERE student_id=?',id);
     }
-    return {studentId:id,startDate:row.start_date,weekOffsets:JSON.parse(row.week_offsets||'[]'),dailyTarget:row.daily_target,bonusFirst:row.bonus_first,bonusStep:row.bonus_step,pendingSettings:JSON.parse(row.pending_settings||'{}'),effectiveDate:row.effective_date};
+    return {studentId:id,scheduleVersion:scheduleVersion(row.start_date,row.week_offsets),startDate:row.start_date,weekOffsets:JSON.parse(row.week_offsets||'[]'),dailyTarget:row.daily_target,bonusFirst:row.bonus_first,bonusStep:row.bonus_step,pendingSettings:JSON.parse(row.pending_settings||'{}'),effectiveDate:row.effective_date};
   }
-  async function weeks(id) {
-    const p=await program(id),date=today(),schedule=scheduledCourseDays(p);
+  async function weeks(id, suppliedProgram=null) {
+    const p=suppliedProgram??await program(id),date=today(),schedule=scheduledCourseDays(p);
     return Array.from({length:10},(_,i)=>{
       const days=schedule.slice(i*7,i*7+7),startDate=days[0].date,endDate=days[6].date;
       const skills=[...new Set(days.flatMap(d=>d.focus))].map(skill=>({skill,name:skillName(skill)}));
       const topics=[...new Set([days[0].title,days[1].title])];
-      return {week:i+1,topic:topics.join(' · '),startDate,endDate,bridges:[...new Map(days.flatMap(day=>day.bridges).map(bridge=>[bridge.skill,bridge])).values()],status:date<startDate?'upcoming':date>endDate?'done':'current',skills};
+      return {week:i+1,topic:topics.join(' · '),startDate,endDate,days:days.map(day=>({...day,skills:day.focus.map(skill=>({skill,name:skillName(skill)}))})),materials:weekMaterials(i+1),downloadUrl:weekMaterials(i+1).downloadUrl,bridges:[...new Map(days.flatMap(day=>day.bridges).map(bridge=>[bridge.skill,bridge])).values()],status:date<startDate?'upcoming':date>endDate?'done':'current',skills};
     });
   }
   const attemptView=a=>({id:a.id,date:a.date,skill:a.skill,templateId:a.template_id,level:a.level,question:a.question_text,questionText:a.question_text,givenAnswer:a.given_answer,correctAnswer:a.correct_answer,correct:Boolean(a.is_correct),mistakeLabel:a.mistake_label,seconds:a.seconds,source:a.source,createdAt:a.created_at});
-  async function detail(id) {
-    const student=safeUser(await one("SELECT id,name,username,role FROM practice_users WHERE id=? AND role='student'",id));
+  async function detail(id, knownStudent=null) {
+    const student=knownStudent?.id===id?knownStudent:safeUser(await one("SELECT id,name,username,role FROM practice_users WHERE id=? AND role='student'",id));
     if(!student)fail(404,'That student was not found.');
     const p=await program(id),canonical=platform?.analytics?await platform.analytics(id):null,rows=canonical?.attempts??await all('SELECT * FROM platform_attempts WHERE student_id=? ORDER BY created_at,id',id);
-    const ledger=await all('SELECT * FROM practice_ledger WHERE student_id=? ORDER BY created_at,id',id);
+    const ledger=canonical?.ledger??await all('SELECT * FROM practice_ledger WHERE student_id=? ORDER BY created_at,id',id);
     const byDate=new Map();
     for(const a of rows){if(!byDate.has(a.date))byDate.set(a.date,{date:a.date,answered:0,correct:0,seconds:0});const d=byDate.get(a.date);d.answered++;d.correct+=a.is_correct?1:0;d.seconds+=a.seconds;}
     const schedule=canonical?.schedule??courseSchedule({program:p,attempts:rows,rules:await all('SELECT * FROM platform_daily_rules WHERE student_id=?',id),today:today()});
@@ -84,20 +86,25 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     return result;
   }
   async function rewards(id) {
-    const prizes=(await all('SELECT p.*,COALESCE(n.note,\'\') AS note FROM practice_prizes p LEFT JOIN platform_prize_notes n ON n.prize_id=p.id ORDER BY p.cost,p.created_at')).map(p=>({id:p.id,name:p.name,cost:p.cost,note:p.note,active:Boolean(p.active)}));
-    if(!id)return {points:0,nextPoint:{answered:0,target:35,remaining:35},prizes,requests:[],history:[]};
-    const p=await program(id),answered=Number((await one('SELECT COUNT(*) AS n FROM platform_attempts WHERE student_id=? AND date=?',id,today())).n);
-    const first=p.dailyTarget+p.bonusFirst,target=answered<first?first:first+(Math.floor((answered-first)/p.bonusStep)+1)*p.bonusStep;
-    return {points:await balance(id),nextPoint:{answered,target,remaining:target-answered},prizes,
-      requests:(await all('SELECT * FROM practice_requests WHERE student_id=? ORDER BY created_at DESC',id)).map(r=>({id:r.id,prizeId:r.prize_id,name:r.prize_name,cost:r.cost,status:r.status==='pending'?'requested':r.status,createdAt:r.created_at,reviewedAt:r.reviewed_at})),
-      history:(await all('SELECT * FROM practice_ledger WHERE student_id=? ORDER BY created_at DESC,id DESC',id)).map(l=>({id:l.id,amount:l.amount,kind:l.kind,note:l.note,createdAt:l.created_at}))};
+    const prizesPromise=all("SELECT p.*,COALESCE(n.note,'') AS note FROM practice_prizes p LEFT JOIN platform_prize_notes n ON n.prize_id=p.id ORDER BY p.cost,p.created_at");
+    if(!id)return {points:0,nextPoint:{answered:0,target:35,remaining:35},prizes:(await prizesPromise).map(p=>({...p,active:Boolean(p.active)})),requests:[],history:[],program:null,pendingSettings:{},effectiveDate:null};
+    const [p,count,points,prizeRows,requests,history]=await Promise.all([
+      program(id),one('SELECT COUNT(*) AS n FROM platform_attempts WHERE student_id=? AND date=?',id,today()),balance(id),prizesPromise,
+      all('SELECT * FROM practice_requests WHERE student_id=? ORDER BY created_at DESC',id),
+      all('SELECT * FROM practice_ledger WHERE student_id=? ORDER BY created_at DESC,id DESC',id)
+    ]);
+    const answered=Number(count.n),first=p.dailyTarget+p.bonusFirst,target=answered<first?first:first+(Math.floor((answered-first)/p.bonusStep)+1)*p.bonusStep;
+    return {points,nextPoint:{answered,target,remaining:target-answered,firstPointAt:first,every:p.bonusStep},program:p,pendingSettings:p.pendingSettings,effectiveDate:p.effectiveDate,
+      prizes:prizeRows.map(p=>({id:p.id,name:p.name,cost:p.cost,note:p.note,active:Boolean(p.active)})),
+      requests:requests.map(r=>({id:r.id,prizeId:r.prize_id,name:r.prize_name,cost:r.cost,status:r.status==='pending'?'requested':r.status,createdAt:r.created_at,reviewedAt:r.reviewed_at})),
+      history:history.map(l=>({id:l.id,amount:l.amount,kind:l.kind,note:l.note,createdAt:l.created_at}))};
   }
   async function dashboard(learner) {
     if(!learner)return {student:null,today:today(),week:null,days:[],schedule:null,backlog:null,progressReport:null,summary:{schedule:null,backlog:null},attention:[],weakSkills:[],saturdayPrep:null,points:0,earnedThisWeek:0,requests:[]};
-    const d=await detail(learner.id),ws=await weeks(learner.id),week=ws.find(w=>w.status==='current')||ws.find(w=>w.status==='upcoming')||ws.at(-1);
+    const [d,reward]=await Promise.all([detail(learner.id,learner),rewards(learner.id)]),ws=await weeks(learner.id,d.program),week=ws.find(w=>w.status==='current')||ws.find(w=>w.status==='upcoming')||ws.at(-1);
     const recent=d.attempts.filter(a=>a.date>=week.startDate&&a.date<=week.endDate);
     const weakSkills=skillList.map(({skill,name})=>{const a=recent.filter(a=>a.skill===skill),correct=a.filter(a=>a.correct).length;return {skill,name,attempts:a.length,correct,accuracy:accuracy(correct,a.length)};}).filter(s=>s.attempts>=5).sort((a,b)=>a.accuracy-b.accuracy).slice(0,5);
-    const reward=await rewards(learner.id),requests=reward.requests.filter(r=>['requested','approved'].includes(r.status));
+    const requests=reward.requests.filter(r=>['requested','approved'].includes(r.status));
     const days=Array.from({length:7},(_,i)=>{const date=addDays(week.startDate,i),scheduled=d.schedule.days.find(day=>day.date===date);return d.days.find(d=>d.date===date)||{date,answered:0,correct:0,accuracy:null,minutes:0,points:0,target:scheduled?.expected??20,remaining:scheduled?.remaining??20,dueAt:scheduled?.dueAt??null,status:date>today()?'upcoming':date===today()?'today':'missed'};});
     const attention=[];
     if(d.backlog.overdue)attention.push({text:`${d.backlog.behind} questions left to be on track: ${d.backlog.overdue} from earlier days and ${d.backlog.remainingToday} today.`,href:`/t/students/${learner.id}?section=days`});
@@ -107,7 +114,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     const missed=days.filter(d=>d.status==='missed').at(-1);if(missed)attention.push({text:`${missed.remaining} questions were left on ${missed.date}.`,href:`/t/students/${learner.id}?section=days&date=${missed.date}`});
     if(requests.length)attention.push({text:`Prize request: ${requests[0].name}, ${requests[0].cost} points.`,href:'/t/rewards'});
     const next=ws.find(w=>w.startDate>today())||week;
-    return {student:learner,today:today(),week,days,schedule:d.schedule,backlog:d.backlog,summary:d.summary,progressReport:d.progressReport,attention:attention.slice(0,3),weakSkills,saturdayPrep:{topic:next.topic,suggestion:weakSkills[0]?`Start with ${weakSkills[0].name.toLowerCase()}; review the recorded answers together.`:'Review the week’s practice before introducing the next skills.'},points:reward.points,earnedThisWeek:reward.history.filter(l=>l.kind==='bonus'&&pacificDate(l.createdAt)>=week.startDate&&pacificDate(l.createdAt)<=week.endDate).reduce((n,l)=>n+l.amount,0),requests};
+    return {student:learner,today:today(),week,days,schedule:d.schedule,backlog:d.backlog,summary:d.summary,progressReport:d.progressReport,attention:attention.slice(0,3),weakSkills,saturdayPrep:{topic:next.topic,suggestion:weakSkills[0]?`Start with ${weakSkills[0].name.toLowerCase()}; review the recorded answers together.`:'Review the week’s practice before introducing the next skills.'},points:reward.points,nextPoint:reward.nextPoint,program:reward.program,earnedThisWeek:reward.history.filter(l=>l.kind==='bonus'&&pacificDate(l.createdAt)>=week.startDate&&pacificDate(l.createdAt)<=week.endDate).reduce((n,l)=>n+l.amount,0),requests};
   }
   async function questionBank(skill) {
     if(skill&&!SKILLS[skill])fail(400,'Choose a skill from the course.');
@@ -141,24 +148,35 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     if(!user)fail(401,'Sign in first.');
     if(path.startsWith('/api/v2/teacher/')&&user.role!=='teacher')fail(403,'A teacher account is needed.');
     if(studentRewards&&user.role!=='student')fail(403,'Use the student account for rewards.');
+    if(path==='/api/v2/teacher/students'&&method==='GET')return json({students:await students()});
     const data=['POST','PATCH','PUT'].includes(method)?await body(request):{};
     const learner=await chooseStudent(user,url,data);
     const requireStudent=()=>{if(!learner)fail(409,'Create a student account first.');return learner.id;};
-    if(path==='/api/v2/teacher/students'&&method==='GET')return json({students:await students()});
     if(path==='/api/v2/teacher/dashboard'&&method==='GET')return json(await dashboard(learner));
     if(path==='/api/v2/teacher/progress-summary'&&method==='GET'){
       if(!learner)return json({student:null,today:today(),backlog:null,schedule:null,summary:null,progressReport:null});
-      const d=await detail(learner.id),{today:current,dailyTarget,startDate,endDate,phase}=d.schedule;
+      const d=await detail(learner.id,learner),{today:current,dailyTarget,startDate,endDate,phase}=d.schedule;
       return json({student:d.student,today:today(),backlog:d.backlog,schedule:{today:current,dailyTarget,startDate,endDate,phase},summary:{answered:d.summary.answered,correct:d.summary.correct,accuracy:d.summary.accuracy,streak:d.summary.streak,bestStreak:d.summary.bestStreak,points:d.points,backlog:d.backlog},progressReport:d.progressReport});
     }
     let match=path.match(/^\/api\/v2\/teacher\/students\/([^/]+)$/);
-    if(match&&method==='GET'){const result=await detail(match[1]),date=url.searchParams.get('date'),skill=url.searchParams.get('skill');if(date){if(!validDate(date))fail(400,'Choose a valid date.');result.attempts=result.attempts.filter(a=>a.date===date);}if(skill)result.attempts=result.attempts.filter(a=>a.skill===skill);return json(result);}
-    if(path==='/api/v2/teacher/plan'&&method==='GET')return json({student:learner,weeks:learner?await weeks(learner.id):[],program:learner?await program(learner.id):null,curriculum:curriculumOverview()});
+    if(match&&method==='GET'){const result=await detail(match[1],learner),date=url.searchParams.get('date'),skill=url.searchParams.get('skill');if(date){if(!validDate(date))fail(400,'Choose a valid date.');result.attempts=result.attempts.filter(a=>a.date===date);}if(skill)result.attempts=result.attempts.filter(a=>a.skill===skill);return json(result);}
+    if(path==='/api/v2/teacher/plan'&&method==='GET'){
+      const p=learner?await program(learner.id):null;
+      return json({student:learner,weeks:p?await weeks(learner.id,p):[],program:p,curriculum:curriculumOverview(),materialSource,diagnostics,materials:{source:materialSource,diagnostics}});
+    }
     if(path==='/api/v2/teacher/plan'&&method==='POST'){
-      const id=requireStudent(),week=integer(data.week,1,10,'Week'),days=integer(data.days??7,1,28,'Delay');
-      const p=await program(id),offsets=Array.from({length:10},(_,i)=>Number(p.weekOffsets[i]||0)+(i>=week-1?days:0));
-      await run('UPDATE platform_program SET week_offsets=? WHERE student_id=?',JSON.stringify(offsets),id);
-      return json({ok:true,weeks:await weeks(id)});
+      const id=requireStudent(),p=await program(id),preview=previewScheduleEdit(p,data);
+      if(data.preview===true){const {offsets,...view}=preview;return json({preview:view});}
+      const [storedStart,storedOffsets]=JSON.parse(p.scheduleVersion);
+      const saved=await run('UPDATE platform_program SET week_offsets=? WHERE student_id=? AND start_date=? AND week_offsets=?',JSON.stringify(preview.offsets),id,storedStart,storedOffsets);
+      if(saved.meta?.changes!==1)fail(409,'The course dates changed in another tab. Reload the curriculum and preview again.');
+      const changed={...p,weekOffsets:preview.offsets,scheduleVersion:scheduleVersion(p.startDate,JSON.stringify(preview.offsets))};
+      return json({ok:true,weeks:await weeks(id,changed),program:changed});
+    }
+    match=path.match(/^\/api\/v2\/teacher\/materials\/week\/(\d+)\.zip$/);
+    if(match&&method==='GET'){
+      const number=integer(Number(match[1]),1,10,'Week'),courseWeek=learner?(await weeks(learner.id))[number-1]:null;
+      return downloadWeek(number,{fetcher:materialFetcher,courseWeek});
     }
     if(path==='/api/v2/teacher/checks'&&method==='GET')return json({student:learner,checks:learner?await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',learner.id):[],weeks:learner?await weeks(learner.id):[]});
     if(path==='/api/v2/teacher/checks'&&method==='POST'){

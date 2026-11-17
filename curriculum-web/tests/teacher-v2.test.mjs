@@ -60,14 +60,14 @@ test('teacher saves paper scores and next-day rules through forms', async () => 
     const score = await f.db.prepare('SELECT * FROM platform_weekly_checks WHERE student_id=?').bind('student').first();
     assert.equal(score.score, 11); assert.equal(score.week, 2); assert.equal(score.note, 'Revisit fractions.');
     await f.render('/t/checks'); assert.match(document.body.textContent, /11 \/ 21/);
-    await f.render('/t/settings');
+    await f.render('/t/rewards');
     document.getElementById('dailyTarget').value = '25'; document.getElementById('bonusFirst').value = '12'; document.getElementById('bonusStep').value = '8';
     await f.submit('program-form');
     const program = await f.db.prepare('SELECT * FROM platform_program WHERE student_id=?').bind('student').first();
     assert.equal(program.daily_target, 20, 'today stays at twenty');
     assert.equal(program.effective_date, '2026-11-11');
     assert.deepEqual(JSON.parse(program.pending_settings), { dailyTarget: 25, bonusFirst: 12, bonusStep: 8 });
-    await f.render('/t/settings'); assert.equal(document.getElementById('dailyTarget').value, '25', 'pending rule remains visible');
+    await f.render('/t/rewards'); assert.equal(document.getElementById('dailyTarget').value, '25', 'pending rule remains visible');
     assert.deepEqual(f.notices.filter(n => n.error), []);
   } finally { f.close(); }
 });
@@ -110,7 +110,7 @@ test('daily record includes missing dates and teacher note saves for the selecte
  const f=await fixture();
  try {
   await f.render('/t/dashboard');
-  assert.match(document.querySelector('.teacher-student-stats').textContent,/Answered today0 \/ 20/);
+  assert.match(document.querySelector('.teacher-today').textContent,/Today’s goal0 \/ 20/);
   assert.match(document.querySelector('.teacher-backlog-hero').textContent,/80 questions behind/);
   assert.match(document.querySelector('.teacher-backlog-hero').textContent,/60 overdue from earlier days/);
   assert.match(document.getElementById('teacher-progress-update').value,/Questions behind: 80 — 60 overdue from earlier days \+ 20 left today/);
@@ -130,14 +130,15 @@ test('one-student dashboard exposes the same backlog and copyable report as the 
  try {
   await f.render('/t/dashboard');
   const expected=await f.ctx.api('/v2/teacher/progress-summary?studentId=student');
-  assert.equal(document.querySelector('h1').textContent,'Sahil’s maths');
+  assert.equal(document.querySelector('h1').textContent,'Sahil’s learning');
   assert.match(document.querySelector('.teacher-backlog-hero').textContent,/160 questions behind/);
   assert.match(document.querySelector('.teacher-backlog-hero').textContent,/140 overdue from earlier days/);
   const field=document.getElementById('teacher-progress-update');
   assert.equal(field.value,expected.progressReport.text);
   assert.match(field.value,/Questions behind: 160/);
   assert.equal(document.querySelectorAll('#teacher-note').length,1);
-  assert.equal(document.querySelectorAll('.teacher-student-stats>article').length,4);
+  assert.equal(document.querySelectorAll('.teacher-actions>a').length,3);
+  assert.equal(document.querySelector('.teacher-share-update').open,false,'report is secondary');
   let copied;
   Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async text=>{copied=text;}}}});
   document.getElementById('copy-progress-update').click();
@@ -147,7 +148,9 @@ test('one-student dashboard exposes the same backlog and copyable report as the 
   document.getElementById('refresh-progress-update').click();
   assert.deepEqual(f.nav,['/t/dashboard']);
   await f.render('/t/plan');
-  assert.match(document.querySelector('.teacher-progress-ribbon').textContent,/160 questions behind/);
+  assert.equal(document.querySelector('.teacher-progress-ribbon'),null,'curriculum is not blocked by a progress ribbon');
+  assert.equal(document.querySelectorAll('.curriculum-week').length,10);
+  assert.equal(document.querySelectorAll('.curriculum-days>li').length,70);
  } finally {
   if(originalNavigator)Object.defineProperty(globalThis,'navigator',originalNavigator);else delete globalThis.navigator;
   f.close();
@@ -176,4 +179,47 @@ test('report copy fallback selects the update and download exports its exact tex
   if(originalNavigator)Object.defineProperty(globalThis,'navigator',originalNavigator);else delete globalThis.navigator;
   URL.createObjectURL=create;URL.revokeObjectURL=revoke;f.close();
  }
+});
+
+test('curriculum date editor previews, cancels and applies dates without changing saved work',async()=>{
+ const f=await fixture();
+ try{
+  await f.render('/t/plan?week=2');
+  assert.equal(document.querySelectorAll('.curriculum-week[open]').length,1);
+  assert.equal(document.querySelector('.curriculum-week[open]').id,'week-2');
+  const input=document.getElementById('week-start-2');
+  const original=input.value;
+  document.querySelector('[data-date-nudge="7"][data-week="2"]').click();
+  assert.equal(input.value,'2026-11-21');
+  await f.submit('week-date-form-2');
+  assert.match(document.getElementById('date-preview-2').textContent,/9 weeks move 7 days later/);
+  let p=await f.db.prepare("SELECT week_offsets FROM platform_program WHERE student_id='student'").first();
+  assert.deepEqual(JSON.parse(p.week_offsets),[],'preview makes no schedule mutation');
+  document.querySelector('[data-cancel-dates]').click();
+  assert.equal(input.value,original);
+  assert.equal(document.getElementById('date-preview-2').hidden,true);
+  input.value='2026-11-17';
+  await f.submit('week-date-form-2');
+  document.querySelector('[data-apply-dates]').click();
+  await until(()=>f.nav.length===1);
+  p=await f.db.prepare("SELECT week_offsets FROM platform_program WHERE student_id='student'").first();
+  assert.deepEqual(JSON.parse(p.week_offsets),[0,3,3,3,3,3,3,3,3,3]);
+  assert.equal((await f.db.prepare('SELECT COUNT(*) AS n FROM practice_ledger').first()).n,0,'dates do not create points');
+ }finally{f.close();}
+});
+
+test('curriculum downloads are pinned reviewed materials and carry the selected student',async()=>{
+ const f=await fixture();
+ try{
+  f.state.studentId='other';
+  await f.render('/t/plan?week=4');
+  const downloads=[...document.querySelectorAll('[data-download-week]')];
+  assert.equal(downloads.length,10);
+  assert.ok(downloads.every(button=>new URL(button.dataset.downloadUrl,'https://example.test').searchParams.get('studentId')==='other'));
+  const pdfs=[...document.querySelectorAll('a[href$=".pdf"]')];
+  assert.equal(pdfs.length,82);
+  assert.ok(pdfs.every(link=>link.href.includes('604a82807488885cc5db31f6b1504b27b48076e1')));
+  assert.match(document.getElementById('week-4').textContent,/Thanksgiving/);
+  assert.doesNotMatch(document.body.innerHTML,/paper_questions\.json|Day_01_Sat_Nov7%202/);
+ }finally{f.close();}
 });

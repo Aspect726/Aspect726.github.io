@@ -1,118 +1,139 @@
-# November 14 daily learning, catch-up and teacher update
+# November 17 curriculum, teaching controls and learning interface
 
-Students now begin with one clear daily task: 20 questions a day from Saturday,
-November 7, 2026, over the supplied 70-day plan. The main page shows actual
-answers today, remaining work, a Pacific-time due-date countdown and the
-teacher’s weekly note. Extra practice and Review are the two supporting choices;
-lessons, tools and detailed progress remain available behind secondary links.
-Daily mode stops at the goal. A prominent backlog count appears across the
-student's pages and throughout teacher management. It separates earlier overdue
-work from today's remaining goal: with no answers on November 14, the count is
-160 questions behind (140 earlier, 20 today). Completing today's 20 leaves 140;
-five extra answers reduce it to 135. These values are calculated from dates and
-saved work, not hardcoded.
+The teacher interface now has four main destinations: Overview, Curriculum &
+dates, Student work, and Points & rewards. Settings retains accounts, helper
+access and backups. The one-student overview puts the current lesson, daily work,
+catch-up progress and weekly note together. Practice tasks and question samples
+are grouped under Curriculum; paper checks remain available from Student work.
+The manually shareable progress update is retained in a disclosure. No email is
+sent or scheduled.
 
-Each date's first target answers satisfy that date; surplus answers pay down the
-oldest already-due deficits without prepaying future work. Actual dated answers
-and on-time streaks remain intact, while the calendar separately shows later
-catch-up credit. Five-question catch-up sessions follow the oldest unfinished
-lesson's introduced topics. Teacher views use the same canonical counts and
-show all 70 scheduled dates, including unanswered days.
+Points & rewards now includes the authoritative rule editor, today's active
+rules, tomorrow's pending rules, numerical examples, prizes, requests and the
+ledger. With the default rules, the first 20 saved answers satisfy today's goal;
+extra answers reduce earlier unfinished work, and points are earned at 35, 45,
+55 and each further ten answers. The same catch-up answer can reduce overdue
+work and earn points. A PDF download or paper score does not count as an online
+answer. Existing points, accounts and learning history are preserved.
 
-The teacher dashboard is centered on one student, with daily work, catch-up
-progress, accuracy, skills, website difficulty levels and the weekly note
-together. A dated progress update can be copied or downloaded for manual sharing.
-It includes overall and recent accuracy, focus, points and next steps, without
-raw answers or tutoring conversations. Account management remains in Settings.
-No email delivery or scheduled email automation is configured.
+## Curriculum review and materials
 
-## Curriculum and question changes
+The new curriculum is on the repository's `Curriculum` branch at commit
+`604a82807488885cc5db31f6b1504b27b48076e1`. Its plan is structurally identical to
+the existing 70-day plan: no change to the teaching sequence or generators was
+needed. The 16 supplemental foundation/bridge targets remain alongside the 54
+supplied plan skills. Grade 5 familiarity is still checked rather than assumed
+mastered, and automatic practice stays within introduced topics.
 
-The original plan file is unchanged. A curriculum overlay maps 70 learning targets
-to Grade 5 foundations, BSD IMT1 and selected next-course extensions. It adds 16
-explicit foundation/bridge skills, prerequisites, teaching dates, lesson notes
-and accessible diagrams. Fifth-grade knowledge is checked rather than marked
-mastered. General fraction division, ratios, rates, percentages and fractional
-volume are introduced as new learning. Same-day prerequisite topics come first.
-Automatic practice/review uses introduced topics; teachers and students can
-explicitly choose a later lesson or assignment.
+The complete branch tree and all 83 PDFs were reviewed; downloaded PDF bytes
+matched their Git blob hashes. The default curriculum page references 82 PDFs:
+70 canonical student sheets, ten teacher guides, and the Grade 5 diagnostic and
+key. An older duplicate first-day sheet is excluded. The page organizes all ten
+weeks and 70 days, with individual links and a weekly ZIP containing seven
+student sheets, the teacher guide and a README with the assigned dates. ZIP
+source files are size- and hash-checked against the pinned revision. The website
+does not serve a source-branch archive or the `For_ChatGPT/` folder.
 
-The added coverage includes place value, rounding from hundreds to thousandths,
-whole-number multiplication, decimal addition/multiplication, measurement
-conversion, fraction sharing, expressions, paired patterns, common factors,
-signed division, shape hierarchy, combined whole-number volume, fractional line
-plots, probability and sampling. Existing generators now include varied powers
-and bases, signed rational comparisons, fraction scaling, coordinate rectangle
-area, fractional prism edges, outside triangle heights, prism/pyramid nets and
-both odd/even median lists. See `docs/curriculum-audit.md` for official sources,
-standard mappings and the differences between published BSD course boundaries.
-This is a teaching alignment, not a placement decision or an exam specification.
+Earlier/later controls and an exact start date replace the ambiguous “move back”
+action. A preview names all affected weeks before saving. Overlapping dates and
+stale concurrent edits are rejected. Submitted answers and point-ledger rows are
+not rewritten. Original dates remain printed on PDFs; the website calendar and
+ZIP README show the assigned dates. A source Thanksgiving-date error is noted
+rather than converted into an automatic holiday exception.
 
-Each standard 20-question block retains six warm-ups and 14 multi-step stories,
-with 14 different scenarios. All five story shapes have computed answers, units,
-two to four dependent worked steps and help. Numerical grading remains in code.
-Saved tutor history, teacher visibility, account isolation and management
-controls are preserved; this release does not reset accounts, answers or points.
+See `docs/curriculum-update-2026-11-17.md` for the audit, district/publisher
+cross-check and extraction limits. This is curriculum alignment, not a BSD
+placement assessment or an independent proof of every supplied answer key.
+
+## Student experience and help
+
+The daily action stays primary; short catch-up work is the recommended next step
+once today's goal is met. Daily/catch-up progress and the next reward point have
+separate explanations and meters. Counts use saved answers and course dates;
+they are not hardcoded. Actual activity stays on its original date, later
+catch-up credits are separate, and future daily goals cannot be prepaid.
+
+Shorter task labels replace decorative slogans. Blue, violet, yellow and coral
+accents, mathematical diagrams and two original geometry characters give the
+interface a consistent learning theme. Finite celebrations follow saved work,
+do not delay the next question and respect reduced-motion preferences.
+
+Every question retains computed hints, worked steps and an answer. Contextual
+help actions focus the tutor on a question, worked step or the student's method.
+Opening help restores saved messages; only submitting requests a new generated
+explanation. Retrying unchanged content reuses the same request ID. Generated
+replies remain labeled as AI, with student-specific history and teacher
+visibility preserved. Numerical grading remains in code.
+
+The evidence and design rationale are documented in
+`docs/ux-review-2026-11-17.md`, including IES, CAST and W3C references.
+
+## Navigation and asset delivery
+
+Duplicate student-list requests and the serial global progress-summary fetch
+were removed from teacher navigation. Identical in-flight GET requests are
+coalesced; only the teacher's student list has a 30-second memory cache.
+Progress, points, answers and conversations are not cached in browser storage.
+Mutations and session/account changes invalidate state, and late reads cannot
+restore a previous session's data. Immediate loading feedback and main-heading
+focus accompany page navigation.
+
+Warm Workers reuse initialized services and immutable decoded assets while
+authenticating every request and reading student records from the database.
+This reduces redundant work; production network latency has not been measured.
+
+A concrete styling defect was also fixed: the previous deployment's
+`teacher-backlog.css` was built into the Worker but omitted from the public asset
+allowlist, so its request returned 404. The allowlist now includes every required
+module and stylesheet. Compiled smoke coverage follows the delivered import and
+stylesheet graph so this failure cannot hide behind a successful bundle build.
 
 ## Verification
 
-- Generator reports record 640,500 checks across 327 warm-up/template shapes.
-  The current full suite passes 305 tests with zero failures or skips.
-  Backlog regressions cover the 160-to-135 catch-up example,
-  duplicate answers, no future prepayment and consistent role-specific counts.
-  Coverage includes 70 dated goals, Pacific midnight/DST, shifted weeks,
-  same-day prerequisites, review filtering, concurrent completion, saved notes,
-  ownership, grading, history, rewards and teacher management.
-  Teacher UI checks exercise the copyable report, clipboard success, manual-copy
-  fallback, text download and the single-student toolbar.
-- The private corpus contains 2,322 records,2,469 segments and 739 distinct
-  number-free frames. All 218,112 approved warm-up entries and 340,800 approved
-  story entries pass the exclusion checks. All 71 question families have three
-  levels; each story pool has 1,600 entries spanning 16 scenarios and five shapes.
-- The original 4,550-question course/bonus capacity check passes. The current
-  70-day daily check materializes 1,400 questions:980 stories and 420 warm-ups,
-  with 14 distinct story scenarios per day and no repeat. Single-skill sets pass
-  for all 213 skill/level combinations.
-- Frame checks inspect 490,500 template samples plus every approved warm-up and
-  story seed, with zero matching paper frames. Source hashes and pool digests
-  block builds if that evidence becomes stale. Aggregate reports are public;
-  the paper corpus, approved seed pool and private QA fixtures are not.
-- In the preceding curriculum revision, sandboxed Chromium rendered 34
-  desktop/tablet/phone views against an
-  isolated SQLite backend, with no page errors or horizontal document overflow.
-  Screenshot inspection corrected calendar alignment and completion density.
-  A second browser journey using the production checked pool saved exactly 20
-  answers, including 14 distinct stories, stopped Daily mode at 20, opened optional
-  extra practice, and displayed matching teacher counts and the saved note.
-  Its nine screenshots include the completed state and expanded curriculum on
-  desktop and phone. Geometry and curriculum diagrams were also rendered and
-  inspected, including extreme prism/pyramid dimensions.
-- Production Worker build and compiled smoke checks pass.
-  The smoke test exercises the 70-day schedule,70-skill library, old/new lessons,
-  persistent tutor history, role isolation, counted answers and private paths.
+- The full suite passes **335 tests**, with zero failures or skips. Coverage
+  includes schedule preview/cancel/apply, nine affected later weeks, overlap and
+  concurrent-edit rejection, student-specific downloads, all 82 PDF references,
+  active/pending reward rules, tutor retries, request reuse and access isolation.
+- The expanded private no-repeat input contains **4,485 records**: 2,322 original
+  paper/slide records, 2,123 revised numbered PDF questions and 40 reminder boxes
+  containing worked examples. It has 4,632 extracted segments and 1,239
+  number-free frames. The original input remains unchanged.
+- The rebuilt pool passes all checks for **218,112 approved warm-ups** and
+  **340,800 approved stories**, with zero matching questions or frames. All 71
+  question families retain three difficulty levels, 16 story scenarios and all
+  five story shapes.
+- The **4,550-question** course/bonus capacity check passes. All 70 daily sets
+  materialize 1,400 questions: 420 warm-ups and 980 stories, with fourteen distinct
+  scenarios per day. Numerical grading and worked solutions remain unchanged.
+- Frame checks pass **490,500 generated samples** plus every approved pool entry.
+  Source hashes and the final pool digest are verified; stale evidence blocks
+  building. Only aggregate results are mirrored publicly.
+- The final production Worker build passes with 18 public shell assets and a
+  9,679,694-byte Worker. Compiled smoke passes the recursive 15-asset HTML, CSS,
+  module and font dependency graph, plus login, role isolation, vetted questions,
+  worked help, saved tutor history, counted answers and private-path denial.
+  Final packaging uses the same pushed source as the saved Site version.
 
-The current update's browser appearance could not be verified: the managed
-preview relay timed out waiting for port 4173, and the cloud browser failed at
-initialization with `gaas-browser node_repl sandbox cannot be disabled`. This
-update's UI behavior is covered by the automated tests above; the older screenshots
-do not establish the appearance of the new backlog and teacher dashboard.
+The current browser tool failed at initialization with
+`gaas-browser node_repl sandbox cannot be disabled`. Final appearance could not
+be visually verified. Earlier screenshots describe earlier revisions; they do
+not establish this update's layout. Automated interaction and asset-delivery
+checks are separate from visual browser verification.
 
 ## Hosting and remaining limits
 
-The existing ChatGPT Site and public host audience are retained. Application
-accounts protect records and teacher controls. Sites confirmed `donteventry.me`
-and SSL active with no domain error during the preceding publication. No Namecheap DNS
-change is needed. The public GitHub source mirror excludes private validation
-inputs and credentials.
+The existing ChatGPT Site, public host audience, application accounts and D1/R2
+bindings are retained. This update does not change Namecheap DNS, runtime secrets
+or email automation. Native Sites publication status identifies the deployed
+version; this document does not assume a version number before publication.
 
-Previous direct HTTPS checks of the custom domain and OpenAI were blocked by
-the workspace proxy with 403. The preceding release's screenshots used the
-actual application and an isolated backend, not an authenticated production session.
-Sites publication status separately establishes the deployed version. Live AI
-provider operation remains unverified from this workspace; code-computed hints
-and worked answers remain available when AI cannot respond. The existing server
-runtime key and bounded tutor-history retrieval are unchanged.
+Live AI-provider operation remains unverified from this workspace. The existing
+server runtime configuration is unchanged; computed hints and worked answers
+remain available when AI cannot respond. No production load-timing, authenticated
+production browser or Safari-device claim is made. Weekly ZIPs require the
+pinned GitHub source to be reachable; individual PDF links are also provided.
 
-No Safari-device or production load-timing claim is made. The scheduled backup
-handler still has no verified host cron, and private corpus CI secrets are not
-configured in the public repository. Teacher-created backups remain available.
+The scheduled backup handler still has no verified host cron, and private corpus
+CI secrets are not configured in the public repository. Teacher-created backups
+remain available. Private corpora, PDF extraction text, seed pools, credentials
+and QA account fixtures stay out of the public source mirror and public assets.

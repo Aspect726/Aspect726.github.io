@@ -11,6 +11,57 @@ function setup(api) {
  return {dom,ctx};
 }
 const tick = () => new Promise(resolve => setTimeout(resolve,0));
+test('home keeps the daily goal primary and explains the catch-up and points overlap',async()=>{
+ const {dom,ctx}=setup(async()=>({...summary,today:'2026-11-14',answered:25,points:2,backlog:{behind:135,overdue:135,remainingToday:0,completedToDate:25,requiredToDate:160,oldestDueDate:'2026-11-07',nextCatchupDay:{title:'Subtracting decimals'}}}));
+ try{
+  await renderStudent('/s/today',ctx);
+  assert.match(document.querySelector('.daily-count').textContent,/20 \/ 20/);
+  assert.match(document.querySelector('.daily-status').textContent,/25 answered today/);
+  assert.equal(document.querySelector('.daily-start').getAttribute('href'),'/s/practice?intent=catchup&count=5');
+  assert.match(document.querySelector('.catchup-focus').textContent,/Subtracting decimals/);
+  assert.match(document.querySelector('.learning-points').textContent,/10 questions to your next point/);
+  assert.match(document.querySelector('.learning-points').textContent,/Catch-up answers can earn points too/);
+  assert.match(document.querySelector('.point-rules').textContent,/35 total/);
+  assert.equal(document.querySelector('.learning-points a[href="/s/extra"]'),null,'points explain progress without another competing start');
+  assert.equal(document.querySelector('.geometry-friend.celebrating'),null,'home character stays still');
+ }finally{dom.window.close();}
+});
+
+test('initial summary is reused for the daily page without a second request',async()=>{
+ const {dom,ctx}=setup(async()=>{throw Error('Unnecessary summary request');});
+ ctx.initialSummary={...summary,answered:9};
+ try{await renderStudent('/s/today',ctx);assert.match(document.querySelector('.daily-status').textContent,/11 questions left today/);}finally{dom.window.close();}
+});
+
+test('moved lesson dates use their actual weekdays and calendar gaps',async()=>{
+ const first={date:'2026-11-17',expected:20,answered:0,status:'upcoming'};
+ const second={date:'2026-11-20',expected:20,answered:0,status:'upcoming'};
+ const {dom,ctx}=setup(async path=>path.endsWith('/summary')?{...summary,today:'2026-11-14',weekDays:[{...first,weekday:'Saturday'}],schedule:{startDate:first.date,endDate:second.date,today:null,days:[first,second]}}:{weeks:[],skills:[],days:[],totalQuestions:0,schedule:{startDate:first.date,endDate:second.date,today:null,days:[first,second]}});
+ try{
+  await renderStudent('/s/today',ctx);
+  assert.match(document.querySelector('.daily-status').textContent,/Tuesday/);
+  assert.equal(document.querySelector('.day-dot>span').textContent,'Tue');
+  await renderStudent('/s/progress',ctx);
+  assert.equal(document.querySelectorAll('.calendar-square').length,2);
+  assert.equal(document.querySelectorAll('.calendar-break').length,2);
+  assert.equal(document.querySelectorAll('.calendar-spacer').length,2,'Tuesday starts after Sunday and Monday');
+  assert.equal(document.querySelector('.calendar-weekdays').textContent,'SunMonTueWedThuFriSat');
+ }finally{dom.window.close();}
+});
+
+test('correct answers show a short character reaction and keep the next action focused',async()=>{
+ const {dom,ctx}=setup(async path=>path.endsWith('/summary')?summary:path.endsWith('/question')?{question:{id:'celebrate',skill:'D1',prompt:'Add 1 and 2.'},summary}:{correct:true,solution:['3'],pointsAwarded:1,summary:{...summary,answered:35,points:1,nextPointAt:45}});
+ try{
+  await renderStudent('/s/practice?count=5',ctx);
+  assert.equal(document.querySelector('.geometry-friend'),null,'no character moves while reading the question');
+  document.querySelector('[name=answer]').value='3';
+  document.querySelector('#practice-answer-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await tick();
+  assert.ok(document.querySelector('.feedback-title .geometry-friend.celebrating'));
+  assert.ok(document.querySelector('.point-celebration .circle-friend'));
+  assert.match(document.querySelector('.point-celebration').textContent,/1 point earned/);
+  assert.equal(document.activeElement.id,'next-question');
+ }finally{dom.window.close();}
+});
 test('student home makes the daily task primary and keeps the teacher note visible',async()=>{
  const {dom,ctx}=setup(async path=>{assert.equal(path,'/v2/student/summary');return {...summary,answered:14};});
  await renderStudent('/s/today',ctx);
@@ -27,7 +78,7 @@ test('course map exposes upcoming skill lessons and practice without locks',asyn
  await renderStudent('/s/map',ctx);
  assert.ok(document.querySelector('a[href="/s/learn/F1"]'));
  assert.ok([...document.querySelectorAll('a')].some(a => a.getAttribute('href') === '/s/practice?source=library&skill=F1&count=5'));
- assert.match(document.body.textContent,/Ready for your next maths challenge/); dom.window.close();
+ assert.match(document.body.textContent,/Choose a lesson to study/); dom.window.close();
 });
 test('progress calendar includes unanswered course dates, not only attempt dates',async()=>{
  const {dom,ctx}=setup(async()=>({weeks:[{week:1,title:'Decimals',startDate:'2026-11-07',skills:[]}],skills:[],days:[{date:'2026-11-07',answered:20,target:20,accuracy:50,pointsEarned:0}],checks:[],totalQuestions:20,overallAccuracy:50,streak:1,bestStreak:1}));
@@ -167,7 +218,7 @@ test('review chooses due work without asking the student to select a skill',asyn
 const dueSummary=(answered=0,overrides={})=>({...summary,today:'2026-11-14',answered,backlog:{behind:Math.max(0,160-answered),overdue:Math.max(0,140-Math.max(0,answered-20)),remainingToday:Math.max(0,20-answered),requiredToDate:160,completedToDate:Math.min(160,answered),oldestDueDate:'2026-11-07',catchupCredit:Math.max(0,answered-20),onTimeCompletions:answered>=20?1:0,...overrides}});
 test('daily home shows all160 due questions before the first answer and separates earlier work from today',async()=>{
  const {dom,ctx}=setup(async()=>dueSummary());
- try{await renderStudent('/s/today',ctx);const banner=document.querySelector('.backlog-banner');assert.equal(banner.querySelector('[data-questions-behind]').textContent,'160');assert.match(banner.textContent,/140 from earlier days\+20 due today/);assert.match(banner.textContent,/0 of 160 questions due so far completed/);assert.ok([...banner.querySelectorAll('a')].find(link=>link.getAttribute('href')==='/s/practice?intent=catchup&count=5'));assert.equal(document.querySelector('.daily-start').getAttribute('href'),'/s/practice');assert.ok(banner.compareDocumentPosition(document.querySelector('.daily-task-card')) & dom.window.Node.DOCUMENT_POSITION_FOLLOWING);}finally{dom.window.close();}
+ try{await renderStudent('/s/today',ctx);const banner=document.querySelector('.backlog-banner');assert.equal(banner.querySelector('[data-questions-behind]').textContent,'160');assert.match(banner.textContent,/140 from earlier days\+20 due today/);assert.match(banner.textContent,/0 of 160 questions due so far completed/);assert.equal(banner.querySelector('.button').getAttribute('href'),'/s/practice');assert.match(banner.querySelector('.button').textContent,/Finish today first/);assert.equal(document.querySelector('.daily-start').getAttribute('href'),'/s/practice');assert.ok(document.querySelector('.daily-task-card').compareDocumentPosition(banner) & dom.window.Node.DOCUMENT_POSITION_FOLLOWING);}finally{dom.window.close();}
 });
 test('extra practice and review keep the same backlog even when no skill reviews are due',async()=>{
  const {dom,ctx}=setup(async path=>path.endsWith('/summary')?dueSummary(20):path.endsWith('/library')?{skills:[]}:{count:0,due:[]});
