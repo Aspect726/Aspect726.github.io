@@ -165,3 +165,65 @@ fetched anew. Mutations invalidate before and after execution, and late reads
 from an earlier generation refetch under the current session. No answers,
 progress or tutoring history are written to browser storage. Warm Worker service
 reuse does not bypass per-request authentication or student-specific queries.
+
+## Gradebook (v2)
+
+Teacher routes require a teacher session and accept the selected `studentId`.
+Student routes always use the authenticated student; a supplied ID cannot select
+another student's records. Numerical grades and score bands are calculated in
+code. New mutations require a stable `requestId` (8–100 letters, digits, `_` or
+`-`); retries with identical content are idempotent and reused IDs with different
+content fail with 409. Writes are audited and all new tables are backed up.
+
+| Route | Method | Purpose |
+| --- | --- | --- |
+| `/api/v2/teacher/gradebook` | GET | Ten dated weeks, paper/online records, assessment catalog, scores, planning estimate and summary |
+| `/api/v2/teacher/paper-days` | GET / POST | Read weekly paper records or save `{date,correct,total,minutes,note}` |
+| `/api/v2/teacher/assessments` | GET / POST | List or add `{title,kind,week,plannedDate,maxScore,areas}` |
+| `/api/v2/teacher/assessments/:id` | PATCH | Edit future assessment metadata without rewriting prior score snapshots |
+| `/api/v2/teacher/assessments/:id/visibility` | PATCH | Set `{showScores}` for this test and selected student |
+| `/api/v2/teacher/scores` | GET / POST | Read scores or add an attempt with `{assessmentId,score,takenOn,minutes,missed,note}` |
+| `/api/v2/teacher/scores/:id` | PATCH | Correct an entry or record `{redoCompleted,redoNote}` |
+| `/api/v2/teacher/gradebook/settings` | PATCH | Set `{showScores}` for the selected student |
+| `/api/v2/student/gradebook` | GET | Own shared paper grades and test scores, with teacher notes and planning information excluded |
+
+`missed:null` means unknown question-level coverage; an empty array means every
+question was answered correctly. A complete missed list must be unique, in range,
+and agree with the score. Areas use `{id,label,questions:[1,2,...]}`. Retakes are
+new POSTs; corrections edit the existing score. Maximums are fixed on each saved
+attempt, so changing a catalog total cannot rescale an old result.
+
+`GRADEBOOK_INITIAL_SCORE_JSON` is an optional private runtime secret, never a
+browser setting. It accepts an initial diagnostic import with `seedId`,
+`assessmentId`, `score`, `maxScore` and optional `takenOn`/`note`. The import is
+idempotent, only chooses an unambiguous single student, and does not overwrite
+teacher-entered scores. A missing date stays unknown. No actual student result
+is embedded in source or migrations.
+
+## Private test documents and learning feedback
+
+Blank PDFs belong to an assessment; completed-work PDFs belong to one student's
+specific score attempt. Uploads require a teacher session, a selected student,
+a stable request ID, `Content-Type: application/pdf`, and `X-File-Name` (URL-encoded).
+The server validates the size and PDF header and stores bytes under private R2
+keys. Document downloads require teacher authentication and use attachment
+responses with no-store caching. Public static builds contain no PDF bytes.
+
+Teacher document routes provide the selected test's attachments and review
+history. Analysis sends only the selected blank/completed pair, the authoritative
+score and question map, and allowed skill IDs to OpenAI using `store:false`.
+It never changes scores. Requests are bounded, deduplicated and audited; failures
+leave grading and uploads available. A review fingerprint binds it to current
+documents and the saved grade revision. Teacher sharing is explicit; changed
+inputs invalidate previously shared feedback.
+
+`GET /api/v2/student/test-reviews` returns only that signed-in student's current,
+teacher-shared reviews, subject to score visibility. Teacher notes and drafts are
+excluded. Relevant review summaries, not PDF bytes, enter the bounded tutor
+history context. The teacher's entered numerical grade remains authoritative.
+
+The optional private `private/initial-test-documents.json` contains bundled blank
+attachments for the private Site source only. The build validates it and embeds
+it solely in server code; it is excluded from the public GitHub source mirror.
+No actual grades are stored there. `OPENAI_TEST_REVIEW_MODEL` optionally selects
+the document review model; `OPENAI_API_KEY` stays in private runtime settings.

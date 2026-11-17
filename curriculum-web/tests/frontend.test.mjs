@@ -35,7 +35,7 @@ test('full app shell authenticates, separates roles, serves real routes and save
   w.document.querySelector('#signout').click();await until(()=>w.document.querySelector('#auth-form'));
   const beforeStudent=requests.length;
   await submit({username:'student',password:'1234'});await until(()=>w.document.querySelector('.daily-task-card'));
-  assert.equal(w.location.pathname,'/s/today');assert.equal(w.document.querySelectorAll('.sidebar nav a').length,8);assert.equal(w.document.querySelector('.learning-resources').open,false);assert.ok(w.document.querySelector('.daily-teacher-note'));
+  assert.equal(w.location.pathname,'/s/today');assert.deepEqual([...w.document.querySelectorAll('.sidebar nav a > span')].map(a=>a.textContent),['Today','Learn','My progress','Rewards']);assert.equal(w.document.querySelector('.learning-resources'),null);assert.ok(w.document.querySelector('.daily-teacher-note'));
   assert.equal(w.document.querySelector('.backlog-pill strong').textContent,'160');assert.equal(w.document.querySelector('[data-questions-behind]').textContent,'160');
   assert.equal(requests.slice(beforeStudent).filter(r=>r.path==='/api/v2/student/summary').length,1,'initial daily page uses one fresh summary for header and content');
   await w.__navigate('/t/dashboard');await until(()=>w.location.pathname==='/s/today');assert.equal(w.__state.user.role,'student');
@@ -59,12 +59,11 @@ test('full app shell authenticates, separates roles, serves real routes and save
   await w.__navigate('/s/today');await until(()=>w.document.querySelector('.sidebar'));
   assert.equal(w.document.querySelector('.backlog-pill strong').textContent,'159');assert.equal(w.document.querySelector('[data-questions-behind]').textContent,'159');
   Object.defineProperty(w,'innerWidth',{value:375,writable:true});w.dispatchEvent(new w.Event('resize'));
-  assert.equal(w.document.querySelector('#school-navigation').hidden,true,'mobile course navigation starts closed');
-  assert.ok(w.document.querySelector('.school-account a[href="/s/settings"]'),'account settings remain available outside collapsed navigation');
-  w.document.querySelector('#menu-toggle').click();assert.equal(w.document.querySelector('#menu-toggle').getAttribute('aria-expanded'),'true');
-  assert.equal(w.document.querySelector('#school-navigation').hidden,false,'Menu reveals every course destination');
-  w.document.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(w.document.querySelector('#menu-toggle').getAttribute('aria-expanded'),'false');
-  assert.equal(w.document.querySelector('#school-navigation').hidden,true);
+  assert.equal(w.document.querySelector('#school-navigation').hidden,false,'the labelled student bottom navigation stays available on phones');
+  assert.equal(w.document.querySelector('#menu-toggle'),null,'students have one navigation, not an additional drawer');
+  assert.equal(w.document.querySelectorAll('nav[aria-label="Student navigation"]').length,1);
+  assert.ok(w.document.querySelector('.student-account-link[href="/s/settings"]'),'account settings remain reachable');
+  assert.equal(w.document.querySelector('.workspace').inert,false,'the page is usable without opening a menu');
   w.innerWidth=1200;w.dispatchEvent(new w.Event('resize'));assert.equal(w.document.querySelector('#school-navigation').hidden,false,'desktop course navigation stays available');
  }finally{dom.window.close();db.close();}
 });

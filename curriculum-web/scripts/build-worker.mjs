@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir, readdir, cp, rm } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build } from 'esbuild';
+import { build, transform } from 'esbuild';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
 import { decodeStorySeed, allSkills } from '../server/questions.mjs';
@@ -47,14 +47,27 @@ async function walk(directory, prefix = '') {
     const type = types[extname(entry.name)];
     if (!type || /(?:course|paper_questions|answer|packet)/i.test(relative)) throw new Error(`Unexpected public asset: ${relative}`);
     const bytes = await readFile(join(directory, entry.name));
-    const binary = extname(entry.name) === '.woff2';
-    assets[relative] = { type, encoding:binary ? 'base64' : 'utf8', body:bytes.toString(binary ? 'base64' : 'utf8') };
+    const extension = extname(entry.name), binary = extension === '.woff2';
+    let body = bytes.toString(binary ? 'base64' : 'utf8');
+    if (['.js','.mjs','.css'].includes(extension)) body = (await transform(body, {loader:extension === '.css' ? 'css' : 'js',minify:true,target:'es2022',...(extension === '.css' ? {} : {format:'esm'}),legalComments:'none'})).code;
+    assets[relative] = { type, encoding:binary ? 'base64' : 'utf8', body };
   }
 }
 await walk(join(root,'public'));
 await mkdir(join(root,'generated'),{recursive:true});
 await writeFile(join(root,'generated/assets.json'), JSON.stringify(assets));
 await writeFile(join(root,'generated/vetted-seeds.json'), JSON.stringify(pool));
+// Optional classroom attachments are bundled into server code only. Their
+// private source file and generated copy are excluded from the public mirror.
+let initialDocuments = [];
+try { initialDocuments = JSON.parse(await readFile(join(root,'private/initial-test-documents.json'),'utf8')); }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
+if (!Array.isArray(initialDocuments) || initialDocuments.length > 10) throw new Error('Invalid private test attachment configuration.');
+for (const document of initialDocuments) {
+  const bytes = Buffer.from(document.base64 || '', 'base64');
+  if (!document.seedId || !document.assessmentId || !document.filename || bytes.length > 10 * 1024 * 1024 || bytes.subarray(0,5).toString() !== '%PDF-') throw new Error('Invalid private initial test PDF.');
+}
+await writeFile(join(root,'generated/initial-test-documents.json'), JSON.stringify(initialDocuments));
 await rm(join(root,'dist'),{recursive:true,force:true});
 await mkdir(join(root,'dist/server'),{recursive:true});
 await mkdir(join(root,'dist/.openai'),{recursive:true});
@@ -67,7 +80,8 @@ const migrationCheck = new DatabaseSync(':memory:');
 try {
  for (const filename of (await readdir(join(root,'migrations'))).filter(f=>f.endsWith('.sql')).sort()) {
   const sql=await readFile(join(root,'migrations',filename),'utf8');
-  const statements=sql.match(/\s*CREATE\s+TRIGGER\b[\s\S]*?\bEND\s*;|[^;]+;/gi);
+  // A semicolon in a full-line SQL comment is not a statement boundary.
+  const statements=sql.replace(/^\s*--.*$/gm,'').match(/\s*CREATE\s+TRIGGER\b[\s\S]*?\bEND\s*;|[^;]+;/gi);
   for(const statement of statements||[]) migrationCheck.exec(statement);
   const tag=filename.slice(0,-4);
   if(!journal.entries.some(e=>e.tag===tag)){

@@ -1,3 +1,5 @@
+import { renderGradebook } from './gradebook.mjs';
+
 const numeric = value => Number(value || 0).toLocaleString('en-US');
 const percent = value => value === null || value === undefined ? '—' : `${Math.round(Number(value))}%`;
 const weekdayLabel = value => value ? new Date(`${String(value).slice(0, 10)}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' }) : '';
@@ -96,6 +98,8 @@ export async function renderTeacher(path, ctx) {
   };
   if (!selected && !['/t/settings', '/t/questions'].includes(route)) return noStudent();
 
+  if (['/t/gradebook', '/t/scores'].includes(route)) return renderGradebook(path, { ...ctx, selectedStudent: selected });
+
   if (route === '/t/students') return navigate(detailPath);
 
   if (route === '/t/dashboard') {
@@ -109,7 +113,10 @@ export async function renderTeacher(path, ctx) {
     const goal=today?.expected||0,answered=report?.today?.answered??today?.answered??0;
     const due=today?.dueAt?new Date(Date.parse(today.dueAt)-1).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:schedule.timeZone||'America/Los_Angeles',timeZoneName:'short'}):'';
     const counts=report?.mastery||{},levelCounts=report?.levels?.counts||{};
-    const currentAccuracy=report?.accuracy?.overall?.percent??data.summary?.accuracy;
+    const recentAccuracy=report?.accuracy?.recent;
+    const currentAccuracy=recentAccuracy?recentAccuracy.percent:report?.accuracy?.overall?.percent??data.summary?.accuracy;
+    const nextAction=data.gradebookSummary?.nextAction;
+    const latestTest=data.gradebookSummary?.latestTest;
     const reportText=report?.text||'The progress update is not available. Reload this page to try again.';
     const completed=Math.min(Number(b.requiredToDate)||0,Number(b.completedToDate)||0);
     const percentDone=b.requiredToDate?Math.round(completed/b.requiredToDate*100):100;
@@ -118,18 +125,21 @@ export async function renderTeacher(path, ctx) {
     render(`${name}’s learning`, `<p class="page-intro">${e(dateLabel(data.today))} · Week ${e(week.week)} of 10</p>
       <nav class="teacher-actions" aria-label="Teaching actions">
         ${link('/t/plan',`<span class="teacher-action-icon" aria-hidden="true">▤</span><span><strong>Prepare a lesson</strong><small>Curriculum, worksheets & dates</small></span><span aria-hidden="true">→</span>`,'teacher-action action-blue')}
-        ${link(detailPath,`<span class="teacher-action-icon" aria-hidden="true">✓</span><span><strong>Review student work</strong><small>Answers, skills & paper checks</small></span><span aria-hidden="true">→</span>`,'teacher-action action-purple')}
+        ${link('/t/gradebook',`<span class="teacher-action-icon" aria-hidden="true">✓</span><span><strong>Grades & student work</strong><small>Daily paper grades, tests & answers</small></span><span aria-hidden="true">→</span>`,'teacher-action action-purple')}
         ${link('/t/rewards',`<span class="teacher-action-icon" aria-hidden="true">★</span><span><strong>Manage points</strong><small>${numeric(data.points)} available${requestCount?` · ${numeric(requestCount)} requests`:' · rules & prizes'}</small></span><span aria-hidden="true">→</span>`,'teacher-action action-gold')}
       </nav>
+      <nav class="teacher-quick-links" aria-label="Quick teaching actions">${link(`${detailPath}?section=days&date=${encodeURIComponent(data.today)}`,'Today’s answers')}${link(`/t/gradebook?date=${encodeURIComponent(data.today)}#today`,'Enter paper grade')}${link('/t/scores','Enter test score')}<a href="#teacher-note-panel" class="text-link" id="jump-to-weekly-note">Update weekly note</a></nav>
       <section class="teacher-progress-board" aria-labelledby="teacher-progress-title"><div class="section-heading"><h2 id="teacher-progress-title">Practice progress</h2>${link(`${detailPath}?section=days`,'Daily record →')}</div>
         <div class="teacher-progress-columns"><div class="teacher-today"><span class="metric-label">Today’s goal</span><strong>${numeric(Math.min(answered,goal))}<small> / ${numeric(goal)}</small></strong><progress value="${Math.min(answered,goal)}" max="${Math.max(1,goal)}" aria-label="Today’s questions complete"></progress><p>${goal?`${numeric(b.remainingToday)} left${due?` · due ${e(due)}`:''}`:'No daily set scheduled'}</p><small>${numeric(answered)} answers submitted today</small></div>
         <div class="teacher-backlog-hero"><span class="metric-label">Earlier work</span><strong>${numeric(b.overdue)}</strong><p>questions to catch up</p><small>${numeric(b.behind)} questions behind including today</small><p class="teacher-backlog-breakdown">${numeric(b.overdue)} overdue from earlier days + ${numeric(b.remainingToday)} today</p></div>
-        <div class="teacher-learning-summary"><span class="metric-label">Learning so far</span><strong>${percent(currentAccuracy)}</strong><p>overall accuracy · ${numeric(report?.totals?.answered??data.summary?.answered)} answers</p><small>${numeric(counts.mastered)} / ${numeric(counts.total||70)} skills mastered</small>${link(`${detailPath}?section=skills`,'See skills →')}</div></div>
-        <p class="teacher-progress-explainer">Today’s questions count toward today’s goal. Extra answers catch up earlier work and count toward reward points. ${link('/t/rewards','See the points rules')}</p>
+        <div class="teacher-learning-summary"><span class="metric-label">Recent learning</span><strong>${percent(currentAccuracy)}</strong><p>${recentAccuracy?'last 7 days':'overall accuracy'} · ${numeric(recentAccuracy?.answered??report?.totals?.answered??data.summary?.answered)} answers</p><small>${numeric(counts.mastered)} / ${numeric(counts.total||70)} skills mastered</small>${link(`${detailPath}?section=skills`,'See skills →')}</div></div>
+        <p class="teacher-progress-explainer">Today’s questions count toward today’s goal. Extra answers catch up earlier work and count toward reward points. ${link('/t/rewards','See the points rules')}</p>${nextAction?`<p class="teacher-next-action"><strong>Next:</strong> ${link(nextAction.href,e(nextAction.text))}</p>`:''}
       </section>
+      <section class="teacher-gradebook-shortcut" aria-labelledby="teacher-gradebook-title"><div><h2 id="teacher-gradebook-title">Paper & tests</h2><p>${latestTest?`${e(latestTest.title||'Latest test')}: <strong>${numeric(latestTest.score)} / ${numeric(latestTest.maxScore)}</strong> · ${latestTest.takenOn?e(dateLabel(latestTest.takenOn)):'date not recorded'}`:'No test score recorded yet.'}</p><small>Paper grades are separate from the 20 daily online questions.</small></div><div class="form-actions">${link(`/t/gradebook?week=${encodeURIComponent(week.week)}&date=${encodeURIComponent(data.today)}#today`,'Enter today’s paper grade','button secondary')}${link('/t/scores','Add a test score','text-link')}</div></section>
       <div class="teacher-teach-grid"><section class="teacher-current-lesson"><p class="eyebrow">Week ${e(week.week)} · ${e(dateLabel(week.startDate))}–${e(dateLabel(week.endDate))}</p><h2>${e(week.topic||'Current lessons')}</h2>${focus.length?`<ul class="teacher-focus-short">${skillLinks(focus.slice(0,3))}</ul>`:''}<div class="form-actions">${link(`/t/plan?week=${encodeURIComponent(week.week)}`,'Open this week','button')}${link('/t/assign','Set a practice task')}</div>${data.weakSkills?.length?`<div class="teacher-help-focus"><h3>Review next</h3>${data.weakSkills.slice(0,2).map(skill=>`<p>${link(`${detailPath}?section=skills&skill=${encodeURIComponent(skill.skill)}`,e(skill.name||skill.skill))} <small>${percent(skill.accuracy)} recent accuracy</small></p>`).join('')}</div>`:''}</section>
-      <section class="teacher-paper-note teacher-note-prominent"><p class="eyebrow">Your weekly note</p><h2>A note for ${e(name)}</h2><form id="teacher-note"><div class="field"><label for="teacher-note-text">Appears on Daily questions</label><textarea id="teacher-note-text" name="text" rows="4" maxlength="1000" placeholder="For example: Draw equal groups before dividing.">${e(note)}</textarea></div>${errorBox}<button class="button secondary" type="submit">Save note</button></form></section></div>
+      <section id="teacher-note-panel" class="teacher-paper-note teacher-note-prominent"><p class="eyebrow">Your weekly note</p><h2>A note for ${e(name)}</h2><form id="teacher-note"><div class="field"><label for="teacher-note-text">Appears on Daily questions</label><textarea id="teacher-note-text" name="text" rows="4" maxlength="1000" placeholder="For example: Draw equal groups before dividing.">${e(note)}</textarea></div>${errorBox}<button class="button secondary" type="submit">Save note</button></form></section></div>
       <details class="teacher-share-update teacher-disclosure"><summary><span>Share a progress update</span><small>Copy or download the latest stats</small></summary><div class="disclosure-content"><p>Updated ${e(dateLabel(report?.date||data.today))}. Send this using your own messaging app.</p><label class="visually-hidden" for="teacher-progress-update">Copyable progress update</label><textarea id="teacher-progress-update" readonly rows="10" spellcheck="false">${e(reportText)}</textarea><div class="form-actions"><button class="button" id="copy-progress-update" ${report?'':'disabled'}>Copy update</button><button class="button secondary" id="download-progress-update" ${report?'':'disabled'}>Download text</button><button class="text-link" id="refresh-progress-update">Refresh stats</button></div><p id="progress-copy-status" class="small" role="status" aria-live="polite"></p><p class="small">Website question levels: ${[1,2,3].map(level=>`Level ${level}: ${numeric(levelCounts[level])} practiced skills`).join(' · ')}. These describe difficulty, not school grades.</p></div></details>`);
+    document.getElementById('jump-to-weekly-note')?.addEventListener('click',event=>{event.preventDefault();document.getElementById('teacher-note-panel')?.scrollIntoView?.({block:'center'});document.getElementById('teacher-note-text')?.focus({preventScroll:true});});
     bindForm('teacher-note',async fd=>{await write('notes',{week:Number(week.week),text:fd.get('text')});},'Your note is saved.');
     document.getElementById('refresh-progress-update')?.addEventListener('click',reload);
     document.getElementById('copy-progress-update')?.addEventListener('click',async()=>{
@@ -150,7 +160,7 @@ export async function renderTeacher(path, ctx) {
     // The history endpoint is cursor-bounded; do not also fetch the old full answer list.
     const data = section === 'history' ? { student: selected } : await api(endpoint(`students/${encodeURIComponent(state.studentId)}`, date ? { date } : {}));
     const sections = [['overview', 'Overview'], ['days', 'Days'], ['skills', 'Skills'], ['history', 'Learning history'], ['patterns', 'Mistake patterns']];
-    const nav = `<nav class="section-nav" aria-label="Student detail sections">${link('/t/checks','Paper checks','section-link')}${sections.map(([id, title]) => `<a data-nav href="${detailPath}?section=${id}" class="section-link${section === id ? ' active' : ''}"${section === id ? ' aria-current="page"' : ''}>${e(title)}</a>`).join('')}</nav>`;
+    const nav = `<nav class="section-nav" aria-label="Student detail sections">${link('/t/gradebook','Daily grades','section-link')}${link('/t/scores','Tests','section-link')}${sections.map(([id, title]) => `<a data-nav href="${detailPath}?section=${id}" class="section-link${section === id ? ' active' : ''}"${section === id ? ' aria-current="page"' : ''}>${e(title)}</a>`).join('')}</nav>`;
     let content = '';
     if (section === 'overview') {
       const summary = data.summary || {};
@@ -223,7 +233,7 @@ export async function renderTeacher(path, ctx) {
     const diagnostics=data.diagnostics||data.materials?.diagnostics||[];
     const materialLink=item=>`<a href="${e(item.url)}" target="_blank" rel="noopener noreferrer" class="material-link"><span aria-hidden="true">▤</span> ${e(item.label||item.title||item.name||'PDF')} <small>PDF ↗</small></a>`;
     render('Curriculum & dates', `<p class="page-intro">Choose a week to see lessons, download the materials, or change dates.</p>
-      <div class="curriculum-toolbar"><p><strong>10 weeks</strong> · 70 daily lessons · ${numeric(data.program?.dailyTarget||20)} online questions a day</p><button id="move-whole-course" class="button secondary">Move the whole course</button>${link('/t/checks','Record a paper check →')}</div>
+      <div class="curriculum-toolbar"><p><strong>10 weeks</strong> · 70 daily lessons · ${numeric(data.program?.dailyTarget||20)} online questions a day</p><button id="move-whole-course" class="button secondary">Move the whole course</button>${link('/t/scores','Record a test score →')}</div>
       <div class="teacher-course-plan">${(data.weeks||[]).map(week=>{
         const materials=week.materials||{},selectedWeek=Number(week.week)===weekNumber;
         const worksheets=materials.worksheets||[];

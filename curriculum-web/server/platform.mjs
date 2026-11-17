@@ -2,6 +2,7 @@ import plan from './plan.json' with { type: 'json' };
 import { SKILLS, dayInfo, addDays, pacificDate } from './plan.mjs';
 import { courseSchedule, introducedSkills, courseSlots, FOUNDATION_SKILLS } from './course-schedule.mjs';
 import { curriculumForSkill } from './curriculum.mjs';
+import { alignmentForSkill, unitCoverage } from './im-alignment.mjs';
 import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity, storyScenarios, storyShapes, formatQuestionAnswer, parseUnitAnswer, decodeStorySeed } from './questions.mjs';
 import { parseNumber, rational, add, sub, mul, div, eq, compare } from './math.mjs';
 
@@ -256,8 +257,8 @@ export function createPlatform({db,clock=()=>new Date(),production=false,questio
     if(!user)fail(401,'Sign in first.');if(user.role!=='student')fail(403,'Use a student account for practice.');
     const route=path.slice('/api/v2/student/'.length),id=user.id,method=request.method;
     if(route==='summary'&&method==='GET')return json(await summary(id));
-    if(route==='map'&&method==='GET')return json({weeks:await weeks(id)});
-    if(route==='progress'&&method==='GET'){const a=await analytics(id);return json({...a,attempts:undefined,ledger:undefined,weeks:await weeks(id,a),checks:await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',id)});}
+    if(route==='map'&&method==='GET'){const a=await analytics(id),mapped=(await weeks(id,a)).map(week=>({...week,skills:week.skills.map(skill=>({...skill,im:alignmentForSkill(skill.skill)}))}));return json({weeks:mapped,unitCoverage:unitCoverage(a.skills)});}
+    if(route==='progress'&&method==='GET'){const a=await analytics(id);return json({...a,attempts:undefined,ledger:undefined,weeks:await weeks(id,a),checks:(await one('SELECT show_scores FROM platform_gradebook_settings WHERE student_id=?',id))?.show_scores===0?[]:await all("SELECT c.week,c.score FROM platform_weekly_checks c WHERE c.student_id=? AND NOT EXISTS(SELECT 1 FROM platform_assessment_visibility v WHERE v.student_id=c.student_id AND v.assessment_id='weekly-'||c.week AND v.show_scores=0) ORDER BY c.week",id)});}
     if(route==='review'&&method==='GET'){const requested=new URL(request.url).searchParams.get('skill');if(requested&&!SKILLS[requested])fail(400,'Choose a skill from the course.');const due=await dueReviews(id,null,requested);return json({due:due.map(x=>({id:x.id,skill:x.skill,stage:x.stage,dueDate:x.due_date,name:SKILLS[x.skill]})),count:due.length});}
     if(route==='question'&&method==='POST')return json(await question(id,await body(request)));
     if(route==='help'&&method==='POST')return json(await help(id,await body(request)));

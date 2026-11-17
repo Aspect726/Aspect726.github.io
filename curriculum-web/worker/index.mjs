@@ -3,8 +3,9 @@ import { createApp } from '../server/backend.mjs';
 import { createWorkerRuntime } from './runtime.mjs';
 import assets from '../generated/assets.json';
 import questionPool from '../generated/vetted-seeds.json';
+import initialDocuments from '../generated/initial-test-documents.json';
 
-const application = createWorkerRuntime({ assets, questionPool, createApplication: createApp, bootstrap: provisionDemoAccounts });
+const application = createWorkerRuntime({ assets, questionPool, initialDocuments, createApplication: createApp, bootstrap: provisionDemoAccounts });
 
 export default {
   async fetch(request, env) {

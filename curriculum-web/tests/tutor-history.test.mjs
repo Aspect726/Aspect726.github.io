@@ -112,3 +112,24 @@ test('mistake summaries keep template-specific patterns separate and do not diag
   assert.ok(value.commonMistakes.some(row=>row.templateId==='D-SUB:story-compare'));assert.ok(value.commonMistakes.some(row=>row.label==='Answers to revisit; no matching mistake pattern.'));
  }finally{f.db.close();}
 });
+
+test('tutor retrieves only teacher-shared same-skill test feedback within the existing context budget',async()=>{
+ const f=await fixture();try{
+  const current=await f.question('alice','D-SUB'),calls=[];
+  const service=createTutorHistory({db:f.db,testDocuments:{profile:async(id,options)=>{calls.push({id,...options});return {visible:true,reviews:Array.from({length:9},(_,i)=>({title:'PRIVATE_TEST_TITLE',studentId:'PRIVATE_STUDENT_ID',summary:'Unrelated summary',focus:[{skillId:'D-SUB',reason:'Regroup one whole. '.repeat(50),nextStep:'Keep each place value aligned. '.repeat(50)},{skillId:'G-TRI',reason:'UNRELATED_MARKER',nextStep:'UNRELATED_MARKER'}],questions:[{number:i+1,status:'mistake',skillIds:['D-SUB'],explanation:'Subtract each matching place. '.repeat(50),nextStep:'Write placeholder zeros. '.repeat(50)},{number:99,status:'correct',skillIds:['D-SUB'],explanation:'CORRECT_MARKER',nextStep:''}]}))};}}});
+  const value=await service.context('alice',{questionId:current.id}),encoded=JSON.stringify(value);
+  assert.deepEqual(calls,[{id:'alice',skill:'D-SUB',limit:3}]);assert.ok(value.testReviews.length<=3);assert.match(encoded,/Regroup one whole/);assert.match(encoded,/Teacher-shared test feedback/);
+  assert.ok(encoded.length<=2200,encoded.length);assert.doesNotMatch(encoded,/UNRELATED_MARKER|CORRECT_MARKER|PRIVATE_TEST_TITLE|PRIVATE_STUDENT_ID|studentId|questionId/);
+  await assert.rejects(()=>service.context('bob',{questionId:current.id}),e=>e.status===404);assert.equal(calls.length,1,'Ownership is checked before retrieving test context.');
+ }finally{f.db.close();}
+});
+
+test('hidden or unavailable test feedback does not leak into tutor context or break normal help',async()=>{
+ const f=await fixture();try{
+  const current=await f.question();
+  for(const profile of [async()=>({visible:false,reviews:[{focus:[{skillId:'D-SUB',reason:'PRIVATE_HIDDEN',nextStep:'PRIVATE_HIDDEN'}]}]}),async()=>{throw Error('temporarily unavailable');}]){
+   const service=createTutorHistory({db:f.db,testDocuments:{profile}}),value=await service.context('alice',{questionId:current.id});
+   assert.equal(value.testReviews,undefined);assert.equal(value.skill.name,'Subtract decimals, including from whole numbers (regrouping across zeros)');assert.doesNotMatch(JSON.stringify(value),/PRIVATE_HIDDEN/);
+  }
+ }finally{f.db.close();}
+});

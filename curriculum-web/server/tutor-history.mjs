@@ -14,7 +14,7 @@ function cursorDecode(value){
  try{if(typeof value!=='string'||value.length>500||!/^[A-Za-z0-9_-]+$/.test(value))throw 0;const [at,key]=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(atob(value.replaceAll('-','+').replaceAll('_','/')),c=>c.charCodeAt(0))));if(typeof at!=='string'||at.length>40||!/^\d{4}-\d\d-\d\d/.test(at)||typeof key!=='string'||key.length>200)throw 0;return {at,key};}catch{fail(400,'That history page could not be read. Open the first page again.');}
 }
 
-export function createTutorHistory({db,clock=()=>new Date()}){
+export function createTutorHistory({db,clock=()=>new Date(),testDocuments=null}){
  const st=(sql,...args)=>db.prepare(sql).bind(...args),one=(sql,...args)=>st(sql,...args).first(),all=async(sql,...args)=>(await st(sql,...args).all()).results,run=(sql,...args)=>st(sql,...args).run();
  const now=()=>new Date(clock()).toISOString();
  async function ownedQuestion(studentId,questionId){
@@ -68,24 +68,35 @@ export function createTutorHistory({db,clock=()=>new Date()}){
  }
  async function context(studentId,{questionId}){
   const {record}=await ownedQuestion(studentId,questionId),skill=record.skill;
-  const [stats,recent,common,used,events,conversations]=await Promise.all([
+  const [stats,recent,common,used,events,conversations,testProfile]=await Promise.all([
    progress(studentId,skill),
    all('SELECT question_text,given_answer,correct_answer,is_correct FROM platform_attempts WHERE student_id=? AND skill=? ORDER BY created_at DESC,rowid DESC LIMIT 6',studentId,skill),
    mistakes(studentId,skill,3),helpSummary(studentId,skill),
    all('SELECT kind,part FROM platform_tutor_events WHERE student_id=? AND skill=? ORDER BY created_at DESC,rowid DESC LIMIT 8',studentId,skill),
-   all("SELECT c.message,c.reply,c.assessment,c.mode,c.part,json_extract(q.q,'$.plainPrompt') AS question FROM platform_tutor_conversations c JOIN platform_questions q ON q.id=c.question_id WHERE c.student_id=? AND c.skill=? ORDER BY c.created_at DESC,c.rowid DESC LIMIT 3",studentId,skill)
+   all("SELECT c.message,c.reply,c.assessment,c.mode,c.part,json_extract(q.q,'$.plainPrompt') AS question FROM platform_tutor_conversations c JOIN platform_questions q ON q.id=c.question_id WHERE c.student_id=? AND c.skill=? ORDER BY c.created_at DESC,c.rowid DESC LIMIT 3",studentId,skill),
+   testDocuments?.profile?testDocuments.profile(studentId,{skill,limit:3}).catch(()=>({visible:false,reviews:[]})):null
   ]);
   const metric=stats[0];
   const value={skill:{name:SKILLS[skill]??skill,answered:metric?.attempts??0,accuracy:metric?.accuracy??null,recentAccuracy:recent.length?Math.round(recent.filter(row=>row.is_correct).length*100/recent.length):null},recentAnswers:recent.map(row=>({question:clipped(row.question_text,90),given:clipped(row.given_answer,40),correctAnswer:clipped(row.correct_answer,40),correct:Boolean(row.is_correct)})),commonMistakes:common.map(row=>({description:clipped(row.label,100),count:row.count})),helpUsed:{hint:used.hint,step:used.step,answer:used.answer,recent:events.map(row=>({kind:row.kind,part:row.part}))},conversations:conversations.map(row=>({question:clipped(row.question,70),message:clipped(row.message,180),reply:clipped(row.reply,220),assessment:row.assessment,mode:row.mode,part:row.part}))};
+  if(testProfile?.visible===true){
+   value.testReviews=(Array.isArray(testProfile.reviews)?testProfile.reviews:[]).slice(0,3).map(review=>({
+    source:'Teacher-shared test feedback',
+    focus:(Array.isArray(review.focus)?review.focus:[]).filter(item=>item.skillId===skill).slice(0,1).map(item=>({reason:clipped(item.reason,90),nextStep:clipped(item.nextStep,130)})),
+    questions:(Array.isArray(review.questions)?review.questions:[]).filter(item=>Array.isArray(item.skillIds)&&item.skillIds.includes(skill)&&['mistake','unclear'].includes(item.status)).slice(0,1).map(item=>({status:item.status,explanation:clipped(item.explanation,110),nextStep:clipped(item.nextStep,130)}))
+   })).filter(review=>review.focus.length||review.questions.length);
+   if(!value.testReviews.length)delete value.testReviews;
+  }
   // Keep relevant history a small supplement to the code-computed current problem.
   // Prefer a few recent tutoring turns; trim old answers and repeated events first.
   while(JSON.stringify(value).length>2200){
    if(value.recentAnswers.length>2)value.recentAnswers.pop();
    else if(value.helpUsed.recent.length>3)value.helpUsed.recent.pop();
    else if(value.conversations.length>2)value.conversations.pop();
+   else if(value.testReviews?.length>1)value.testReviews.pop();
    else if(value.commonMistakes.length>1)value.commonMistakes.pop();
    else if(value.recentAnswers.length)value.recentAnswers.pop();
    else if(value.conversations.length>1)value.conversations.pop();
+   else if(value.testReviews?.length)value.testReviews.pop();
    else break;
   }
   return value;

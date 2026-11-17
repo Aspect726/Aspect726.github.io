@@ -95,3 +95,17 @@ test('Worker refreshes configuration safely and retries failed bootstrap', async
   await application({ DB, BUCKET: {}, OPENAI_API_KEY: 'test-new', OPENAI_TUTOR_MODEL: 'test-model' });
   assert.equal(created, 3, 'storage bindings are not accidentally reused');
 });
+
+test('private initial grades stay server-side and changing their configuration refreshes the Worker', async () => {
+  const configs=[],DB={};
+  const application=createWorkerRuntime({assets:{},questionPool:{},bootstrap:async()=>{},createApplication:config=>{configs.push(config);return config;}});
+  const seed={seedId:'fixture',assessmentId:'week1-practice',score:4,maxScore:23,takenOn:null};
+  await application({DB,GRADEBOOK_INITIAL_SCORE_JSON:JSON.stringify(seed)});
+  assert.deepEqual(configs[0].initialScore,seed);
+  assert.deepEqual(configs[0].assets,{});
+  await application({DB,GRADEBOOK_INITIAL_SCORE_JSON:JSON.stringify({...seed,score:5})});
+  assert.equal(configs.length,2);
+  assert.equal(configs[1].initialScore.score,5);
+  await assert.rejects(application({DB,GRADEBOOK_INITIAL_SCORE_JSON:'PRIVATE_INVALID_VALUE'}),error=>error.message==='The private initial grade configuration is not valid JSON.');
+  assert.equal(configs.length,2,'invalid private data is not handed to the app');
+});

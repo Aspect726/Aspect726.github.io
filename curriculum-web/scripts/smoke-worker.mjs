@@ -26,7 +26,7 @@ async function checkBrowserAssets() {
       for (const match of text.matchAll(/<(?:link|script|img)\b[^>]*\b(?:href|src)=["']([^"']+)["'][^>]*>/gi)) refs.push(match[1]);
     }
     if (type.includes('javascript')) {
-      for (const match of text.matchAll(/\b(?:import|export)\s+(?:[^;'"`]*?\s+from\s*)?["']([^"']+)["']/g)) refs.push(match[1]);
+      for (const match of text.matchAll(/\b(?:import|export)\s*(?:[^;'"`]*?\bfrom\s*)?["']([^"']+)["']/g)) refs.push(match[1]);
       for (const match of text.matchAll(/\bimport\s*\(\s*["']([^"']+)["']\s*\)/g)) refs.push(match[1]);
     }
     if (type.includes('css')) {
@@ -40,7 +40,7 @@ async function checkBrowserAssets() {
       queue.push(url.pathname);
     }
   }
-  for (const required of ['/app.js','/api-client.mjs','/student.mjs','/teacher.mjs','/learning-character.mjs','/tutor-panel.mjs','/styles.css','/teacher-backlog.css','/student-learning.css','/tutor-panel.css'])
+  for (const required of ['/app.js','/api-client.mjs','/student.mjs','/teacher.mjs','/learning-character.mjs','/tutor-panel.mjs','/styles.css','/teacher-backlog.css','/student-learning.css','/tutor-panel.css','/gradebook.mjs','/gradebook.css','/test-documents.mjs'])
     assert.ok(checked.has(required), `Published page reaches ${required}`);
   return checked.size;
 }
@@ -50,9 +50,9 @@ try {
   const browserAssets = await checkBrowserAssets();
   assert.equal((await worker.fetch(request('/api/today'),{DB:db})).status,401);
   for(const path of ['/assets/math-playground.svg','/assets/graph-paper.svg']) { const art=await worker.fetch(request(path),{DB:db}); assert.equal(art.status,200);assert.match(art.headers.get('content-type'),/image\/svg/); }
-  const font=await worker.fetch(request('/assets/fonts/inter-latin.woff2'),{DB:db});
+  const font=await worker.fetch(request('/assets/fonts/plus-jakarta-sans-latin.woff2'),{DB:db});
   assert.equal(font.status,200);assert.match(font.headers.get('content-type'),/font\/woff2/);
-  for(const path of ['/server/questions.mjs','/private/vetted-seeds.json','/data/course.json','/resources/packets/Day_001_Sat_Week_01.pdf','/private','/server','/unknown.css','/.env','/.git/config'])
+  for(const path of ['/server/questions.mjs','/private/vetted-seeds.json','/private/initial-test-documents.json','/generated/initial-test-documents.json','/data/course.json','/resources/packets/Day_001_Sat_Week_01.pdf','/private','/server','/unknown.css','/.env','/.git/config'])
     assert.equal((await worker.fetch(request(path),{DB:db})).status,404);
   const setup=await worker.fetch(request('/api/setup',{username:'teacher',name:'Teacher',password:'test-teacher-password'}),{DB:db});
   assert.equal(setup.status,200);assert.match(setup.headers.get('set-cookie'),/HttpOnly/);assert.match(setup.headers.get('set-cookie'),/Secure/);
@@ -73,6 +73,16 @@ try {
   const tutor=await worker.fetch(request('/api/v2/student/tutor',{questionId:question.id,message:'What should I do first?',mode:'explain',part:0,requestId:'compiled-tutor-request'},studentCookie),{DB:db});assert.equal(tutor.status,200);assert.equal((await tutor.json()).source,'worked-help');
   const history=await worker.fetch(request('/api/v2/student/tutor-history?questionId='+question.id,null,studentCookie),{DB:db});assert.equal(history.status,200);assert.equal((await history.json()).conversations.length,1);
   const student=await db.prepare('SELECT id FROM practice_users WHERE username=?').bind('student').first();
+  const blobs=new Map(),BUCKET={put:async(key,bytes)=>blobs.set(key,new Uint8Array(bytes)),get:async key=>blobs.has(key)?{arrayBuffer:async()=>blobs.get(key).slice().buffer}:null,delete:async key=>blobs.delete(key)};
+  const gradeEnv={DB:db,BUCKET,GRADEBOOK_INITIAL_SCORE_JSON:JSON.stringify({seedId:'compiled-fixture',assessmentId:'week1-practice',score:4,maxScore:23,takenOn:null})};
+  const gradebookResponse=await worker.fetch(request('/api/v2/teacher/gradebook?studentId='+student.id,null,teacherCookie),gradeEnv);assert.equal(gradebookResponse.status,200);
+  const gradebook=await gradebookResponse.json();assert.equal(gradebook.weeks.length,10);assert.equal(gradebook.assessments.find(a=>a.id==='standards-5').maxScore,39);assert.equal(gradebook.assessments.find(a=>a.id==='ratios-rates-percents').maxScore,25);assert.equal(gradebook.scores.find(s=>s.assessmentId==='week1-practice').takenOn,null);
+  const documentResponse=await worker.fetch(request('/api/v2/teacher/test-documents?studentId='+student.id+'&assessmentId=ratios-rates-percents',null,teacherCookie),gradeEnv);assert.equal(documentResponse.status,200);
+  const documents=(await documentResponse.json()).documents;assert.equal(documents.length,1,'private bundled blank PDF is imported');
+  const download=await worker.fetch(request(documents[0].url,null,teacherCookie),gradeEnv);assert.equal(download.status,200);assert.match(new TextDecoder().decode((await download.arrayBuffer()).slice(0,5)),/^%PDF-/);
+  assert.equal((await worker.fetch(request(documents[0].url,null,studentCookie),gradeEnv)).status,403);
+  assert.equal((await worker.fetch(request(documents[0].url),gradeEnv)).status,401);
+  const studentGrades=await worker.fetch(request('/api/v2/student/gradebook?studentId=another-student',null,studentCookie),gradeEnv);assert.equal(studentGrades.status,200);assert.equal((await studentGrades.json()).scores[0].score,4);
   const teacherHistory=await worker.fetch(request('/api/v2/teacher/tutor-history?studentId='+student.id,null,teacherCookie),{DB:db});assert.equal(teacherHistory.status,200);assert.equal((await teacherHistory.json()).items.length,2);
   assert.equal((await worker.fetch(request('/api/v2/teacher/tutor-history?studentId='+student.id,null,studentCookie),{DB:db})).status,403);
   const stored=JSON.parse((await db.prepare('SELECT q FROM platform_questions WHERE id=?').bind(question.id).first()).q);

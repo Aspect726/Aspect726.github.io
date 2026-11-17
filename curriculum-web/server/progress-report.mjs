@@ -5,6 +5,29 @@ const plain = value => String(value ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+
 const percent = (correct, answered) => answered > 0 && correct !== null ? Math.round(correct / answered * 100) : null;
 const quantity = (value, noun) => `${value} ${noun}${value === 1 ? '' : 's'}`;
 const accuracyText = value => value.percent === null ? 'No answers yet' : `${value.percent}% (${value.correct}/${value.answered} correct)`;
+const safePercent = value => typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 100 ? Math.round(value * 10) / 10 : null;
+
+// Keep the shareable report separate from the teacher's full gradebook. In
+// particular, score notes, missed-answer notes and audit history stay private.
+function gradebookReport(source) {
+  if (!source) return null;
+  const test = source.latestTest, score = count(test?.score), maxScore = count(test?.maxScore);
+  const latestTest = test && score !== null && maxScore > 0 && score <= maxScore ? {
+    title: plain(test.title), score, maxScore, percent: Math.round(score / maxScore * 1000) / 10,
+    takenOn: validDate(test.takenOn) ? test.takenOn : null, attempt: count(test.attempt) ?? 1
+  } : null;
+  const planning = source.readiness;
+  const readiness = planning ? {
+    label: 'Program planning estimate',
+    status: ['complete', 'incomplete', 'needs-setup'].includes(planning.status) ? planning.status : 'incomplete',
+    percent: planning.status === 'complete' ? safePercent(planning.percent) : null,
+    missing: Array.isArray(planning.missing) ? planning.missing.filter(item => typeof item === 'string').map(plain) : [],
+    note: 'This is a course planning estimate, not a BSD placement decision.'
+  } : null;
+  const paper = source.paper ? { recordedDays: count(source.paper.recordedDays), correct: count(source.paper.correct), total: count(source.paper.total) } : null;
+  if (paper) paper.percent = paper.total > 0 && paper.correct !== null ? Math.round(paper.correct / paper.total * 1000) / 10 : null;
+  return { latestTest, readiness, paper, nextAction: source.nextAction?.text ? plain(source.nextAction.text) : null };
+}
 
 // Accept the complete, student-specific teacher detail before UI filters are
 // applied. This is a summary of stored metrics, not a new grading calculation.
@@ -74,6 +97,8 @@ export function progressReport(detail, { date = detail.schedule?.today?.date, ti
   else nextAction = 'All scheduled questions are complete. Keep building confidence with extra practice or review.';
 
   const student = { id: detail.student.id, name: plain(detail.student.name) || 'Student' };
+  const gradebook = gradebookReport(detail.gradebookSummary);
+  const latestTest = gradebook?.latestTest, planning = gradebook?.readiness;
   const lines = [
     `${student.name} — math progress update`,
     `${date} (${timeZone})`,
@@ -91,9 +116,20 @@ export function progressReport(detail, { date = detail.schedule?.today?.date, ti
     ...(focus?.title ? [`${focus.upcoming ? 'Next focus' : 'Current focus'}: ${focus.title}${focus.week ? ` (week ${focus.week})` : ''}.`] : []),
     ...(streak !== null ? [`Current streak: ${quantity(streak, 'day')}.`] : []),
     ...(points !== null ? [`Reward points: ${points}.`] : []),
+    ...(gradebook ? [
+      latestTest ? `Latest recorded test: ${latestTest.title} — ${latestTest.score}/${latestTest.maxScore} (${latestTest.percent}%), ${latestTest.takenOn ?? 'date not recorded'}${latestTest.attempt > 1 ? `, attempt ${latestTest.attempt}` : ''}.` : 'Latest recorded test: No grade recorded yet.',
+      ...(gradebook.paper?.recordedDays ? [`Paper practice: ${gradebook.paper.recordedDays} days graded${gradebook.paper.percent !== null ? `; ${gradebook.paper.correct}/${gradebook.paper.total} correct (${gradebook.paper.percent}%)` : ''}.`] : ['Paper practice: No grades recorded yet.']),
+      'Paper grades and tests do not change online completion, catch-up counts or reward points.',
+      ...(planning ? [
+        `Program planning estimate: ${planning.percent !== null ? `${planning.percent}%` : planning.status === 'needs-setup' ? 'Teacher setup needed' : 'More results needed'}.`,
+        ...(planning.missing.length ? [`Still needed: ${planning.missing.join('; ')}.`] : []),
+        planning.note
+      ] : [])
+    ] : []),
     '',
     `Next step: ${nextAction}`,
+    ...(gradebook?.nextAction ? [`Test & paper next step: ${gradebook.nextAction}`] : []),
     'Practice: https://donteventry.me/s/today'
   ];
-  return { date, timeZone, student, backlog, today, totals, accuracy, mastery, levels, focus, streak, points, nextAction, text: lines.join('\n') };
+  return { date, timeZone, student, backlog, today, totals, accuracy, mastery, levels, focus, streak, points, nextAction, ...(gradebook ? { gradebook } : {}), text: lines.join('\n') };
 }

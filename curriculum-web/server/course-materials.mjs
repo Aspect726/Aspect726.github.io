@@ -9,7 +9,7 @@ export const materialSource = Object.freeze({
 const base = `https://raw.githubusercontent.com/${materialSource.repository}/${materialSource.commit}/Nov6/Double_Advanced_Claude/`;
 const fail = (message, status = 503) => { throw Object.assign(new Error(message), { status }); };
 const fileUrl = path => base + path.split('/').map(encodeURIComponent).join('/');
-const resource = row => ({ ...row, url: fileUrl(row.path), label: row.path.startsWith('Teacher/') ? 'Teacher guide and answer key' : row.path.endsWith('_Key.pdf') ? 'Grade 5 check answer key' : row.path.startsWith('Tests/') ? 'Grade 5 standards check' : `Day ${Number(row.path.match(/Day_(\d+)/)?.[1])} worksheet`, type: 'pdf' });
+const resource = row => ({ ...row, url: fileUrl(row.path), label: row.path.startsWith('Teacher/') ? 'Teacher guide and answer key' : row.path.endsWith('_Key.pdf') ? 'Grade 5 reference answer key (37 questions)' : row.path.startsWith('Tests/') ? 'Grade 5 reference check (37 questions)' : `Day ${Number(row.path.match(/Day_(\d+)/)?.[1])} worksheet`, type: 'pdf' });
 export const diagnostics = files.filter(file => file.path.startsWith('Tests/')).map(resource);
 export function weekMaterials(week) {
   if (!Number.isInteger(week) || week < 1 || week > 10) fail('Choose a week from 1 to 10.', 400);
@@ -68,7 +68,7 @@ export async function downloadWeek(week, { fetcher = fetch, courseWeek = null } 
   if (chosen.reduce((sum, file) => sum + file.size, 0) > 2 * 1024 * 1024) fail('This download is too large. Open the individual PDFs instead.');
   const entries = await Promise.all(chosen.map(async file => ({ name: file.path, bytes: await fetchReviewedPDF(file, fetcher) })));
   const calendar = courseWeek?.days?.map(day => `Day ${day.index + 1}: ${day.date} — ${day.title}`).join('\n') || '';
-  const readme = `Week ${week} curriculum materials\n\nSeven student worksheets and one teacher guide with answer keys.\n${courseWeek ? `Current course dates: ${courseWeek.startDate} to ${courseWeek.endDate}.\n` : ''}${materialSource.note}\n${material.notes.length ? '\n' + material.notes.join('\n') + '\n' : ''}${calendar ? '\nCurrent lesson calendar\n' + calendar + '\n' : ''}\nSource: ${materialSource.url}\nRevision: ${materialSource.commit}\nThe Grade 5 diagnostic and its answer key are separate downloads on the curriculum page.\n`;
+  const readme = `Week ${week} curriculum materials\n\nSeven student worksheets and one teacher guide with answer keys.\n${courseWeek ? `Current course dates: ${courseWeek.startDate} to ${courseWeek.endDate}.\n` : ''}${materialSource.note}\n${material.notes.length ? '\n' + material.notes.join('\n') + '\n' : ''}${calendar ? '\nCurrent lesson calendar\n' + calendar + '\n' : ''}\nSource: ${materialSource.url}\nRevision: ${materialSource.commit}\nThe separate Grade 5 reference PDF has 37 questions. It does not match the 39-question syllabus diagnostic used by the gradebook.\n`;
   entries.push({ name: 'READ-ME.txt', bytes: encoder.encode(readme) });
   const archive = storedZip(entries);
   const suffix = /^\d{4}-\d{2}-\d{2}$/.test(courseWeek?.startDate ?? '') ? `-${courseWeek.startDate}` : '';

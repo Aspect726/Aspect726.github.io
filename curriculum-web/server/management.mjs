@@ -1,3 +1,4 @@
+import { createGradebook } from './gradebook.mjs';
 import { SKILLS, START_DATE, dayInfo, addDays, pacificDate, validDate } from './plan.mjs';
 import { generateQuestion, publicQuestion, gradeQuestion, storyScenarios, storyShapes, formatQuestionAnswer, decodeStorySeed } from './questions.mjs';
 import { courseSchedule, scheduledCourseDays } from './course-schedule.mjs';
@@ -18,7 +19,7 @@ const skillWeek = skill => { for(let i=0;i<70;i++) if(dayInfo(i).focus.includes(
 const skillName = skill => SKILLS[skill]||skill;
 const accuracy = (correct,total) => total ? Math.round(correct/total*100) : null;
 
-export function createManagement({db,clock=()=>new Date(),production=false,questionPool=null,platform=null,materialFetcher=fetch}) {
+export function createManagement({db,clock=()=>new Date(),production=false,questionPool=null,platform=null,materialFetcher=fetch,initialScore=null}) {
   const stmt=(sql,...args)=>db.prepare(sql).bind(...args);
   const one=(sql,...args)=>stmt(sql,...args).first();
   const all=async(sql,...args)=>(await stmt(sql,...args).all()).results;
@@ -50,6 +51,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     }
     return {studentId:id,scheduleVersion:scheduleVersion(row.start_date,row.week_offsets),startDate:row.start_date,weekOffsets:JSON.parse(row.week_offsets||'[]'),dailyTarget:row.daily_target,bonusFirst:row.bonus_first,bonusStep:row.bonus_step,pendingSettings:JSON.parse(row.pending_settings||'{}'),effectiveDate:row.effective_date};
   }
+  const gradebook=createGradebook({db,clock,platform,program,chooseStudent,initialScore});
   async function weeks(id, suppliedProgram=null) {
     const p=suppliedProgram??await program(id),date=today(),schedule=scheduledCourseDays(p);
     return Array.from({length:10},(_,i)=>{
@@ -82,6 +84,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     });
     const mistakes=new Map();for(const a of rows)if(!a.is_correct&&a.mistake_label){const key=`${a.skill}|${a.mistake_label}`;if(!mistakes.has(key))mistakes.set(key,{skill:a.skill,name:skillName(a.skill),label:JSON.parse(a.result||'{}').hint||a.mistake_label,count:0,examples:[]});const m=mistakes.get(key);m.count++;if(m.examples.length<3)m.examples.push(attemptView(a));}
     const result={student,program:p,schedule,backlog:schedule.backlog,points:canonical?.points??ledger.reduce((n,row)=>n+row.amount,0),summary:{answered:rows.length,correct:rows.filter(a=>a.is_correct).length,accuracy:accuracy(rows.filter(a=>a.is_correct).length,rows.length),streak,bestStreak,schedule,backlog:schedule.backlog},days,skills,mistakes:[...mistakes.values()].filter(m=>m.count>=2).sort((a,b)=>b.count-a.count),attempts:rows.map(attemptView).reverse(),checks:await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',id)};
+    result.gradebookSummary=await gradebook.summary(id,{programData:p,canonical:canonical??{attempts:rows,schedule}});
     result.progressReport=progressReport(result,{date:today()});
     return result;
   }
@@ -114,7 +117,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     const missed=days.filter(d=>d.status==='missed').at(-1);if(missed)attention.push({text:`${missed.remaining} questions were left on ${missed.date}.`,href:`/t/students/${learner.id}?section=days&date=${missed.date}`});
     if(requests.length)attention.push({text:`Prize request: ${requests[0].name}, ${requests[0].cost} points.`,href:'/t/rewards'});
     const next=ws.find(w=>w.startDate>today())||week;
-    return {student:learner,today:today(),week,days,schedule:d.schedule,backlog:d.backlog,summary:d.summary,progressReport:d.progressReport,attention:attention.slice(0,3),weakSkills,saturdayPrep:{topic:next.topic,suggestion:weakSkills[0]?`Start with ${weakSkills[0].name.toLowerCase()}; review the recorded answers together.`:'Review the week’s practice before introducing the next skills.'},points:reward.points,nextPoint:reward.nextPoint,program:reward.program,earnedThisWeek:reward.history.filter(l=>l.kind==='bonus'&&pacificDate(l.createdAt)>=week.startDate&&pacificDate(l.createdAt)<=week.endDate).reduce((n,l)=>n+l.amount,0),requests};
+    return {student:learner,today:today(),week,days,schedule:d.schedule,backlog:d.backlog,summary:d.summary,gradebookSummary:d.gradebookSummary,progressReport:d.progressReport,attention:attention.slice(0,3),weakSkills,saturdayPrep:{topic:next.topic,suggestion:weakSkills[0]?`Start with ${weakSkills[0].name.toLowerCase()}; review the recorded answers together.`:'Review the week’s practice before introducing the next skills.'},points:reward.points,nextPoint:reward.nextPoint,program:reward.program,earnedThisWeek:reward.history.filter(l=>l.kind==='bonus'&&pacificDate(l.createdAt)>=week.startDate&&pacificDate(l.createdAt)<=week.endDate).reduce((n,l)=>n+l.amount,0),requests};
   }
   async function questionBank(skill) {
     if(skill&&!SKILLS[skill])fail(400,'Choose a skill from the course.');
@@ -142,6 +145,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     return {skills:skillList,skill,questions,flags,servedCounts};
   }
   async function handle(request,user) {
+    const gradeResponse=await gradebook.handle(request,user);if(gradeResponse)return gradeResponse;
     const url=new URL(request.url),path=url.pathname,method=request.method;
     const studentRewards=path==='/api/v2/student/rewards'||/^\/api\/v2\/student\/rewards\/[^/]+\/request$/.test(path);
     if(!path.startsWith('/api/v2/teacher/')&&!studentRewards)return null;
@@ -181,7 +185,7 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     if(path==='/api/v2/teacher/checks'&&method==='GET')return json({student:learner,checks:learner?await all('SELECT week,score,note FROM platform_weekly_checks WHERE student_id=? ORDER BY week',learner.id):[],weeks:learner?await weeks(learner.id):[]});
     if(path==='/api/v2/teacher/checks'&&method==='POST'){
       const id=requireStudent(),week=integer(data.week,1,10,'Week'),score=integer(data.score,0,21,'Score');
-      await run('INSERT INTO platform_weekly_checks(student_id,week,score,note) VALUES(?,?,?,?) ON CONFLICT(student_id,week) DO UPDATE SET score=excluded.score,note=excluded.note',id,week,score,text(data.note,1000));return json({ok:true});
+      await gradebook.saveLegacyWeekly(user,id,week,score,text(data.note,1000));return json({ok:true});
     }
     if(path==='/api/v2/teacher/notes'&&method==='GET')return json({student:learner,notes:learner?await all('SELECT week,text FROM platform_teacher_notes WHERE student_id=? ORDER BY week',learner.id):[]});
     if(path==='/api/v2/teacher/notes'&&method==='POST'){
@@ -259,5 +263,5 @@ export function createManagement({db,clock=()=>new Date(),production=false,quest
     }
     return json({error:'Not found.'},404);
   }
-  return {handle,program,weeks,detail,rewards,dashboard};
+  return {handle,program,weeks,detail,rewards,dashboard,gradebook};
 }

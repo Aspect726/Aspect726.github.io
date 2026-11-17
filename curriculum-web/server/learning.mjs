@@ -1,6 +1,7 @@
 import { generateQuestion, publicQuestion, gradeQuestion, questionIdentity, storyScenarios, storyShapes, formatQuestionAnswer, decodeStorySeed } from './questions.mjs';
 import { LESSONS, vocabulary, formulas } from './lessons.mjs';
 import { curriculumForSkill, curriculumOverview, SUPPLEMENTAL_SKILLS } from './curriculum.mjs';
+import { alignmentForSkill } from './im-alignment.mjs';
 
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const fail=(status,message)=>{throw Object.assign(new Error(message),{status});};
@@ -47,7 +48,7 @@ export function createLearning({db,clock=()=>new Date(),production=false,questio
   const note=LESSONS[skill];if(!note)fail(404,'That skill was not found.');
   const qs=await examples(user.id,skill),first=qs[0],wrong=first.hints[0];
   const wrongLabel=first.choices&&/^option-\d+$/.test(wrong.answer)?strip(first.choices[Number(wrong.answer.slice(7))]?.label??wrong.answer):wrong.answer;
-  return {...note,skill,curriculum:curriculumForSkill(skill),model:SUPPLEMENTAL_SKILLS[skill]?note.model:first.svg||note.model,conceptModel:note.model,examples:qs.map(view),trap:{answer:String(wrongLabel),text:wrong.text},completed:Boolean(await one('SELECT completed_at FROM platform_lessons WHERE student_id=? AND skill=?',user.id,skill))};
+  return {...note,skill,curriculum:curriculumForSkill(skill),im:alignmentForSkill(skill),model:SUPPLEMENTAL_SKILLS[skill]?note.model:first.svg||note.model,conceptModel:note.model,examples:qs.map(view),trap:{answer:String(wrongLabel),text:wrong.text},completed:Boolean(await one('SELECT completed_at FROM platform_lessons WHERE student_id=? AND skill=?',user.id,skill))};
  }
  async function handle(request,user) {
   const url=new URL(request.url),path=url.pathname;
@@ -55,7 +56,7 @@ export function createLearning({db,clock=()=>new Date(),production=false,questio
   if(!user)fail(401,'Sign in first.');if(user.role!=='student')fail(403,'Use a student account for learning.');
   if(path.endsWith('/library')&&request.method==='GET') {
    // Examples are fetched with the lesson so browsing the index stays light.
-   return json({skills:Object.values(LESSONS).map(lesson=>({...lesson,curriculum:curriculumForSkill(lesson.skill)})),vocabulary,formulas,curriculum:curriculumOverview()});
+   return json({skills:Object.values(LESSONS).map(lesson=>({...lesson,curriculum:curriculumForSkill(lesson.skill),im:alignmentForSkill(lesson.skill)})),vocabulary,formulas,curriculum:curriculumOverview()});
   }
   if(path.endsWith('/lesson')&&request.method==='GET')return json(await lesson(user,url.searchParams.get('skill')));
   if(path.endsWith('/lesson-complete')&&request.method==='POST') {

@@ -8,15 +8,50 @@ govern the learning experience.
 
 Student routes: `/s/today`, `/s/extra`, `/s/map`, `/s/learn/:skill`, `/s/practice`, `/s/review`,
 `/s/library`, `/s/progress`, `/s/rewards`. Teacher routes: `/t/dashboard`,
-`/t/students/:id`, `/t/plan`, `/t/checks`, `/t/assign`, `/t/rewards`,
+`/t/gradebook`, `/t/scores`, `/t/students/:id`, `/t/plan`, `/t/checks`, `/t/assign`, `/t/rewards`,
 `/t/questions`, `/t/settings`. `/login` is the only signed-out page.
 
 The interface uses a desktop sidebar, tablet rail, mobile drawer and full page
-URLs. Cobalt, violet, yellow and coral accents, graphs, geometric illustrations
-and two original geometry characters support a lesson-first layout. Short
+URLs. Royal blue, coral, gold and lavender accents, graphs, geometric illustrations
+and four original geometry characters support a lesson-first layout. Short
 celebrations follow saved answers and completed work; reduced-motion preferences
 are respected and motion never blocks the next question. Lessons, practice, review, rewards and teacher management share
 the same persistent database.
+
+## Weekly gradebook and tests
+
+Open **Teacher → Student work**. Daily practice shows one week at a time,
+with separate online counts and paper scores, optional minutes and teacher notes.
+Use **Tests** to add a test, record a score, correct an entry, add a retake, mark
+missed questions or record completed corrections. Missing scores remain blank.
+Paper and test grades never change online completion, catch-up or reward points.
+
+The syllabus catalog uses the 39-question Grade 5 diagnostic, the unweighted
+25-question ratios/rates/percents diagnostic, and seven weekly
+checks (Weeks 1, 2, 3, 4, 6, 7 and 8). The checkpoint and rehearsal are separate.
+The existing downloadable Grade 5 PDF is clearly marked as a different
+37-question reference. No matching 39-question PDF was supplied.
+
+The teacher-only planning estimate shows its components and missing evidence.
+It uses the latest attempt for each scheduled assessment and online first-try
+accuracy over the last 14 days. It is a course planning aid, not a BSD placement
+cutoff. Completed tests move into Past & hidden after 14 days; Hide and Restore
+keep the active list short without deleting attempts.
+
+Each test can have a private blank PDF and completed-work PDFs per attempt.
+Choose Analyze work to request feedback, then review it before sharing. The
+entered grade stays authoritative. Changed grades or files make old feedback
+stale; approved current feedback appears in the student learning profile and
+helps personalize relevant tutoring without resending the PDFs. Uploaded files
+live in private object storage and never enter the public Pages build.
+
+The course map and lesson pages show verified IM Grade 5, 6 and 7 unit tags.
+Coverage counts describe the website’s selected skills rather than claiming
+completion of entire IM units. See [the unit alignment](docs/im-unit-alignment.md).
+
+Global and per-test student score visibility are controlled in the gradebook; teacher notes
+and the planning estimate always remain private. See
+[the syllabus audit](docs/gradebook-syllabus-audit.md) for grading decisions.
 
 ## Local development
 
@@ -53,12 +88,12 @@ on-time history and streak remain accurate. Daily mode stops at the goal. Extra
 practice and five-question catch-up sessions remain available afterward;
 catch-up focuses on the oldest unfinished lesson's introduced topics.
 
-The teacher sidebar has four main destinations: Overview, Curriculum & dates,
-Student work, and Points & rewards. Settings contains accounts, helper access
+The teacher sidebar has four main destinations: Overview, Curriculum,
+Student work, and Rewards. Settings contains accounts, helper access
 and backups. The overview opens directly to the selected student's current
 lesson, daily work, catch-up progress and weekly note. A single student needs
 no selector. Practice tasks and question samples sit under Curriculum; paper
-checks remain available from Student work. A dated progress
+grades and tests are in Student work. A dated progress
 update can be copied or downloaded as plain text for the teacher to send manually;
 no email is sent or scheduled. The update uses the same student-specific metrics
 as the visible counters and excludes raw answers and tutoring conversations.

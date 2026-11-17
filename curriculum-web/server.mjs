@@ -11,12 +11,14 @@ const db = createSQLiteDB(process.env.DATABASE_PATH || resolve(root, 'private/pr
 db.migrate();
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.woff2': 'font/woff2', '.svg': 'image/svg+xml' };
 const assets = {};
-for (const name of ['index.html', 'app.js', 'student.mjs', 'teacher.mjs', 'styles.css', 'assets/favicon.svg', 'assets/math-playground.svg', 'assets/graph-paper.svg']) {
-  try { assets[`/${name}`] = { body: await readFile(resolve(root, 'public', name)), type: types[extname(name)] }; } catch (error) { if (error.code !== 'ENOENT') throw error; }
+async function loadPublic(directory, prefix = '') {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const name = `${prefix}/${entry.name}`, absolute = resolve(directory, entry.name);
+    if (entry.isDirectory()) await loadPublic(absolute, name);
+    else if (types[extname(entry.name)]) assets[name] = { body: await readFile(absolute), type: types[extname(entry.name)] };
+  }
 }
-for (const name of await readdir(resolve(root, 'public/assets/fonts')).catch(() => [])) {
-  if (name.endsWith('.woff2')) assets[`/assets/fonts/${name}`] = { body: await readFile(resolve(root, 'public/assets/fonts', name)), type: types['.woff2'] };
-}
+await loadPublic(resolve(root, 'public'));
 let questionPool = null;
 try { questionPool = JSON.parse(await readFile(resolve(root, 'private/vetted-seeds.json'), 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const app = createApp({ db, assets, questionPool, production: process.env.NODE_ENV === 'production' });

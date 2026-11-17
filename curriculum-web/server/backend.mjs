@@ -3,6 +3,7 @@ import { createManagement } from './management.mjs';
 import { createLearning } from './learning.mjs';
 import { createTutor } from './ai-tutor.mjs';
 import { createTutorHistory } from './tutor-history.mjs';
+import { createTestDocuments } from './test-documents.mjs';
 import { hash, compare } from 'bcryptjs';
 import { generateQuestion, gradeQuestion, publicQuestion, questionIdentity } from './questions.mjs';
 import { buildSlots, dayInfo, pacificDate, SKILLS } from './plan.mjs';
@@ -15,11 +16,13 @@ const DAY = 86400000;
 // smoke check in sync whenever a new browser module or stylesheet is added.
 const PUBLIC_ASSETS = new Set([
   '/index.html', '/app.js', '/api-client.mjs', '/student.mjs', '/teacher.mjs',
-  '/learning-character.mjs', '/tutor-panel.mjs', '/styles.css',
+  '/learning-character.mjs', '/tutor-panel.mjs', '/gradebook.mjs', '/test-documents.mjs', '/gradebook.css', '/styles.css',
   '/teacher-backlog.css', '/student-learning.css', '/tutor-panel.css',
   '/favicon.svg', '/assets/favicon.svg', '/assets/math-playground.svg', '/assets/graph-paper.svg',
-  '/assets/fonts/inter-latin.woff2', '/assets/fonts/source-serif-4-latin.woff2',
-  '/assets/fonts/inter-LICENSE.txt', '/assets/fonts/source-serif-4-LICENSE.txt'
+  '/assets/fonts/source-serif-4-latin.woff2',
+  '/assets/fonts/plus-jakarta-sans-latin.woff2', '/assets/fonts/source-sans-3-latin.woff2',
+  '/assets/fonts/plus-jakarta-sans-LICENSE.txt', '/assets/fonts/source-sans-3-LICENSE.txt',
+  '/assets/fonts/source-serif-4-LICENSE.txt'
 ]);
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers } });
 // Preserve the deployed role encoding while exposing only teacher/student roles.
@@ -39,11 +42,12 @@ const plainLabel = label => String(label).replace(/<math\b[^>]*aria-label="([^"]
 const readableAnswer = (q, answer) => q.choices && /^option-\d+$/.test(answer) ? plainLabel(q.choices[Number(answer.slice(7))]?.label ?? answer) : answer;
 const rightAnswer = q => q.choices ? plainLabel(q.choices.find((_, i) => gradeQuestion(q, `option-${i}`).correct)?.label ?? q.answer) : String(q.answer);
 
-export function createApp({ db, assets = {}, clock = () => new Date(), production = false, questionPool = null, backupStore = null, logger = console, ai = {} }) {
+export function createApp({ db, assets = {}, clock = () => new Date(), production = false, questionPool = null, backupStore = null, logger = console, ai = {}, initialScore = null, initialDocuments = [] }) {
   const platform = createPlatform({db, clock, production, questionPool});
-  const management = createManagement({db, clock, production, questionPool, platform});
+  const management = createManagement({db, clock, production, questionPool, platform, initialScore});
   const learning = createLearning({db, clock, production, questionPool});
-  const tutorHistory = createTutorHistory({db, platform, clock});
+  const testDocuments = createTestDocuments({db, bucket:backupStore, clock, ai, initialDocuments, ensureCatalog:()=>management.gradebook.ensureReady()});
+  const tutorHistory = createTutorHistory({db, platform, clock, testDocuments});
   const tutor = createTutor({db, platform, history:tutorHistory, clock, ai});
   const now = () => new Date(clock());
   const iso = () => now().toISOString();
@@ -255,7 +259,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     const tables = ['users', 'settings', 'runs', 'questions', 'attempts', 'ledger', 'prizes', 'requests'];
     const data = { version: 2, createdAt: iso(), tables: {} };
     for (const table of tables) data.tables[`practice_${table}`] = await all(`SELECT * FROM practice_${table}`);
-    for (const table of ['platform_program','platform_questions','platform_attempts','platform_review_queue','platform_lessons','platform_examples','platform_daily_rules','platform_assignments','platform_weekly_checks','platform_teacher_notes','platform_flags','platform_prize_notes','platform_ai_settings','platform_tutor_events','platform_tutor_conversations']) data.tables[table] = await all(`SELECT * FROM ${table}`);
+    for (const table of ['platform_program','platform_questions','platform_attempts','platform_review_queue','platform_lessons','platform_examples','platform_daily_rules','platform_assignments','platform_weekly_checks','platform_teacher_notes','platform_flags','platform_prize_notes','platform_ai_settings','platform_tutor_events','platform_tutor_conversations','platform_assessments','platform_scores','platform_paper_days','platform_gradebook_settings','platform_grade_requests','platform_grade_audit','platform_grade_imports','platform_test_documents','platform_test_reviews','platform_test_document_requests','platform_assessment_visibility']) data.tables[table] = await all(`SELECT * FROM ${table}`);
     const date = todayDate();
     if (backupStore) await backupStore.put(`practice-backups/${date}.json`, JSON.stringify(data), { httpMetadata: { contentType: 'application/json' } });
     await run('INSERT INTO practice_backups(date,data,created_at) VALUES(?,?,?) ON CONFLICT(date) DO UPDATE SET data = excluded.data,created_at = excluded.created_at', date, JSON.stringify(backupStore ? { storedExternally: true, key: `practice-backups/${date}.json` } : data), iso());
@@ -331,7 +335,7 @@ export function createApp({ db, assets = {}, clock = () => new Date(), productio
     if (path.startsWith('/api/v2/')) {
       if (path.startsWith('/api/v2/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');
       if (path.startsWith('/api/v2/student/') && user.role !== 'student') fail(403, 'Use a student account for learning.');
-      for (const handler of [tutorHistory, tutor, platform, management, learning]) { const response = await handler.handle(request, user); if (response) return response; }
+      for (const handler of [testDocuments, tutorHistory, tutor, platform, management, learning]) { const response = await handler.handle(request, user); if (response) return response; }
       return json({error:'Not found.'},404);
     }
     if (path.startsWith('/api/teacher/') && user.role !== 'teacher') fail(403, 'A teacher account is needed.');

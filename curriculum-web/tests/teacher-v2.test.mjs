@@ -38,7 +38,7 @@ async function until(predicate) { const start = Date.now(); while (!predicate())
 test('teacher routes render against real management API and preserve selected student', async () => {
   const f = await fixture();
   try {
-    for (const route of ['/t/dashboard', '/t/students/student', '/t/students/student?section=days', '/t/students/student?section=skills', '/t/students/student?section=patterns', '/t/plan', '/t/checks', '/t/assign', '/t/rewards', '/t/questions', '/t/settings']) {
+    for (const route of ['/t/dashboard', '/t/gradebook', '/t/scores', '/t/students/student', '/t/students/student?section=days', '/t/students/student?section=skills', '/t/students/student?section=patterns', '/t/plan', '/t/checks', '/t/assign', '/t/rewards', '/t/questions', '/t/settings']) {
       await f.render(route);
       assert.ok(document.querySelector('h1'), route);
       assert.doesNotMatch(document.body.textContent, /\b(?:undefined|NaN|lorem)\b|\[object Object\]/i, route);
@@ -222,4 +222,17 @@ test('curriculum downloads are pinned reviewed materials and carry the selected 
   assert.match(document.getElementById('week-4').textContent,/Thanksgiving/);
   assert.doesNotMatch(document.body.innerHTML,/paper_questions\.json|Day_01_Sat_Nov7%202/);
  }finally{f.close();}
+});
+
+test('overview gives direct access to today’s answers, grades and the existing weekly note',async()=>{
+  const f=await fixture();try{
+    await f.render('/t/dashboard');const nav=document.querySelector('.teacher-quick-links');assert.ok(nav);assert.match(nav.textContent,/Today’s answers.*Enter paper grade.*Enter test score.*Update weekly note/);assert.match(nav.querySelector('a[href*="section=days"]').getAttribute('href'),/date=2026-11-10/);assert.match(nav.querySelector('a[href*="gradebook"]').getAttribute('href'),/date=2026-11-10#today/);document.getElementById('teacher-note-text').value='Use a drawing first.';document.getElementById('jump-to-weekly-note').click();assert.equal(document.activeElement.id,'teacher-note-text');assert.equal(document.getElementById('teacher-note-text').value,'Use a drawing first.');
+  }finally{f.close();}
+});
+
+test('teacher saves a per-test visibility choice through the real gradebook API',async()=>{
+  const f=await fixture();try{
+    await f.render('/t/scores?assessment=weekly-1');const form=document.querySelector('[data-test-visibility="weekly-1"]');assert.ok(form);form.querySelector('[name=showScores]').checked=false;await f.submit(form.id);
+    const data=await f.ctx.api('/v2/teacher/gradebook?studentId=student');assert.equal(data.assessments.find(test=>test.id==='weekly-1').showScores,false);assert.equal(data.assessments.find(test=>test.id==='weekly-2').showScores,true);assert.equal(data.settings.showScores,true);
+  }finally{f.close();}
 });
