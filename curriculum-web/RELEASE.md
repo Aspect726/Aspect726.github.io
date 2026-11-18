@@ -1,5 +1,23 @@
 # November 17 classroom update
 
+## Layout repair follow-up
+
+The layout pass corrects conflicting styles in the student, teacher, gradebook
+and tutor screens. Text-link buttons no longer inherit browser-default button
+boxes; checkboxes retain their native size; button variants keep readable hover
+colors; diagram spacing no longer moves feedback icons or character artwork.
+Practice-card actions align, grade-entry labels and fields have room to wrap,
+and mobile progress descriptions stay in their intended rows. Phone notices
+sit above the bottom navigation. The labelled tablet sidebar uses one consistent
+breakpoint and no longer displays overlapping rail tooltips. Keyboard focus
+indicators from the preceding release remain intact.
+
+The 40 focused frontend, design, gradebook, test-document and tutor checks pass.
+The production build and compiled Worker smoke pass. This is a source/cascade
+review, not a completed screenshot review: the browser still fails during
+initialization, the desktop viewer reports no available Cloud environment,
+and downloading the hosted screenshot is blocked by the outbound proxy.
+
 ## Classroom and design
 
 The teacher classroom has four main destinations plus Settings, direct entry to
@@ -50,7 +68,7 @@ context without resending the PDFs for each question.
 
 ## Verification
 
-All **436 tests pass**, with no failures or skips. The final Worker build has
+The preceding gradebook release passed all **436 tests**, with no failures or skips. Its Worker build has
 23 public shell assets and is 9,925,849 bytes. Compiled smoke follows the
 19-asset HTML/CSS/module/font dependency graph and verifies accounts, role
 isolation, saved answers, tutor history, gradebook catalog/import, private PDF

@@ -3,7 +3,7 @@
 @font-face{font-family:'Source Serif 4';src:url('/assets/fonts/source-serif-4-latin.woff2') format('woff2');font-weight:200 900;font-display:swap}
 :root{--paper:#FAF8F2;--card:#FFFFFF;--ink:#243653;--deep:#243653;--ink-soft:#5B6B88;--muted:#5B6B88;--body:var(--ink);--teal:#365FC4;--royal:#365FC4;--accent-dark:#2B4FA8;--accent-soft:#EDF3FF;--cornflower:#7399EC;--coral:#ED927F;--coral-text:#B8523F;--brick:var(--coral-text);--gold:#F3CE70;--gold-text:#8A6414;--gold-soft:#FFF8E6;--warm-soft:#FFF7F4;--lavender:#B6A2DF;--lavender-text:#6B55A8;--good:#25663F;--good-soft:#E3F4E8;--miss:var(--coral-text);--line:#DEDCD5;--control-edge:#767F93;--line-strong:var(--control-edge);--track:#EDF3FF;--radius:12px;--shadow:0 4px 18px #2436530A;--space:4px;--heading:'Plus Jakarta Sans',Arial,sans-serif;--sans:'Source Sans 3',Arial,sans-serif;--serif:'Source Serif 4',Georgia,serif;color-scheme:light}
 *{box-sizing:border-box}
-html{scroll-padding-top:24px}
+html{scroll-padding-top:96px}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 button,input,select,textarea{font:inherit;color:inherit;max-width:100%}
 button,a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -83,6 +83,7 @@ math{font-family:var(--serif);font-size:1.12em}math[display=block]{margin:20px 0
 .button.small,.button.compact{padding:8px 13px;font-size:11px}.button.wide{width:100%}
 .text-link,.text-button{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--teal);font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:4px}
 .text-button{padding:8px 0;border:0;background:none}.form-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:22px}
+button.text-link{appearance:none;border:0;background:transparent;padding:8px 0;text-align:left;white-space:normal}
 .field{display:grid;gap:8px;margin-bottom:20px;min-width:0}
 .field label,.field>span{font-size:12px;font-weight:600;line-height:1.5}
 .field label>input,.field label>select,.field label>textarea{display:block;margin-top:8px}
@@ -136,7 +137,7 @@ tbody tr:last-child td{border-bottom:0}td p{margin:6px 0 0}td .button{white-spac
 .history-list{list-style:none;margin:0;padding:0}.history-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 0;border-bottom:1px solid var(--line)}.history-row:last-child{border-bottom:0}.history-row>div{min-width:0}.history-row p{font-size:11px;margin:6px 0 0}
 .reference-list dt{font-weight:600;margin-top:20px;font-size:14px}.reference-list dd{margin:8px 0 20px;color:var(--muted);font-size:13px}
 .example,.lesson-example{background:#F0F4FC;border:1px solid var(--line);padding:24px;margin:20px 0}.steps{padding-left:24px}.steps li{padding:8px 0}.steps li::marker{color:var(--brick)}
-.lesson-section{margin-bottom:24px}.lesson-section svg,.lesson-model svg{max-height:280px;margin:24px auto}
+.lesson-section{margin-bottom:24px}.lesson-model svg{max-height:280px;margin:24px auto}
 .trap{border-left:3px solid var(--brick);padding:20px;background:var(--warm-soft)}
 .teacher-app .page-content{font-size:13px}.teacher-app .page-heading h1{font-size:42px}.teacher-app .panel h2{font-size:26px}
 .teacher-app .day-summary{color:var(--ink);text-decoration:none}.teacher-app .day-summary strong{display:block;font:600 25px var(--serif);margin:8px 0}.teacher-app .day-summary>span:last-child{font-size:10px;color:var(--muted)}
@@ -152,8 +153,8 @@ tbody tr:last-child td{border-bottom:0}td p{margin:6px 0 0}td .button{white-spac
 .practice-brand span{font:9px var(--sans);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
 .focus-progress{margin:20px 0 28px}.focus-progress .section-heading{align-items:center;font-size:12px;margin-bottom:12px}.focus-progress .small{margin:12px 0 0;font-size:11px}
 .question-surface{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);padding:38px;margin:24px 0;box-shadow:var(--shadow)}
-.question-prompt{font:23px/1.8 var(--serif);margin-bottom:28px;overflow-wrap:anywhere}.question-stage svg,.question-surface svg{max-height:300px;margin:20px auto}
-.question-stage fieldset{border:0;padding:0}.question-stage fieldset label{display:flex;align-items:flex-start;gap:12px;padding:15px;border:1px solid var(--line);margin:10px 0;font-size:15px}.question-stage fieldset label:has(input:checked){background:var(--gold-soft);border-color:#87A2D9}
+.question-prompt{font:23px/1.8 var(--serif);margin-bottom:28px;overflow-wrap:anywhere}.question-diagram svg{max-height:300px;margin:20px auto}
+.question-stage fieldset{border:0;padding:0;margin-inline:0;min-width:0}.question-stage fieldset label{display:flex;align-items:flex-start;gap:12px;padding:15px;border:1px solid var(--line);margin:10px 0;font-size:15px}.question-stage fieldset label:has(input:checked){background:var(--gold-soft);border-color:#87A2D9}
 .question-stage .field input{font-size:23px;min-height:54px}
 .feedback{padding:24px;border-left:3px solid var(--teal);background:#EEF3FC;margin-top:28px}.feedback.correct{border-color:var(--good);background:var(--gold-soft)}.feedback.miss{border-color:var(--brick);background:var(--warm-soft)}
 .feedback h2{display:flex;align-items:center;gap:10px;font-size:28px}.feedback details{margin:20px 0}.feedback summary{cursor:pointer;min-height:44px}.feedback li{padding:6px 0}
@@ -318,7 +319,7 @@ details[open]>.course-summary .course-open-label{display:none}
 .rewards-balance{display:flex;align-items:center;justify-content:space-between;gap:32px}.rewards-balance p:last-child{margin:0;font-size:13px;color:var(--muted)}
 .reward-next{border-left:1px solid var(--line);padding-left:30px;max-width:400px}.reward-next p{font-size:13px}.reward-next strong{color:var(--brick)}
 .reward-records{margin-top:32px;align-items:start}.history-row>.badge,.history-row>strong{flex-shrink:0}.request-status{text-transform:capitalize}
-.question-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}.question-meta .eyebrow{font-size:10px;line-height:1.7;margin:0;max-width:50ch}.question-meta .badge{flex-shrink:0}
+.question-meta{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px 22px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}.question-meta .eyebrow{min-width:0;font-size:10px;line-height:1.7;margin:0;max-width:50ch}.question-meta .badge{flex-shrink:0}
 .question-diagram{padding:10px 0;margin:16px 0 24px;overflow-x:auto}.question-diagram svg{max-width:100%;margin:auto}
 #practice-answer-form{border-top:1px solid var(--line);padding-top:24px}.answer-field{max-width:560px;font-size:13px;font-weight:600}#answer-help{font-size:12px;line-height:1.7;max-width:65ch}
 .question-hint{font-size:13px;margin-bottom:18px}.question-hint>summary{min-height:44px;cursor:pointer;padding:10px 0;color:var(--teal)}.question-hint>p{padding:18px;background:var(--paper)}
@@ -879,14 +880,17 @@ input:not([type=checkbox]):not([type=radio]),select,textarea{border:1px solid va
 /* Shared workbook primitives. Color belongs to meaning, not to page-sized blocks. */
 :where(h1,h2,h3,h4){font-family:var(--heading)}
 :where(button,input,select,textarea){border-radius:var(--radius)}
-.button,button[type=submit]{background:var(--royal);border:1px solid var(--royal);box-shadow:var(--shadow);border-radius:var(--radius);font-weight:650;transition:background .15s,border-color .15s}
+.button,button[type=submit]{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;background:var(--royal);border:1px solid var(--royal);box-shadow:var(--shadow);border-radius:var(--radius);font-weight:650;transition:background .15s,border-color .15s}
 .button:hover:not(:disabled),button[type=submit]:hover:not(:disabled){background:var(--accent-dark);border-color:var(--accent-dark);box-shadow:var(--shadow);transform:none}
 .button:active:not(:disabled),button[type=submit]:active:not(:disabled){transform:none;box-shadow:none}
 .button.secondary,.button.secondary:hover,.question-help .button,.question-help .button:hover{background:var(--card);border-color:var(--control-edge);color:var(--royal);box-shadow:none}
 .button.secondary:hover,.question-help .button:hover{background:var(--accent-soft)}
 .button.gold{background:var(--gold);border-color:var(--gold-text);color:var(--ink);box-shadow:none}
+.button.gold:hover:not(:disabled){background:var(--gold-soft);border-color:var(--gold-text);color:var(--ink)}
 .button.danger{background:var(--card);border-color:var(--coral-text);color:var(--coral-text);box-shadow:none}
+.button.danger:hover:not(:disabled){background:var(--warm-soft);border-color:var(--coral-text);color:var(--coral-text)}
 .button.quiet{background:transparent;color:var(--royal);border-color:transparent;box-shadow:none}
+.button.quiet:hover:not(:disabled){background:var(--accent-soft);border-color:transparent;color:var(--royal)}
 input:not([type=checkbox]):not([type=radio]),select,textarea,.topbar-status select,.question-stage .field input{border:1px solid var(--control-edge);background:var(--card);border-radius:var(--radius)}
 input[type=checkbox],input[type=radio]{accent-color:var(--royal);outline-offset:3px}
 .field label,.field>span{display:block;font-size:14px;line-height:1.5}.field label>input[type=checkbox],.field label>input[type=radio]{display:inline-block}
@@ -905,7 +909,7 @@ input[type=checkbox],input[type=radio]{accent-color:var(--royal);outline-offset:
 .sidebar .side-link.active .nav-icon{color:var(--royal)}.sidebar .side-link:hover{background:var(--accent-soft);transform:none}
 .math-heading-decoration{color:var(--lavender-text)}.math-heading-decoration svg>g>path:nth-child(2){stroke:var(--lavender-text)}
 .geometry-friend{display:inline-flex;align-items:center;justify-content:center;width:180px;height:165px;flex:0 0 auto;pointer-events:none}
-.geometry-friend.small{width:40px;height:37px}.geometry-friend>svg{width:100%;height:100%;overflow:visible}
+.geometry-friend.small{width:40px;height:37px}.geometry-friend>svg{width:100%;height:100%;margin:0;max-height:none;overflow:visible}
 .geometry-friend .friend-sparks{opacity:1}.geometry-friend:not(.celebrating) .friend-body{animation:none}
 .character-math-diagram{width:min(100%,240px);margin:0;flex:0 0 auto}.character-math-diagram svg{width:100%;height:auto}.character-math-diagram text{font:14px var(--sans);text-anchor:middle;fill:var(--ink);stroke:none}.character-math-diagram figcaption{font:13px/1.5 var(--sans);color:var(--muted);text-align:center;margin-top:8px}
 @media(max-width:639px){.geometry-friend{width:160px;height:147px}.geometry-friend.small{width:40px;height:37px}.character-math-diagram{width:180px}}

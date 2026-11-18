@@ -77,8 +77,11 @@
 .gradebook-week-summary p { margin: 3px 0 0; }
 
 .gradebook-days { display: grid; gap: 12px; margin: 20px 0 24px; }
-.gradebook-day { display: grid; grid-template-columns: 106px 132px minmax(0, 1fr); align-items: start; gap: 18px; padding: 20px; border: 1px solid var(--gradebook-border); border-radius: 13px; background: #fff; }
+.gradebook-day { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 1.8fr); align-items: start; gap: 16px 24px; padding: 20px; border: 1px solid var(--gradebook-border); border-radius: 13px; background: #fff; }
 .gradebook-day > * { min-width: 0; }
+.gradebook-day > .gradebook-day-date { grid-column: 1; grid-row: 1; }
+.gradebook-day > .gradebook-day-online { grid-column: 1; grid-row: 2; }
+.gradebook-day > .paper-grade-form { grid-column: 2; grid-row: 1 / span 2; }
 .gradebook-day-date { padding-top: 1px; font-size: 13px; line-height: 1.55; }
 .gradebook-day-date :is(strong, h3) { display: block; font-size: 15px; margin: 0 0 4px; color: #34466a; }
 .gradebook-day-date :is(small, p) { display: block; margin: 3px 0 0; color: var(--gradebook-muted); }
@@ -87,7 +90,7 @@
 .gradebook-day-online :is(strong, b) { display: block; color: #3658b1; font-size: 16px; line-height: 1.4; }
 .gradebook-day-online :is(p, small) { margin: 4px 0 0; display: block; }
 .paper-grade-form { min-width: 0; }
-.paper-grade-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; align-items: start; }
+.paper-grade-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; align-items: end; }
 .paper-grade-fields > * { min-width: 0; }
 .paper-grade-fields > :is(.paper-grade-note, .gradebook-note, .full-width, [data-wide]) { grid-column: 1 / -1; }
 .paper-grade-fields > label:has(textarea), .paper-grade-fields > .field:has(textarea) { grid-column: 1 / -1; }
@@ -135,7 +138,7 @@
 .score-entry > summary::after { content: "+"; font-size: 22px; font-weight: 400; margin-left: auto; }
 .score-entry[open] > summary::after { content: "−"; }
 .score-entry > :is(form, .score-entry-content) { padding: 4px 16px 18px; }
-.score-entry-grid, .gradebook-catalog-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.score-entry-grid, .gradebook-catalog-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: end; }
 .score-entry-grid > *, .gradebook-catalog-form > * { min-width: 0; }
 .score-entry-grid > :is(.full-width, .gradebook-errors, .missed-question-grid, .score-live-result, .form-actions), .gradebook-catalog-form > :is(.full-width, .form-actions, .gradebook-errors, p, h3, fieldset) { grid-column: 1 / -1; }
 .score-entry-grid > label:has(textarea), .score-entry-grid > .field:has(textarea), .gradebook-catalog-form > label:has(textarea), .gradebook-catalog-form > .field:has(textarea) { grid-column: 1 / -1; }
@@ -245,13 +248,15 @@
 .score-redo [role="status"]:empty { display: none; }
 
 @media (max-width: 1100px) {
-  .gradebook-day { grid-template-columns: 95px 120px minmax(0, 1fr); gap: 14px; padding: 18px; }
+  .gradebook-day { gap: 14px 20px; padding: 18px; }
   .paper-grade-fields { gap: 10px; }
   .gradebook-readiness { gap: 20px; }
 }
 @media (max-width: 900px) {
   .gradebook-day { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .paper-grade-form { grid-column: 1 / -1; padding-top: 15px; border-top: 1px solid #e6eaf3; }
+  .gradebook-day > .gradebook-day-date { grid-column: 1; grid-row: 1; }
+  .gradebook-day > .gradebook-day-online { grid-column: 2; grid-row: 1; }
+  .gradebook-day > .paper-grade-form { grid-column: 1 / -1; grid-row: 2; padding-top: 15px; border-top: 1px solid #e6eaf3; }
   .gradebook-day-online { margin-left: auto; width: 100%; max-width: 210px; }
   .gradebook-day-date { padding: 5px 0; }
   .gradebook-week-summary { gap: 10px; }
@@ -310,6 +315,7 @@
 }
 @media (max-width: 360px) {
   .gradebook-day { grid-template-columns: 1fr; }
+  .gradebook-day > :is(.gradebook-day-date,.gradebook-day-online,.paper-grade-form) { grid-column: 1; grid-row: auto; }
   .gradebook-day-online { margin-left: 0; max-width: none; }
   .paper-grade-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .readiness-components { grid-template-columns: 1fr; }
