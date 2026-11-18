@@ -1,41 +1,217 @@
-# Double Advanced
+# Double Advanced learning platform
 
-A student workspace and teacher classroom built around the expanded Double Advanced curriculum. The source lives in `curriculum-web`; the original curriculum stays on the repository's `Curriculum` branch.
+A server-backed mathematics learning site for elementary and middle-school
+students and their teachers, hosted on ChatGPT Sites at `donteventry.me`.
+The host audience is public; application accounts protect learning records and
+teacher controls. The supplied course plan and the user's later instructions
+govern the learning experience.
 
-## Run locally
+Student routes: `/s/today`, `/s/extra`, `/s/map`, `/s/learn/:skill`, `/s/practice`, `/s/review`,
+`/s/library`, `/s/progress`, `/s/rewards`. Teacher routes: `/t/dashboard`,
+`/t/gradebook`, `/t/scores`, `/t/students/:id`, `/t/plan`, `/t/checks`, `/t/assign`, `/t/rewards`,
+`/t/questions`, `/t/settings`. `/login` is the only signed-out page.
 
-Use Node.js 24 or newer. The local server has no third-party runtime dependencies. Import the curriculum first using [CURRICULUM.md](CURRICULUM.md), then:
+The interface uses a desktop sidebar, tablet rail, mobile drawer and full page
+URLs. Royal blue, coral, gold and lavender accents, graphs, geometric illustrations
+and four original geometry characters support a lesson-first layout. Short
+celebrations follow saved answers and completed work; reduced-motion preferences
+are respected and motion never blocks the next question. Lessons, practice, review, rewards and teacher management share
+the same persistent database.
 
-```sh
-cd curriculum-web
-npm start
+## Weekly gradebook and tests
+
+Open **Teacher → Student work**. Daily practice shows one week at a time,
+with separate online counts and paper scores, optional minutes and teacher notes.
+Use **Tests** to add a test, record a score, correct an entry, add a retake, mark
+missed questions or record completed corrections. Missing scores remain blank.
+Paper and test grades never change online completion, catch-up or reward points.
+
+The syllabus catalog uses the 39-question Grade 5 diagnostic, the unweighted
+25-question ratios/rates/percents diagnostic, and seven weekly
+checks (Weeks 1, 2, 3, 4, 6, 7 and 8). The checkpoint and rehearsal are separate.
+The existing downloadable Grade 5 PDF is clearly marked as a different
+37-question reference. No matching 39-question PDF was supplied.
+
+The teacher-only planning estimate shows its components and missing evidence.
+It uses the latest attempt for each scheduled assessment and online first-try
+accuracy over the last 14 days. It is a course planning aid, not a BSD placement
+cutoff. Completed tests move into Past & hidden after 14 days; Hide and Restore
+keep the active list short without deleting attempts.
+
+Each test can have a private blank PDF and completed-work PDFs per attempt.
+Choose Analyze work to request feedback, then review it before sharing. The
+entered grade stays authoritative. Changed grades or files make old feedback
+stale; approved current feedback appears in the student learning profile and
+helps personalize relevant tutoring without resending the PDFs. Uploaded files
+live in private object storage and never enter the public Pages build.
+
+The course map and lesson pages show verified IM Grade 5, 6 and 7 unit tags.
+Coverage counts describe the website’s selected skills rather than claiming
+completion of entire IM units. See [the unit alignment](docs/im-unit-alignment.md).
+
+Global and per-test student score visibility are controlled in the gradebook; teacher notes
+and the planning estimate always remain private. See
+[the syllabus audit](docs/gradebook-syllabus-audit.md) for grading decisions.
+
+## Local development
+
+Requires Node 24. Run `npm ci`, `npm test`, then `npm start`. SQLite data stays in
+ignored `private/`. Production runs the same Request/Response handlers on D1.
+Applied migrations are immutable; new platform tables preserve prior accounts,
+attempts, points and prizes. Local migrations are recorded and run once.
+
+## Current practice rules
+
+Each standard set of 20 contains six short warm-ups and 14 story problems.
+Stories use named people, concrete quantities and two to four dependent steps,
+with 14 different scenarios per set. The five question shapes are missing
+amounts, comparing options, working backward, fixing a mistake and what-if
+follow-ups. Parameters and exact answers are computed in code. Story answers
+require units; comparison answers also identify the better option. Missing or
+incorrect units can be fixed without spending the question.
+
+Each submitted question counts once, whether right or wrong. Empty and invalid
+input does not count. An equivalent answer that needs simplest form can be fixed
+without spending the question. Default required total is 20; points are awarded
+at 35, 45, 55 and each further 10 answered questions. Learn, Library and Review
+count too. Unique answer rows and ledger keys prevent duplicate awards.
+
+The daily task starts on Saturday, November 7, 2026, and runs for 70 days.
+The server supplies Pacific-time deadlines, including daylight-saving changes.
+The student page shows answers completed today, questions remaining and a live
+countdown. A shared backlog count separates earlier overdue questions from work
+still due today. The calendar includes every scheduled date, even with no answers.
+Each date's first target answers fulfill that date's goal; extra answers reduce
+the oldest already-due deficits. They never prepay future goals. Actual answers
+stay on their completion date, and catch-up credit is shown separately so the
+on-time history and streak remain accurate. Daily mode stops at the goal. Extra
+practice and five-question catch-up sessions remain available afterward;
+catch-up focuses on the oldest unfinished lesson's introduced topics.
+
+The teacher sidebar has four main destinations: Overview, Curriculum,
+Student work, and Rewards. Settings contains accounts, helper access
+and backups. The overview opens directly to the selected student's current
+lesson, daily work, catch-up progress and weekly note. A single student needs
+no selector. Practice tasks and question samples sit under Curriculum; paper
+grades and tests are in Student work. A dated progress
+update can be copied or downloaded as plain text for the teacher to send manually;
+no email is sent or scheduled. The update uses the same student-specific metrics
+as the visible counters and excludes raw answers and tutoring conversations.
+
+The topic mix has two foundation, ten focus, five recent and three older review
+positions. Explicit teacher assignments and due reviews can use these positions.
+Automatic practice stays within introduced topics; short teaching bridges fill
+missing prerequisites without rewriting the supplied plan. Grade 5 foundations
+are available for review, but never assumed mastered. General fraction division,
+ratios, percentages and fractional volume are introduced as new learning. Difficulty adjusts after three correct or two
+incorrect answers. Misses schedule fresh versions on days 1, 3 and 7. A correct
+7-day review clears the entry. All practice sources share the same story quota;
+concurrent requests reserve unique positions and scenarios. Question hashes
+prevent repeats for the student across the program.
+
+Daily and bonus rules are edited in Points & rewards, with today's active rules
+and tomorrow's pending changes shown separately. A numerical preview explains
+when each point is earned. A catch-up answer can both reduce earlier unfinished
+work and count toward a bonus threshold; points and backlog are separate totals.
+Changes to daily and bonus targets take effect the next day. Week shifts move
+the selected week and all later weeks, using earlier/later controls or an exact
+date. The preview names affected weeks; overlapping dates and stale concurrent
+edits are rejected. Prize approval does not spend points;
+marking a prize given spends them atomically. Manual corrections require a note.
+Legacy production scoring endpoints return 410 and cannot bypass these rules.
+
+## Help and AI tutor
+
+Every question has a hint, worked steps and an answer that can be revealed
+without changing progress or points. The optional AI helper can explain a
+selected step or comment on the student's reasoning. Question-specific quick
+actions focus the message on a worked step or the student's attempted method.
+Only submitting a message requests a new explanation; failed requests retain
+the same request ID when retried. Code still grades every
+answer; AI feedback cannot change a score. If AI is paused, unavailable or at
+its allowance, the computed worked help remains available.
+
+Tutor conversations and help use are saved as student learning history and are
+visible to the teacher. Relevant recent history informs later explanations;
+it is not treated as proof of mastery. Teacher Settings controls AI availability
+and per-student/classroom daily allowances.
+
+Production reads `OPENAI_API_KEY` from a server runtime secret and optional
+`OPENAI_TUTOR_MODEL` from runtime configuration. Never put a key in source,
+browser assets or a public repository. The default is `gpt-5-nano` with minimal
+reasoning, switching to `gpt-6-luna` with no reasoning on December 11, 2026, or
+after a provider `404/model_not_found` response. Live provider verification is
+separate from mocked integration tests; see `RELEASE.md`.
+
+## Curriculum materials and navigation
+
+The November 17 upload on the GitHub `Curriculum` branch was reviewed at commit
+`604a82807488885cc5db31f6b1504b27b48076e1`. Its 70-day plan is identical to the
+existing plan, so the teaching sequence and saved progress are retained. Revised
+PDF questions required a new private no-repeat check. The teacher curriculum
+page lists all 70 days and references 82 reviewed PDFs: 70 canonical student
+sheets, ten teacher guides and the Grade 5 diagnostic with its key.
+
+Download week produces a standard ZIP containing seven student sheets, the
+teacher guide with answer keys, and a README showing the student's assigned
+dates. PDF bytes are checked against pinned Git blob hashes. The PDFs retain
+their original printed dates; rescheduling changes the website calendar and ZIP
+README, not the PDF contents. Downloads never include the source branch archive
+or `For_ChatGPT/` test inputs. See `docs/curriculum-update-2026-11-17.md` for the
+audit, the excluded duplicate sheet and the source's Thanksgiving-date correction.
+
+Navigation coalesces identical in-flight GET requests and briefly caches only
+the teacher's student list. Progress, points, answers and conversations are not
+cached in browser storage. Mutations and account/session changes invalidate
+client state. The Worker reuses initialized services and immutable assets while
+still authenticating every request. Page loading feedback and keyboard focus
+make navigation clear while data loads. These changes remove redundant work;
+production network timing is not yet measured.
+
+The educational design rationale and linked research are in
+`docs/ux-review-2026-11-17.md`.
+
+## Private release checks
+
+`server/plan.json` preserves the supplied dates and original focus topics.
+`server/curriculum.mjs` adds Grade 5, IMT1 and selected early IMT2 teaching targets,
+prerequisites and dated bridges. See `docs/curriculum-audit.md` for BSD sources,
+standard mappings and course-boundary limits. Teachers can inspect this mapping
+in Curriculum & dates. The paper/slide corpus and revised-PDF extraction are
+private validation input only; never put them in a public repository or artifact.
+The current combined check uses 4,485 records: the 2,322 original records,
+2,123 revised numbered PDF questions, and 40 worked reminder boxes.
+
 ```
-
-Open `http://127.0.0.1:3000`. Browsing the curriculum does not require an account. Saved answers require a server account. The server saves progress in `private/progress.sqlite`; keep this file on a persistent disk and back it up along with its WAL files using SQLite's backup mechanism. Do not commit databases or answer snapshots.
-
-Create the teacher account with `node server.mjs --create-teacher`, supplying `TEACHER_USERNAME`, `TEACHER_PASSWORD`, and optionally `TEACHER_NAME` as environment variables. Use a password manager and a unique password of at least 3 characters. Do not put a password in a tracked file or shell history. Sign in as the teacher and create the learner's account from the teacher screen. A nickname is sufficient; no child's email or full name is needed.
-
-## Hosting
-
-GitHub Pages uses the repository's existing branch publication. The root page opens `curriculum-web/public/`, and `_config.yml` excludes server, test, private-data, and importer paths. The workflow validates a separate public-only artifact, checks public JSON for private answer fields, and verifies the exact published JavaScript over HTTPS. GitHub Pages cannot run the SQLite server. Saved learning happens on the private hosted classroom or local server.
-
-The production classroom's URL and status are recorded in the delivery notes after deployment. It uses a separate database and protected server routes; a public static site must never receive a database, password, answer key, teacher guide, or hidden slide deck.
-
-For a conventional Node host, run `NODE_ENV=production`, set `APP_ORIGIN` to the exact HTTPS origin, put `DATABASE_PATH` on a persistent volume, and serve the frontend and API on the same origin through HTTPS. Keep port 3000 private behind the proxy. Import current curriculum into `data/` on that host and provide teacher resources in `private/resources/teacher/`. Production session cookies require HTTPS.
-
-## Learning and grading
-
-Weeks run Saturday through Friday. Every day has 20 required questions, except Wednesday's 25. Two challenges are included in each day's total. Optional assessments and extra practice do not silently increase the assignment. Teachers can change requirements, pause lessons, reschedule work, and record checked paper work.
-
-Equivalent numerical values use exact rational arithmetic. Format rules such as simplifying or supplying units are separate checks. Constructed explanations, drawings, and ambiguous source answers are sent to teacher review. A question is complete only when correct or approved. Hints, retries, first attempts, eventual correctness, and paper work remain distinguishable. Teacher settings control solution release and mastery criteria.
-
-## Validation
-
-```sh
+PAPER_QUESTIONS_PATH=/private/paper_questions.json npm run test:paper -- --write-pool
+PAPER_QUESTIONS_PATH=/private/paper_questions.json VETTED_SEEDS_PATH=private/vetted-seeds.json FRAME_REPORT_PATH=private/frame-validation.json npm run test:frames
 npm test
-npm run build:pages
+npm run build
+node scripts/smoke-worker.mjs
 ```
 
-Curriculum validation covers the source manifest, assigned counts, all packet page references, slide numbering, source arithmetic checks, and the generated extra bank. The importer keeps a detailed local report at `data/import-report.json`. Server tests use isolated temporary databases; they do not modify learner records.
+The build requires checked legacy and story pools, frame evidence and source
+provenance hashes. It rejects stale evidence. The approved story pool contains
+1,600 entries per skill/difficulty, covering 16 scenarios and all five shapes.
+Exact, numeric and number-free frame checks exclude the private printed-sheet
+and slide material. The original 4,550-question course check is retained; a
+second check materializes all 70 days with the six/14 mix.
 
-The source repository is public, including the original uploaded curriculum on `Curriculum`. Application authorization protects classroom endpoints and stored progress; it cannot make material already published to a public GitHub branch secret.
+Only aggregate validation reports belong in the public repository. The private
+corpus, seed pool, credentials and private QA fixtures are never copied into the
+public mirror. Public assets contain no private data or answer-key modules.
+
+## Accounts and backups
+
+The current Sites audience is public. Each person signs in with a student or
+teacher application account. Teacher Settings creates accounts and
+resets passwords. Resetting a password revokes that person's sessions. Demo
+accounts requested for acceptance are provisioned from a host secret; their
+credentials are not in source and deployment never resets an existing password.
+
+Teacher Settings can save and download a private database backup, including the
+new learning tables. Exports include password hashes and should stay private.
+The Worker has a scheduled backup handler; a host cron must be configured before
+nightly operation can be claimed.
+
+See `RELEASE.md` for the current verification report and remaining limits.

@@ -1,0 +1,5997 @@
+{
+  "version": 1,
+  "result": "passed",
+  "sourceRecords": 4510,
+  "paperSegments": 4657,
+  "uniquePaperFrames": 1262,
+  "skills": 71,
+  "levels": 3,
+  "checkedStoryQuestions": 340800,
+  "matchingQuestions": 0,
+  "matchingFrames": 0,
+  "minimumPerSkillLevel": 1600,
+  "minimumScenarios": 16,
+  "minimumShapes": 5,
+  "bySkill": {
+    "D-SUB": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "D-LONG": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "D-DIV": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-WHOLE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-EXP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-ORDER": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-DIST": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-FACTOR": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-LIKE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-SOLVE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-STORY": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-PERIM": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-RELATE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-GRAPH": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-PARA": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-TRI": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-COMP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-SA": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-OPP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-ABS": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-ORDER": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-COORD": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-REFLECT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-DIST": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-INEQ": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-QUESTION": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-DISPLAY": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-MEAN": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-MEDIAN": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-CENTER": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-RANGE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-IQR": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-BOX": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-MAD": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-SPREAD": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "P-PROP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "P-SCALE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "P-MAP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-CIRC": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-CAREA": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-ADD": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-MULT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-2STEP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-ADD": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-SUB": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-MULT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-DIV": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-COMP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "R-RATIO": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "R-RATE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "P-PERCENT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "P-CHANGE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-DIV": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-VOL": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-PLACE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-ROUND": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-WMULT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "D-ADD": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "D-MULT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "M-CONVERT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "F-UNITDIV": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-NUM": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "E-PATTERN": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-FACTORS": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "N-SDIV": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-CLASS": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "G-WVOL": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-LINEPLOT": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-PROB": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "S-SAMPLE": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    },
+    "WARMUP": {
+      "1": 1600,
+      "2": 1600,
+      "3": 1600
+    }
+  },
+  "shapeCoverage": {
+    "D-SUB": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "D-LONG": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "D-DIV": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-WHOLE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-EXP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-ORDER": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-DIST": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-FACTOR": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-LIKE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-SOLVE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-STORY": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-PERIM": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-RELATE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-GRAPH": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-PARA": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-TRI": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-COMP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-SA": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-OPP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-ABS": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-ORDER": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-COORD": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-REFLECT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-DIST": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-INEQ": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-QUESTION": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-DISPLAY": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-MEAN": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-MEDIAN": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-CENTER": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-RANGE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-IQR": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-BOX": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-MAD": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-SPREAD": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "P-PROP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "P-SCALE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "P-MAP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-CIRC": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-CAREA": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-ADD": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-MULT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-2STEP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-ADD": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-SUB": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-MULT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-DIV": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-COMP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "R-RATIO": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "R-RATE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "P-PERCENT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "P-CHANGE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-DIV": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-VOL": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-PLACE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-ROUND": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-WMULT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "D-ADD": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "D-MULT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "M-CONVERT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "F-UNITDIV": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-NUM": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "E-PATTERN": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-FACTORS": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "N-SDIV": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-CLASS": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "G-WVOL": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-LINEPLOT": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-PROB": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "S-SAMPLE": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    },
+    "WARMUP": {
+      "1": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "2": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      },
+      "3": {
+        "missing": 320,
+        "compare": 320,
+        "backward": 320,
+        "mistake": 320,
+        "what-if": 320
+      }
+    }
+  },
+  "scenarioCoverage": {
+    "D-SUB": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "D-LONG": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "D-DIV": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-WHOLE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-EXP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-ORDER": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-DIST": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-FACTOR": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-LIKE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-SOLVE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-STORY": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-PERIM": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-RELATE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-GRAPH": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-PARA": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-TRI": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-COMP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-SA": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-OPP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-ABS": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-ORDER": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-COORD": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-REFLECT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-DIST": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-INEQ": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-QUESTION": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-DISPLAY": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-MEAN": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-MEDIAN": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-CENTER": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-RANGE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-IQR": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-BOX": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-MAD": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-SPREAD": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "P-PROP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "P-SCALE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "P-MAP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-CIRC": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-CAREA": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-ADD": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-MULT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-2STEP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-ADD": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-SUB": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-MULT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-DIV": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-COMP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "R-RATIO": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "R-RATE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "P-PERCENT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "P-CHANGE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-DIV": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-VOL": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-PLACE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-ROUND": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-WMULT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "D-ADD": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "D-MULT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "M-CONVERT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "F-UNITDIV": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-NUM": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "E-PATTERN": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-FACTORS": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "N-SDIV": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-CLASS": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "G-WVOL": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-LINEPLOT": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-PROB": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "S-SAMPLE": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    },
+    "WARMUP": {
+      "1": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "2": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      },
+      "3": {
+        "bake-sale": 100,
+        "bike-trip": 100,
+        "school-garden": 100,
+        "game-quest": 100,
+        "science-fair": 100,
+        "animal-shelter": 100,
+        "art-club": 100,
+        "school-play": 100,
+        "library-challenge": 100,
+        "sports-day": 100,
+        "aquarium": 100,
+        "space-camp": 100,
+        "music-club": 100,
+        "beach-cleanup": 100,
+        "school-cafe": 100,
+        "robot-club": 100
+      }
+    }
+  },
+  "days": 70,
+  "requiredQuestions": 1400,
+  "storyQuestions": 980,
+  "warmupQuestions": 420,
+  "storiesPerDay": 14,
+  "warmupsPerDay": 6,
+  "storyFraction": 0.7,
+  "uniqueScenariosPerDay": 14,
+  "repeatQuestions": 0,
+  "singleSkillSetsChecked": 213,
+  "poolDigest": "e4b8f51ad3ec45b3c734c4579d4d79b3a408a13015c649c3e7dd11fd314a8570",
+  "checkedAt": "2026-11-17T23:40:27.269Z"
+}

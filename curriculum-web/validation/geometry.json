@@ -1,0 +1,72 @@
+[
+  {
+    "skill": "G-PERIM",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-PARA",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-TRI",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-COMP",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-SA",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "P-SCALE",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "P-MAP",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-CIRC",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-CAREA",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "G-VOL",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  }
+]

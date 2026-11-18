@@ -1,16 +1,22 @@
 # Double Advanced
 
-A complete course explorer and private mathematics classroom for the expanded
-Double Advanced curriculum.
+A student and teacher mathematics learning website, hosted on ChatGPT Sites.
+The site is publicly reachable; learning records require an application account.
 
-- [Public learning site](https://donteventry.me/)
-- [Private classroom](https://double-advanced-classroom.framedegret8.chatgpt.site)
-- [Local setup and architecture](curriculum-web/README.md)
-- [Curriculum import and verification](curriculum-web/CURRICULUM.md)
-- [Implementation checklist](curriculum-web/IMPLEMENTATION.md)
+- [Open the learning platform](https://donteventry.me/)
+- [Source and setup](curriculum-web/README.md)
+- [Release checks and remaining verification](curriculum-web/RELEASE.md)
+- [Namecheap domain verification](DNS.md)
 
-The course contains 10 weeks, 70 days, 1,450 required questions, 140 challenges,
-97 separate optional assessment questions, and 360 extra-practice questions.
-Source materials remain on the `Curriculum` branch. The Pages artifact contains
-student-facing content only; saved progress and protected teacher routes run in
-the private classroom's persistent database service.
+Students start with one clear daily task: 20 questions a day from November 7,
+2026, with a due-time countdown, a visible teacher note and a complete daily
+record. Extra practice and Review are the two supporting choices. The course
+checks Grade 5 foundations, teaches IMT1 topics and adds selected early IMT2
+bridges, with 70 skill targets mapped to BSD resources and mathematics standards.
+Lesson notes, worked help, progress and rewards remain available. Teacher pages cover student history, checks, assignments,
+course dates, rewards, question flags, accounts and settings. The tutor remembers relevant answers, mistakes and conversations for each student.
+Teachers can inspect learning history. Numerical grading stays in code. Records stay on
+the server; the private paper corpus is used only in release validation.
+
+The replacement Pages artifact redirects to the hosted app. Historical public
+Git objects are not erased by this change.

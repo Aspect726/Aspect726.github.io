@@ -1,0 +1,72 @@
+[
+  {
+    "skill": "S-QUESTION",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-DISPLAY",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-MEAN",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-MEDIAN",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-CENTER",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-RANGE",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-IQR",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-BOX",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-MAD",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  },
+  {
+    "skill": "S-SPREAD",
+    "templates": 6,
+    "levels": 3,
+    "questionsChecked": 9000,
+    "failures": 0
+  }
+]

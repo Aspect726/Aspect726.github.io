@@ -1,0 +1,672 @@
+{
+  "samplesPerTemplatePerLevel": 500,
+  "levels": 3,
+  "skillCount": 71,
+  "curriculumSkillCount": 70,
+  "totalQuestionsChecked": 640500,
+  "totalTemplates": 327,
+  "failures": 0,
+  "storyBankCheckedEntries": 340800,
+  "note": "General generator sampling includes additional independent geometry and statistics checks. Story-bank sampling is reported separately in validation/stories.json.",
+  "skills": [
+    {
+      "skill": "D-SUB",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "D-LONG",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "D-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-WHOLE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-EXP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-ORDER",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-DIST",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-FACTOR",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-LIKE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-SOLVE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-STORY",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-RELATE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-GRAPH",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-OPP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-ABS",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-ORDER",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-COORD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-REFLECT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-DIST",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-INEQ",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "P-PROP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-ADD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-MULT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-2STEP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-ADD",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-SUB",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-MULT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-COMP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "R-RATIO",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "R-RATE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "P-PERCENT",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "P-CHANGE",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-DIV",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "WARMUP",
+      "templates": 5,
+      "levels": 3,
+      "questionsChecked": 7500,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-PERIM",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-PARA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-TRI",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-COMP",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-SA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "P-SCALE",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "P-MAP",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-CIRC",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-CAREA",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-VOL",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-QUESTION",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-DISPLAY",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-MEAN",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-MEDIAN",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-CENTER",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-RANGE",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-IQR",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-BOX",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-MAD",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-SPREAD",
+      "templates": 6,
+      "levels": 3,
+      "questionsChecked": 16500,
+      "failures": 0,
+      "independentSpecialistChecks": 9000,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-PLACE",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-ROUND",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-WMULT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "D-ADD",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "D-MULT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "M-CONVERT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "F-UNITDIV",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-NUM",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "E-PATTERN",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-FACTORS",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "N-SDIV",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-CLASS",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "G-WVOL",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-LINEPLOT",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-PROB",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    },
+    {
+      "skill": "S-SAMPLE",
+      "templates": 2,
+      "levels": 3,
+      "questionsChecked": 3000,
+      "failures": 0,
+      "storyShapes": 5,
+      "storyScenarios": 16
+    }
+  ]
+}
