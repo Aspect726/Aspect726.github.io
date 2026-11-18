@@ -15,7 +15,7 @@
 .gradebook-page p, .gradebook-page small { overflow-wrap: anywhere; }
 .gradebook-page small { font-size: 12px; line-height: 1.6; }
 .gradebook-page a, .gradebook-page button, .gradebook-page input, .gradebook-page select, .gradebook-page textarea, .gradebook-page summary { -webkit-tap-highlight-color: transparent; }
-.gradebook-page :is(a, button, input, select, textarea, summary):focus-visible { outline: 3px solid var(--gradebook-blue); outline-offset: 3px; }
+
 .gradebook-page input, .gradebook-page select, .gradebook-page textarea { width: 100%; min-width: 0; min-height: 44px; padding: 9px 11px; border: 1px solid #bec9df; border-radius: 9px; color: var(--gradebook-ink); background: #fff; font: inherit; font-size: 14px; }
 .gradebook-page textarea { min-height: 82px; resize: vertical; }
 .gradebook-page input[type="checkbox"] { width: 19px; height: 19px; min-height: 0; padding: 0; accent-color: var(--gradebook-blue); flex: 0 0 19px; }
@@ -147,8 +147,8 @@
 .missed-question-option { display: flex; justify-content: center; align-items: center; gap: 5px; position: relative; min-width: 44px; min-height: 46px; padding: 8px 4px; border: 1px solid #c9c5dd; border-radius: 9px; background: #fff; color: #53476b; cursor: pointer; font-size: 13px !important; font-weight: 700; }
 .missed-question-option input[type="checkbox"] { display: inline-block; width: 16px; height: 16px; flex-basis: 16px; margin: 0; accent-color: #7650b5; }
 .missed-question-option:has(input:checked) { background: #eee5fa; border-color: #8761ba; color: #593784; box-shadow: inset 0 0 0 1px #8761ba; }
-.missed-question-option:has(input:focus-visible) { outline: 3px solid var(--gradebook-blue); outline-offset: 3px; }
-.missed-question-option input:focus-visible { outline: none; }
+.gradebook-page .missed-question-option:has(input:focus-visible) { outline: none; box-shadow: var(--focus-ring); }
+.missed-question-option input:focus-visible { --focus-ring: none; outline: none; box-shadow: none; }
 .score-live-result { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 14px 16px; margin: 16px 0; border: 1px solid #e8d89f; border-radius: 10px; background: #fff7db; color: #725719; font-size: 13px; line-height: 1.7; }
 .score-live-result strong { font-size: 20px; line-height: 1.4; }
 .score-live-result p { margin: 0; }

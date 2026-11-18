@@ -17,7 +17,7 @@ test('workbook text and control tokens meet measured contrast on their assigned 
  for(const fill of ['--coral','--gold','--lavender'])assert.ok(contrast(value('--ink'),value(fill))>=4.5,fill);
  assert.ok(contrast(value('--good'),value('--good-soft'))>=4.5);
  assert.ok(contrast(value('--coral-text'),value('--warm-soft'))>=4.5);
- assert.match(css,/outline:3px solid var\(--royal\)/);
+ assert.match(css,/--focus-ring:0 0 0 3px var\(--royal\)/);
  assert.doesNotMatch(css,/(?:linear|radial)-gradient\(/);
 });
 

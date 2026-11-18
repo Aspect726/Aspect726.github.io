@@ -9,7 +9,6 @@ button,input,select,textarea{font:inherit;color:inherit;max-width:100%}
 button,a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 button{cursor:pointer}button:disabled{cursor:default;opacity:.5}
 a{color:var(--teal);text-underline-offset:4px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--brick);outline-offset:4px}
 h1,h2,h3,h4,p{margin:0 0 16px}
 h1,h2,h3,h4{color:var(--ink);line-height:1.2;overflow-wrap:anywhere;text-wrap:pretty}
 h1,h2{font-family:var(--heading);font-weight:600;letter-spacing:-.8px}
@@ -650,7 +649,6 @@ h1{line-height:1.16}h2{font-size:27px}h3{letter-spacing:-.3px}
 .button.danger{background:#FFF4F0;color:var(--coral-text);border-color:#E0B2A5;box-shadow:none}.button.small,.button.compact{font-size:12px}
 .text-link,.text-button{font-size:13px;min-height:44px}.field label,.field>span{font-size:13px}.field-help{font-size:12px}
 input:not([type=checkbox]):not([type=radio]),select,textarea{border:1px solid var(--control-edge);border-radius:var(--radius);min-height:46px;background:#FFF;font-size:15px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--royal);outline-offset:4px}
 .card,.panel,.question-preview{border-radius:var(--radius);background:#FFF;border-color:#DBE1F1}.empty-state,.empty{border-left:4px solid #EAA946;border-radius:var(--radius);background:#FFF6DC}
 .empty-state h2,.empty-state h3{font:750 23px/1.3 var(--heading)}
 /* A lesson first, with a visible route from noticing to reasoning. */
@@ -891,7 +889,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .button.quiet{background:transparent;color:var(--royal);border-color:transparent;box-shadow:none}
 input:not([type=checkbox]):not([type=radio]),select,textarea,.topbar-status select,.question-stage .field input{border:1px solid var(--control-edge);background:var(--card);border-radius:var(--radius)}
 input[type=checkbox],input[type=radio]{accent-color:var(--royal);outline-offset:3px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--royal);outline-offset:3px}
 .field label,.field>span{display:block;font-size:14px;line-height:1.5}.field label>input[type=checkbox],.field label>input[type=radio]{display:inline-block}
 .form-error,.inline-error{background:var(--card);color:var(--coral-text);border-color:var(--coral-text);border-radius:var(--radius)}
 .notice{border-radius:var(--radius);background:var(--ink);box-shadow:var(--shadow);font-size:15px}.notice.error{background:var(--coral-text)}
@@ -917,3 +914,20 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .badge,.points-pill,.edu-method>li>span,.edu-method>li:nth-child(2)>span,.edu-method>li:nth-child(3)>span,.edu-course-index .course-status,.story-context>span,.story-context>strong,.practice-stage>span,.edu-workbook .lesson-number{color:var(--ink)}
 .badge.good,.badge.mastered{background:var(--accent-soft);color:var(--ink);border-color:var(--line)}
 .badge.miss{background:var(--card);color:var(--coral-text)}
+
+/* Keep click/tap focus quiet. Keyboard rings follow each control's own radius. */
+:root{--focus-ring:0 0 0 3px var(--royal)}
+:focus:not(:focus-visible){outline:none}
+#main:focus{outline:none;box-shadow:none}
+:is(button,a[href],input,select,textarea,summary,[tabindex]:not([tabindex^="-"])):focus-visible{outline:none;box-shadow:var(--focus-ring)!important}
+input[type=radio]:focus-visible{border-radius:50%}
+input[type=checkbox]:focus-visible{border-radius:3px}
+summary{border-radius:inherit}
+details[open]>summary{border-end-start-radius:0;border-end-end-radius:0}
+summary:focus-visible,.table-wrap:focus-visible{--focus-ring:inset 0 0 0 3px var(--royal)}
+/* High-contrast modes remove shadows, so retain a system-color focus outline. */
+@media(forced-colors:active){
+ :is(button,a[href],input,select,textarea,summary,[tabindex]:not([tabindex^="-"])):focus-visible,.missed-question-option:has(input:focus-visible){outline:3px solid Highlight!important;outline-offset:3px;box-shadow:none!important}
+ summary:focus-visible:focus,.table-wrap:focus-visible:focus{outline-offset:-3px!important}
+ .missed-question-option input:focus-visible:focus{outline:none!important}
+}
